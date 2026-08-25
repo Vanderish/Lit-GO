@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 export default function Navbar({ onRequestReset }) {
   const navigate = useNavigate();
 
-  const handleStartLearning = () => {
-    navigate('/dashboard');
+  const handleLogin = () => {
+    navigate('/login');
   };
 
   return (
@@ -24,7 +24,7 @@ export default function Navbar({ onRequestReset }) {
         </div>
 
         <div className="nav-hud">
-          <button className="btn-nav-cta" onClick={handleStartLearning}>Mulai Belajar</button>
+          <button className="btn-nav-cta" onClick={handleLogin}>Login</button>
           <button className="btn-reset" onClick={onRequestReset} title="Reset Progres Platform">
             <i className="fa-solid fa-rotate-right"></i>
           </button>

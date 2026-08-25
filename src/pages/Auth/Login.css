@@ -1,0 +1,189 @@
+/* WRAPPER UTAMA - Memaksa letak di tengah layar */
+.login-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column; /* Memastikan elemen berjejer atas-bawah ke tengah */
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+  background-color: var(--bg);
+}
+
+/* KOTAK LOGIN */
+.login-card {
+  width: 100%;
+  max-width: 420px; /* Membatasi lebar kotak agar tidak kepanjangan */
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 40px 32px;
+  box-shadow: 0 24px 60px -12px rgba(30, 41, 59, 0.15);
+  position: relative;
+  z-index: 10;
+}
+
+/* HEADER BRAND */
+.brand-header {
+  text-align: center;
+  margin-bottom: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.brand-logo {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, var(--indigo), var(--teal));
+  color: var(--white);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 800;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
+}
+.brand-title {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--navy);
+  letter-spacing: -0.02em;
+}
+
+/* INPUT FORM */
+.form-group {
+  margin-bottom: 20px;
+  width: 100%;
+}
+.label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.label-row label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--navy);
+}
+.link-text {
+  color: var(--indigo);
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition: color 0.2s;
+}
+.link-text:hover { color: var(--navy); }
+
+/* BUNGKUS INPUT & IKON */
+.input-wrapper {
+  position: relative; /* Penting agar ikon tidak keluar melayang */
+  width: 100%;
+  display: block;
+}
+.input-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-dim);
+  font-size: 1.2rem;
+  z-index: 2;
+}
+.input-icon.left { left: 14px; pointer-events: none; }
+.input-icon.right { 
+  right: 14px; 
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+}
+.input-icon.right:hover { color: var(--navy); }
+
+/* KOTAK KETIK (TEXTFIELD) */
+.form-input {
+  width: 100%;
+  padding: 12px 14px 12px 44px; /* Padding kiri disisakan untuk ikon */
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  color: var(--navy);
+  font-size: 0.95rem;
+  transition: all 0.2s;
+  box-sizing: border-box; /* Penting agar padding tidak mengubah width */
+}
+.form-input:focus {
+  outline: none;
+  border-color: var(--indigo);
+  background: var(--white);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+/* TOMBOL MASUK */
+.btn-submit {
+  width: 100%;
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  background: var(--navy);
+  color: var(--white);
+  font-weight: 700;
+  font-size: 0.95rem;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 0.2s, transform 0.15s;
+  margin-top: 28px;
+  box-sizing: border-box;
+}
+.btn-submit:hover {
+  background: var(--indigo);
+  transform: translateY(-1px);
+}
+
+/* GARIS ATAU */
+.divider {
+  position: relative;
+  margin: 28px 0;
+  text-align: center;
+}
+.divider::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--line);
+}
+.divider span {
+  position: relative;
+  background: var(--white);
+  padding: 0 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-dim);
+}
+
+/* LAIN-LAIN */
+.google-auth-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+.register-prompt {
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--text-dim);
+}
+.trust-badge {
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  margin-top: 32px;
+  font-weight: 600;
+}
