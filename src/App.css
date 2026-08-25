@@ -852,3 +852,27 @@ body.font-dyslexic { font-family: 'OpenDyslexic', 'Comic Sans MS', sans-serif !i
 .switch-toggle.on::after {
   transform: translateX(22px);
 }
+
+/* Universal Back to Dashboard Button */
+.btn-back-dashboard {
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-size: 0.86rem;
+  font-weight: 700;
+  border: 1px solid var(--line-strong);
+  background: var(--white);
+  color: var(--navy);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+.btn-back-dashboard:hover {
+  border-color: var(--indigo);
+  color: var(--indigo);
+  background: rgba(59, 130, 246, 0.06);
+  transform: translateX(-2px);
+}
