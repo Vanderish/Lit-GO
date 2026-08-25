@@ -1,24 +1,36 @@
 import React from 'react';
+import { Link, NavLink } from 'react-router-dom';
 
 export default function DashboardNavbar({ pts = 0, badgeCount = 0, expPct = 0, lv = 1, onRequestReset }) {
   return (
-    <nav>
+    <nav style={{ margin: '16px 0 24px 0', width: '100%' }}>
       <div className="nav-inner">
-        <div className="logo">
+        <Link to="/dashboard" className="logo" style={{ textDecoration: 'none' }}>
           <div className="logo-mark">L</div>
           Lit - GO
-        </div>
+        </Link>
+
         <div className="nav-links">
-          <a href="#hub-radar">Radar</a>
-          <a href="#hub-modules">Modul</a>
-          <a href="#hub-sandbox">Lab</a>
-          <a href="#hub-rewards">Reward</a>
+          <NavLink to="/dashboard" className={({ isActive }) => (isActive ? 'active' : '')}>
+            Dashboard
+          </NavLink>
+          <NavLink to="/progres" className={({ isActive }) => (isActive ? 'active' : '')}>
+            Progres
+          </NavLink>
+          <NavLink to="/koleksi-badge" className={({ isActive }) => (isActive ? 'active' : '')}>
+            Reward
+          </NavLink>
         </div>
+
         <div className="nav-hud">
           <div className="hud-chips">
-            <span title="Etika Gems">💎 <strong>{pts}</strong></span>
+            <span title="Etika Gems">
+              💎 <strong>{pts}</strong>
+            </span>
             <div className="hud-sep"></div>
-            <span title="E-Badge Terkumpul">🏅 <strong>{badgeCount}/5</strong></span>
+            <span title="E-Badge Terkumpul">
+              🏅 <strong>{badgeCount}/5</strong>
+            </span>
             <div className="hud-sep"></div>
             <div className="exp-bar-wrap" title="Progress EXP">
               <div className="exp-bar-fill" style={{ width: `${expPct}%` }}></div>
