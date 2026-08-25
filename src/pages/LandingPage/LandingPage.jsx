@@ -5,7 +5,6 @@ import './LandingPage.css';
 
 export default function LandingPage() {
   const [state, setState] = useState({ radar: [0, 0, 0, 0], hasRadar: false, doneModules: [], badges: [] });
-  const [isResetModalOpen, setIsResetModalOpen] = useState(false);
   const [toastMsg, setToastMsg] = useState(null);
   const [toastType, setToastType] = useState('info');
   
@@ -59,13 +58,6 @@ export default function LandingPage() {
       const scrollAmount = 330;
       carouselTrackRef.current.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
     }
-  };
-
-  const handleReset = () => {
-    localStorage.removeItem('litgo_complete_v1');
-    setState({ radar: [0, 0, 0, 0], hasRadar: false, doneModules: [], badges: [] });
-    setIsResetModalOpen(false);
-    showToast('Progres platform telah direset.', 'info');
   };
 
   const handleFontSizeValue = (val) => {
@@ -131,7 +123,7 @@ export default function LandingPage() {
       <div className="bg-glow2"></div>
 
       {/* Navigation dari komponen terpisah */}
-      <Navbar onRequestReset={() => setIsResetModalOpen(true)} />
+      <Navbar />
 
       {/* Toast Notification */}
       {toastMsg && (
@@ -569,23 +561,6 @@ export default function LandingPage() {
           </div>
         </div>
       </footer>
-
-      {/* Reset Confirmation Modal */}
-      {isResetModalOpen && (
-        <div className="modal-overlay" id="modal-confirm">
-          <div className="modal-box" style={{maxWidth:'420px', textAlign:'center'}}>
-            <div style={{width:'52px', height:'52px', borderRadius:'50%', background:'rgba(239,68,68,0.1)', border:'1px solid rgba(239,68,68,0.25)', display:'flex', alignItems:'center', justifyContent:'center', margin:'0 auto 16px', fontSize:'1.3rem', color:'var(--red)'}}>
-              <i className="fa-solid fa-triangle-exclamation"></i>
-            </div>
-            <div className="modal-title" style={{justifyContent:'center', marginBottom:'8px'}}>Konfirmasi Reset Data</div>
-            <p style={{fontSize:'0.86rem', color:'var(--text-dim)', lineHeight:1.6}}>Seluruh progres, badge, dan skor akan dihapus permanen dari browser kamu. Apakah kamu yakin?</p>
-            <div className="modal-footer" style={{justifyContent:'center'}}>
-              <button className="btn-modal-cancel" onClick={() => setIsResetModalOpen(false)}>Batal</button>
-              <button className="btn-modal-danger" onClick={handleReset}>Ya, Reset Sekarang</button>
-            </div>
-          </div>
-        </div>
-      )}
     </>
   );
 }
