@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import AccessibilityPanel from '../../components/AccessibilityPanel';
-import ResetModal from '../../components/ResetModal';
+import Navbar from '../../components/Navbar/Navbar'; 
 import './LandingPage.css';
 
 export default function LandingPage() {
@@ -10,7 +9,7 @@ export default function LandingPage() {
   const [toastMsg, setToastMsg] = useState(null);
   const [toastType, setToastType] = useState('info');
   
-  // Accessibility controls state inside section-akses
+  // Accessibility controls state
   const [fontSize, setFontSizeState] = useState(16);
   const [isDyslexic, setIsDyslexic] = useState(false);
   const [isContrast, setIsContrast] = useState(false);
@@ -38,10 +37,6 @@ export default function LandingPage() {
     setToastMsg(msg);
     setToastType(type);
     setTimeout(() => setToastMsg(null), 3500);
-  };
-
-  const handleStartLearning = () => {
-    navigate('/dashboard');
   };
 
   const openLabFromLanding = (labName) => {
@@ -73,7 +68,6 @@ export default function LandingPage() {
     showToast('Progres platform telah direset.', 'info');
   };
 
-  // Accessibility actions for the in-page accessibility section
   const handleFontSizeValue = (val) => {
     let num = parseInt(val, 10) || 16;
     let size = 16;
@@ -136,31 +130,10 @@ export default function LandingPage() {
       <div className="bg-glow"></div>
       <div className="bg-glow2"></div>
 
-      {/* Navigation */}
-      <nav>
-        <div className="nav-inner">
-          <div className="logo">
-            <div className="logo-mark">L</div>
-            Lit - GO
-          </div>
+      {/* Navigation dari komponen terpisah */}
+      <Navbar onRequestReset={() => setIsResetModalOpen(true)} />
 
-          <div className="nav-links">
-            <a href="#section-labs">Sandbox Lab</a>
-            <a href="#section-modules">Modul</a>
-            <a href="#section-gamifikasi">E&#8209;Badge</a>
-            <a href="#section-akses">Aksesibilitas</a>
-          </div>
-
-          <div className="nav-hud">
-            <button className="btn-nav-cta" onClick={handleStartLearning}>Mulai Belajar</button>
-            <button className="btn-reset" onClick={() => setIsResetModalOpen(true)} title="Reset Progres Platform">
-              <i className="fa-solid fa-rotate-right"></i>
-            </button>
-          </div>
-        </div>
-      </nav>
-
-      {/* Toast Notification Container */}
+      {/* Toast Notification */}
       {toastMsg && (
         <div id="toast-container" style={{ display: 'flex', flexDirection: 'column' }}>
           <div className="toast" style={{ opacity: 1 }}>
@@ -175,7 +148,7 @@ export default function LandingPage() {
         </div>
       )}
 
-      {/* LANDING PAGE MAIN CONTENT */}
+      {/* MAIN CONTENT */}
       <main>
         {/* Hero Section */}
         <header className="hero">
@@ -267,31 +240,31 @@ export default function LandingPage() {
             </div>
             <div className="bento">
               <div className="bento-item b1" onClick={() => openLabFromLanding('hallucination')}>
-                <div className="lab-icon" style={{ background: 'rgba(59,130,246,0.1)', color: 'var(--indigo)' }}>◐</div>
+                <div className="lab-icon" style={{ background: 'rgba(59,130,246,0.1)', color: 'var(--indigo)' }}><i className="fa-solid fa-bug"></i></div>
                 <div className="lab-title">Hallucination & Bias Breaker</div>
                 <div className="lab-desc">Text-highlighting sandbox — klik kalimat yang kamu curigai keliru. Sistem menghitung Fact Score real-time dengan penanda hijau (benar) dan merah (halusinasi), melatihmu membaca AI dengan skeptis yang sehat.</div>
                 <span className="lab-tag">Fondasi AI</span>
               </div>
               <div className="bento-item b2" onClick={() => openLabFromLanding('deepfake')}>
-                <div className="lab-icon" style={{ background: 'rgba(245,158,11,0.12)', color: 'var(--amber)' }}>◎</div>
+                <div className="lab-icon" style={{ background: 'rgba(245,158,11,0.12)', color: 'var(--amber)' }}><i className="fa-solid fa-magnifying-glass"></i></div>
                 <div className="lab-title">Deepfake Detective</div>
                 <div className="lab-desc">Magnifying glass dengan zoom untuk menyorot artefak rekayasa AI: pencahayaan janggal, anatomi jari, tekstur kulit terlalu halus.</div>
                 <span className="lab-tag">Deteksi Deepfake</span>
               </div>
               <div className="bento-item b3" onClick={() => openLabFromLanding('dilemma')}>
-                <div className="lab-icon" style={{ background: 'rgba(16,185,129,0.12)', color: 'var(--emerald)' }}>⚖</div>
+                <div className="lab-icon" style={{ background: 'rgba(16,185,129,0.12)', color: 'var(--emerald)' }}><i className="fa-solid fa-scale-balanced"></i></div>
                 <div className="lab-title">AI Ethical Dilemma</div>
                 <div className="lab-desc">Studi kasus bercabang — tiap keputusan menggeser tiga indikator: Risiko Hak Cipta, Privasi Data, dan Integritas Akademik.</div>
                 <span className="lab-tag">Studi Etika</span>
               </div>
               <div className="bento-item b4" onClick={() => openLabFromLanding('prompt')}>
-                <div className="lab-icon" style={{ background: 'rgba(20,184,166,0.12)', color: 'var(--teal)' }}>▤</div>
+                <div className="lab-icon" style={{ background: 'rgba(20,184,166,0.12)', color: 'var(--teal)' }}><i className="fa-solid fa-terminal"></i></div>
                 <div className="lab-title">Live Prompt Safety Lab</div>
                 <div className="lab-desc">Split-screen analyzer mewarnai kata berisiko (merah) dan konteks jelas (hijau), menghitung Safety & Quality Score.</div>
                 <span className="lab-tag">Prompt Safety</span>
               </div>
               <div className="bento-item b5" onClick={openRadarFromLanding}>
-                <div className="lab-icon" style={{ background: 'rgba(30,41,59,0.07)', color: 'var(--navy)' }}>◈</div>
+                <div className="lab-icon" style={{ background: 'rgba(30,41,59,0.07)', color: 'var(--navy)' }}><i className="fa-solid fa-chart-line"></i></div>
                 <div className="lab-title">AI Readiness Radar</div>
                 <div className="lab-desc">Asesmen 8 pertanyaan di awal dan akhir belajar, divisualisasikan sebagai grafik radar 4 pilar — supaya progres terlihat, bukan cuma dirasakan.</div>
                 <span className="lab-tag">Pre &amp; Post Test</span>
@@ -508,15 +481,15 @@ export default function LandingPage() {
                     </div>
                   </div>
                   <div className="a11y-toggle">
-                    <div className="a11y-toggle-label"><div className="a11y-icon-chip">✧</div>Font Ramah Disleksia</div>
+                    <div className="a11y-toggle-label"><div className="a11y-icon-chip"><i className="fa-solid fa-wand-magic-sparkles"></i></div>Font Ramah Disleksia</div>
                     <button className={`switch-toggle a11y-switch-dyslexia ${isDyslexic ? 'on' : ''}`} onClick={toggleDyslexia}></button>
                   </div>
                   <div className="a11y-toggle">
-                    <div className="a11y-toggle-label"><div className="a11y-icon-chip">◐</div>Kontras Tinggi</div>
+                    <div className="a11y-toggle-label"><div className="a11y-icon-chip"><i className="fa-solid fa-circle-half-stroke"></i></div>Kontras Tinggi</div>
                     <button className={`switch-toggle a11y-switch-contrast ${isContrast ? 'on' : ''}`} onClick={toggleContrast}></button>
                   </div>
                   <div className="a11y-toggle">
-                    <div className="a11y-toggle-label"><div className="a11y-icon-chip">▶</div>Text-to-Speech</div>
+                    <div className="a11y-toggle-label"><div className="a11y-icon-chip"><i className="fa-solid fa-volume-high"></i></div>Text-to-Speech</div>
                     <button className={`switch-toggle a11y-switch-tts ${isSpeaking ? 'on' : ''}`} onClick={toggleTTS}></button>
                   </div>
                 </div>
@@ -597,15 +570,22 @@ export default function LandingPage() {
         </div>
       </footer>
 
-      {/* Floating Accessibility Panel Component */}
-      <AccessibilityPanel showToast={showToast} />
-
       {/* Reset Confirmation Modal */}
-      <ResetModal
-        isOpen={isResetModalOpen}
-        onClose={() => setIsResetModalOpen(false)}
-        onReset={handleReset}
-      />
+      {isResetModalOpen && (
+        <div className="modal-overlay" id="modal-confirm">
+          <div className="modal-box" style={{maxWidth:'420px', textAlign:'center'}}>
+            <div style={{width:'52px', height:'52px', borderRadius:'50%', background:'rgba(239,68,68,0.1)', border:'1px solid rgba(239,68,68,0.25)', display:'flex', alignItems:'center', justifyContent:'center', margin:'0 auto 16px', fontSize:'1.3rem', color:'var(--red)'}}>
+              <i className="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <div className="modal-title" style={{justifyContent:'center', marginBottom:'8px'}}>Konfirmasi Reset Data</div>
+            <p style={{fontSize:'0.86rem', color:'var(--text-dim)', lineHeight:1.6}}>Seluruh progres, badge, dan skor akan dihapus permanen dari browser kamu. Apakah kamu yakin?</p>
+            <div className="modal-footer" style={{justifyContent:'center'}}>
+              <button className="btn-modal-cancel" onClick={() => setIsResetModalOpen(false)}>Batal</button>
+              <button className="btn-modal-danger" onClick={handleReset}>Ya, Reset Sekarang</button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
