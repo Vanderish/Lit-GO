@@ -6,8 +6,9 @@ export default function ProgresPage() {
   const navigate = useNavigate();
   const { state, doneCount, badgeCount, pts, lv, expPct, MODULES } = useProgress();
 
-  const totalProgressPct = Math.round(
-    ((doneCount / 6) * 0.5 + (badgeCount / 5) * 0.3 + (state.hasRadar ? 0.2 : 0)) * 100
+  const totalProgressPct = Math.min(
+    100,
+    Math.round(((doneCount / 16) * 0.6 + (badgeCount / 5) * 0.25 + (state.hasRadar ? 0.15 : 0)) * 100)
   );
 
   return (
@@ -67,13 +68,13 @@ export default function ProgresPage() {
           }}
         >
           <div style={{ fontSize: '0.75rem', color: 'var(--amber)', fontWeight: 700, textTransform: 'uppercase' }}>
-            Modul Selesai
+            Langkah Selesai
           </div>
           <div style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--navy)', marginTop: '4px' }}>
-            {doneCount} / 6 Modul
+            {doneCount} / 16 Langkah
           </div>
           <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)', marginTop: '4px' }}>
-            {doneCount === 6 ? 'Semua modul tuntas 🎉' : `${6 - doneCount} modul tersisa`}
+            {doneCount === 16 ? 'Semua 16 langkah tuntas 🎉' : `${16 - doneCount} langkah tersisa`}
           </div>
         </div>
 
@@ -182,8 +183,8 @@ export default function ProgresPage() {
       <div className="panel" style={{ padding: '24px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
           <div>
-            <div style={{ fontWeight: 700, fontSize: '1.1rem', color: 'var(--navy)' }}>Status Silabus 6 Modul</div>
-            <div style={{ fontSize: '0.82rem', color: 'var(--text-dim)' }}>Daftar kelulusan materi dan kuis evaluasi</div>
+            <div style={{ fontWeight: 700, fontSize: '1.1rem', color: 'var(--navy)' }}>Status Silabus 6 Modul Utama (24 Langkah Gamifikasi)</div>
+            <div style={{ fontSize: '0.82rem', color: 'var(--text-dim)' }}>Daftar kelulusan 24 game interaktif &amp; Tebak Gambar AI</div>
           </div>
           <button className="btn-lab" onClick={() => navigate('/modul-belajar')}>
             Buka Halaman Modul Belajar →
@@ -192,7 +193,9 @@ export default function ProgresPage() {
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
           {MODULES.map((mod) => {
-            const isDone = state.doneModules.includes(mod.id);
+            const modTotalSteps = mod.steps.length;
+            const modCompletedSteps = mod.steps.filter((s) => (state.doneModules || []).includes(s.id)).length;
+            const isDone = modCompletedSteps === modTotalSteps;
             return (
               <div
                 key={mod.id}
@@ -224,7 +227,7 @@ export default function ProgresPage() {
                   </div>
                   <div>
                     <div style={{ fontWeight: 700, fontSize: '0.9rem', color: 'var(--navy)' }}>
-                      {mod.tag}: {mod.title}
+                      {mod.tag}: {mod.title} ({modCompletedSteps}/{modTotalSteps} Langkah)
                     </div>
                     <div style={{ fontSize: '0.78rem', color: 'var(--text-dim)' }}>{mod.topics}</div>
                   </div>
@@ -242,7 +245,7 @@ export default function ProgresPage() {
                         borderRadius: '20px',
                       }}
                     >
-                      <i className="fa-solid fa-circle-check mr-1"></i> Selesai (+250 Gems)
+                      <i className="fa-solid fa-circle-check mr-1"></i> Tuntas ({modTotalSteps}/{modTotalSteps} Langkah)
                     </span>
                   ) : (
                     <button
@@ -250,7 +253,7 @@ export default function ProgresPage() {
                       style={{ fontSize: '0.76rem', padding: '6px 12px' }}
                       onClick={() => navigate('/modul-belajar')}
                     >
-                      Belum Selesai →
+                      {modCompletedSteps}/{modTotalSteps} Langkah →
                     </button>
                   )}
                 </div>
