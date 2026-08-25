@@ -18,16 +18,14 @@ export default function Dashboard() {
   const navigate = useNavigate();
   const { state, saveState, showToast } = useProgress();
 
-  const [isPretestViewOpen, setIsPretestViewOpen] = useState(false);
+  const [isPretestViewOpen, setIsPretestViewOpen] = useState(!state.hasRadar);
   const [currentStep, setCurrentStep] = useState(0);
   // Default kosong (null) agar pengguna wajib memilih
   const [radarAnswers, setRadarAnswers] = useState([null, null, null, null, null, null, null, null]);
 
   // Wajib: Otomatis tampilkan halaman Pre-Test Fullscreen jika pengguna belum menyelesaikan asesmen
   useEffect(() => {
-    if (!state.hasRadar) {
-      setIsPretestViewOpen(true);
-    }
+    setIsPretestViewOpen(!state.hasRadar);
   }, [state.hasRadar]);
 
   const handleCircleSelect = (questionIndex, val) => {

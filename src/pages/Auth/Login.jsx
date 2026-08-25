@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
+import { useProgress } from '../../context/ProgressContext';
 import './Login.css';
 
 const Login = () => {
   const navigate = useNavigate();
+  const { refreshState } = useProgress();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -21,6 +23,7 @@ const Login = () => {
       picture: '',
     };
     localStorage.setItem('user_data', JSON.stringify(userDetail));
+    if (refreshState) refreshState();
     navigate('/dashboard');
   };
 
@@ -29,6 +32,7 @@ const Login = () => {
     const userDetail = jwtDecode(credentialResponse.credential);
     console.log('Login Google Berhasil! Data User:', userDetail);
     localStorage.setItem('user_data', JSON.stringify(userDetail));
+    if (refreshState) refreshState();
     navigate('/dashboard');
   };
 

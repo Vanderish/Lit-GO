@@ -30,34 +30,58 @@ export const BADGE_DATA = [
   { id:5, icon:'fa-graduation-cap', bg:'linear-gradient(135deg, #10B981, #059669)', name:'Cendekia Digital', req:'Sertifikasi & Kelulusan Akhir', desc:'Lencana kualifikasi tertinggi atas penyelesaian seluruh kurikulum etika AI dan kelulusan evaluasi akhir.' },
 ];
 
-const ProgressContext = createContext();
+const getStorageKey = () => {
+  try {
+    const s = localStorage.getItem('user_data');
+    if (s) {
+      const u = JSON.parse(s);
+      if (u && u.email) {
+        return `litgo_complete_${u.email}`;
+      }
+    }
+  } catch (err) {}
+  return 'litgo_complete_v1';
+};
 
-export function ProgressProvider({ children }) {
-  const [state, setState] = useState({
+const loadInitialState = () => {
+  const key = getStorageKey();
+  const s = localStorage.getItem(key);
+  if (s) {
+    try {
+      return JSON.parse(s);
+    } catch (err) {
+      console.error('Failed to parse ' + key, err);
+    }
+  }
+  return {
     radar: [0, 0, 0, 0],
     hasRadar: false,
     doneModules: [],
     badges: [],
-  });
+  };
+};
+
+const ProgressContext = createContext();
+
+export function ProgressProvider({ children }) {
+  const [state, setState] = useState(loadInitialState);
 
   const [toastMsg, setToastMsg] = useState(null);
   const [toastType, setToastType] = useState('info');
   const [isConfirmModalOpen, setConfirmModalOpen] = useState(false);
 
+  const refreshState = () => {
+    setState(loadInitialState());
+  };
+
   useEffect(() => {
-    const s = localStorage.getItem('litgo_complete_v1');
-    if (s) {
-      try {
-        setState(JSON.parse(s));
-      } catch (err) {
-        console.error('Failed to parse litgo_complete_v1', err);
-      }
-    }
+    refreshState();
   }, []);
 
   const saveState = (newState) => {
     setState(newState);
-    localStorage.setItem('litgo_complete_v1', JSON.stringify(newState));
+    const key = getStorageKey();
+    localStorage.setItem(key, JSON.stringify(newState));
   };
 
   const showToast = (msg, type = 'info') => {
@@ -67,7 +91,15 @@ export function ProgressProvider({ children }) {
   };
 
   const handleReset = () => {
+    const key = getStorageKey();
+    localStorage.removeItem(key);
     localStorage.removeItem('litgo_complete_v1');
+    setState({
+      radar: [0, 0, 0, 0],
+      hasRadar: false,
+      doneModules: [],
+      badges: [],
+    });
     window.location.reload();
   };
 
@@ -82,6 +114,7 @@ export function ProgressProvider({ children }) {
       value={{
         state,
         saveState,
+        refreshState,
         showToast,
         toastMsg,
         toastType,
