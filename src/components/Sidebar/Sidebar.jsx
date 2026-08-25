@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useProgress } from '../../context/ProgressContext';
 import './Sidebar.css';
 
 export default function Sidebar() {
-  const location = useLocation();
   const { badgeCount, doneCount } = useProgress();
   const [userData, setUserData] = useState(null);
 
@@ -21,30 +20,32 @@ export default function Sidebar() {
 
   const sandboxNav = [
     {
+      to: '/radar-readiness',
+      title: 'Radar Readiness',
+      icon: 'fa-chart-pie',
+      color: '#3B82F6',
+    },
+    {
       to: '/sandbox/deepfake-detective',
       title: 'Deepfake Detective',
-      sub: 'Inspeksi Artefak Visual',
       icon: 'fa-eye',
       color: '#0EA5E9',
     },
     {
       to: '/sandbox/bias-breaker',
       title: 'Bias Breaker',
-      sub: 'Deteksi Halusinasi Teks',
       icon: 'fa-quote-left',
       color: '#F59E0B',
     },
     {
       to: '/sandbox/ethical-dilemma',
       title: 'Ethical Dilemma',
-      sub: 'Simulasi Keputusan',
       icon: 'fa-scale-balanced',
       color: '#6366F1',
     },
     {
       to: '/sandbox/prompt-safety',
       title: 'Prompt Safety Lab',
-      sub: 'Parser Anatomi Prompt',
       icon: 'fa-code',
       color: '#10B981',
     },
@@ -52,16 +53,8 @@ export default function Sidebar() {
 
   const mainNav = [
     {
-      to: '/radar-readiness',
-      title: 'Radar Readiness',
-      sub: 'Asesmen 4 Pilar',
-      icon: 'fa-chart-pie',
-      color: '#3B82F6',
-    },
-    {
       to: '/modul-belajar',
       title: 'Modul Belajar',
-      sub: '6 Modul Silabus',
       icon: 'fa-book-bookmark',
       color: '#D97706',
       counter: `${doneCount}/6`,
@@ -69,7 +62,6 @@ export default function Sidebar() {
     {
       to: '/koleksi-badge',
       title: 'Koleksi Badge',
-      sub: '& E-Sertifikat',
       icon: 'fa-award',
       color: '#059669',
       counter: `${badgeCount}/5`,
@@ -103,7 +95,7 @@ export default function Sidebar() {
         {/* SECTION 1: SANDBOX LAB */}
         <div className="sidebar-section">
           <div className="sidebar-section-title">
-            <span><i className="fa-solid fa-shapes mr-1.5" style={{ color: '#64748B' }}></i> SANDBOX LAB</span>
+            <span>SANDBOX LAB</span>
           </div>
 
           <div className="sidebar-menu-list">
@@ -116,13 +108,11 @@ export default function Sidebar() {
                     `sidebar-menu-item ${isActive ? 'active' : ''}`
                   }
                 >
-                  {/* Clean icon without background square box */}
                   <div className="menu-item-icon-clean" style={{ color: item.color }}>
                     <i className={`fa-solid ${item.icon}`}></i>
                   </div>
                   <div className="menu-item-info">
                     <span className="menu-item-title">{item.title}</span>
-                    <span className="menu-item-sub">{item.sub}</span>
                   </div>
                 </NavLink>
               );
@@ -130,10 +120,10 @@ export default function Sidebar() {
           </div>
         </div>
 
-        {/* SECTION 2: FITUR DIREKTORI */}
+        {/* SECTION 2: PUSAT LITERASI */}
         <div className="sidebar-section">
           <div className="sidebar-section-title">
-            <span><i className="fa-solid fa-folder-open mr-1.5" style={{ color: '#64748B' }}></i> FITUR DIREKTORI</span>
+            <span>PUSAT LITERASI</span>
           </div>
 
           <div className="sidebar-menu-list">
@@ -146,13 +136,11 @@ export default function Sidebar() {
                     `sidebar-menu-item ${isActive ? 'active' : ''}`
                   }
                 >
-                  {/* Clean icon without background square box */}
                   <div className="menu-item-icon-clean" style={{ color: item.color }}>
                     <i className={`fa-solid ${item.icon}`}></i>
                   </div>
                   <div className="menu-item-info">
                     <span className="menu-item-title">{item.title}</span>
-                    <span className="menu-item-sub">{item.sub}</span>
                   </div>
                   {item.counter && (
                     <span className="menu-item-count">{item.counter}</span>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Chart as ChartJS,
@@ -18,34 +18,92 @@ export default function Dashboard() {
   const navigate = useNavigate();
   const { state, saveState, showToast } = useProgress();
 
-  const [isRadarModalOpen, setRadarModalOpen] = useState(false);
-  const [radarAnswers, setRadarAnswers] = useState([3, 2, 3, 4, 2, 2, 3, 3]);
+  const [isPretestViewOpen, setIsPretestViewOpen] = useState(false);
+  const [currentStep, setCurrentStep] = useState(0);
+  // Default kosong (null) agar pengguna wajib memilih
+  const [radarAnswers, setRadarAnswers] = useState([null, null, null, null, null, null, null, null]);
+
+  // Wajib: Otomatis tampilkan halaman Pre-Test Fullscreen jika pengguna belum menyelesaikan asesmen
+  useEffect(() => {
+    if (!state.hasRadar) {
+      setIsPretestViewOpen(true);
+    }
+  }, [state.hasRadar]);
+
+  const handleCircleSelect = (questionIndex, val) => {
+    const newAns = [...radarAnswers];
+    newAns[questionIndex] = val;
+    setRadarAnswers(newAns);
+  };
+
+  const isAllAnswered = radarAnswers.every((ans) => ans !== null && ans !== undefined);
+  const answeredCount = radarAnswers.filter((ans) => ans !== null && ans !== undefined).length;
+  const progressPercentage = Math.round((answeredCount / 8) * 100);
 
   const handleRadarSubmit = () => {
+    if (!isAllAnswered) {
+      showToast('Harap jawab seluruh 8 pertanyaan sebelum menyimpan.', 'error');
+      return;
+    }
+
     const vals = radarAnswers;
+    // Skala 1-10 (2 soal per pilar, total maksimum 20 poin = 100%)
     const newRadar = [
-      Math.round(((vals[0] + vals[1]) / 10) * 100),
-      Math.round(((vals[2] + vals[3]) / 10) * 100),
-      Math.round(((vals[4] + vals[5]) / 10) * 100),
-      Math.round(((vals[6] + vals[7]) / 10) * 100),
+      Math.round(((vals[0] + vals[1]) / 20) * 100),
+      Math.round(((vals[2] + vals[3]) / 20) * 100),
+      Math.round(((vals[4] + vals[5]) / 20) * 100),
+      Math.round(((vals[6] + vals[7]) / 20) * 100),
     ];
-    let newBadges = [...state.badges];
+
+    let newBadges = [...(state.badges || [])];
     if (!newBadges.includes(1)) newBadges.push(1);
-    saveState({ ...state, radar: newRadar, hasRadar: true, badges: newBadges });
-    setRadarModalOpen(false);
-    showToast('Pre-Test tersimpan! Radar kecakapan diperbarui.', 'success');
+
+    const newPts = (state.pts || 0) + 50;
+    const newLv = Math.floor(newPts / 100) + 1;
+    const newExpPct = newPts % 100;
+
+    saveState({
+      ...state,
+      radar: newRadar,
+      hasRadar: true,
+      badges: newBadges,
+      pts: newPts,
+      lv: newLv,
+      expPct: newExpPct,
+    });
+
+    setIsPretestViewOpen(false);
+    showToast('Pre-Test Berhasil Diselesaikan! Radar Readiness & Badge Pionir AI kamu telah aktif.', 'success');
   };
+
+  const avgScore = state.hasRadar
+    ? Math.round(state.radar.reduce((a, b) => a + b, 0) / 4)
+    : 0;
 
   const radarData = {
     labels: ['Pemahaman Dasar', 'Etika & Keamanan', 'Prompting', 'Berpikir Kritis'],
     datasets: [
       {
-        label: 'Skor (%)',
+        label: 'Skor Kecakapan Kamu (%)',
         data: state.radar || [0, 0, 0, 0],
-        backgroundColor: 'rgba(59, 130, 246, 0.15)',
-        borderColor: '#3B82F6',
-        pointBackgroundColor: '#F59E0B',
-        borderWidth: 2,
+        backgroundColor: 'rgba(99, 102, 241, 0.22)',
+        borderColor: '#6366F1',
+        pointBackgroundColor: '#818CF8',
+        pointBorderColor: '#FFFFFF',
+        pointHoverBackgroundColor: '#FFFFFF',
+        pointHoverBorderColor: '#6366F1',
+        pointRadius: 5,
+        borderWidth: 2.5,
+      },
+      {
+        label: 'Target Ideal (%)',
+        data: [100, 100, 100, 100],
+        backgroundColor: 'rgba(236, 72, 153, 0.03)',
+        borderColor: 'rgba(236, 72, 153, 0.35)',
+        borderDash: [4, 4],
+        pointRadius: 2,
+        pointBackgroundColor: '#F43F5E',
+        borderWidth: 1.5,
       },
     ],
   };
@@ -61,18 +119,154 @@ export default function Dashboard() {
         angleLines: { color: '#E2E8F0' },
         ticks: { display: false },
         pointLabels: {
-          font: { size: 10, family: 'Space Grotesk', weight: 'bold' },
-          color: '#334155',
+          font: { size: 10.5, family: 'Plus Jakarta Sans', weight: 'bold' },
+          color: '#1E293B',
         },
       },
     },
     plugins: { legend: { display: false } },
   };
 
+  const pretestQuestions = [
+    { pilar: 'Pemahaman Dasar', q: 'Saya memahami konsep dasar, cara kerja, dan keterbatasan sistem AI.' },
+    { pilar: 'Pemahaman Dasar', q: 'Saya mengetahui risiko fenomena halusinasi data dan bias informasi pada AI.' },
+    { pilar: 'Etika & Keamanan', q: 'Saya selalu memeriksa hak cipta sebelum mempublikasikan karya buatan AI.' },
+    { pilar: 'Etika & Keamanan', q: 'Saya tidak pernah memasukkan data rahasia atau sensitif ke dalam prompt publik.' },
+    { pilar: 'Prompting', q: 'Saya mampu menyusun prompt dengan konteks, instruksi, dan format yang jelas.' },
+    { pilar: 'Prompting', q: 'Saya terbiasa menggunakan teknik few-shot dan persona dalam prompting.' },
+    { pilar: 'Berpikir Kritis', q: 'Saya selalu melakukan fact-checking terhadap klaim dan jawaban dari AI.' },
+    { pilar: 'Berpikir Kritis', q: 'Saya mampu mengenali kejanggalan visual pada gambar atau foto deepfake.' },
+  ];
+
+  const currentQ = pretestQuestions[currentStep];
+
   return (
     <div className="dashboard-container" style={{ padding: 0 }}>
+      {/* MANDATORY FULLSCREEN PRE-TEST ONBOARDING VIEW (MDQuiz Inspired Layout) */}
+      {isPretestViewOpen && (
+        <div className="fullscreen-pretest-overlay">
+          <div className="pretest-container">
+            {/* Top Brand Header */}
+            <div className="pretest-brand-header">
+              <div className="pretest-brand-logo">
+                <i className="fa-solid fa-brain text-indigo"></i> Lit-GO Pre-Test
+              </div>
+            </div>
+
+            {/* MDQuiz 2-Column Layout */}
+            <div className="pretest-mdquiz-layout">
+              {/* Left Main Card Area */}
+              <div className="pretest-main-card">
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <h2 className="pretest-title-large">AI Readiness Radar</h2>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.82rem', fontWeight: 700, color: 'var(--indigo)' }}>
+                    {progressPercentage}%
+                  </span>
+                </div>
+
+                {/* Progress Bar Fill Track */}
+                <div className="pretest-progress-bar-track">
+                  <div className="pretest-progress-bar-fill" style={{ width: `${progressPercentage}%` }}></div>
+                </div>
+
+                {/* Question Header */}
+                <div className="pretest-q-header">
+                  <span style={{ display: 'block', fontSize: '0.76rem', color: 'var(--indigo)', textTransform: 'uppercase', fontFamily: 'var(--font-mono)', letterSpacing: '0.08em', marginBottom: '6px' }}>
+                    Pertanyaan {currentStep + 1} dari 8 &nbsp;•&nbsp; Pilar: {currentQ.pilar}
+                  </span>
+                  {currentQ.q}
+                </div>
+
+                {/* 1 to 10 Circle Buttons */}
+                <div className="pretest-scale-wrapper">
+                  <div className="pretest-scale-circles">
+                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
+                      <button
+                        key={num}
+                        type="button"
+                        className={`scale-circle-btn ${radarAnswers[currentStep] === num ? 'active' : ''}`}
+                        onClick={() => handleCircleSelect(currentStep, num)}
+                      >
+                        {num}
+                      </button>
+                    ))}
+                  </div>
+                  <div className="pretest-scale-labels">
+                    <span>1 (Sangat Tidak Setuju)</span>
+                    <span>10 (Sangat Setuju)</span>
+                  </div>
+                </div>
+
+                {/* Navigation Action Buttons */}
+                <div className="pretest-nav-actions">
+                  <button
+                    type="button"
+                    className="btn-pretest-nav"
+                    onClick={() => setCurrentStep((prev) => Math.max(0, prev - 1))}
+                    disabled={currentStep === 0}
+                  >
+                    Previous
+                  </button>
+
+                  {currentStep < 7 ? (
+                    <button
+                      type="button"
+                      className="btn-pretest-nav primary"
+                      onClick={() => setCurrentStep((prev) => Math.min(7, prev + 1))}
+                    >
+                      Next
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      className="btn-pretest-nav primary"
+                      onClick={handleRadarSubmit}
+                      disabled={!isAllAnswered}
+                    >
+                      {isAllAnswered ? 'Selesaikan Pre-Test' : `Jawab (${answeredCount}/8)`}
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              {/* Right Sidebar Navigator */}
+              <div className="pretest-sidebar">
+                <div className="pretest-sidebar-card">
+                  <div className="pretest-sidebar-score">{progressPercentage}%</div>
+                  <div className="pretest-sidebar-sub">
+                    Terjawab {answeredCount} dari 8 Pertanyaan
+                  </div>
+                </div>
+
+                {/* List of 8 Question Pill Buttons */}
+                <div className="pretest-nav-pills">
+                  {pretestQuestions.map((q, idx) => {
+                    const isDone = radarAnswers[idx] !== null && radarAnswers[idx] !== undefined;
+                    const isActive = currentStep === idx;
+                    return (
+                      <button
+                        key={idx}
+                        type="button"
+                        className={`pretest-pill-btn ${isActive ? 'active' : ''} ${isDone ? 'done' : ''}`}
+                        onClick={() => setCurrentStep(idx)}
+                      >
+                        <span className={`pretest-pill-icon ${isDone ? 'done' : 'pending'}`}>
+                          {isDone ? <i className="fa-solid fa-check"></i> : ''}
+                        </span>
+                        <span>Question {idx + 1}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* DASHBOARD OVERVIEW LOBBY */}
       <div className="wrap">
-        {/* LOBBY HERO & QUICK LAUNCH CARDS */}
+        {/* LOBBY HERO & QUICK LAUNCH CARDS (OVERVIEW DISPLAY) */}
         <div className="hub-lobby" style={{ marginBottom: '40px' }}>
           <div className="hub-lobby-grid">
             {/* Navigasi Group */}
@@ -88,7 +282,7 @@ export default function Dashboard() {
                   marginBottom: '10px',
                 }}
               >
-                NAVIGASI LITERASI
+                PUSAT LITERASI
               </div>
               <div className="hub-nav-list">
                 <button className="hub-nav-btn" onClick={() => navigate('/radar-readiness')}>
@@ -190,127 +384,122 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* AI READINESS RADAR PREVIEW SECTION (Featured on Dashboard) */}
+        {/* AI READINESS RADAR OVERVIEW SECTION */}
         <div className="hub-section">
           <div className="hub-section-head">
             <div>
               <div className="hub-section-title">AI Readiness Radar</div>
-              <div className="hub-section-sub">Preview Tingkat Kecakapan Literasi Kecerdasan Buatan Kamu</div>
+              <div className="hub-section-sub">Statistik General Kecakapan Literasi Kecerdasan Buatan Kamu</div>
             </div>
-            <button className="btn-lab" onClick={() => setRadarModalOpen(true)}>
-              <i className="fa-solid fa-clipboard-check mr-1"></i> {state.hasRadar ? 'Ulangi Pre-Test' : 'Mulai Pre-Test'}
+            <button className="btn-lab" onClick={() => { setCurrentStep(0); setIsPretestViewOpen(true); }}>
+              <i className="fa-solid fa-rotate-right"></i> {state.hasRadar ? 'Ulangi Pre-Test' : 'Mulai Pre-Test'}
             </button>
           </div>
-          <div className="panel" style={{ padding: '24px' }}>
-            <div className="radar-hub-grid">
-              <div className="radar-chart-wrap" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Radar data={radarData} options={radarOptions} />
-              </div>
-              <div>
-                <div className="radar-pillar-list">
-                  <div>
-                    <div className="pillar-item-label" style={{ color: 'var(--indigo)' }}>
-                      <span><i className="fa-solid fa-brain mr-1"></i> Pemahaman Dasar</span>
-                      <strong>{state.radar[0]}%</strong>
-                    </div>
-                    <div className="pillar-item-track">
-                      <div className="pillar-item-fill" style={{ width: `${state.radar[0]}%`, background: 'var(--indigo)' }}></div>
-                    </div>
-                  </div>
-                  <div>
-                    <div className="pillar-item-label" style={{ color: 'var(--teal)' }}>
-                      <span><i className="fa-solid fa-shield-halved mr-1"></i> Etika &amp; Keamanan</span>
-                      <strong>{state.radar[1]}%</strong>
-                    </div>
-                    <div className="pillar-item-track">
-                      <div className="pillar-item-fill" style={{ width: `${state.radar[1]}%`, background: 'var(--teal)' }}></div>
-                    </div>
-                  </div>
-                  <div>
-                    <div className="pillar-item-label" style={{ color: 'var(--amber)' }}>
-                      <span><i className="fa-solid fa-terminal mr-1"></i> Prompting</span>
-                      <strong>{state.radar[2]}%</strong>
-                    </div>
-                    <div className="pillar-item-track">
-                      <div className="pillar-item-fill" style={{ width: `${state.radar[2]}%`, background: 'var(--amber)' }}></div>
-                    </div>
-                  </div>
-                  <div>
-                    <div className="pillar-item-label" style={{ color: 'var(--emerald)' }}>
-                      <span><i className="fa-solid fa-magnifying-glass mr-1"></i> Critical Thinking</span>
-                      <strong>{state.radar[3]}%</strong>
-                    </div>
-                    <div className="pillar-item-track">
-                      <div className="pillar-item-fill" style={{ width: `${state.radar[3]}%`, background: 'var(--emerald)' }}></div>
-                    </div>
+
+          <div className="panel radar-futuristic-card">
+            <div className="radar-futuristic-grid">
+              {/* 1. Left Column: Overview Metrics */}
+              <div className="radar-left-col">
+                <div>
+                  <div className="radar-stat-tag">Total Indeks Kecakapan</div>
+                  <div className="radar-stat-number">{state.hasRadar ? `${avgScore}%` : '0%'}</div>
+                  <div style={{ fontSize: '0.78rem', color: 'var(--emerald)', fontWeight: 700, marginTop: '4px' }}>
+                    <i className="fa-solid fa-circle-check"></i> {state.hasRadar ? 'Asesmen Diselesaikan' : 'Belum Pre-Test'}
                   </div>
                 </div>
-                <div className="radar-rec">
-                  {state.hasRadar
-                    ? `Skor rata-rata kecakapan kamu adalah ${Math.round(
-                        state.radar.reduce((a, b) => a + b, 0) / 4
-                      )}%. Pelajari modul rekomendasi untuk meningkatkan pilar terendah.`
-                    : 'Lakukan Pre-Test untuk mengukur titik awal kecakapan AI kamu sebelum membuka modul.'}
+
+                <div className="radar-left-list">
+                  <div className="radar-left-item">
+                    <span className="radar-left-name">
+                      <span className="radar-left-dot" style={{ background: '#6366F1' }}></span> Pemahaman
+                    </span>
+                    <span className="radar-left-val">{state.radar[0]}%</span>
+                  </div>
+                  <div className="radar-left-item">
+                    <span className="radar-left-name">
+                      <span className="radar-left-dot" style={{ background: '#14B8A6' }}></span> Etika &amp; Keamanan
+                    </span>
+                    <span className="radar-left-val">{state.radar[1]}%</span>
+                  </div>
+                  <div className="radar-left-item">
+                    <span className="radar-left-name">
+                      <span className="radar-left-dot" style={{ background: '#F59E0B' }}></span> Prompting
+                    </span>
+                    <span className="radar-left-val">{state.radar[2]}%</span>
+                  </div>
+                  <div className="radar-left-item">
+                    <span className="radar-left-name">
+                      <span className="radar-left-dot" style={{ background: '#10B981' }}></span> Critical Thinking
+                    </span>
+                    <span className="radar-left-val">{state.radar[3]}%</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* 2. Center Column: Hero Circular Radar Chart */}
+              <div className="radar-center-col">
+                <div className="radar-circular-backdrop">
+                  <Radar data={radarData} options={radarOptions} />
+                </div>
+              </div>
+
+              {/* 3. Right Column: Performance Breakdown & Donut Ring */}
+              <div className="radar-right-col">
+                <div className="radar-right-card">
+                  <div className="radar-right-donut-wrap">
+                    <svg width="68" height="68" viewBox="0 0 36 36" style={{ transform: 'rotate(-90deg)' }}>
+                      <path
+                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                        fill="none"
+                        stroke="#E2E8F0"
+                        strokeWidth="3.8"
+                      />
+                      <path
+                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                        fill="none"
+                        stroke="url(#donutGradient)"
+                        strokeWidth="3.8"
+                        strokeDasharray={`${state.hasRadar ? avgScore : 0}, 100`}
+                        strokeLinecap="round"
+                      />
+                      <defs>
+                        <linearGradient id="donutGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" stopColor="#6366F1" />
+                          <stop offset="100%" stopColor="#EC4899" />
+                        </linearGradient>
+                      </defs>
+                    </svg>
+
+                    <div>
+                      <div className="donut-score-text">{state.hasRadar ? `${avgScore}%` : '0%'}</div>
+                      <div className="donut-label">Skor Rata-rata 4 Pilar</div>
+                    </div>
+                  </div>
+
+                  <div className="radar-right-breakdown">
+                    <div className="breakdown-row">
+                      <span className="breakdown-title">Pemahaman Dasar</span>
+                      <span className="breakdown-score-pill blue">{state.radar[0]}%</span>
+                    </div>
+                    <div className="breakdown-row">
+                      <span className="breakdown-title">Etika &amp; Keamanan</span>
+                      <span className="breakdown-score-pill teal">{state.radar[1]}%</span>
+                    </div>
+                    <div className="breakdown-row">
+                      <span className="breakdown-title">Prompting</span>
+                      <span className="breakdown-score-pill amber">{state.radar[2]}%</span>
+                    </div>
+                    <div className="breakdown-row">
+                      <span className="breakdown-title">Critical Thinking</span>
+                      <span className="breakdown-score-pill emerald">{state.radar[3]}%</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-
-      {/* Pre-Test Modal */}
-      {isRadarModalOpen && (
-        <div className="modal-overlay" id="modal-radar">
-          <div className="modal-box">
-            <div className="modal-head">
-              <div className="modal-title">Pre-Test Asesmen Radar</div>
-              <button className="modal-close" onClick={() => setRadarModalOpen(false)}>
-                ✕
-              </button>
-            </div>
-            <p style={{ fontSize: '0.84rem', color: 'var(--text-dim)', marginBottom: '20px' }}>
-              Jawab 8 pertanyaan (skala 1–5) untuk mengkalibrasi radar kecakapan awal kamu.
-            </p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', fontSize: '0.84rem' }}>
-              {[
-                'Saya memahami konsep dasar dan keterbatasan sistem AI.',
-                'Saya mengetahui risiko fenomena halusinasi data pada AI.',
-                'Saya selalu memeriksa hak cipta sebelum mempublikasikan konten.',
-                'Saya tidak pernah memasukkan data rahasia ke dalam prompt publik.',
-                'Saya mampu menyusun prompt dengan konteks, instruksi & format jelas.',
-                'Saya terbiasa menggunakan teknik few-shot & persona dalam prompting.',
-                'Saya selalu melakukan fact-checking terhadap klaim dari AI.',
-                'Saya mampu mengenali kejanggalan visual pada foto deepfake.',
-              ].map((q, i) => (
-                <div key={i}>
-                  <label style={{ fontWeight: 600, display: 'block', marginBottom: '6px' }}>
-                    {i + 1}. {q}
-                  </label>
-                  <input
-                    type="range"
-                    min="1"
-                    max="5"
-                    value={radarAnswers[i]}
-                    onChange={(e) => {
-                      const newAns = [...radarAnswers];
-                      newAns[i] = parseInt(e.target.value);
-                      setRadarAnswers(newAns);
-                    }}
-                  />
-                </div>
-              ))}
-            </div>
-            <div className="modal-footer">
-              <button className="btn-modal-cancel" onClick={() => setRadarModalOpen(false)}>
-                Batal
-              </button>
-              <button className="btn-modal-ok" onClick={handleRadarSubmit}>
-                Simpan &amp; Update Radar
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
