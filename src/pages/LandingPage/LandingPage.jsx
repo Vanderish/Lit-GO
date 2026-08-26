@@ -48,13 +48,6 @@ export default function LandingPage() {
     }
   };
 
-  const handleReset = () => {
-    localStorage.removeItem('litgo_complete_v1');
-    setState({ radar: [0, 0, 0, 0], hasRadar: false, doneModules: [], badges: [] });
-    setIsResetModalOpen(false);
-    showToast('Progres platform telah direset.', 'info');
-  };
-
   const handleFontSizeValue = (val) => {
     let num = parseInt(val, 10) || 16;
     let size = 16;
@@ -131,7 +124,7 @@ export default function LandingPage() {
       <div className="bg-glow2"></div>
 
       {/* Navigation dari komponen terpisah */}
-      <Navbar onRequestReset={() => setIsResetModalOpen(true)} />
+      <Navbar />
 
       {/* Toast Notification */}
       {toastMsg && (

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export default function Navbar({ onRequestReset }) {
+export default function Navbar() {
   const navigate = useNavigate();
 
   const handleLogin = () => {
@@ -24,10 +24,7 @@ export default function Navbar({ onRequestReset }) {
         </div>
 
         <div className="nav-hud">
-          <button className="btn-nav-cta" onClick={handleLogin}>Login</button>
-          <button className="btn-reset" onClick={onRequestReset} title="Reset Progres Platform">
-            <i className="fa-solid fa-rotate-right"></i>
-          </button>
+          <button className="btn-nav-cta" onClick={handleLogin}>SignIn</button>
         </div>
       </div>
     </nav>
