@@ -505,9 +505,6 @@ export default function Dashboard() {
                           factFeedback.includes('Informasi Valid') ? <><strong style={{color:'var(--emerald)', display:'block', marginBottom:'4px'}}><i className="fa-solid fa-circle-check mr-1"></i> Informasi Valid:</strong><span style={{color:'var(--emerald)'}}>Kalimat ini berbasis data faktual yang dapat diverifikasi.</span></> : 
                           factFeedback}
                        </div>
-                       <button className="btn-lab-ghost" onClick={resetHallucination}>
-                         <i className="fa-solid fa-rotate-right mr-1"></i> Reset Simulasi
-                       </button>
                     </div>
                   </div>
                 </div>
