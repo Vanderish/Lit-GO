@@ -15,8 +15,13 @@ const Login = () => {
   // Handle Login Manual (Email & Password)
   const handleManualLogin = (e) => {
     e.preventDefault();
-    console.log('Login manual dengan:', email, password);
-    // Tambahkan logika autentikasi manual kamu di sini
+    const userDetail = {
+      name: email.split('@')[0] || 'User Lit-GO',
+      email: email,
+      picture: '',
+    };
+    localStorage.setItem('user_data', JSON.stringify(userDetail));
+    navigate('/dashboard');
   };
 
   // Handle Login Sukses Google
@@ -24,21 +29,17 @@ const Login = () => {
     const userDetail = jwtDecode(credentialResponse.credential);
     console.log('Login Google Berhasil! Data User:', userDetail);
     localStorage.setItem('user_data', JSON.stringify(userDetail));
-    alert(`Selamat datang, ${userDetail.name}!`);
     navigate('/dashboard');
   };
 
   return (
-    // Tempel Client ID kamu di clientId di bawah ini
     <GoogleOAuthProvider clientId={`${clientId}`}>
-      {/* bg-grid dipisah dari login-wrapper agar tidak menarik z-index ke belakang */}
       <div className="login-wrapper">
         <div className="bg-grid"></div>
         <div className="bg-glow"></div>
         <div className="bg-glow2"></div>
 
         <main className="login-card">
-          
           {/* Logo / Brand Area */}
           <div className="brand-header">
             <div className="brand-logo">L</div>
@@ -46,7 +47,6 @@ const Login = () => {
           </div>
 
           <form onSubmit={handleManualLogin}>
-            
             {/* Email Input */}
             <div className="form-group">
               <div className="label-row">
@@ -125,7 +125,6 @@ const Login = () => {
           <div className="trust-badge">
             Memahami AI dengan Kritis.
           </div>
-          
         </main>
       </div>
     </GoogleOAuthProvider>
