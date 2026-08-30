@@ -365,39 +365,6 @@ export default function Dashboard() {
                   <div className="hub-nav-icon" style={{ background: 'rgba(59,130,246,0.1)', color: 'var(--indigo)' }}>
                     <i className="fa-solid fa-scale-balanced"></i>
                   </div>
-                </div>
-              )}
-
-              {/* Tab 2: Hallucination */}
-              {activeTab === 'hallucination' && (
-                <div className="sandbox-tab-content active" id="tab-hallucination">
-                  <div className="lab-inner">
-                    <div className="lab-box">
-                       <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:'14px', fontSize:'0.8rem', color:'var(--text-dim)'}}>
-                          <span>Klik kalimat yang kamu curigai <strong style={{color:'var(--navy)'}}>halusinasi atau bias</strong></span>
-                          <span className="score-pill">🎯 Fact Score: <strong id="fact-score" style={{color:'var(--amber)'}}>{factScore}</strong>/3</span>
-                       </div>
-                       <div style={{fontSize:'0.9rem', lineHeight:2, color:'var(--navy-light)'}}>
-                         Teknologi kecerdasan buatan berkembang sangat pesat.
-                         {factWords.map(w => (
-                           <span key={w.id} className="fact-word" onClick={() => handleFactClick(w.id)} style={{
-                             cursor: w.clicked ? 'default' : 'pointer', 
-                             background: w.clicked ? (w.isHallu ? 'rgba(239,68,68,0.12)' : 'rgba(16,185,129,0.12)') : 'transparent',
-                             color: w.clicked ? (w.isHallu ? 'var(--red)' : 'var(--emerald)') : 'inherit',
-                             textDecoration: w.clicked && w.isHallu ? 'line-through' : 'none'
-                           }}> {w.text}</span>
-                         ))}
-                       </div>
-                       <div style={{fontSize:'0.75rem', color:'var(--text-dim)', marginTop:'12px', fontStyle:'italic'}}>* Klik kalimat yang mencurigakan untuk menguji validitasnya.</div>
-                    </div>
-                    <div className="lab-sidebar">
-                       <div className="lab-sidebar-title">Umpan Balik Analisis:</div>
-                       <div id="fact-feedback" style={{background:'var(--white)', border:'1px solid var(--line)', borderRadius:'10px', padding:'14px', fontSize:'0.8rem', color:'var(--text-dim)', minHeight:'110px'}}>
-                         {factFeedback.includes('Tepat!') ? <><strong style={{color:'var(--red)', display:'block', marginBottom:'4px'}}><i className="fa-solid fa-triangle-exclamation mr-1"></i> Tepat! Halusinasi/Bias:</strong><span style={{color:'var(--red)'}}>{factFeedback.replace('Tepat! Halusinasi/Bias: ','')}</span></> : 
-                          factFeedback.includes('Informasi Valid') ? <><strong style={{color:'var(--emerald)', display:'block', marginBottom:'4px'}}><i className="fa-solid fa-circle-check mr-1"></i> Informasi Valid:</strong><span style={{color:'var(--emerald)'}}>Kalimat ini berbasis data faktual yang dapat diverifikasi.</span></> : 
-                          factFeedback}
-                       </div>
-                    </div>
                   <div>
                     <div className="hub-nav-title">Ethical Dilemma</div>
                     <div className="hub-nav-sub">Simulasi Keputusan</div>
