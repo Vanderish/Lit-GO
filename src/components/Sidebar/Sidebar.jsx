@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useProgress } from '../../context/ProgressContext';
 import './Sidebar.css';
 
 export default function Sidebar() {
   const { badgeCount, doneCount } = useProgress();
+  const navigate = useNavigate();
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
@@ -18,13 +19,13 @@ export default function Sidebar() {
     }
   }, []);
 
+  const handleLogout = () => {
+    localStorage.removeItem('user_data');
+    setUserData(null);
+    navigate('/login', { replace: true });
+  };
+
   const sandboxNav = [
-    {
-      to: '/radar-readiness',
-      title: 'Radar Readiness',
-      icon: 'fa-chart-pie',
-      color: '#3B82F6',
-    },
     {
       to: '/sandbox/deepfake-detective',
       title: 'Deepfake Detective',
@@ -82,16 +83,24 @@ export default function Sidebar() {
           <span className="dot dot-green"></span>
         </div>
 
-        <NavLink to="/dashboard" className="sidebar-brand" style={{ textDecoration: 'none' }}>
-          <div className="sidebar-brand-logo">L</div>
-          <div className="sidebar-brand-text">
-            <span className="brand-name">Lit-GO</span>
-            <span className="brand-tag">Literasi AI Lab</span>
+        <div className="sidebar-profile-card">
+          {userPicture ? (
+            <img src={userPicture} alt={userName} className="user-avatar-img" />
+          ) : (
+            <div className="user-avatar-initial">
+              {userName.charAt(0).toUpperCase()}
+            </div>
+          )}
+          <div className="user-profile-info">
+            <div className="user-name" title={userName}>{userName}</div>
+            <div className="user-email" title={userEmail}>{userEmail}</div>
           </div>
-        </NavLink>
+          <div className="profile-status-dot" title="Aktif"></div>
+        </div>
       </div>
 
       <div className="sidebar-content">
+
         {/* SECTION 1: SANDBOX LAB */}
         <div className="sidebar-section">
           <div className="sidebar-section-title">
@@ -154,19 +163,20 @@ export default function Sidebar() {
 
       {/* Footer Profile User */}
       <div className="sidebar-footer">
-        <div className="sidebar-profile-card">
-          {userPicture ? (
-            <img src={userPicture} alt={userName} className="user-avatar-img" />
-          ) : (
-            <div className="user-avatar-initial">
-              {userName.charAt(0).toUpperCase()}
+        <div className="sidebar-menu-list">
+          <button
+            type="button"
+            className="sidebar-logout-btn"
+            onClick={handleLogout}
+            aria-label="Logout"
+          >
+            <div className="menu-item-icon-clean" style={{ color: '#EF4444' }}>
+              <i className="fa-solid fa-right-from-bracket"></i>
             </div>
-          )}
-          <div className="user-profile-info">
-            <div className="user-name" title={userName}>{userName}</div>
-            <div className="user-email" title={userEmail}>{userEmail}</div>
-          </div>
-          <div className="profile-status-dot" title="Aktif"></div>
+            <div className="menu-item-info">
+              <span className="menu-item-title">Logout</span>
+            </div>
+          </button>
         </div>
       </div>
     </aside>

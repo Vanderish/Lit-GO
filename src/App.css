@@ -6,7 +6,11 @@
   --navy-light: #334155;
   --indigo: #3B82F6;
   --teal: #14B8A6;
-  --bg: #F8FAFC;
+
+  --bg-light: oklch(1 0 264);
+  --bg: oklch(0.96 0 264);
+  --bg-dark: oklch(0.92 0 264);
+
   --white: #FFFFFF;
   --amber: #F59E0B;
   --emerald: #10B981;
@@ -20,6 +24,26 @@
   --radius: 16px;
   --radius-sm: 10px;
   --radius-lg: 24px;
+
+  /* shadow */
+  --shadow-s:
+  inset 0 1px 2px #ffffff30,
+  0 1px 2px #00000030,
+  0 2px 4px #00000015;
+  --shadow-m:
+  inset 0 1px 2px #ffffff50,
+  0 2px 4px #00000030,
+  0 4px 8px #00000015;
+  --shadow-l:
+  inset 0 1px 2px #ffffff70,
+  0 4px 6px #00000030,
+  0 6px 10px #00000015;
+
+  /* light */
+  --highlight: #FFFFFF;
+
+  /* border */
+  --border-card: solid 1px var(--bg);
 }
 
 /* ============================
@@ -58,7 +82,7 @@ button, input, select, textarea { cursor: pointer; font-family: var(--font-body)
 /* ============================
    LAYOUT & UTILITY CLASSES
    ============================ */
-.wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+.wrap { max-width: 1180px; margin: 0 auto; padding: 0; }
 .panel { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); }
 .panel-sm { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-sm); }
 .section { padding: 84px 0; }
@@ -875,4 +899,4 @@ body.font-dyslexic { font-family: 'OpenDyslexic', 'Comic Sans MS', sans-serif !i
   color: var(--indigo);
   background: rgba(59, 130, 246, 0.06);
   transform: translateX(-2px);
-}
+}
