@@ -5,7 +5,9 @@
   position: relative;
   background-color: var(--bg, #F8FAFC);
 }
-
+.layout-main::-webkit-scrollbar{
+  display: none;
+}
 .layout-main {
   flex: 1;
   display: flex;

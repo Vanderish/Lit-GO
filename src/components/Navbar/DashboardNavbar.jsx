@@ -3,7 +3,7 @@ import { Link, NavLink } from 'react-router-dom';
 
 export default function DashboardNavbar({ pts = 0, badgeCount = 0, expPct = 0, lv = 1, onRequestReset }) {
   return (
-    <nav style={{ margin: '16px 0 24px 0', width: '100%' }}>
+    <nav style={{ margin: '0 0 24px 0', width: '100%' }}>
       <div className="nav-inner">
         <Link to="/dashboard" className="logo" style={{ textDecoration: 'none' }}>
           <div className="logo-mark">L</div>
