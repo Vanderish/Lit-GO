@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../../context/ProgressContext';
+import './ModulBelajarPage.css';
 
 export default function ModulBelajarPage() {
   const navigate = useNavigate();
@@ -49,25 +50,15 @@ export default function ModulBelajarPage() {
 
   return (
     <div className="page-wrap">
-      {/* Back to Dashboard Button */}
-      <div style={{ marginBottom: '16px' }}>
-        <button
-          className="btn-lab-ghost"
-          onClick={() => navigate('/dashboard')}
-          style={{ padding: '8px 16px', fontSize: '0.85rem', fontWeight: 600 }}
-        >
-          <i className="fa-solid fa-arrow-left mr-2"></i> Kembali ke Dashboard
-        </button>
-      </div>
 
-      <div className="hub-section-head" style={{ marginBottom: '24px' }}>
+      <div className="hub-section-head modul-belajar-header">
         <div>
-          <h1 className="hub-section-title" style={{ fontSize: '1.6rem' }}>Modul Belajar Literasi AI</h1>
+          <h1 className="hub-section-title modul-belajar-title">Modul Belajar Literasi AI</h1>
           <p className="hub-section-sub">6 Modul Silabus Terstruktur dengan Evaluasi Kuis &amp; Reward E-Badge</p>
         </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '24px' }}>
+      <div className="modul-grid">
         {MODULES.map((mod) => {
           const isDone = state.doneModules.includes(mod.id);
           return (
@@ -75,7 +66,6 @@ export default function ModulBelajarPage() {
               key={mod.id}
               className={`mod-carousel-card mod-card-theme-${mod.id}`}
               onClick={() => openModule(mod.id)}
-              style={{ width: '100%', cursor: 'pointer' }}
             >
               <div className="mod-card-level">{mod.id}</div>
               <div className="mod-card-icon" style={{ background: mod.iconBg }}>
@@ -107,19 +97,7 @@ export default function ModulBelajarPage() {
           <div className="modal-box">
             <div className="modal-head">
               <div>
-                <span
-                  id="mod-modal-tag"
-                  style={{
-                    fontFamily: 'var(--font-mono)',
-                    fontSize: '0.7rem',
-                    background: 'rgba(59,130,246,0.1)',
-                    color: 'var(--indigo)',
-                    padding: '4px 9px',
-                    borderRadius: '6px',
-                    marginRight: '8px',
-                    fontWeight: 600,
-                  }}
-                >
+                <span className="modal-tag" id="mod-modal-tag">
                   {activeMod.tag}
                 </span>
                 <span className="modal-title" id="mod-modal-title">
@@ -135,20 +113,11 @@ export default function ModulBelajarPage() {
               <div id="mod-read-view">
                 <div
                   id="mod-modal-content"
-                  style={{
-                    background: 'var(--bg)',
-                    border: '1px solid var(--line)',
-                    borderRadius: '12px',
-                    padding: '18px',
-                    fontSize: '0.88rem',
-                    color: 'var(--navy-light)',
-                    lineHeight: 1.7,
-                  }}
                   dangerouslySetInnerHTML={{
                     __html: `<strong style="color:var(--indigo); display:block; margin-bottom:8px;"><i class="fa-solid fa-book-open mr-1"></i> Materi Pembelajaran:</strong>${activeMod.reading}`,
                   }}
                 ></div>
-                <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '20px' }}>
+                <div className="modal-button-wrapper">
                   <button className="btn-modal-ok" onClick={() => setShowQuizView(true)}>
                     Lanjut ke Kuis →
                   </button>
@@ -156,23 +125,14 @@ export default function ModulBelajarPage() {
               </div>
             ) : (
               <div id="mod-quiz-view">
-                <div style={{ background: 'var(--bg)', border: '1px solid var(--line)', borderRadius: '12px', padding: '18px' }}>
-                  <div
-                    style={{
-                      fontSize: '0.72rem',
-                      fontWeight: 700,
-                      color: 'var(--amber)',
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.07em',
-                      marginBottom: '8px',
-                    }}
-                  >
+                <div>
+                  <div className="quiz-label">
                     Kuis Evaluasi
                   </div>
-                  <p id="quiz-q" style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--navy)', marginBottom: '14px' }}>
+                  <p id="quiz-q">
                     {activeMod.quiz.q}
                   </p>
-                  <div id="quiz-opts" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                  <div id="quiz-opts">
                     {activeMod.quiz.opts.map((opt, i) => (
                       <button key={i} className="quiz-option" onClick={() => answerQuiz(i === activeMod.quiz.ans)}>
                         {opt}
@@ -183,7 +143,6 @@ export default function ModulBelajarPage() {
                     <div
                       id="quiz-fb"
                       className={`quiz-feedback ${quizFeedback.correct ? 'correct' : 'wrong'}`}
-                      style={{ marginTop: '14px', display: 'block' }}
                     >
                       {quizFeedback.correct ? (
                         <>
