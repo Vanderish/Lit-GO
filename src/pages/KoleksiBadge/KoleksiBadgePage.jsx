@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../../context/ProgressContext';
+import './KoleksiBadgePage.css';
 
 export default function KoleksiBadgePage() {
   const navigate = useNavigate();
@@ -11,20 +12,10 @@ export default function KoleksiBadgePage() {
 
   return (
     <div className="page-wrap">
-      {/* Back to Dashboard Button */}
-      <div style={{ marginBottom: '16px' }}>
-        <button
-          className="btn-lab-ghost"
-          onClick={() => navigate('/dashboard')}
-          style={{ padding: '8px 16px', fontSize: '0.85rem', fontWeight: 600 }}
-        >
-          <i className="fa-solid fa-arrow-left mr-2"></i> Kembali ke Dashboard
-        </button>
-      </div>
 
-      <div className="hub-section-head" style={{ marginBottom: '24px' }}>
+      <div className="hub-section-head koleksi-badge-header">
         <div>
-          <h1 className="hub-section-title" style={{ fontSize: '1.6rem' }}>Koleksi Badge &amp; E-Sertifikat</h1>
+          <h1 className="hub-section-title koleksi-badge-title">Koleksi Badge &amp; E-Sertifikat</h1>
           <p className="hub-section-sub">Kumpulkan 5 Badge Literasi &amp; Unduh Sertifikat Kelulusan Digital</p>
         </div>
       </div>
@@ -36,12 +27,8 @@ export default function KoleksiBadgePage() {
           return (
             <div key={b.id} className={`badge-hub-card ${unlocked ? 'unlocked' : ''}`}>
               <div
-                className="badge-hub-icon"
-                style={{
-                  background: unlocked ? b.bg : 'rgba(30,41,59,0.06)',
-                  color: unlocked ? '#FFF' : 'var(--text-dim)',
-                  boxShadow: unlocked ? '0 4px 14px rgba(0,0,0,0.1)' : 'none',
-                }}
+                className={`badge-hub-icon ${unlocked ? 'unlocked' : 'locked'}`}
+                style={unlocked ? { background: b.bg } : {}}
               >
                 {unlocked ? <i className={`fa-solid ${b.icon}`}></i> : <i className="fa-solid fa-lock"></i>}
               </div>
@@ -65,24 +52,13 @@ export default function KoleksiBadgePage() {
       </div>
 
       {/* Certificate Generator Panel */}
-      <div
-        className="panel"
-        style={{
-          padding: '28px',
-          marginTop: '28px',
-          display: 'flex',
-          flexWrap: 'wrap',
-          alignItems: 'center',
-          gap: '20px',
-          justifyContent: 'space-between',
-        }}
-      >
+      <div className="cert-panel-wrapper">
         <div>
-          <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '1.15rem', marginBottom: '4px' }}>
+          <div className="cert-panel-title">
             Generator E-Sertifikat Digital Lit-GO
           </div>
-          <div style={{ fontSize: '0.84rem', color: 'var(--text-dim)' }}>
-            Syarat pembukaan: Kumpulkan minimum 4 badge kecakapan literasi. (Terkumpul: <strong>{unlockedCount}/5</strong>)
+          <div className="cert-panel-subtitle">
+            Syarat pembukaan: Kumpulkan minimum 4 badge kecakapan literasi. (Terkumpul: <span className="cert-panel-count">{unlockedCount}/5</span>)
           </div>
         </div>
         <div className="cert-form-row">
