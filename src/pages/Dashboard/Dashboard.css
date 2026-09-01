@@ -90,7 +90,6 @@
 @media (max-width: 880px) { .lab-inner { grid-template-columns: 1fr; } }
 .lab-box { background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 20px; }
 .lab-sidebar { background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 20px; display: flex; flex-direction: column; gap: 14px; }
-.lab-sidebar-title { font-size: 0.85rem; font-weight: 700; color: var(--navy); padding-bottom: 10px; border-bottom: 1px solid var(--line); }
 
 .btn-lab {
   padding: 10px 16px; border-radius: 10px; font-size: 0.82rem; font-weight: 700; border: none;

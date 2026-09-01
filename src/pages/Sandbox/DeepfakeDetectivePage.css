@@ -1,145 +1,185 @@
-/* ============================
-   DEEPFAKE DETECTIVE PAGE
-   ============================ */
-.back-btn-wrapper {
-  margin-bottom: 16px;
+.detective-layout-grid {
+  display: grid;
+  grid-template-columns: 1fr 380px; /* Kolom kiri (Gambar) dinamis, Kolom kanan (Sidebar) fix 380px */
+  gap: 28px;
+  align-items: start;
 }
 
-.detective-header {
-  margin-bottom: 24px;
+@media (max-width: 992px) {
+  .detective-layout-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
-.sandbox-label {
-  font-size: 0.75rem;
-  font-family: var(--font-mono);
-  color: var(--teal);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: 4px;
-}
-
-.detective-title {
-  font-size: 1.6rem;
-}
-
-.panel-lab {
-  padding: 28px;
-}
-
-/* --- Magnifier & Image Styles --- */
-.magnifier-box {
-  position: relative;
-  height: 380px;
-  overflow: hidden;
-}
-
-.magnifier-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.magnifier-lens {
-  position: absolute;
-  border: 2px solid var(--indigo);
-  border-radius: 50%;
-  width: 130px;
-  height: 130px;
-  display: none;
-  pointer-events: none;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  background-repeat: no-repeat;
-  z-index: 10;
-}
-
-/* --- Overlay Markers --- */
-.df-overlay {
-  display: none;
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 5;
-}
-
-.df-overlay.active {
-  display: block;
-}
-
-.df-marker {
-  position: absolute;
-  border-radius: 50%;
+/* --- Panel Kiri (Gambar) --- */
+.image-panel {
+  padding: 24px;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.75rem;
-  font-weight: 900;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.df-marker-1 {
-  top: 30%;
-  right: 25%;
-  width: 44px;
-  height: 44px;
-  border: 2px solid var(--red);
-  background: rgba(239, 68, 68, 0.15);
-  color: var(--red);
-}
-
-.df-marker-2 {
-  bottom: 28%;
-  left: 32%;
-  width: 38px;
-  height: 38px;
-  border: 2px solid var(--amber);
-  background: rgba(245, 158, 11, 0.15);
-  color: var(--amber);
-}
-
-/* --- Lab Controls & Sidebar --- */
-.lab-controls {
+.forensic-toolbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 14px;
 }
 
-.lab-hint {
-  font-size: 0.8rem;
-  color: var(--text-dim);
+.toolbar-left { display: flex; gap: 8px; }
+.tool-btn {
+  width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--line);
+  background: var(--white); color: var(--navy-light); font-size: 0.9rem;
+  transition: all 0.2s;
+}
+.tool-btn.active, .tool-btn:hover { background: rgba(59, 130, 246, 0.1); border-color: var(--indigo); color: var(--indigo); }
+
+.toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.confidence-label { font-size: 0.7rem; font-weight: 700; color: var(--text-dim); letter-spacing: 0.05em; }
+.confidence-badge {
+  background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.2);
+  color: var(--red); font-size: 0.75rem; font-weight: 700; padding: 6px 12px; border-radius: 6px;
 }
 
-.artifact-card {
-  border-radius: 10px;
-  padding: 14px;
-  font-size: 0.82rem;
-  margin-bottom: 12px;
+/* --- Magnifier & Image Wrap --- */
+.magnifier-box {
+  position: relative;
+  /* Kunci lebar box agar pas seukuran gambar, tidak melar ke area abu-abu */
+  display: inline-block; 
+  width: fit-content; 
+  max-width: 100%;
+  overflow: hidden;
+  border-radius: 8px;
+  cursor: crosshair;
+  line-height: 0;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
-.artifact-red {
-  background: rgba(239, 68, 68, 0.06);
-  border: 1px solid rgba(239, 68, 68, 0.2);
-}
-
-.artifact-amber {
-  background: rgba(245, 158, 11, 0.07);
-  border: 1px solid rgba(245, 158, 11, 0.25);
-}
-
-.artifact-title {
+.magnifier-img {
   display: block;
-  margin-bottom: 4px;
+  height: 420px; 
+  width: auto;
+  max-width: 100%;
+  object-fit: contain; 
 }
 
-.text-red {
-  color: var(--red);
+.magnifier-lens {
+  position: absolute; border: 2px solid var(--indigo); border-radius: 50%;
+  width: 130px; height: 130px; display: none; pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3); background-repeat: no-repeat; z-index: 20;
 }
 
-.text-amber {
-  color: var(--amber);
+/* --- Interactive Hotspots --- */
+.df-hotspot {
+  position: absolute;
+  cursor: crosshair;
+  z-index: 10;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+  width: 56px; 
+  height: 56px;
+  transform: translate(-50%, -50%);
 }
 
+/* Koordinat presisi disesuaikan dengan foto wanita di Unsplash */
+.hotspot-1 { 
+  top: 60%;   /* Pas di area mata kiri (dari sudut pandang kita) */
+  left: 40%;  
+}
+
+.hotspot-2 { 
+  top: 35%;   /* Pas di area tekstur kulit/pipi bagian kanan */
+  left: 64%;  
+}
+
+@keyframes pulse-hint {
+  0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7); border-color: var(--amber); background: rgba(245, 158, 11, 0.1); }
+  70% { box-shadow: 0 0 0 15px rgba(245, 158, 11, 0); border-color: transparent; background: transparent; }
+  100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); border-color: transparent; background: transparent; }
+}
+
+.df-hotspot.hint-glow { animation: pulse-hint 1.2s infinite; }
+.df-hotspot.found { border-color: var(--emerald); background: rgba(16, 185, 129, 0.15); animation: none; }
+.df-hotspot.found::after {
+  content: '\f00c'; font-family: 'Font Awesome 6 Free'; font-weight: 900;
+  color: var(--emerald); position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  font-size: 1.4rem; text-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+
+.lab-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; }
+.lab-hint { font-size: 0.82rem; color: var(--navy); background: var(--bg); padding: 8px 14px; border-radius: 8px; border: 1px solid var(--line); }
+
+/* --- Kolom Kanan (Header & Sidebar) --- */
+.sidebar-column { display: flex; flex-direction: column; gap: 20px; }
+
+.detective-header { margin-bottom: 4px; }
+.sandbox-label {
+  font-size: 0.72rem; font-family: var(--font-mono); color: var(--teal);
+  font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px;
+}
+.detective-title { font-size: 1.5rem; line-height: 1.2; margin-bottom: 4px; }
+.hub-section-sub { font-size: 0.8rem; color: var(--text-dim); }
+
+.lab-sidebar-panel {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+}
+.lab-sidebar-title-row {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;
+}
+.lab-sidebar-title { font-size: 0.95rem; font-weight: 800; color: var(--navy); font-family: var(--font-display); }
+.badge-count { background: var(--bg); border: 1px solid var(--line); padding: 3px 8px; border-radius: 6px; font-size: 0.7rem; font-weight: 700; color: var(--text-dim); }
+
+.artifacts-list { display: flex; flex-direction: column; gap: 14px; margin-bottom: 24px; flex: 1; }
+
+/* Desain Card ala Screenshot */
+.artifact-card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 16px;
+  font-size: 0.8rem;
+  box-shadow: 0 2px 6px rgba(15,23,42,0.03);
+}
+.artifact-card p { margin-top: 8px; color: var(--text-dim); line-height: 1.5; }
+
+.artifact-red { border-left: 4px solid var(--red); }
+.artifact-amber { border-left: 4px solid var(--amber); }
+
+.artifact-head { display: flex; justify-content: space-between; align-items: center; }
+.artifact-title { display: flex; align-items: center; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em; font-weight: 800; }
+.text-red { color: var(--red); }
+.text-amber { color: var(--amber); }
+
+.severity-badge { font-size: 0.65rem; font-weight: 700; padding: 2px 6px; border-radius: 4px; }
+.severity-badge.red { background: rgba(239, 68, 68, 0.15); color: var(--red); }
+.severity-badge.amber { background: rgba(245, 158, 11, 0.15); color: var(--amber); }
+
+/* Status Terkunci (Belum Ditemukan) */
+.locked-card {
+  background: rgba(30, 41, 59, 0.02); border: 1px dashed rgba(30, 41, 59, 0.15);
+  color: var(--text-dim); font-weight: 600; display: flex; align-items: center; justify-content: center; padding: 24px 14px; text-align: center;
+}
+
+.success-check-card {
+  border: 1px dashed var(--line); border-radius: 8px; padding: 16px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+  color: var(--text-dim); font-size: 0.75rem; font-weight: 600; text-align: center; margin-top: 4px;
+}
+.success-check-card i { font-size: 1.4rem; color: var(--emerald); }
+
+@keyframes revealCard { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.reveal-anim { animation: revealCard 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+/* Tombol Selesaikan Inspeksi */
 .btn-complete-inspection {
-  width: 100%;
-  margin-top: 10px;
+  width: 100%; padding: 12px; border-radius: 8px; font-weight: 700; font-size: 0.85rem; border: none;
+  background: var(--text-dim); color: #fff; cursor: not-allowed; opacity: 0.7; transition: all 0.2s;
 }
+.btn-complete-inspection.ready { background: #047857; cursor: pointer; opacity: 1; }
+.btn-complete-inspection.ready:hover { background: #065F46; transform: translateY(-1px); }
