@@ -141,7 +141,7 @@ export default function Dashboard() {
   const currentQ = pretestQuestions[currentStep];
 
   return (
-    <div className="dashboard-container" style={{ padding: 0 }}>
+    <div className="dashboard-container">
       {/* MANDATORY FULLSCREEN PRE-TEST ONBOARDING VIEW (MDQuiz Inspired Layout) */}
       {isPretestViewOpen && (
         <div className="fullscreen-pretest-overlay">

@@ -140,6 +140,7 @@
   padding: 24px;
   margin-bottom: 28px;
   background: var(--panel-bg);
+  background-color: var(--bg);
 }
 
 .radar-header {
@@ -220,6 +221,7 @@
   border-radius: 12px;
   padding: 24px;
   background: var(--panel-bg);
+  background-color: var(--bg);
 }
 
 .section-header {
@@ -258,7 +260,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 14px 18px;
-  background: var(--bg);
+  background: var(--bg-light);
   border: 1px solid var(--line);
   border-radius: 12px;
   transition: all 0.3s ease;

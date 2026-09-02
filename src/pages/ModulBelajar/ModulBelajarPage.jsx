@@ -7,9 +7,10 @@ export default function ModulBelajarPage() {
   const navigate = useNavigate();
   const { state, saveState, showToast, MODULES } = useProgress();
 
-  const [isModuleModalOpen, setModuleModalOpen] = useState(false);
+  const [isModuleOpen, setModuleOpen] = useState(false);
   const [activeModId, setActiveModId] = useState(null);
   const [showQuizView, setShowQuizView] = useState(false);
+  const [selectedAnsIndex, setSelectedAnsIndex] = useState(null);
   const [quizFeedback, setQuizFeedback] = useState({ show: false, correct: false, msg: '' });
 
   const activeMod = MODULES.find((m) => m.id === activeModId);
@@ -17,13 +18,19 @@ export default function ModulBelajarPage() {
   const openModule = (id) => {
     setActiveModId(id);
     setShowQuizView(false);
+    setSelectedAnsIndex(null);
     setQuizFeedback({ show: false, correct: false, msg: '' });
-    setModuleModalOpen(true);
+    setModuleOpen(true);
   };
 
-  const answerQuiz = (isCorrect) => {
+  const handleQuizSubmit = () => {
+    if (selectedAnsIndex === null) return;
+    
+    const isCorrect = selectedAnsIndex === activeMod.quiz.ans;
+    
     if (isCorrect) {
       setQuizFeedback({ show: true, correct: true, msg: 'Jawaban Benar! Modul Selesai!' });
+      
       let newDone = [...state.doneModules];
       if (!newDone.includes(activeModId)) newDone.push(activeModId);
 
@@ -35,22 +42,22 @@ export default function ModulBelajarPage() {
       if (newDone.length === 6 && state.hasRadar && !newBadges.includes(5)) newBadges.push(5);
 
       saveState({ ...state, doneModules: newDone, badges: newBadges });
+      
       setTimeout(() => {
-        setModuleModalOpen(false);
+        setModuleOpen(false);
         showToast('Modul selesai! EXP & Gems bertambah.', 'success');
-      }, 1400);
+      }, 1500);
     } else {
       setQuizFeedback({
         show: true,
         correct: false,
-        msg: 'Jawaban kurang tepat. Baca ulang materi dan coba lagi.',
+        msg: 'Jawaban kurang tepat. Coba periksa kembali.',
       });
     }
   };
 
   return (
-    <div className="page-wrap">
-
+    <div className="page-wrap wrap" style={{ paddingTop: '28px' }}>
       <div className="hub-section-head modul-belajar-header">
         <div>
           <h1 className="hub-section-title modul-belajar-title">Modul Belajar Literasi AI</h1>
@@ -91,74 +98,110 @@ export default function ModulBelajarPage() {
         })}
       </div>
 
-      {/* Module Modal */}
-      {isModuleModalOpen && activeMod && (
-        <div className="modal-overlay" id="modal-module">
-          <div className="modal-box">
-            <div className="modal-head">
-              <div>
-                <span className="modal-tag" id="mod-modal-tag">
-                  {activeMod.tag}
-                </span>
-                <span className="modal-title" id="mod-modal-title">
-                  {activeMod.title}
-                </span>
-              </div>
-              <button className="modal-close" onClick={() => setModuleModalOpen(false)}>
-                ✕
-              </button>
+      {/* FULL PAGE OVERLAY (Menggantikan Modal Popup) */}
+      {isModuleOpen && activeMod && (
+        <div className="fp-container">
+          
+          {/* Header Aplikasi (Mirip mockup) */}
+          <header className="fp-header">
+            <div className="fp-header-left">
+              <h1 className="fp-header-title">Deepfake Lab: Module {activeMod.id}01</h1>
             </div>
+            <button className="fp-close-btn" onClick={() => setModuleOpen(false)} aria-label="Close">
+              <span className="material-symbols-outlined"><i className="fa-solid fa-xmark"></i></span>
+            </button>
+          </header>
 
-            {!showQuizView ? (
-              <div id="mod-read-view">
-                <div
-                  id="mod-modal-content"
-                  dangerouslySetInnerHTML={{
-                    __html: `<strong style="color:var(--indigo); display:block; margin-bottom:8px;"><i class="fa-solid fa-book-open mr-1"></i> Materi Pembelajaran:</strong>${activeMod.reading}`,
-                  }}
-                ></div>
-                <div className="modal-button-wrapper">
-                  <button className="btn-modal-ok" onClick={() => setShowQuizView(true)}>
-                    Lanjut ke Kuis →
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <div id="mod-quiz-view">
-                <div>
-                  <div className="quiz-label">
-                    Kuis Evaluasi
+          {/* Canvas Konten Utama */}
+          <main className="fp-main">
+            <div className="fp-content-wrapper">
+              
+              {!showQuizView ? (
+                // --- TAMPILAN MATERI BELAJAR ---
+                <div className="fp-view-section">
+                  <div className="fp-heading-area">
+                    <h2 className="fp-section-title">{activeMod.title}</h2>
+                    <p className="fp-section-subtitle">{activeMod.topics}</p>
                   </div>
-                  <p id="quiz-q">
-                    {activeMod.quiz.q}
-                  </p>
-                  <div id="quiz-opts">
+                  <div 
+                    className="fp-reading-content"
+                    dangerouslySetInnerHTML={{ __html: activeMod.reading }}
+                  ></div>
+                </div>
+              ) : (
+                // --- TAMPILAN KUIS (Desain Baru) ---
+                <div className="fp-view-section">
+                  <div className="fp-heading-area">
+                    <h2 className="fp-section-title">Kuis Evaluasi</h2>
+                    <p className="fp-section-subtitle">Uji Pemahaman Topik</p>
+                  </div>
+                  
+                  <div className="fp-quiz-question">
+                    <h3>{activeMod.quiz.q}</h3>
+                  </div>
+
+                  <div className="fp-quiz-options">
                     {activeMod.quiz.opts.map((opt, i) => (
-                      <button key={i} className="quiz-option" onClick={() => answerQuiz(i === activeMod.quiz.ans)}>
-                        {opt}
-                      </button>
+                      <label 
+                        key={i} 
+                        className={`fp-quiz-option-card ${selectedAnsIndex === i ? 'selected' : ''}`}
+                        onClick={() => {
+                          setSelectedAnsIndex(i);
+                          setQuizFeedback({ show: false }); // Reset error kalau milih opsi lain
+                        }}
+                      >
+                        <input className="sr-only" name="quiz_answer" type="radio" value={i} />
+                        <span className="fp-quiz-option-text">{opt}</span>
+                      </label>
                     ))}
                   </div>
+
+                  {/* Feedback Box Inline */}
                   {quizFeedback.show && (
-                    <div
-                      id="quiz-fb"
-                      className={`quiz-feedback ${quizFeedback.correct ? 'correct' : 'wrong'}`}
-                    >
-                      {quizFeedback.correct ? (
-                        <>
-                          <i className="fa-solid fa-circle-check mr-1"></i> {quizFeedback.msg}
-                        </>
-                      ) : (
-                        <>
-                          <i className="fa-solid fa-triangle-exclamation mr-1"></i> {quizFeedback.msg}
-                        </>
-                      )}
+                    <div className={`fp-quiz-feedback ${quizFeedback.correct ? 'correct' : 'wrong'}`}>
+                      <i className={`fa-solid ${quizFeedback.correct ? 'fa-circle-check' : 'fa-triangle-exclamation'} mr-2`}></i>
+                      {quizFeedback.msg}
                     </div>
                   )}
                 </div>
-              </div>
+              )}
+            </div>
+          </main>
+
+          {/* Navigasi Bawah (Bottom Nav Shell) */}
+          <nav className="fp-bottom-nav">
+            {!showQuizView ? (
+              <>
+                <button className="btn-fp-nav btn-fp-back" onClick={() => setModuleOpen(false)}>
+                  <i className="fa-solid fa-chevron-left"></i> Kembali
+                </button>
+                <div className="fp-progress-dots">
+                  <div className="fp-dot active"></div>
+                  <div className="fp-dot"></div>
+                </div>
+                <button className="btn-fp-nav btn-fp-next" onClick={() => setShowQuizView(true)}>
+                  Lanjut Kuis <i className="fa-solid fa-chevron-right"></i>
+                </button>
+              </>
+            ) : (
+              <>
+                <button className="btn-fp-nav btn-fp-back" onClick={() => setShowQuizView(false)}>
+                  <i className="fa-solid fa-chevron-left"></i> Materi
+                </button>
+                <div className="fp-progress-dots">
+                  <div className="fp-dot"></div>
+                  <div className="fp-dot active"></div>
+                </div>
+                <button 
+                  className="btn-fp-nav btn-fp-next" 
+                  onClick={handleQuizSubmit}
+                  disabled={selectedAnsIndex === null || quizFeedback.correct}
+                >
+                  Submit <i className="fa-solid fa-check ml-1"></i>
+                </button>
+              </>
             )}
-          </div>
+          </nav>
         </div>
       )}
     </div>
