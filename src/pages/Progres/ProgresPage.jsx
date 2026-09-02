@@ -13,15 +13,6 @@ export default function ProgresPage() {
 
   return (
     <div className="page-wrap">
-      {/* Back to Dashboard Button */}
-      <div className="progres-back-wrapper">
-        <button
-          className="btn-lab-ghost btn-back-progres"
-          onClick={() => navigate('/dashboard')}
-        >
-          <i className="fa-solid fa-arrow-left mr-2"></i> Kembali ke Dashboard
-        </button>
-      </div>
 
       <div className="hub-section-head progres-header">
         <div>

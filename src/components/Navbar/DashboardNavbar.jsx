@@ -2,10 +2,22 @@ import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
 export default function DashboardNavbar({ pts = 0, badgeCount = 0, expPct = 0, lv = 1, onRequestReset }) {
+  
+  // Fungsi untuk memicu event membuka/menutup sidebar
+  const handleToggleSidebar = () => {
+    window.dispatchEvent(new CustomEvent('toggleMobileMenu'));
+  };
+
   return (
     <nav style={{ margin: '0 0 24px 0', width: '100%' }}>
-      <div className="nav-inner">
-        <Link to="/dashboard" className="logo" style={{ textDecoration: 'none' }}>
+      <div className="nav-inner" style={{ justifyContent: 'flex-start' }}>
+        
+        {/* Tombol Hamburger (Khusus Mobile) */}
+        <button className="mobile-nav-toggle" onClick={handleToggleSidebar} aria-label="Toggle Menu">
+          <i className="fa-solid fa-bars"></i>
+        </button>
+
+        <Link to="/dashboard" className="logo" style={{ textDecoration: 'none', marginRight: 'auto' }}>
           <div className="logo-mark">L</div>
           Lit - GO
         </Link>
