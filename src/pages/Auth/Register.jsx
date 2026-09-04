@@ -3,25 +3,36 @@ import { GoogleOAuthProvider, useGoogleLogin } from '@react-oauth/google';
 import { useNavigate, Link } from 'react-router-dom';
 import './Login.css';
 
-const LoginForm = () => {
+const RegisterForm = () => {
   const navigate = useNavigate();
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
 
-  const handleManualLogin = (e) => {
+  const handleManualRegister = (e) => {
     e.preventDefault();
+    setErrorMsg('');
+
+    if (password !== confirmPassword) {
+      setErrorMsg('Kata sandi dan konfirmasi kata sandi tidak cocok!');
+      return;
+    }
+
     const userDetail = {
-      name: email.split('@')[0] || 'User Lit-GO',
+      name: name.trim() || email.split('@')[0],
       email: email,
       picture: '',
     };
+    
     localStorage.setItem('user_data', JSON.stringify(userDetail));
     navigate('/dashboard');
   };
 
-  const loginWithGoogle = useGoogleLogin({
+  const registerWithGoogle = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       setIsGoogleLoading(true);
       try {
@@ -43,7 +54,7 @@ const LoginForm = () => {
       }
     },
     onError: (error) => {
-      console.log('Proses Login Google Gagal', error);
+      console.log('Proses Register Google Gagal', error);
       setIsGoogleLoading(false);
     },
   });
@@ -56,17 +67,35 @@ const LoginForm = () => {
 
       {/* Tombol Batal / Kembali */}
       <Link to="/" className="btn-back-home">
-        <i className="fa-solid fa-arrow-left"></i> Kembali
+        <i className="fa-solid fa-arrow-left"></i> Batal
       </Link>
 
       <main className="login-card">
-        <div className="brand-header">
+        <div className="brand-header" style={{ marginBottom: '24px' }}>
           <div className="brand-logo">L</div>
-          <h1 className="brand-title">Lit-GO</h1>
+          <h1 className="brand-title">Daftar Akun</h1>
         </div>
 
-        <form onSubmit={handleManualLogin}>
-          <div className="form-group">
+        <form onSubmit={handleManualRegister}>
+          <div className="form-group" style={{ marginBottom: '16px' }}>
+            <div className="label-row">
+              <label htmlFor="name">Nama Lengkap</label>
+            </div>
+            <div className="input-wrapper">
+              <i className="input-icon left fa-solid fa-user"></i>
+              <input 
+                type="text" 
+                id="name" 
+                className="form-input" 
+                placeholder="John Doe" 
+                required 
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+          </div>
+
+          <div className="form-group" style={{ marginBottom: '16px' }}>
             <div className="label-row">
               <label htmlFor="email">Email</label>
             </div>
@@ -84,10 +113,9 @@ const LoginForm = () => {
             </div>
           </div>
 
-          <div className="form-group">
+          <div className="form-group" style={{ marginBottom: '16px' }}>
             <div className="label-row">
               <label htmlFor="password">Kata Sandi</label>
-              <a href="#forgot" className="link-text">Lupa kata sandi?</a>
             </div>
             <div className="input-wrapper">
               <i className="input-icon left fa-solid fa-lock"></i>
@@ -96,7 +124,7 @@ const LoginForm = () => {
                 id="password" 
                 className="form-input" 
                 style={{ paddingRight: '48px' }}
-                placeholder="••••••••" 
+                placeholder="Buat kata sandi" 
                 required 
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -111,12 +139,35 @@ const LoginForm = () => {
             </div>
           </div>
 
-          <button type="submit" className="btn-submit">
-            Masuk <i className="fa-solid fa-arrow-right" style={{ fontSize: '16px' }}></i>
+          <div className="form-group">
+            <div className="label-row">
+              <label htmlFor="confirmPassword">Konfirmasi Kata Sandi</label>
+            </div>
+            <div className="input-wrapper">
+              <i className="input-icon left fa-solid fa-shield-check"></i>
+              <input 
+                type={showPassword ? "text" : "password"} 
+                id="confirmPassword" 
+                className="form-input" 
+                placeholder="Ulangi kata sandi" 
+                required 
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+            </div>
+            {errorMsg && (
+              <div style={{ color: 'var(--red)', fontSize: '0.8rem', marginTop: '6px', fontWeight: '600' }}>
+                <i className="fa-solid fa-triangle-exclamation mr-1"></i> {errorMsg}
+              </div>
+            )}
+          </div>
+
+          <button type="submit" className="btn-submit" style={{ marginTop: '20px' }}>
+            Daftar Sekarang <i className="fa-solid fa-user-plus" style={{ fontSize: '14px' }}></i>
           </button>
         </form>
 
-        <div className="divider">
+        <div className="divider" style={{ margin: '20px 0' }}>
           <span>atau</span>
         </div>
 
@@ -126,7 +177,7 @@ const LoginForm = () => {
             className={`google-login-btn ${isGoogleLoading ? 'is-loading' : ''}`}
             onClick={() => {
               setIsGoogleLoading(true);
-              loginWithGoogle();
+              registerWithGoogle();
             }}
             disabled={isGoogleLoading}
           >
@@ -142,30 +193,26 @@ const LoginForm = () => {
               )}
             </span>
             <span className="google-login-text">
-              {isGoogleLoading ? 'Memproses...' : 'Masuk dengan Google'}
+              {isGoogleLoading ? 'Memproses...' : 'Daftar dengan Google'}
             </span>
           </button>
         </div>
 
         <div className="register-prompt">
-          Belum punya akun? <Link to="/register" className="link-text">Daftar sekarang</Link>
-        </div>
-
-        <div className="trust-badge">
-          Memahami AI dengan Kritis.
+          Sudah punya akun? <Link to="/login" className="link-text">Masuk di sini</Link>
         </div>
       </main>
     </div>
   );
 };
 
-const LoginWrapper = () => {
+const RegisterWrapper = () => {
   const clientId = import.meta.env.VITE_OAUTH_SECRET || "DUMMY_CLIENT_ID";
   return (
     <GoogleOAuthProvider clientId={clientId}>
-      <LoginForm />
+      <RegisterForm />
     </GoogleOAuthProvider>
   );
 };
 
-export default LoginWrapper;
+export default RegisterWrapper;

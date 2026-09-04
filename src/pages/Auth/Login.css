@@ -226,22 +226,55 @@
 .google-login-btn.is-loading .google-login-text {
   letter-spacing: 0.01em;
 }
+/* ... (kode google-login-btn ke atas biarkan sama) ... */
+
 .google-login-icon-wrap {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: #ffffff;
-  border-radius: 50%;
-  width: 20px;
-  height: 20px;
+  width: 24px;  /* Dibesarkan dari 20px */
+  height: 24px; /* Dibesarkan dari 20px */
   flex-shrink: 0;
-  box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.25);
+  /* Hapus background dan box-shadow yang bikin ikon terlihat sempit/bulat aneh */
+  background: transparent; 
 }
+
 .google-login-icon {
-  width: 16px;
-  height: 16px;
+  width: 22px;  /* Dibesarkan agar lebih proporsional */
+  height: 22px;
   display: block;
 }
+
 .google-login-text {
   line-height: 1;
+  font-size: 0.95rem;
+}
+
+/* TOMBOL KEMBALI / CANCEL */
+.btn-back-home {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  color: var(--navy);
+  padding: 8px 16px;
+  border-radius: 100px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s;
+  z-index: 20;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+}
+
+.btn-back-home:hover {
+  background: rgba(59, 130, 246, 0.05);
+  color: var(--indigo);
+  border-color: var(--indigo);
+  transform: translateX(-4px);
 }
