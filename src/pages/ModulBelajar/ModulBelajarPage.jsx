@@ -1,6 +1,26 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../../context/ProgressContext';
+import { marked } from 'marked';
+import './ModulBelajarPage.css';
+
+// Import file markdown luar menggunakan fitur raw Vite (?raw)
+import mdModul1 from '../../content/modul-1.md?raw';
+import mdModul2 from '../../content/modul-2.md?raw';
+import mdModul3 from '../../content/modul-3.md?raw';
+import mdModul4 from '../../content/modul-4.md?raw';
+import mdModul5 from '../../content/modul-5.md?raw';
+import mdModul6 from '../../content/modul-6.md?raw';
+
+const markdownContents = {
+  1: mdModul1,
+  2: mdModul2,
+  3: mdModul3,
+  4: mdModul4,
+  5: mdModul5,
+  6: mdModul6,
+};
+
 
 export default function ModulBelajarPage() {
   const navigate = useNavigate();
@@ -8,6 +28,61 @@ export default function ModulBelajarPage() {
 
   const [activeModule, setActiveModule] = useState(null); // Selected module card
   const [activeStep, setActiveStep] = useState(null); // Selected step (triggers Full-Screen Gamified View)
+  const [isModuleOpen, setModuleOpen] = useState(false);
+  const [activeModId, setActiveModId] = useState(null);
+  const [showQuizView, setShowQuizView] = useState(false);
+  const [selectedAnsIndex, setSelectedAnsIndex] = useState(null);
+  const [quizFeedback, setQuizFeedback] = useState({ show: false, correct: false, msg: '' });
+  const [parsedHtmlContent, setParsedHtmlContent] = useState('');
+
+  const activeMod = MODULES.find((m) => m.id === activeModId);
+
+  const openModule = (id) => {
+    setActiveModId(id);
+    setShowQuizView(false);
+    setSelectedAnsIndex(null);
+    setQuizFeedback({ show: false, correct: false, msg: '' });
+
+    const rawMarkdown = markdownContents[id] || 'Materi belum tersedia.';
+    const htmlContent = marked.parse(rawMarkdown);
+    setParsedHtmlContent(htmlContent);
+
+    setModuleOpen(true);
+  };
+
+  const handleQuizSubmit = () => {
+    if (selectedAnsIndex === null || !activeMod || !activeMod.quiz) return;
+    
+    const isCorrect = selectedAnsIndex === activeMod.quiz.ans;
+    
+    if (isCorrect) {
+      setQuizFeedback({ show: true, correct: true, msg: 'Jawaban Benar! Modul Selesai!' });
+      
+      let newDone = [...(state.doneModules || [])];
+      if (!newDone.includes(activeModId)) newDone.push(activeModId);
+
+      let newBadges = [...(state.badges || [])];
+      if (state.hasRadar && !newBadges.includes(1)) newBadges.push(1);
+      if (newDone.includes(2) && !newBadges.includes(2)) newBadges.push(2);
+      if (newDone.includes(3) && !newBadges.includes(3)) newBadges.push(3);
+      if (newDone.includes(4) && newDone.includes(5) && !newBadges.includes(4)) newBadges.push(4);
+      if (newDone.length >= 6 && state.hasRadar && !newBadges.includes(5)) newBadges.push(5);
+
+      saveState({ ...state, doneModules: newDone, badges: newBadges });
+      
+      setTimeout(() => {
+        setModuleOpen(false);
+        showToast('Modul selesai! EXP & Gems bertambah.', 'success');
+      }, 1500);
+    } else {
+      setQuizFeedback({
+        show: true,
+        correct: false,
+        msg: 'Jawaban kurang tepat. Coba periksa kembali.',
+      });
+    }
+  };
+
 
   // Duolingo, Mimo, & Tebak Gambar Interactive States
   const [dialogueIdx, setDialogueIdx] = useState(0);
@@ -206,7 +281,28 @@ export default function ModulBelajarPage() {
             </div>
 
             <p style={{ fontSize: '0.84rem', color: 'var(--text-dim)', marginBottom: '18px' }}>
-              Pilih salah satu dari <strong>4 Langkah Aktivitas Full-Screen</strong> di bawah ini untuk bermain game interaktif &amp; Tebak Gambar:
+              
+            {/* Quick Link to Markdown Theory & Quiz */}
+            <div style={{ marginBottom: '18px', padding: '14px 18px', background: 'rgba(99, 102, 241, 0.08)', borderRadius: '12px', border: '1px solid rgba(99, 102, 241, 0.2)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
+              <div>
+                <div style={{ fontWeight: 700, fontSize: '0.9rem', color: 'var(--navy)' }}>
+                  <i className="fa-solid fa-book-open mr-2 text-indigo"></i> Ringkasan Teori &amp; Kuis Evaluasi
+                </div>
+                <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)', marginTop: '2px' }}>
+                  Baca materi kurikulum terstruktur dan ikuti kuis evaluasi singkat.
+                </div>
+              </div>
+              <button
+                type="button"
+                className="btn-lab"
+                onClick={() => openModule(activeModule.id)}
+                style={{ padding: '8px 16px', fontSize: '0.82rem', whiteSpace: 'nowrap' }}
+              >
+                Buka Materi &amp; Kuis →
+              </button>
+            </div>
+
+            Pilih salah satu dari <strong>4 Langkah Aktivitas Full-Screen</strong> di bawah ini untuk bermain game interaktif &amp; Tebak Gambar:
             </p>
 
             {/* 4 Step Cards per Module */}
@@ -1077,6 +1173,112 @@ export default function ModulBelajarPage() {
           </div>
         </div>
       )}
+    
+      {/* FULL PAGE OVERLAY MODUL (MARKDOWN & EVALUATION QUIZ) */}
+      {isModuleOpen && activeMod && (
+        <div className="fp-container">
+          <header className="fp-header">
+            <div className="fp-header-left">
+              <h1 className="fp-header-title">Lit-GO: {activeMod.tag} - {activeMod.title}</h1>
+            </div>
+            <button className="fp-close-btn" onClick={() => setModuleOpen(false)} aria-label="Close">
+              <i className="fa-solid fa-xmark"></i>
+            </button>
+          </header>
+
+          <main className="fp-main">
+            <div className="fp-content-wrapper">
+              {!showQuizView ? (
+                <div className="fp-view-section">
+                  <div className="fp-heading-area">
+                    <h2 className="fp-section-title">{activeMod.title}</h2>
+                    <p className="fp-section-subtitle">{activeMod.topics}</p>
+                  </div>
+                  
+                  {/* Konten hasil file Markdown */}
+                  <div 
+                    className="fp-reading-content"
+                    dangerouslySetInnerHTML={{ __html: parsedHtmlContent }}
+                  ></div>
+                </div>
+              ) : (
+                <div className="fp-view-section">
+                  <div className="fp-heading-area">
+                    <h2 className="fp-section-title">Kuis Evaluasi Modul</h2>
+                    <p className="fp-section-subtitle">Uji Pemahaman: {activeMod.title}</p>
+                  </div>
+                  
+                  {activeMod.quiz && (
+                    <>
+                      <div className="fp-quiz-question">
+                        <h3>{activeMod.quiz.q}</h3>
+                      </div>
+
+                      <div className="fp-quiz-options">
+                        {activeMod.quiz.opts.map((opt, i) => (
+                          <label 
+                            key={i} 
+                            className={`fp-quiz-option-card ${selectedAnsIndex === i ? 'selected' : ''}`}
+                            onClick={() => {
+                              setSelectedAnsIndex(i);
+                              setQuizFeedback({ show: false, correct: false, msg: '' });
+                            }}
+                          >
+                            <input className="sr-only" name="quiz_answer" type="radio" value={i} readOnly checked={selectedAnsIndex === i} />
+                            <span className="fp-quiz-option-text">{opt}</span>
+                          </label>
+                        ))}
+                      </div>
+
+                      {quizFeedback.show && (
+                        <div className={`fp-quiz-feedback ${quizFeedback.correct ? 'correct' : 'wrong'}`}>
+                          <i className={`fa-solid ${quizFeedback.correct ? 'fa-circle-check' : 'fa-triangle-exclamation'} mr-2`}></i>
+                          {quizFeedback.msg}
+                        </div>
+                      )}
+                    </>
+                  )}
+                </div>
+              )}
+            </div>
+          </main>
+
+          <nav className="fp-bottom-nav">
+            {!showQuizView ? (
+              <>
+                <button className="btn-fp-nav btn-fp-back" onClick={() => setModuleOpen(false)}>
+                  <i className="fa-solid fa-chevron-left"></i> Kembali
+                </button>
+                <div className="fp-progress-dots">
+                  <div className="fp-dot active"></div>
+                  <div className="fp-dot"></div>
+                </div>
+                <button className="btn-fp-nav btn-fp-next" onClick={() => setShowQuizView(true)}>
+                  Lanjut Kuis <i className="fa-solid fa-chevron-right"></i>
+                </button>
+              </>
+            ) : (
+              <>
+                <button className="btn-fp-nav btn-fp-back" onClick={() => setShowQuizView(false)}>
+                  <i className="fa-solid fa-chevron-left"></i> Materi
+                </button>
+                <div className="fp-progress-dots">
+                  <div className="fp-dot"></div>
+                  <div className="fp-dot active"></div>
+                </div>
+                <button 
+                  className="btn-fp-nav btn-fp-next" 
+                  onClick={handleQuizSubmit}
+                  disabled={selectedAnsIndex === null || quizFeedback.correct}
+                >
+                  Submit Jawaban <i className="fa-solid fa-check ml-1"></i>
+                </button>
+              </>
+            )}
+          </nav>
+        </div>
+      )}
+
     </div>
   );
 }

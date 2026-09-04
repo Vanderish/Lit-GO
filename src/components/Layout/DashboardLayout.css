@@ -3,9 +3,11 @@
   min-height: 100vh;
   width: 100%;
   position: relative;
-  background-color: var(--bg, #F8FAFC);
+  background-color: var(--bg-dark);
 }
-
+.layout-main::-webkit-scrollbar{
+  display: none;
+}
 .layout-main {
   flex: 1;
   display: flex;

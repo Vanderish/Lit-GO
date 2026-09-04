@@ -1,11 +1,17 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../../context/ProgressContext';
+import './DeepfakeDetectivePage.css';
 
 export default function DeepfakeDetectivePage() {
   const navigate = useNavigate();
   const { state, saveState, showToast } = useProgress();
-  const [dfOverlayOn, setDfOverlayOn] = useState(false);
+  
+  const [foundArtifacts, setFoundArtifacts] = useState([]);
+  const [isHintActive, setIsHintActive] = useState(false);
+  
+  // State baru untuk melacak alat yang aktif (pointer, magnify, scan)
+  const [activeTool, setActiveTool] = useState('pointer');
 
   const magBoxRef = useRef(null);
   const magLensRef = useRef(null);
@@ -13,11 +19,19 @@ export default function DeepfakeDetectivePage() {
 
   const handleMagMove = (e) => {
     if (!magBoxRef.current || !magLensRef.current || !magImgRef.current) return;
+    const lens = magLensRef.current;
+    
+    // Cegah kemunculan kanta pembesar jika tool yang aktif bukan 'magnify'
+    if (activeTool !== 'magnify') {
+      lens.style.display = 'none';
+      return;
+    }
+
     const box = magBoxRef.current;
     const r = box.getBoundingClientRect();
-    const x = e.clientX - r.left,
-      y = e.clientY - r.top;
-    const lens = magLensRef.current;
+    const x = e.clientX - r.left;
+    const y = e.clientY - r.top;
+    
     lens.style.display = 'block';
     lens.style.left = x - 65 + 'px';
     lens.style.top = y - 65 + 'px';
@@ -26,8 +40,31 @@ export default function DeepfakeDetectivePage() {
     lens.style.backgroundPosition = `-${x * 2.2 - 65}px -${y * 2.2 - 65}px`;
   };
 
+  // Pastikan lensa mati saat berpindah tool
+  const changeTool = (tool) => {
+    setActiveTool(tool);
+    if (magLensRef.current && tool !== 'magnify') {
+      magLensRef.current.style.display = 'none';
+    }
+  };
+
+  const handleArtifactClick = (id) => {
+    if (!foundArtifacts.includes(id)) {
+      setFoundArtifacts((prev) => [...prev, id]);
+      showToast(`Artefak visual ${id} berhasil diidentifikasi!`, 'success');
+    }
+  };
+
+  const handleShowHint = () => {
+    if (foundArtifacts.length === 2) return;
+    setIsHintActive(true);
+    setTimeout(() => {
+      setIsHintActive(false);
+    }, 1000);
+  };
+
   const handleCompleteInspection = () => {
-    let newBadges = [...state.badges];
+    let newBadges = [...(state.badges || [])];
     if (!newBadges.includes(2)) {
       newBadges.push(2);
       saveState({ ...state, badges: newBadges });
@@ -38,136 +75,158 @@ export default function DeepfakeDetectivePage() {
   };
 
   return (
-    <div className="page-wrap">
-      {/* Back to Dashboard Button */}
-      <div style={{ marginBottom: '16px' }}>
-        <button
-          className="btn-lab-ghost"
-          onClick={() => navigate('/dashboard')}
-          style={{ padding: '8px 16px', fontSize: '0.85rem', fontWeight: 600 }}
-        >
-          <i className="fa-solid fa-arrow-left mr-2"></i> Kembali ke Dashboard
-        </button>
-      </div>
-
-      <div className="hub-section-head" style={{ marginBottom: '24px' }}>
-        <div>
-          <div style={{ fontSize: '0.75rem', fontFamily: 'var(--font-mono)', color: 'var(--teal)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '4px' }}>
-            SANDBOX LAB 01
-          </div>
-          <h1 className="hub-section-title" style={{ fontSize: '1.6rem' }}>Deepfake Detective</h1>
-          <p className="hub-section-sub">Inspeksi Artefak Visual &amp; Kejanggalan Rekayasa Gambar AI Generatif</p>
-        </div>
-      </div>
-
-      <div className="panel" style={{ padding: '28px' }}>
-        <div className="lab-inner">
-          <div className="lab-box">
-            <div
-              className="magnifier-box"
-              id="deepfake-box"
-              ref={magBoxRef}
-              onMouseMove={handleMagMove}
-              onMouseLeave={() => magLensRef.current && (magLensRef.current.style.display = 'none')}
-              style={{ height: '380px' }}
-            >
-              <img
-                id="deepfake-img"
-                ref={magImgRef}
-                src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&q=80"
-                alt="Target Deepfake"
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-              />
-              <div
-                id="df-overlay"
-                style={{ display: dfOverlayOn ? 'block' : 'none', position: 'absolute', inset: 0, pointerEvents: 'none' }}
+    <div className="page-wrap wrap">
+      <div className="detective-layout-grid">
+        
+        {/* KOLOM KIRI: Panel Area Gambar */}
+        <div className="panel image-panel">
+          <div className="forensic-toolbar">
+            <div className="toolbar-left">
+              {/* Tombol Pointer (Kiri) */}
+              <button 
+                className={`tool-btn ${activeTool === 'pointer' ? 'active' : ''}`}
+                onClick={() => changeTool('pointer')}
+                title="Kursor Default"
               >
-                <div
-                  style={{
-                    position: 'absolute',
-                    top: '30%',
-                    right: '25%',
-                    width: '44px',
-                    height: '44px',
-                    border: '2px solid var(--red)',
-                    borderRadius: '50%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    background: 'rgba(239,68,68,0.15)',
-                    fontSize: '0.75rem',
-                    fontWeight: 900,
-                    color: 'var(--red)',
-                  }}
-                >
-                  1
-                </div>
-                <div
-                  style={{
-                    position: 'absolute',
-                    bottom: '28%',
-                    left: '32%',
-                    width: '38px',
-                    height: '38px',
-                    border: '2px solid var(--amber)',
-                    borderRadius: '50%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    background: 'rgba(245,158,11,0.15)',
-                    fontSize: '0.75rem',
-                    fontWeight: 900,
-                    color: 'var(--amber)',
-                  }}
-                >
-                  2
-                </div>
-              </div>
-              <div className="magnifier-lens" id="mag-lens" ref={magLensRef}></div>
+                <i className="fa-solid fa-arrow-pointer"></i>
+              </button>
+              
+              {/* Tombol Magnifier (Tengah) */}
+              <button 
+                className={`tool-btn ${activeTool === 'magnify' ? 'active' : ''}`}
+                onClick={() => changeTool('magnify')}
+                title="Kanta Pembesar"
+              >
+                <i className="fa-solid fa-magnifying-glass"></i>
+              </button>
+              
+              {/* Tombol Scan (Kanan) */}
+              <button 
+                className={`tool-btn ${activeTool === 'scan' ? 'active' : ''}`}
+                onClick={() => changeTool('scan')}
+                title="Mode Analisis"
+              >
+                <i className="fa-solid fa-temperature-half"></i>
+              </button>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '14px' }}>
-              <span style={{ fontSize: '0.8rem', color: 'var(--text-dim)' }}>
-                <i className="fa-solid fa-hand-pointer mr-1"></i> Arahkan kursor ke foto untuk memperbesar lensa kanta
+            <div className="toolbar-right">
+              <span className="confidence-label">CONFIDENCE SCORE:</span>
+              <span className="confidence-badge">
+                <i className="fa-solid fa-triangle-exclamation mr-1"></i> 87% AI Generated
               </span>
-              <button className="btn-lab-ghost" onClick={() => setDfOverlayOn(!dfOverlayOn)} id="df-overlay-btn">
-                <i className={`fa-solid ${dfOverlayOn ? 'fa-eye-slash' : 'fa-eye'} mr-1`}></i>{' '}
-                {dfOverlayOn ? 'Sembunyikan Sorotan' : 'Tampilkan Sorotan Artefak'}
+            </div>
+          </div>
+
+          <div className="lab-box">
+            <div style={{ textAlign: 'center', backgroundColor: '#E2E8F0', borderRadius: '12px', padding: '20px', display: 'flex', justifyContent: 'center' }}>
+              <div
+                className="magnifier-box"
+                ref={magBoxRef}
+                onMouseMove={handleMagMove}
+                onMouseLeave={() => magLensRef.current && (magLensRef.current.style.display = 'none')}
+                // Ubah kursor dinamis sesuai alat yang dipakai
+                style={{ cursor: activeTool === 'magnify' ? 'crosshair' : 'default' }}
+              >
+                <img
+                  ref={magImgRef}
+                  src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&q=80"
+                  alt="Target Deepfake"
+                  className="magnifier-img"
+                />
+                
+                <div 
+                  className={`df-hotspot hotspot-1 ${isHintActive && !foundArtifacts.includes(1) ? 'hint-glow' : ''} ${foundArtifacts.includes(1) ? 'found' : ''}`}
+                  onClick={() => handleArtifactClick(1)}
+                  title="Klik area ini"
+                ></div>
+
+                <div 
+                  className={`df-hotspot hotspot-2 ${isHintActive && !foundArtifacts.includes(2) ? 'hint-glow' : ''} ${foundArtifacts.includes(2) ? 'found' : ''}`}
+                  onClick={() => handleArtifactClick(2)}
+                  title="Klik area ini"
+                ></div>
+
+                <div className="magnifier-lens" ref={magLensRef}></div>
+              </div>
+            </div>
+            
+            <div className="lab-controls">
+              <span className="lab-hint">
+                <i className="fa-solid fa-crosshairs mr-1"></i> Arahkan kursor dan <strong>klik area</strong> yang mencurigakan.
+              </span>
+              <button 
+                className="btn-lab-ghost" 
+                onClick={handleShowHint} 
+                disabled={foundArtifacts.length === 2}
+              >
+                <i className="fa-solid fa-lightbulb mr-1"></i> Minta Petunjuk
               </button>
             </div>
           </div>
+        </div>
 
-          <div className="lab-sidebar">
-            <div className="lab-sidebar-title">Temuan Artefak Visual:</div>
-            <div
-              style={{
-                background: 'rgba(239,68,68,0.06)',
-                border: '1px solid rgba(239,68,68,0.2)',
-                borderRadius: '10px',
-                padding: '14px',
-                fontSize: '0.82rem',
-              }}
-            >
-              <strong style={{ color: 'var(--red)', display: 'block', marginBottom: '4px' }}>
-                1. Asimetri Refleksi Retina
-              </strong>
-              Pantulan cahaya pada iris mata kiri dan kanan tidak konsisten dengan arah sumber cahaya latar belakang.
+        {/* KOLOM KANAN: Title/Header + Sidebar Panel */}
+        <div className="sidebar-column">
+          <div className="detective-header">
+            <div className="sandbox-label">SANDBOX LAB 01</div>
+            <h1 className="hub-section-title detective-title">Deepfake Detective</h1>
+            <p className="hub-section-sub">Inspeksi Artefak Visual &amp; Kejanggalan Rekayasa Gambar AI Generatif</p>
+          </div>
+
+          <div className="panel lab-sidebar-panel">
+            <div className="lab-sidebar-title-row">
+              <span className="lab-sidebar-title">Visual Artifact Findings</span>
+              <span className="badge-count">2 Issues</span>
             </div>
-            <div
-              style={{
-                background: 'rgba(245,158,11,0.07)',
-                border: '1px solid rgba(245,158,11,0.25)',
-                borderRadius: '10px',
-                padding: '14px',
-                fontSize: '0.82rem',
-              }}
-            >
-              <strong style={{ color: 'var(--amber)', display: 'block', marginBottom: '4px' }}>
-                2. Over-Smoothing Tekstur Kulit
-              </strong>
-              Pori-pori dan batas telinga terlalu halus — tanda khas generative blending dari model diffusion.
+            
+            <div className="artifacts-list">
+              {foundArtifacts.includes(1) ? (
+                <div className="artifact-card artifact-red reveal-anim">
+                  <div className="artifact-head">
+                    <strong className="artifact-title text-red">
+                      <i className="fa-solid fa-eye mr-1"></i> Retinal Reflection Asymmetry
+                    </strong>
+                    <span className="severity-badge red">High</span>
+                  </div>
+                  <p>Light reflections in the left and right pupils are inconsistent with the background light source.</p>
+                </div>
+              ) : (
+                <div className="artifact-card locked-card">
+                  <i className="fa-solid fa-lock mr-2"></i> Area Mata Belum Diinspeksi
+                </div>
+              )}
+              
+              {foundArtifacts.includes(2) ? (
+                <div className="artifact-card artifact-amber reveal-anim">
+                  <div className="artifact-head">
+                    <strong className="artifact-title text-amber">
+                      <i className="fa-solid fa-face-smile mr-1"></i> Skin Texture Over-Smoothing
+                    </strong>
+                    <span className="severity-badge amber">Medium</span>
+                  </div>
+                  <p>Pores and ear boundaries are excessively smooth — a signature of generative blending.</p>
+                </div>
+              ) : (
+                <div className="artifact-card locked-card">
+                  <i className="fa-solid fa-lock mr-2"></i> Area Tekstur Kulit Belum Diinspeksi
+                </div>
+              )}
+
+              {foundArtifacts.length === 2 && (
+                <div className="success-check-card reveal-anim">
+                  <i className="fa-regular fa-circle-check"></i>
+                  <span>Background consistency check passed.</span>
+                </div>
+              )}
             </div>
-            <button className="btn-lab" onClick={handleCompleteInspection} style={{ width: '100%', marginTop: '10px' }}>
-              <i className="fa-solid fa-circle-check mr-1"></i> Selesaikan Inspeksi Artefak
+            
+            <button 
+              className={`btn-lab btn-complete-inspection ${foundArtifacts.length === 2 ? 'ready' : ''}`}
+              onClick={handleCompleteInspection}
+              disabled={foundArtifacts.length < 2}
+            >
+              <i className={`fa-solid ${foundArtifacts.length === 2 ? 'fa-clipboard-check' : 'fa-lock'} mr-1`}></i> 
+              {foundArtifacts.length === 2 ? 'Complete Forensic Analysis' : `Temukan Semua (${foundArtifacts.length}/2)`}
             </button>
           </div>
         </div>

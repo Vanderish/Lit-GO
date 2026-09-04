@@ -10,7 +10,7 @@ import {
 } from 'chart.js';
 import { Radar } from 'react-chartjs-2';
 import { useProgress } from '../../context/ProgressContext';
-import '../Dashboard/Dashboard.css';
+import './RadarReadiness.css';
 
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip);
 
@@ -252,14 +252,6 @@ export default function RadarReadinessPage() {
 
       {/* DEDICATED RADAR READINESS PAGE CONTENT */}
       <div className="wrap">
-        <div style={{ marginBottom: '20px', marginTop: '20px' }}>
-          <button
-            className="btn-back-dashboard"
-            onClick={() => navigate('/dashboard')}
-          >
-            <i className="fa-solid fa-arrow-left"></i> Kembali ke Dashboard
-          </button>
-        </div>
 
         <div className="hub-section-head">
           <div>
@@ -375,80 +367,6 @@ export default function RadarReadinessPage() {
           </div>
         </div>
 
-        {/* Detailed 4-Pillar Recommendations Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '20px' }}>
-          <div className="panel" style={{ padding: '24px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
-              <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'rgba(99,102,241,0.12)', color: '#6366F1', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <i className="fa-solid fa-brain"></i>
-              </div>
-              <div>
-                <h3 style={{ fontSize: '0.95rem', fontWeight: 700 }}>Pemahaman Dasar</h3>
-                <span style={{ fontSize: '0.75rem', color: 'var(--text-dim)' }}>Skor: {state.radar[0]}%</span>
-              </div>
-            </div>
-            <p style={{ fontSize: '0.82rem', color: 'var(--text-dim)', lineHeight: 1.5 }}>
-              Mengukur pemahamanmu tentang definisi AI, sejarah singkat, keterbatasan sistem, dan penanganan halusinasi data.
-            </p>
-            <button className="btn-back-dashboard" onClick={() => navigate('/modul-belajar')} style={{ width: '100%', marginTop: '16px', fontSize: '0.78rem', justifyContent: 'center' }}>
-              Pelajari Modul 1 →
-            </button>
-          </div>
-
-          <div className="panel" style={{ padding: '24px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
-              <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'rgba(20,184,166,0.12)', color: '#14B8A6', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <i className="fa-solid fa-shield-halved"></i>
-              </div>
-              <div>
-                <h3 style={{ fontSize: '0.95rem', fontWeight: 700 }}>Etika &amp; Keamanan</h3>
-                <span style={{ fontSize: '0.75rem', color: 'var(--text-dim)' }}>Skor: {state.radar[1]}%</span>
-              </div>
-            </div>
-            <p style={{ fontSize: '0.82rem', color: 'var(--text-dim)', lineHeight: 1.5 }}>
-              Mengukur kesadaran etika hak cipta, privasi data rahasia, serta kemampuan deteksi rekayasa deepfake visual.
-            </p>
-            <button className="btn-back-dashboard" onClick={() => navigate('/modul-belajar')} style={{ width: '100%', marginTop: '16px', fontSize: '0.78rem', justifyContent: 'center' }}>
-              Pelajari Modul 2 →
-            </button>
-          </div>
-
-          <div className="panel" style={{ padding: '24px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
-              <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'rgba(245,158,11,0.12)', color: '#F59E0B', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <i className="fa-solid fa-terminal"></i>
-              </div>
-              <div>
-                <h3 style={{ fontSize: '0.95rem', fontWeight: 700 }}>Prompt Engineering</h3>
-                <span style={{ fontSize: '0.75rem', color: 'var(--text-dim)' }}>Skor: {state.radar[2]}%</span>
-              </div>
-            </div>
-            <p style={{ fontSize: '0.82rem', color: 'var(--text-dim)', lineHeight: 1.5 }}>
-              Mengukur kecakapan menyusun instruksi prompt terstruktur dengan konteks, format, persona, dan teknik few-shot.
-            </p>
-            <button className="btn-back-dashboard" onClick={() => navigate('/modul-belajar')} style={{ width: '100%', marginTop: '16px', fontSize: '0.78rem', justifyContent: 'center' }}>
-              Pelajari Modul 3 →
-            </button>
-          </div>
-
-          <div className="panel" style={{ padding: '24px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
-              <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'rgba(16,185,129,0.12)', color: '#10B981', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <i className="fa-solid fa-magnifying-glass"></i>
-              </div>
-              <div>
-                <h3 style={{ fontSize: '0.95rem', fontWeight: 700 }}>Critical Thinking</h3>
-                <span style={{ fontSize: '0.75rem', color: 'var(--text-dim)' }}>Skor: {state.radar[3]}%</span>
-              </div>
-            </div>
-            <p style={{ fontSize: '0.82rem', color: 'var(--text-dim)', lineHeight: 1.5 }}>
-              Mengukur kemampuan melatih skeptisisme sehat, melakukan fact-checking, dan mengevaluasi klaim buatan AI.
-            </p>
-            <button className="btn-back-dashboard" onClick={() => navigate('/modul-belajar')} style={{ width: '100%', marginTop: '16px', fontSize: '0.78rem', justifyContent: 'center' }}>
-              Pelajari Modul 6 →
-            </button>
-          </div>
-        </div>
       </div>
     </div>
   );

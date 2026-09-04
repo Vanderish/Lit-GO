@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-// Data Silabus & Badge Data (6 Modul Utama x 4 Langkah Penyelesaian Unik = 24 Langkah Total)
+// Data Silabus & Badge Data (6 Modul Utama x 4 Langkah Penyelesaian Unik + Kuis Evaluasi)
 export const MODULES = [
   {
     id: 1,
@@ -10,6 +10,15 @@ export const MODULES = [
     badge: "Pionir AI",
     icon: "fa-brain",
     iconBg: "linear-gradient(135deg, #8B5CF6, #6D28D9)",
+    quiz: {
+      q: "Apa yang dimaksud dengan fenomena 'Halusinasi' pada model AI?",
+      opts: [
+        "AI mengalami kerusakan sistem total dan mati.",
+        "AI menghasilkan fakta palsu yang terdengar ilmiah & meyakinkan.",
+        "AI bisa membaca emosi dan pikiran pengguna."
+      ],
+      ans: 1
+    },
     steps: [
       {
         id: "1-1",
@@ -68,6 +77,15 @@ export const MODULES = [
     badge: "Penjaga Etika",
     icon: "fa-shield-halved",
     iconBg: "linear-gradient(135deg, #0EA5E9, #0284C7)",
+    quiz: {
+      q: "Data mana yang HARUS DIRAHASIAKAN dan TIDAK BOLEH dimasukkan ke prompt AI publik?",
+      opts: [
+        "Rangkuman makalah sejarah Indonesia 1945.",
+        "NIK dan kata sandi perbankan.",
+        "Pertanyaan rumus matematika fisika."
+      ],
+      ans: 1
+    },
     steps: [
       {
         id: "2-1",
@@ -117,6 +135,15 @@ export const MODULES = [
     badge: "Master Prompt",
     icon: "fa-terminal",
     iconBg: "linear-gradient(135deg, #6366F1, #4F46E5)",
+    quiz: {
+      q: "Elemen apa yang menentukan gaya bahasa & perspektif sudut pandang AI?",
+      opts: [
+        "Format Output",
+        "Panjang karakter teks",
+        "Persona / Peran AI"
+      ],
+      ans: 2
+    },
     steps: [
       {
         id: "3-1",
@@ -165,6 +192,15 @@ export const MODULES = [
     badge: "Inovator Produktif",
     icon: "fa-rocket",
     iconBg: "linear-gradient(135deg, #EC4899, #F43F5E)",
+    quiz: {
+      q: "Cara paling etis menggunakan AI untuk tugas akademis?",
+      opts: [
+        "Menyalin 100% jawaban AI dan mengakuinya murni sendiri.",
+        "AI sebagai teman diskusi & outline, lalu tulis sendiri dan deklarasikan penggunaan AI.",
+        "Menyuruh AI buatkan seluruh skripsi dari bab 1 hingga 5."
+      ],
+      ans: 1
+    },
     steps: [
       {
         id: "4-1",
@@ -221,6 +257,15 @@ export const MODULES = [
     badge: "Kreator Beretika",
     icon: "fa-palette",
     iconBg: "linear-gradient(135deg, #10B981, #059669)",
+    quiz: {
+      q: "Tindakan mana yang melanggar etika dalam pembuatan gambar AI?",
+      opts: [
+        "Prompt pencahayaan fotorealistik alam.",
+        "Membuat foto deepfake tokoh publik untuk menyebarkan fitnah.",
+        "Membuat ilustrasi pemandangan gaya cyberpunk."
+      ],
+      ans: 1
+    },
     steps: [
       {
         id: "5-1",
@@ -269,6 +314,15 @@ export const MODULES = [
     badge: "Cendekia Digital",
     icon: "fa-graduation-cap",
     iconBg: "linear-gradient(135deg, #F59E0B, #D97706)",
+    quiz: {
+      q: "Apa peran utama manusia dalam hubungannya dengan teknologi AI?",
+      opts: [
+        "Pasrah dan serahkan seluruh keputusan ke AI.",
+        "Pemegang kendali utama (pilot) yang mengevaluasi secara kritis output AI.",
+        "Menolak seluruh penggunaan AI di kehidupan."
+      ],
+      ans: 1
+    },
     steps: [
       {
         id: "6-1",
@@ -407,16 +461,15 @@ export function ProgressProvider({ children }) {
         showToast,
         toastMsg,
         toastType,
+        handleReset,
         isConfirmModalOpen,
         setConfirmModalOpen,
-        handleReset,
         doneCount,
         badgeCount,
         pts,
         lv,
         expPct,
         MODULES,
-        BADGE_DATA,
       }}
     >
       {children}

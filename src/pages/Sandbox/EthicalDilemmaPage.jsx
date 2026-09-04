@@ -19,16 +19,6 @@ export default function EthicalDilemmaPage() {
 
   return (
     <div className="page-wrap">
-      {/* Back to Dashboard Button */}
-      <div style={{ marginBottom: '16px' }}>
-        <button
-          className="btn-lab-ghost"
-          onClick={() => navigate('/dashboard')}
-          style={{ padding: '8px 16px', fontSize: '0.85rem', fontWeight: 600 }}
-        >
-          <i className="fa-solid fa-arrow-left mr-2"></i> Kembali ke Dashboard
-        </button>
-      </div>
 
       <div className="hub-section-head" style={{ marginBottom: '24px' }}>
         <div>

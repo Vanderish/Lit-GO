@@ -139,7 +139,7 @@ export default function Dashboard() {
   const currentQ = pretestQuestions[currentStep];
 
   return (
-    <div className="dashboard-container" style={{ padding: 0 }}>
+    <div className="dashboard-container">
       {/* MANDATORY FULLSCREEN PRE-TEST ONBOARDING VIEW (MDQuiz Inspired Layout) */}
       {isPretestViewOpen && (
         <div className="fullscreen-pretest-overlay">
@@ -265,53 +265,8 @@ export default function Dashboard() {
       {/* DASHBOARD OVERVIEW LOBBY */}
       <div className="wrap">
         {/* LOBBY HERO & QUICK LAUNCH CARDS (OVERVIEW DISPLAY) */}
-        <div className="hub-lobby" style={{ marginBottom: '40px' }}>
-          <div className="hub-lobby-grid">
-            {/* Navigasi Group */}
-            <div>
-              <div
-                style={{
-                  fontSize: '0.7rem',
-                  fontFamily: 'var(--font-mono)',
-                  color: 'var(--indigo)',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.08em',
-                  fontWeight: 600,
-                  marginBottom: '10px',
-                }}
-              >
-                PUSAT LITERASI
-              </div>
-              <div className="hub-nav-list">
-                <button className="hub-nav-btn" onClick={() => navigate('/radar-readiness')}>
-                  <div className="hub-nav-icon" style={{ background: 'rgba(59,130,246,0.1)', color: 'var(--indigo)' }}>
-                    <i className="fa-solid fa-chart-line"></i>
-                  </div>
-                  <div>
-                    <div className="hub-nav-title">Radar Readiness</div>
-                    <div className="hub-nav-sub">Asesmen 4 Pilar</div>
-                  </div>
-                </button>
-                <button className="hub-nav-btn" onClick={() => navigate('/modul-belajar')}>
-                  <div className="hub-nav-icon" style={{ background: 'rgba(245,158,11,0.1)', color: 'var(--amber)' }}>
-                    <i className="fa-solid fa-book-open"></i>
-                  </div>
-                  <div>
-                    <div className="hub-nav-title">Modul Belajar</div>
-                    <div className="hub-nav-sub">6 Modul Silabus</div>
-                  </div>
-                </button>
-                <button className="hub-nav-btn" onClick={() => navigate('/koleksi-badge')}>
-                  <div className="hub-nav-icon" style={{ background: 'rgba(16,185,129,0.1)', color: 'var(--emerald)' }}>
-                    <i className="fa-solid fa-trophy"></i>
-                  </div>
-                  <div>
-                    <div className="hub-nav-title">Koleksi Badge</div>
-                    <div className="hub-nav-sub">&amp; E-Sertifikat</div>
-                  </div>
-                </button>
-              </div>
-            </div>
+        <div className="hub-lobby" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+          <div className="hub-lobby-flex">
 
             {/* Mascot Room Center */}
             <div className="hub-center">
@@ -325,60 +280,6 @@ export default function Dashboard() {
               </button>
             </div>
 
-            {/* Sandbox Lab Group */}
-            <div>
-              <div
-                style={{
-                  fontSize: '0.7rem',
-                  fontFamily: 'var(--font-mono)',
-                  color: 'var(--teal)',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.08em',
-                  fontWeight: 600,
-                  marginBottom: '10px',
-                }}
-              >
-                SANDBOX LAB
-              </div>
-              <div className="hub-nav-list">
-                <button className="hub-nav-btn" onClick={() => navigate('/sandbox/deepfake-detective')}>
-                  <div className="hub-nav-icon" style={{ background: 'rgba(20,184,166,0.1)', color: 'var(--teal)' }}>
-                    <i className="fa-solid fa-magnifying-glass"></i>
-                  </div>
-                  <div>
-                    <div className="hub-nav-title">Deepfake Detective</div>
-                    <div className="hub-nav-sub">Inspeksi Artefak Visual</div>
-                  </div>
-                </button>
-                <button className="hub-nav-btn" onClick={() => navigate('/sandbox/bias-breaker')}>
-                  <div className="hub-nav-icon" style={{ background: 'rgba(245,158,11,0.1)', color: 'var(--amber)' }}>
-                    <i className="fa-solid fa-bug"></i>
-                  </div>
-                  <div>
-                    <div className="hub-nav-title">Bias Breaker</div>
-                    <div className="hub-nav-sub">Deteksi Halusinasi Teks</div>
-                  </div>
-                </button>
-                <button className="hub-nav-btn" onClick={() => navigate('/sandbox/ethical-dilemma')}>
-                  <div className="hub-nav-icon" style={{ background: 'rgba(59,130,246,0.1)', color: 'var(--indigo)' }}>
-                    <i className="fa-solid fa-scale-balanced"></i>
-                  </div>
-                  <div>
-                    <div className="hub-nav-title">Ethical Dilemma</div>
-                    <div className="hub-nav-sub">Simulasi Keputusan</div>
-                  </div>
-                </button>
-                <button className="hub-nav-btn" onClick={() => navigate('/sandbox/prompt-safety')}>
-                  <div className="hub-nav-icon" style={{ background: 'rgba(16,185,129,0.1)', color: 'var(--emerald)' }}>
-                    <i className="fa-solid fa-terminal"></i>
-                  </div>
-                  <div>
-                    <div className="hub-nav-title">Prompt Safety Lab</div>
-                    <div className="hub-nav-sub">Parser Anatomi Prompt</div>
-                  </div>
-                </button>
-              </div>
-            </div>
           </div>
         </div>
 
@@ -496,6 +397,82 @@ export default function Dashboard() {
               </div>
             </div>
           </div>
+
+          {/* Detailed 4-Pillar Recommendations Grid */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '20px', marginTop: '20px' }}>
+            <div className="panel" style={{ padding: '24px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+                <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'rgba(99,102,241,0.12)', color: '#6366F1', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <i className="fa-solid fa-brain"></i>
+                </div>
+                <div>
+                  <h3 style={{ fontSize: '0.95rem', fontWeight: 700 }}>Pemahaman Dasar</h3>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--text-dim)' }}>Skor: {state.radar[0]}%</span>
+                </div>
+              </div>
+              <p style={{ fontSize: '0.82rem', color: 'var(--text-dim)', lineHeight: 1.5 }}>
+                Mengukur pemahamanmu tentang definisi AI, sejarah singkat, keterbatasan sistem, dan penanganan halusinasi data.
+              </p>
+              <button className="btn-back-dashboard" onClick={() => navigate('/modul-belajar')} style={{ width: '100%', marginTop: '16px', fontSize: '0.78rem', justifyContent: 'center' }}>
+                Pelajari Modul 1 →
+              </button>
+            </div>
+
+            <div className="panel" style={{ padding: '24px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+                <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'rgba(20,184,166,0.12)', color: '#14B8A6', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <i className="fa-solid fa-shield-halved"></i>
+                </div>
+                <div>
+                  <h3 style={{ fontSize: '0.95rem', fontWeight: 700 }}>Etika &amp; Keamanan</h3>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--text-dim)' }}>Skor: {state.radar[1]}%</span>
+                </div>
+              </div>
+              <p style={{ fontSize: '0.82rem', color: 'var(--text-dim)', lineHeight: 1.5 }}>
+                Mengukur kesadaran etika hak cipta, privasi data rahasia, serta kemampuan deteksi rekayasa deepfake visual.
+              </p>
+              <button className="btn-back-dashboard" onClick={() => navigate('/modul-belajar')} style={{ width: '100%', marginTop: '16px', fontSize: '0.78rem', justifyContent: 'center' }}>
+                Pelajari Modul 2 →
+              </button>
+            </div>
+
+            <div className="panel" style={{ padding: '24px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+                <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'rgba(245,158,11,0.12)', color: '#F59E0B', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <i className="fa-solid fa-terminal"></i>
+                </div>
+                <div>
+                  <h3 style={{ fontSize: '0.95rem', fontWeight: 700 }}>Prompt Engineering</h3>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--text-dim)' }}>Skor: {state.radar[2]}%</span>
+                </div>
+              </div>
+              <p style={{ fontSize: '0.82rem', color: 'var(--text-dim)', lineHeight: 1.5 }}>
+                Mengukur kecakapan menyusun instruksi prompt terstruktur dengan konteks, format, persona, dan teknik few-shot.
+              </p>
+              <button className="btn-back-dashboard" onClick={() => navigate('/modul-belajar')} style={{ width: '100%', marginTop: '16px', fontSize: '0.78rem', justifyContent: 'center' }}>
+                Pelajari Modul 3 →
+              </button>
+            </div>
+
+            <div className="panel" style={{ padding: '24px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+                <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'rgba(16,185,129,0.12)', color: '#10B981', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <i className="fa-solid fa-magnifying-glass"></i>
+                </div>
+                <div>
+                  <h3 style={{ fontSize: '0.95rem', fontWeight: 700 }}>Critical Thinking</h3>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--text-dim)' }}>Skor: {state.radar[3]}%</span>
+                </div>
+              </div>
+              <p style={{ fontSize: '0.82rem', color: 'var(--text-dim)', lineHeight: 1.5 }}>
+                Mengukur kemampuan melatih skeptisisme sehat, melakukan fact-checking, dan mengevaluasi klaim buatan AI.
+              </p>
+              <button className="btn-back-dashboard" onClick={() => navigate('/modul-belajar')} style={{ width: '100%', marginTop: '16px', fontSize: '0.78rem', justifyContent: 'center' }}>
+                Pelajari Modul 6 →
+              </button>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>

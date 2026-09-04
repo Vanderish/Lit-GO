@@ -12,6 +12,8 @@ import DashboardLayout from './components/Layout/DashboardLayout';
 // Pages
 import LandingPage from './pages/LandingPage/LandingPage';
 import Login from './pages/Auth/Login';
+import Register from './pages/Auth/Register';
+
 import Dashboard from './pages/Dashboard/Dashboard';
 import ProgresPage from './pages/Progres/ProgresPage';
 import RadarReadinessPage from './pages/RadarReadiness/RadarReadinessPage';
@@ -30,6 +32,7 @@ function App() {
           {/* Route Publik */}
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
 
           {/* Route yang Dilindungi */}
           <Route element={<ProtectedRoute />}>
