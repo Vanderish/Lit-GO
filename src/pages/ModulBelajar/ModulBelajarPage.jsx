@@ -1,7 +1,25 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../../context/ProgressContext';
+import { marked } from 'marked';
 import './ModulBelajarPage.css';
+
+// Import file markdown luar menggunakan fitur raw Vite (?raw)
+import mdModul1 from '../../content/modul-1.md?raw';
+import mdModul2 from '../../content/modul-2.md?raw';
+import mdModul3 from '../../content/modul-3.md?raw';
+import mdModul4 from '../../content/modul-4.md?raw';
+import mdModul5 from '../../content/modul-5.md?raw';
+import mdModul6 from '../../content/modul-6.md?raw';
+
+const markdownContents = {
+  1: mdModul1,
+  2: mdModul2,
+  3: mdModul3,
+  4: mdModul4,
+  5: mdModul5,
+  6: mdModul6,
+};
 
 export default function ModulBelajarPage() {
   const navigate = useNavigate();
@@ -12,6 +30,7 @@ export default function ModulBelajarPage() {
   const [showQuizView, setShowQuizView] = useState(false);
   const [selectedAnsIndex, setSelectedAnsIndex] = useState(null);
   const [quizFeedback, setQuizFeedback] = useState({ show: false, correct: false, msg: '' });
+  const [parsedHtmlContent, setParsedHtmlContent] = useState('');
 
   const activeMod = MODULES.find((m) => m.id === activeModId);
 
@@ -20,6 +39,12 @@ export default function ModulBelajarPage() {
     setShowQuizView(false);
     setSelectedAnsIndex(null);
     setQuizFeedback({ show: false, correct: false, msg: '' });
+
+    // Ambil teks markdown berdasarkan ID dan parse ke HTML
+    const rawMarkdown = markdownContents[id] || 'Materi belum tersedia.';
+    const htmlContent = marked.parse(rawMarkdown);
+    setParsedHtmlContent(htmlContent);
+
     setModuleOpen(true);
   };
 
@@ -98,11 +123,10 @@ export default function ModulBelajarPage() {
         })}
       </div>
 
-      {/* FULL PAGE OVERLAY (Menggantikan Modal Popup) */}
+      {/* FULL PAGE OVERLAY MODUL */}
       {isModuleOpen && activeMod && (
         <div className="fp-container">
           
-          {/* Header Aplikasi (Mirip mockup) */}
           <header className="fp-header">
             <div className="fp-header-left">
               <h1 className="fp-header-title">Deepfake Lab: Module {activeMod.id}01</h1>
@@ -112,24 +136,23 @@ export default function ModulBelajarPage() {
             </button>
           </header>
 
-          {/* Canvas Konten Utama */}
           <main className="fp-main">
             <div className="fp-content-wrapper">
               
               {!showQuizView ? (
-                // --- TAMPILAN MATERI BELAJAR ---
                 <div className="fp-view-section">
                   <div className="fp-heading-area">
                     <h2 className="fp-section-title">{activeMod.title}</h2>
                     <p className="fp-section-subtitle">{activeMod.topics}</p>
                   </div>
+                  
+                  {/* Konten hasil file Markdown luar */}
                   <div 
                     className="fp-reading-content"
-                    dangerouslySetInnerHTML={{ __html: activeMod.reading }}
+                    dangerouslySetInnerHTML={{ __html: parsedHtmlContent }}
                   ></div>
                 </div>
               ) : (
-                // --- TAMPILAN KUIS (Desain Baru) ---
                 <div className="fp-view-section">
                   <div className="fp-heading-area">
                     <h2 className="fp-section-title">Kuis Evaluasi</h2>
@@ -147,7 +170,7 @@ export default function ModulBelajarPage() {
                         className={`fp-quiz-option-card ${selectedAnsIndex === i ? 'selected' : ''}`}
                         onClick={() => {
                           setSelectedAnsIndex(i);
-                          setQuizFeedback({ show: false }); // Reset error kalau milih opsi lain
+                          setQuizFeedback({ show: false });
                         }}
                       >
                         <input className="sr-only" name="quiz_answer" type="radio" value={i} />
@@ -156,7 +179,6 @@ export default function ModulBelajarPage() {
                     ))}
                   </div>
 
-                  {/* Feedback Box Inline */}
                   {quizFeedback.show && (
                     <div className={`fp-quiz-feedback ${quizFeedback.correct ? 'correct' : 'wrong'}`}>
                       <i className={`fa-solid ${quizFeedback.correct ? 'fa-circle-check' : 'fa-triangle-exclamation'} mr-2`}></i>
@@ -168,7 +190,6 @@ export default function ModulBelajarPage() {
             </div>
           </main>
 
-          {/* Navigasi Bawah (Bottom Nav Shell) */}
           <nav className="fp-bottom-nav">
             {!showQuizView ? (
               <>

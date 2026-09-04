@@ -1,24 +1,18 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-// Data Silabus & Badge Data
+// Data Silabus & Badge Data (Tanpa teks reading yang panjang)
 export const MODULES = [
   { id:1, tag:"Level 1", title:'Kenalan dengan "Otak" AI', topics:"Definisi AI, sejarah singkat, mitos vs fakta, keterbatasan & halusinasi.", badge:"Pionir AI", icon:'fa-brain', iconBg:'linear-gradient(135deg, #8B5CF6, #6D28D9)',
-    reading:"AI (Artificial Intelligence) adalah simulasi kecerdasan manusia oleh mesin yang dilatih menggunakan miliaran data statistik. AI <b>tidak memiliki kesadaran</b> atau pemahaman sejati. Keterbatasan utamanya adalah <b>Halusinasi</b> — kondisi di mana AI menghasilkan fakta palsu yang terdengar sangat meyakinkan.",
     quiz:{ q:"Apa yang dimaksud dengan fenomena 'Halusinasi' pada model AI?", opts:["AI mengalami kerusakan sistem total dan mati.","AI menghasilkan fakta palsu yang terdengar ilmiah & meyakinkan.","AI bisa membaca emosi dan pikiran pengguna."], ans:1 }},
   { id:2, tag:"Level 2", title:"Kompas Etika & Privasi", topics:"Hak cipta, plagiarisme, privasi data, bias AI, identifikasi deepfake.", badge:"Penjaga Etika", icon:'fa-shield-halved', iconBg:'linear-gradient(135deg, #0EA5E9, #0284C7)',
-    reading:"Etika AI mencakup perlindungan privasi data pribadi (NIK, password, rekening), pencegahan plagiarisme, dan netralitas dari Bias. <b>Deepfake</b> bisa dikenali lewat kejanggalan retina mata, tekstur kulit berlebih, serta asimetri bentuk telinga/jari.",
     quiz:{ q:"Data mana yang HARUS DIRAHASIAKAN dan TIDAK BOLEH dimasukkan ke prompt AI publik?", opts:["Rangkuman makalah sejarah Indonesia 1945.","NIK dan kata sandi perbankan.","Pertanyaan rumus matematika fisika."], ans:1 }},
   { id:3, tag:"Level 3", title:"Seni Berbicara dengan Mesin", topics:"Anatomi prompt (konteks, instruksi, format, persona), teknik zero-shot vs few-shot.", badge:"Master Prompt", icon:'fa-terminal', iconBg:'linear-gradient(135deg, #6366F1, #4F46E5)',
-    reading:"Prompting adalah seni berkomunikasi dengan AI. Prompt berkualitas mengandung 4 elemen: <b>Persona/Role</b>, <b>Konteks</b> (latar belakang), <b>Instruksi Spesifik</b> (tugas utama), dan <b>Format Output</b> (tabel/poin/ringkasan).",
     quiz:{ q:"Elemen apa yang menentukan gaya bahasa & perspektif sudut pandang AI?", opts:["Format Output","Panjang karakter teks","Persona / Peran AI"], ans:2 }},
   { id:4, tag:"Level 4", title:"Asisten Produktivitas AI", topics:"Tips riset anti-hoaks, AI sebagai tutor pribadi, & email profesional.", badge:"Inovator Produktif", icon:'fa-rocket', iconBg:'linear-gradient(135deg, #EC4899, #F43F5E)',
-    reading:"AI dapat digunakan sebagai rekan diskusi dan tutor belajar. Untuk mencegah hoaks, selalu terapkan <i>Double Check & Fact Verification</i>. Gunakan AI untuk merumuskan kerangka, merapikan tata bahasa, atau membuat draf email.",
     quiz:{ q:"Cara paling etis menggunakan AI untuk tugas akademis?", opts:["Menyalin 100% jawaban AI dan mengakuinya murni sendiri.","AI sebagai teman diskusi & outline, lalu tulis sendiri dan deklarasikan penggunaan AI.","Menyuruh AI buatkan seluruh skripsi dari bab 1 hingga 5."], ans:1 }},
   { id:5, tag:"Level 5", title:"Eksplorasi AI Kreatif", topics:"Etika text-to-image, hak cipta karya visual, & prompting visual.", badge:"Kreator Beretika", icon:'fa-palette', iconBg:'linear-gradient(135deg, #10B981, #059669)',
-    reading:"Generative Image AI mengubah teks menjadi karya visual. Etika seni AI mengharuskan kreator untuk tidak meniru gaya seniman hidup tanpa izin dan tidak membuat citra palsu yang menyesatkan publik.",
     quiz:{ q:"Tindakan mana yang melanggar etika dalam pembuatan gambar AI?", opts:["Prompt pencahayaan fotorealistik alam.","Membuat foto deepfake tokoh publik untuk menyebarkan fitnah.","Membuat ilustrasi pemandangan gaya cyberpunk."], ans:1 }},
   { id:6, tag:"Level 6", title:"Bertahan di Era AI", topics:"Critical thinking, empati, adaptasi karier masa depan.", badge:"Cendekia Digital", icon:'fa-graduation-cap', iconBg:'linear-gradient(135deg, #F59E0B, #D97706)',
-    reading:"Di era AI, keterampilan manusia yang paling tak tergantikan adalah <b>Pemikiran Kritis</b>, <b>Empati Moral</b>, dan <b>Kreativitas Asli</b>. AI adalah alat (copilot), sedangkan manusia adalah pemegang kendali utama (pilot).",
     quiz:{ q:"Apa peran utama manusia dalam hubungannya dengan teknologi AI?", opts:["Pasrah dan serahkan seluruh keputusan ke AI.","Pemegang kendali utama (pilot) yang mengevaluasi secara kritis output AI.","Menolak seluruh penggunaan AI di kehidupan."], ans:1 }},
 ];
 
