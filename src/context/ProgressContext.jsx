@@ -386,22 +386,32 @@ const getStorageKey = () => {
   return 'litgo_complete_v1';
 };
 
+const defaultState = {
+  radar: [0, 0, 0, 0],
+  hasRadar: false,
+  doneModules: [],
+  badges: [],
+};
+
 const loadInitialState = () => {
   const key = getStorageKey();
   const s = localStorage.getItem(key);
   if (s) {
     try {
-      return JSON.parse(s);
+      const parsed = JSON.parse(s);
+      return {
+        ...defaultState,
+        ...parsed,
+        radar: Array.isArray(parsed?.radar) && parsed.radar.length === 4 ? parsed.radar : defaultState.radar,
+        hasRadar: Boolean(parsed?.hasRadar),
+        doneModules: Array.isArray(parsed?.doneModules) ? parsed.doneModules : [],
+        badges: Array.isArray(parsed?.badges) ? parsed.badges : [],
+      };
     } catch (err) {
       console.error('Failed to parse ' + key, err);
     }
   }
-  return {
-    radar: [0, 0, 0, 0],
-    hasRadar: false,
-    doneModules: [],
-    badges: [],
-  };
+  return defaultState;
 };
 
 const ProgressContext = createContext();
@@ -437,20 +447,31 @@ export function ProgressProvider({ children }) {
     const key = getStorageKey();
     localStorage.removeItem(key);
     localStorage.removeItem('litgo_complete_v1');
-    setState({
-      radar: [0, 0, 0, 0],
-      hasRadar: false,
-      doneModules: [],
-      badges: [],
-    });
+    setState(defaultState);
     window.location.reload();
   };
 
-  const doneCount = state.doneModules ? state.doneModules.length : 0;
+  // Kalkulasi 24 langkah gamifikasi terstruktur
+  const allStepIds = MODULES.flatMap((m) => (m.steps ? m.steps.map((s) => s.id) : []));
+  const doneCount = state.doneModules
+    ? state.doneModules.filter((id) => allStepIds.includes(id)).length
+    : 0;
+
+  // Hitung jumlah modul yang telah tuntas seluruh langkahnya (0 - 6 Modul)
+  const completedModulesCount = MODULES.filter((mod) => {
+    if (mod.steps && mod.steps.length > 0) {
+      return mod.steps.every((s) => (state.doneModules || []).includes(s.id));
+    }
+    return (state.doneModules || []).includes(mod.id);
+  }).length;
+
   const badgeCount = state.badges ? state.badges.length : 0;
-  const pts = doneCount * 100 + badgeCount * 100;
-  const lv = Math.max(1, Math.floor(doneCount / 3) + 1);
-  const expPct = Math.min(100, Math.round((doneCount / 16) * 100));
+  // Total Gems: 100 per langkah + 100 per badge + 50 jika Pre-Test selesai
+  const pts = doneCount * 100 + badgeCount * 100 + (state.hasRadar ? 50 : 0);
+  // Level progres naik setiap kelipatan 4 langkah (6 modul x 4 langkah = Level 1 sampai 7)
+  const lv = Math.max(1, Math.floor(doneCount / 4) + 1);
+  // EXP % proporsional terhadap total 24 langkah
+  const expPct = Math.min(100, Math.round((doneCount / 24) * 100));
 
   return (
     <ProgressContext.Provider
@@ -465,11 +486,13 @@ export function ProgressProvider({ children }) {
         isConfirmModalOpen,
         setConfirmModalOpen,
         doneCount,
+        completedModulesCount,
         badgeCount,
         pts,
         lv,
         expPct,
         MODULES,
+        BADGE_DATA,
       }}
     >
       {children}

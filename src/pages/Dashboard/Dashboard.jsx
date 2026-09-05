@@ -74,8 +74,11 @@ export default function Dashboard() {
     showToast('Pre-Test Berhasil Diselesaikan! Radar Readiness & Badge Pionir AI kamu telah aktif.', 'success');
   };
 
-  const avgScore = state.hasRadar
-    ? Math.round(state.radar.reduce((a, b) => a + b, 0) / 4)
+  const hasRadar = Boolean(state?.hasRadar);
+  const radar = Array.isArray(state?.radar) && state.radar.length === 4 ? state.radar : [0, 0, 0, 0];
+
+  const avgScore = hasRadar
+    ? Math.round(radar.reduce((a, b) => a + b, 0) / 4)
     : 0;
 
   const radarData = {
@@ -83,7 +86,7 @@ export default function Dashboard() {
     datasets: [
       {
         label: 'Skor Kecakapan Kamu (%)',
-        data: state.radar || [0, 0, 0, 0],
+        data: radar,
         backgroundColor: 'rgba(99, 102, 241, 0.22)',
         borderColor: '#6366F1',
         pointBackgroundColor: '#818CF8',
@@ -312,25 +315,25 @@ export default function Dashboard() {
                     <span className="radar-left-name">
                       <span className="radar-left-dot" style={{ background: '#6366F1' }}></span> Pemahaman
                     </span>
-                    <span className="radar-left-val">{state.radar[0]}%</span>
+                    <span className="radar-left-val">{radar[0]}%</span>
                   </div>
                   <div className="radar-left-item">
                     <span className="radar-left-name">
                       <span className="radar-left-dot" style={{ background: '#14B8A6' }}></span> Etika &amp; Keamanan
                     </span>
-                    <span className="radar-left-val">{state.radar[1]}%</span>
+                    <span className="radar-left-val">{radar[1]}%</span>
                   </div>
                   <div className="radar-left-item">
                     <span className="radar-left-name">
                       <span className="radar-left-dot" style={{ background: '#F59E0B' }}></span> Prompting
                     </span>
-                    <span className="radar-left-val">{state.radar[2]}%</span>
+                    <span className="radar-left-val">{radar[2]}%</span>
                   </div>
                   <div className="radar-left-item">
                     <span className="radar-left-name">
                       <span className="radar-left-dot" style={{ background: '#10B981' }}></span> Critical Thinking
                     </span>
-                    <span className="radar-left-val">{state.radar[3]}%</span>
+                    <span className="radar-left-val">{radar[3]}%</span>
                   </div>
                 </div>
               </div>
@@ -370,7 +373,7 @@ export default function Dashboard() {
                     </svg>
 
                     <div>
-                      <div className="donut-score-text">{state.hasRadar ? `${avgScore}%` : '0%'}</div>
+                      <div className="donut-score-text">{hasRadar ? `${avgScore}%` : '0%'}</div>
                       <div className="donut-label">Skor Rata-rata 4 Pilar</div>
                     </div>
                   </div>
@@ -378,19 +381,19 @@ export default function Dashboard() {
                   <div className="radar-right-breakdown">
                     <div className="breakdown-row">
                       <span className="breakdown-title">Pemahaman Dasar</span>
-                      <span className="breakdown-score-pill blue">{state.radar[0]}%</span>
+                      <span className="breakdown-score-pill blue">{radar[0]}%</span>
                     </div>
                     <div className="breakdown-row">
                       <span className="breakdown-title">Etika &amp; Keamanan</span>
-                      <span className="breakdown-score-pill teal">{state.radar[1]}%</span>
+                      <span className="breakdown-score-pill teal">{radar[1]}%</span>
                     </div>
                     <div className="breakdown-row">
                       <span className="breakdown-title">Prompting</span>
-                      <span className="breakdown-score-pill amber">{state.radar[2]}%</span>
+                      <span className="breakdown-score-pill amber">{radar[2]}%</span>
                     </div>
                     <div className="breakdown-row">
                       <span className="breakdown-title">Critical Thinking</span>
-                      <span className="breakdown-score-pill emerald">{state.radar[3]}%</span>
+                      <span className="breakdown-score-pill emerald">{radar[3]}%</span>
                     </div>
                   </div>
                 </div>
@@ -407,7 +410,7 @@ export default function Dashboard() {
                 </div>
                 <div>
                   <h3 style={{ fontSize: '0.95rem', fontWeight: 700 }}>Pemahaman Dasar</h3>
-                  <span style={{ fontSize: '0.75rem', color: 'var(--text-dim)' }}>Skor: {state.radar[0]}%</span>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--text-dim)' }}>Skor: {radar[0]}%</span>
                 </div>
               </div>
               <p style={{ fontSize: '0.82rem', color: 'var(--text-dim)', lineHeight: 1.5 }}>
@@ -425,7 +428,7 @@ export default function Dashboard() {
                 </div>
                 <div>
                   <h3 style={{ fontSize: '0.95rem', fontWeight: 700 }}>Etika &amp; Keamanan</h3>
-                  <span style={{ fontSize: '0.75rem', color: 'var(--text-dim)' }}>Skor: {state.radar[1]}%</span>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--text-dim)' }}>Skor: {radar[1]}%</span>
                 </div>
               </div>
               <p style={{ fontSize: '0.82rem', color: 'var(--text-dim)', lineHeight: 1.5 }}>
@@ -443,7 +446,7 @@ export default function Dashboard() {
                 </div>
                 <div>
                   <h3 style={{ fontSize: '0.95rem', fontWeight: 700 }}>Prompt Engineering</h3>
-                  <span style={{ fontSize: '0.75rem', color: 'var(--text-dim)' }}>Skor: {state.radar[2]}%</span>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--text-dim)' }}>Skor: {radar[2]}%</span>
                 </div>
               </div>
               <p style={{ fontSize: '0.82rem', color: 'var(--text-dim)', lineHeight: 1.5 }}>
@@ -461,7 +464,7 @@ export default function Dashboard() {
                 </div>
                 <div>
                   <h3 style={{ fontSize: '0.95rem', fontWeight: 700 }}>Critical Thinking</h3>
-                  <span style={{ fontSize: '0.75rem', color: 'var(--text-dim)' }}>Skor: {state.radar[3]}%</span>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--text-dim)' }}>Skor: {radar[3]}%</span>
                 </div>
               </div>
               <p style={{ fontSize: '0.82rem', color: 'var(--text-dim)', lineHeight: 1.5 }}>

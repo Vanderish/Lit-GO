@@ -4,7 +4,7 @@ import { useProgress } from '../../context/ProgressContext';
 import './Sidebar.css';
 
 export default function Sidebar() {
-  const { badgeCount, doneCount } = useProgress();
+  const { badgeCount, doneCount, completedModulesCount } = useProgress();
   const navigate = useNavigate();
   const [userData, setUserData] = useState(null);
   
@@ -31,10 +31,12 @@ export default function Sidebar() {
   const closeMobileMenu = () => setIsMobileOpen(false);
 
   const modulNav = [
-    { to: '/modul-belajar', title: 'Modul Belajar', icon: 'fa-book-bookmark', color: '#D97706', counter: `${doneCount}/6` },
+    { to: '/dashboard', title: 'Dashboard', icon: 'fa-gauge-high', color: '#6366F1' },
+    { to: '/modul-belajar', title: 'Modul Belajar', icon: 'fa-book-bookmark', color: '#D97706', counter: `${completedModulesCount}/6` },
   ];
 
   const sandboxNav = [
+    { to: '/radar-readiness', title: 'Radar Readiness', icon: 'fa-chart-pie', color: '#3B82F6' },
     { to: '/sandbox/deepfake-detective', title: 'Deepfake Detective', icon: 'fa-eye', color: '#0EA5E9' },
     { to: '/sandbox/bias-breaker', title: 'Bias Breaker', icon: 'fa-quote-left', color: '#F59E0B' },
     { to: '/sandbox/ethical-dilemma', title: 'Ethical Dilemma', icon: 'fa-scale-balanced', color: '#6366F1' },
@@ -42,6 +44,7 @@ export default function Sidebar() {
   ];
 
   const badgeNav = [
+    { to: '/progres', title: 'Progres Belajar', icon: 'fa-chart-line', color: '#3B82F6', counter: `${doneCount}/24` },
     { to: '/koleksi-badge', title: 'Koleksi Badge', icon: 'fa-award', color: '#059669', counter: `${badgeCount}/5` },
   ];
 

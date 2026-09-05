@@ -49,7 +49,7 @@ export default function DashboardNavbar({ pts = 0, badgeCount = 0, expPct = 0, l
             </div>
           </div>
           <div className="hud-level" title={`Level ${lv}`}>
-            LV.1
+            LV.
             <span className="hud-lv-badge">{lv}</span>
           </div>
           <button className="btn-reset" onClick={onRequestReset} title="Reset Progres Platform">

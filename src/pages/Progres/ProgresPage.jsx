@@ -7,9 +7,12 @@ export default function ProgresPage() {
   const navigate = useNavigate();
   const { state, doneCount, badgeCount, pts, lv, expPct, MODULES } = useProgress();
 
+  const hasRadar = Boolean(state?.hasRadar);
+  const radar = Array.isArray(state?.radar) && state.radar.length === 4 ? state.radar : [0, 0, 0, 0];
+
   const totalProgressPct = Math.min(
     100,
-    Math.round(((doneCount / 24) * 0.6 + (badgeCount / 5) * 0.25 + (state.hasRadar ? 0.15 : 0)) * 100)
+    Math.round(((doneCount / 24) * 0.6 + (badgeCount / 5) * 0.25 + (hasRadar ? 0.15 : 0)) * 100)
   );
 
   return (
@@ -68,11 +71,11 @@ export default function ProgresPage() {
           <div>
             <div className="radar-title">Status Asesmen Radar 4 Pilar</div>
             <div className="radar-subtitle">
-              {state.hasRadar ? 'Kalibrasi hasil Pre-Test tingkat kecakapan' : 'Belum melakukan Pre-Test'}
+              {hasRadar ? 'Kalibrasi hasil Pre-Test tingkat kecakapan' : 'Belum melakukan Pre-Test'}
             </div>
           </div>
           <button className="btn-lab-ghost btn-radar" onClick={() => navigate('/radar-readiness')}>
-            {state.hasRadar ? 'Lihat Detail Radar →' : 'Jalankan Pre-Test →'}
+            {hasRadar ? 'Lihat Detail Radar →' : 'Jalankan Pre-Test →'}
           </button>
         </div>
 
@@ -80,37 +83,37 @@ export default function ProgresPage() {
           <div className="pillar-item">
             <div className="pillar-item-label pillar-label-indigo">
               <span><i className="fa-solid fa-brain mr-1"></i> Pemahaman Dasar AI</span>
-              <strong>{state.radar ? state.radar[0] : 0}%</strong>
+              <strong>{radar[0]}%</strong>
             </div>
             <div className="pillar-item-track">
-              <div className="pillar-item-fill pillar-fill-indigo" style={{ width: `${state.radar ? state.radar[0] : 0}%` }}></div>
+              <div className="pillar-item-fill pillar-fill-indigo" style={{ width: `${radar[0]}%` }}></div>
             </div>
           </div>
           <div className="pillar-item">
             <div className="pillar-item-label pillar-label-teal">
               <span><i className="fa-solid fa-shield-halved mr-1"></i> Etika &amp; Keamanan Data</span>
-              <strong>{state.radar ? state.radar[1] : 0}%</strong>
+              <strong>{radar[1]}%</strong>
             </div>
             <div className="pillar-item-track">
-              <div className="pillar-item-fill pillar-fill-teal" style={{ width: `${state.radar ? state.radar[1] : 0}%` }}></div>
+              <div className="pillar-item-fill pillar-fill-teal" style={{ width: `${radar[1]}%` }}></div>
             </div>
           </div>
           <div className="pillar-item">
             <div className="pillar-item-label pillar-label-amber">
               <span><i className="fa-solid fa-terminal mr-1"></i> Formulasi Prompting</span>
-              <strong>{state.radar ? state.radar[2] : 0}%</strong>
+              <strong>{radar[2]}%</strong>
             </div>
             <div className="pillar-item-track">
-              <div className="pillar-item-fill pillar-fill-amber" style={{ width: `${state.radar ? state.radar[2] : 0}%` }}></div>
+              <div className="pillar-item-fill pillar-fill-amber" style={{ width: `${radar[2]}%` }}></div>
             </div>
           </div>
           <div className="pillar-item">
             <div className="pillar-item-label pillar-label-emerald">
               <span><i className="fa-solid fa-magnifying-glass mr-1"></i> Critical Thinking</span>
-              <strong>{state.radar ? state.radar[3] : 0}%</strong>
+              <strong>{radar[3]}%</strong>
             </div>
             <div className="pillar-item-track">
-              <div className="pillar-item-fill pillar-fill-emerald" style={{ width: `${state.radar ? state.radar[3] : 0}%` }}></div>
+              <div className="pillar-item-fill pillar-fill-emerald" style={{ width: `${radar[3]}%` }}></div>
             </div>
           </div>
         </div>
@@ -132,9 +135,9 @@ export default function ProgresPage() {
           {MODULES.map((mod) => {
             const modTotalSteps = mod.steps ? mod.steps.length : 1;
             const modCompletedSteps = mod.steps
-              ? mod.steps.filter((s) => (state.doneModules || []).includes(s.id)).length
-              : ((state.doneModules || []).includes(mod.id) ? 1 : 0);
-            const isDone = modCompletedSteps === modTotalSteps;
+              ? mod.steps.filter((s) => (state?.doneModules || []).includes(s.id)).length
+              : ((state?.doneModules || []).includes(mod.id) ? 1 : 0);
+            const isDone = modCompletedSteps === modTotalSteps || (state?.doneModules || []).includes(mod.id);
             return (
               <div
                 key={mod.id}

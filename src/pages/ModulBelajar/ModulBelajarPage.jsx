@@ -62,11 +62,19 @@ export default function ModulBelajarPage() {
       if (!newDone.includes(activeModId)) newDone.push(activeModId);
 
       let newBadges = [...(state.badges || [])];
-      if (state.hasRadar && !newBadges.includes(1)) newBadges.push(1);
-      if (newDone.includes(2) && !newBadges.includes(2)) newBadges.push(2);
-      if (newDone.includes(3) && !newBadges.includes(3)) newBadges.push(3);
-      if (newDone.includes(4) && newDone.includes(5) && !newBadges.includes(4)) newBadges.push(4);
-      if (newDone.length >= 6 && state.hasRadar && !newBadges.includes(5)) newBadges.push(5);
+      const mod1Done = ['1-1', '1-2', '1-3', '1-4'].every((s) => newDone.includes(s)) || newDone.includes(1);
+      const mod2Done = ['2-1', '2-2', '2-3', '2-4'].every((s) => newDone.includes(s)) || newDone.includes(2);
+      const mod3Done = ['3-1', '3-2', '3-3', '3-4'].every((s) => newDone.includes(s)) || newDone.includes(3);
+      const mod4Done = ['4-1', '4-2', '4-3', '4-4'].every((s) => newDone.includes(s)) || newDone.includes(4);
+      const mod5Done = ['5-1', '5-2', '5-3', '5-4'].every((s) => newDone.includes(s)) || newDone.includes(5);
+      const mod6Done = ['6-1', '6-2', '6-3', '6-4'].every((s) => newDone.includes(s)) || newDone.includes(6);
+
+      if (mod1Done && !newBadges.includes(1)) newBadges.push(1);
+      if (mod2Done && !newBadges.includes(2)) newBadges.push(2);
+      if (mod3Done && !newBadges.includes(3)) newBadges.push(3);
+      if (mod4Done && mod5Done && !newBadges.includes(4)) newBadges.push(4);
+      const allModulesDone = mod1Done && mod2Done && mod3Done && mod4Done && mod5Done && mod6Done;
+      if (allModulesDone && state.hasRadar && !newBadges.includes(5)) newBadges.push(5);
 
       saveState({ ...state, doneModules: newDone, badges: newBadges });
       
@@ -143,18 +151,19 @@ export default function ModulBelajarPage() {
     }
 
     let newBadges = [...(state.badges || [])];
-    const mod1Done = ['1-1', '1-2', '1-3', '1-4'].every((s) => newDone.includes(s));
-    const mod2Done = ['2-1', '2-2', '2-3', '2-4'].every((s) => newDone.includes(s));
-    const mod3Done = ['3-1', '3-2', '3-3', '3-4'].every((s) => newDone.includes(s));
-    const mod4Done = ['4-1', '4-2', '4-3', '4-4'].every((s) => newDone.includes(s));
-    const mod5Done = ['5-1', '5-2', '5-3', '5-4'].every((s) => newDone.includes(s));
-    const mod6Done = ['6-1', '6-2', '6-3', '6-4'].every((s) => newDone.includes(s));
+    const mod1Done = ['1-1', '1-2', '1-3', '1-4'].every((s) => newDone.includes(s)) || newDone.includes(1);
+    const mod2Done = ['2-1', '2-2', '2-3', '2-4'].every((s) => newDone.includes(s)) || newDone.includes(2);
+    const mod3Done = ['3-1', '3-2', '3-3', '3-4'].every((s) => newDone.includes(s)) || newDone.includes(3);
+    const mod4Done = ['4-1', '4-2', '4-3', '4-4'].every((s) => newDone.includes(s)) || newDone.includes(4);
+    const mod5Done = ['5-1', '5-2', '5-3', '5-4'].every((s) => newDone.includes(s)) || newDone.includes(5);
+    const mod6Done = ['6-1', '6-2', '6-3', '6-4'].every((s) => newDone.includes(s)) || newDone.includes(6);
 
     if (mod1Done && !newBadges.includes(1)) newBadges.push(1);
     if (mod2Done && !newBadges.includes(2)) newBadges.push(2);
     if (mod3Done && !newBadges.includes(3)) newBadges.push(3);
     if (mod4Done && mod5Done && !newBadges.includes(4)) newBadges.push(4);
-    if (newDone.length === 24 && state.hasRadar && !newBadges.includes(5)) newBadges.push(5);
+    const allModulesDone = mod1Done && mod2Done && mod3Done && mod4Done && mod5Done && mod6Done;
+    if (allModulesDone && state.hasRadar && !newBadges.includes(5)) newBadges.push(5);
 
     saveState({
       ...state,
