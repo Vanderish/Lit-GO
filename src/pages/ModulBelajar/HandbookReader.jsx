@@ -36,20 +36,19 @@ export default function HandbookReader({ moduleId, onProceedToQuiz, onClose }) {
         <div className="handbook-cover-left">
           <div className="handbook-badge-row">
             <span className="hb-pill hb-pill-level">
-              <i className="fa-solid fa-bookmark mr-1"></i> {moduleData.tag}
+              {moduleData.tag}
             </span>
             <span className="hb-pill hb-pill-edition">
-              <i className="fa-solid fa-award mr-1"></i> Lit-GO Handbook Edisi 2026
+              Lit-GO Handbook Edisi 2026
             </span>
             <span className="hb-pill hb-pill-time">
-              <i className="fa-solid fa-clock mr-1"></i> {moduleData.readingTime}
+              {moduleData.readingTime}
             </span>
           </div>
 
           <h1 className="handbook-main-title">{moduleData.title}</h1>
           <p className="handbook-main-subtitle">{moduleData.subtitle}</p>
           <div className="handbook-standard-tag">
-            <i className="fa-solid fa-shield-halved mr-2 text-primary"></i>
             Terverifikasi: <strong>{moduleData.standardTag}</strong>
           </div>
 
@@ -104,14 +103,14 @@ export default function HandbookReader({ moduleId, onProceedToQuiz, onClose }) {
             onClick={() => setViewMode('booklet')}
             title="Tampilan Lembar Booklet"
           >
-            <i className="fa-solid fa-book-open mr-1"></i> Booklet
+            Booklet
           </button>
           <button 
             className={`hb-mode-btn ${viewMode === 'continuous' ? 'active' : ''}`}
             onClick={() => setViewMode('continuous')}
             title="Tampilan Baca Menyeluruh"
           >
-            <i className="fa-solid fa-bars-staggered mr-1"></i> Semua Halaman
+            Semua Halaman
           </button>
         </div>
       </div>
@@ -162,7 +161,8 @@ export default function HandbookReader({ moduleId, onProceedToQuiz, onClose }) {
           onClick={handlePrev}
           disabled={currentPageIndex === 0}
         >
-          <i className="fa-solid fa-arrow-left mr-2"></i> Halaman Sebelumnya
+          <span className="hb-btn-arrow">←</span>
+          <span>Halaman Sebelumnya</span>
         </button>
 
         <div className="hb-dots-indicator">
@@ -181,11 +181,13 @@ export default function HandbookReader({ moduleId, onProceedToQuiz, onClose }) {
         >
           {currentPageIndex === totalPages - 1 ? (
             <>
-              Lanjut ke Kuis Evaluasi <i className="fa-solid fa-clipboard-check ml-2"></i>
+              <span>Lanjut ke Kuis Evaluasi</span>
+              <span className="hb-btn-arrow">→</span>
             </>
           ) : (
             <>
-              Halaman Selanjutnya <i className="fa-solid fa-arrow-right ml-2"></i>
+              <span>Halaman Selanjutnya</span>
+              <span className="hb-btn-arrow">→</span>
             </>
           )}
         </button>
@@ -222,7 +224,6 @@ function HandbookPageRender({ page, activeMythTab, setActiveMythTab }) {
             </div>
             {page.imgCaption && (
               <div className="hb-illustration-caption">
-                <i className="fa-solid fa-circle-info mr-2 text-primary"></i>
                 {page.imgCaption}
               </div>
             )}
@@ -251,7 +252,6 @@ function HandbookPageRender({ page, activeMythTab, setActiveMythTab }) {
           {page.callout && (
             <div className={`hb-callout-box hb-callout-${page.callout.type}`}>
               <div className="hb-callout-head">
-                <i className="fa-solid fa-certificate mr-2 text-primary"></i>
                 <strong>{page.callout.title}</strong>
               </div>
               <p className="hb-callout-desc">{page.callout.text}</p>
@@ -262,7 +262,6 @@ function HandbookPageRender({ page, activeMythTab, setActiveMythTab }) {
           {page.comparisons && (
             <div className="hb-comparisons-wrapper">
               <div className="hb-comparison-intro">
-                <i className="fa-solid fa-scale-balanced mr-2 text-indigo"></i>
                 <strong>Tabel Komparasi Ilmiah Mitos vs Realitas</strong>
               </div>
               <div className="hb-comparison-cards-list">
@@ -303,7 +302,6 @@ function HandbookPageRender({ page, activeMythTab, setActiveMythTab }) {
               {page.whyHappens && (
                 <div className="hb-why-happens-card">
                   <div className="hb-why-title">
-                    <i className="fa-solid fa-gear mr-2 text-amber"></i>
                     {page.whyHappens.title}
                   </div>
                   <p className="hb-why-text">{page.whyHappens.text}</p>
@@ -314,7 +312,6 @@ function HandbookPageRender({ page, activeMythTab, setActiveMythTab }) {
               {page.protocolSteps && (
                 <div className="hb-protocol-container">
                   <div className="hb-protocol-title">
-                    <i className="fa-solid fa-list-check mr-2 text-primary"></i>
                     Protokol 3 Langkah Menghindari Halusinasi:
                   </div>
                   <div className="hb-protocol-grid">
@@ -338,7 +335,7 @@ function HandbookPageRender({ page, activeMythTab, setActiveMythTab }) {
             <div className="hb-pilot-container">
               <div className="hb-pilot-hero-card">
                 <div className="hb-pilot-badge">
-                  <i className="fa-solid fa-compass mr-1"></i> {page.pilotAnalogy.title}
+                  {page.pilotAnalogy.title}
                 </div>
                 <blockquote className="hb-pilot-quote">
                   "{page.pilotAnalogy.quote}"
@@ -362,7 +359,6 @@ function HandbookPageRender({ page, activeMythTab, setActiveMythTab }) {
 
               {page.frameworkSeal && (
                 <div className="hb-seal-footer">
-                  <i className="fa-solid fa-circle-check mr-2 text-emerald"></i>
                   {page.frameworkSeal}
                 </div>
               )}

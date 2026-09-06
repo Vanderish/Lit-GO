@@ -328,19 +328,22 @@
 .handbook-badge-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 16px;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
 }
 
 .hb-pill {
   display: inline-flex;
   align-items: center;
-  font-size: 0.76rem;
+  justify-content: center;
+  font-size: 0.78rem;
   font-weight: 700;
-  padding: 5px 12px;
+  padding: 6px 16px;
   border-radius: 9999px;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
+  line-height: 1.2;
 }
 
 .hb-pill-level {
@@ -1161,6 +1164,8 @@
 .btn-hb-back {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  gap: 10px;
   background: #f1f5f9;
   border: 1px solid #cbd5e1;
   color: var(--navy);
@@ -1184,6 +1189,8 @@
 .btn-hb-next {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  gap: 10px;
   background: #1d4ed8;
   border: none;
   color: #ffffff;
@@ -1199,6 +1206,15 @@
 .btn-hb-next:hover {
   background: #1e40af;
   transform: translateY(-1px);
+}
+
+.hb-btn-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  line-height: 1;
+  font-weight: 700;
 }
 
 .hb-dots-indicator {
