@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../../context/ProgressContext';
 import { marked } from 'marked';
 import './ModulBelajarPage.css';
+import HandbookReader from './HandbookReader';
 
 // Import file markdown luar menggunakan fitur raw Vite (?raw)
 import mdModul1 from '../../content/modul-1.md?raw';
@@ -1183,12 +1184,12 @@ export default function ModulBelajarPage() {
         </div>
       )}
     
-      {/* FULL PAGE OVERLAY MODUL (MARKDOWN & EVALUATION QUIZ) */}
+      {/* FULL PAGE OVERLAY MODUL (ILLUSTRATED HANDBOOK & EVALUATION QUIZ) */}
       {isModuleOpen && activeMod && (
         <div className="fp-container">
           <header className="fp-header">
             <div className="fp-header-left">
-              <h1 className="fp-header-title">Lit-GO: {activeMod.tag} - {activeMod.title}</h1>
+              <h1 className="fp-header-title">Lit-GO AI Handbook: {activeMod.tag} - {activeMod.title}</h1>
             </div>
             <button className="fp-close-btn" onClick={() => setModuleOpen(false)} aria-label="Close">
               <i className="fa-solid fa-xmark"></i>
@@ -1196,20 +1197,13 @@ export default function ModulBelajarPage() {
           </header>
 
           <main className="fp-main">
-            <div className="fp-content-wrapper">
+            <div className={`fp-content-wrapper ${!showQuizView ? 'handbook-mode' : ''}`}>
               {!showQuizView ? (
-                <div className="fp-view-section">
-                  <div className="fp-heading-area">
-                    <h2 className="fp-section-title">{activeMod.title}</h2>
-                    <p className="fp-section-subtitle">{activeMod.topics}</p>
-                  </div>
-                  
-                  {/* Konten hasil file Markdown */}
-                  <div 
-                    className="fp-reading-content"
-                    dangerouslySetInnerHTML={{ __html: parsedHtmlContent }}
-                  ></div>
-                </div>
+                <HandbookReader 
+                  moduleId={activeMod.id} 
+                  onProceedToQuiz={() => setShowQuizView(true)} 
+                  onClose={() => setModuleOpen(false)} 
+                />
               ) : (
                 <div className="fp-view-section">
                   <div className="fp-heading-area">
@@ -1252,41 +1246,27 @@ export default function ModulBelajarPage() {
             </div>
           </main>
 
-          <nav className="fp-bottom-nav">
-            {!showQuizView ? (
-              <>
-                <button className="btn-fp-nav btn-fp-back" onClick={() => setModuleOpen(false)}>
-                  <i className="fa-solid fa-chevron-left"></i> Kembali
-                </button>
-                <div className="fp-progress-dots">
-                  <div className="fp-dot active"></div>
-                  <div className="fp-dot"></div>
-                </div>
-                <button className="btn-fp-nav btn-fp-next" onClick={() => setShowQuizView(true)}>
-                  Lanjut Kuis <i className="fa-solid fa-chevron-right"></i>
-                </button>
-              </>
-            ) : (
-              <>
-                <button className="btn-fp-nav btn-fp-back" onClick={() => setShowQuizView(false)}>
-                  <i className="fa-solid fa-chevron-left"></i> Materi
-                </button>
-                <div className="fp-progress-dots">
-                  <div className="fp-dot"></div>
-                  <div className="fp-dot active"></div>
-                </div>
-                <button 
-                  className="btn-fp-nav btn-fp-next" 
-                  onClick={handleQuizSubmit}
-                  disabled={selectedAnsIndex === null || quizFeedback.correct}
-                >
-                  Submit Jawaban <i className="fa-solid fa-check ml-1"></i>
-                </button>
-              </>
-            )}
-          </nav>
+          {showQuizView && (
+            <nav className="fp-bottom-nav">
+              <button className="btn-fp-nav btn-fp-back" onClick={() => setShowQuizView(false)}>
+                <i className="fa-solid fa-chevron-left"></i> Kembali ke Materi
+              </button>
+              <div className="fp-progress-dots">
+                <div className="fp-dot"></div>
+                <div className="fp-dot active"></div>
+              </div>
+              <button 
+                className="btn-fp-nav btn-fp-next" 
+                onClick={handleQuizSubmit}
+                disabled={selectedAnsIndex === null || quizFeedback.correct}
+              >
+                Submit Jawaban <i className="fa-solid fa-check ml-1"></i>
+              </button>
+            </nav>
+          )}
         </div>
       )}
+
 
     </div>
   );
