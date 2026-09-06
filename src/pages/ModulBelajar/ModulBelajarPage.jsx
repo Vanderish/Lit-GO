@@ -4,7 +4,8 @@ import { useProgress } from '../../context/ProgressContext';
 import { marked } from 'marked';
 import './ModulBelajarPage.css';
 import HandbookReader from './HandbookReader';
-import DuolingoGameArena from './DuolingoGameArena';
+import Game1Arena from './Game1Arena';
+import Game2Arena from './Game2Arena';
 
 // Import file markdown luar menggunakan fitur raw Vite (?raw)
 import mdModul1 from '../../content/modul-1.md?raw';
@@ -30,6 +31,7 @@ export default function ModulBelajarPage() {
 
   const [activeModule, setActiveModule] = useState(null); // Selected module card
   const [activeStep, setActiveStep] = useState(null); // Selected step (triggers Full-Screen Gamified View)
+  const [selectedGameMode, setSelectedGameMode] = useState('game1'); // 'game1' (Duolingo) | 'game2' (Mimo)
   const [isModuleOpen, setModuleOpen] = useState(false);
   const [activeModId, setActiveModId] = useState(null);
   const [showQuizView, setShowQuizView] = useState(false);
@@ -313,7 +315,64 @@ export default function ModulBelajarPage() {
               </button>
             </div>
 
-            Pilih salah satu dari <strong>4 Langkah Aktivitas Full-Screen</strong> di bawah ini untuk bermain game interaktif &amp; Tebak Gambar:
+            {/* GAME CONCEPT SELECTOR (GAME 1 vs GAME 2) */}
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: '1fr 1fr',
+              gap: '10px',
+              background: 'rgba(99, 102, 241, 0.08)',
+              padding: '6px',
+              borderRadius: '12px',
+              border: '1px solid rgba(99, 102, 241, 0.2)',
+              marginBottom: '16px'
+            }}>
+              <button
+                type="button"
+                onClick={() => setSelectedGameMode('game1')}
+                style={{
+                  padding: '10px 14px',
+                  borderRadius: '9px',
+                  border: 'none',
+                  background: selectedGameMode === 'game1' ? 'var(--blue)' : 'transparent',
+                  color: selectedGameMode === 'game1' ? '#ffffff' : 'var(--navy)',
+                  fontWeight: 700,
+                  fontSize: '0.84rem',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px',
+                  boxShadow: selectedGameMode === 'game1' ? '0 3px 10px rgba(37, 99, 235, 0.35)' : 'none',
+                  transition: 'all 0.18s ease'
+                }}
+              >
+                <i className="fa-solid fa-gamepad"></i> Game 1 (Duolingo Arena)
+              </button>
+              <button
+                type="button"
+                onClick={() => setSelectedGameMode('game2')}
+                style={{
+                  padding: '10px 14px',
+                  borderRadius: '9px',
+                  border: 'none',
+                  background: selectedGameMode === 'game2' ? '#6366f1' : 'transparent',
+                  color: selectedGameMode === 'game2' ? '#ffffff' : 'var(--navy)',
+                  fontWeight: 700,
+                  fontSize: '0.84rem',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px',
+                  boxShadow: selectedGameMode === 'game2' ? '0 3px 10px rgba(99, 102, 241, 0.35)' : 'none',
+                  transition: 'all 0.18s ease'
+                }}
+              >
+                <i className="fa-solid fa-code"></i> Game 2 (Mimo Code Studio)
+              </button>
+            </div>
+
+            Pilih salah satu dari <strong>4 Langkah Aktivitas Full-Screen</strong> ({selectedGameMode === 'game1' ? 'Game 1: Duolingo Arena' : 'Game 2: Mimo Code Studio'}) di bawah ini:
             </p>
 
             {/* 4 Step Cards per Module */}
@@ -397,13 +456,23 @@ export default function ModulBelajarPage() {
       )}
 
       {/* ========================================================================= */}
-      {/* FULL-SCREEN DUOLINGO GAMIFIED LESSON OVERLAY */}
+      {/* FULL-SCREEN GAMIFIED LESSON OVERLAY (GAME 1 vs GAME 2) */}
       {/* ========================================================================= */}
-      {activeStep && (
-        <DuolingoGameArena
+      {activeStep && selectedGameMode === 'game1' && (
+        <Game1Arena
           activeStep={activeStep}
           onClose={() => setActiveStep(null)}
           onComplete={(stepId) => finishStepAndReward(stepId)}
+          onSwitchToGame2={() => setSelectedGameMode('game2')}
+        />
+      )}
+
+      {activeStep && selectedGameMode === 'game2' && (
+        <Game2Arena
+          activeStep={activeStep}
+          onClose={() => setActiveStep(null)}
+          onComplete={(stepId) => finishStepAndReward(stepId)}
+          onSwitchToGame1={() => setSelectedGameMode('game1')}
         />
       )}
 

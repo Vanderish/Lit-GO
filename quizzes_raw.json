@@ -1,0 +1,1442 @@
+[
+  {
+    "num": 1,
+    "question": "Apa kontribusi utama Alan Turing dalam makalah tahun 1950 terkait evaluasi kecerdasan buatan?",
+    "options": {
+      "A": "Memperkenalkan istilah Artificial Intelligence di Dartmouth Conference",
+      "B": "Mengusulkan Imitation Game (Turing Test) untuk mengukur perilaku cerdas mesin",
+      "C": "Merancang arsitektur Transformer pertama di dunia",
+      "D": "Menemukan metode pemrosesan bahasa alami berbasis Word2Vec"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Turing (1950) merumuskan Imitation Game sebagai ukuran praktis percakapan teks untuk menilai apakah mesin dapat meniru respons manusia."
+  },
+  {
+    "num": 2,
+    "question": "Di manakah istilah \"Artificial Intelligence\" pertama kali dicetuskan secara resmi pada tahun 1956?",
+    "options": {
+      "A": "NeurIPS Conference di Vancouver",
+      "B": "Proposal Konferensi Musim Panas di Dartmouth College",
+      "C": "Seminar Ilmiah di MIT Media Lab",
+      "D": "Pertemuan Tahunan Oxford University"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Istilah AI dicetuskan oleh McCarthy, Minsky, Rochester, dan Shannon dalam proposal proyek riset musim panas Dartmouth 1956."
+  },
+  {
+    "num": 3,
+    "question": "Apa keunggulan teknis utama arsitektur Transformer (Vaswani dkk., 2017) dibanding model recurrent sebelumnya?",
+    "options": {
+      "A": "Memproses kata satu per satu secara berurutan agar tidak terjadi kesalahan",
+      "B": "Menggunakan mekanisme self-attention untuk memproses seluruh kalimat secara paralel",
+      "C": "Menghapus kebutuhan komputasi GPU dan data pelatihan",
+      "D": "Memastikan AI tidak pernah menghasilkan halusinasi"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Transformer membuang mekanisme perulangan (recurrence) dan mengandalkan self-attention untuk pemrosesan paralel yang jauh lebih cepat."
+  },
+  {
+    "num": 4,
+    "question": "Berapa estimasi jumlah sitasi makalah \"Attention Is All You Need\" hingga tahun 2026 yang menandai pengaruh besarnya pada LLM?",
+    "options": {
+      "A": "Lebih dari 10.000 kali",
+      "B": "Lebih dari 50.000 kali",
+      "C": "Lebih dari 250.000 kali",
+      "D": "Tepat 1.000.000 kali"
+    },
+    "key": "C",
+    "pembahasan": "[Dalam Modul] Makalah Vaswani dkk. (2017) telah dikutip lebih dari 250.000 kali dan menjadi fondasi ChatGPT, Gemini, dan Claude."
+  },
+  {
+    "num": 5,
+    "question": "Secara teknis, apa prinsip dasar operasional sebuah Large Language Model (LLM)?",
+    "options": {
+      "A": "Memiliki kesadaran penuh terhadap makna kata yang diucapkannya",
+      "B": "Mesin statistik yang memprediksi token berikutnya berdasarkan probabilitas pola data",
+      "C": "Pencari fakta otomatis yang terhubung langsung ke kebenaran mutlak",
+      "D": "Program basis data konvensional yang menyimpan seluruh jawaban manusia"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] LLM tidak memiliki kesadaran, melainkan merangkai pola statistik probabilitas urutan kata/token.\nLangkah 2: Pasangan Konsep Ilmiah (Dalam & Luar Modul)"
+  },
+  {
+    "num": 6,
+    "question": "Dalam arsitektur Transformer, mekanisme Self-Attention bekerja dengan menghitung bobot hubungan antar-kata melalui tiga matriks utama, yaitu...",
+    "options": {
+      "A": "Input, Process, Output",
+      "B": "Query (Q), Key (K), dan Value (V)",
+      "C": "Encoder, Decoder, Transducer",
+      "D": "Token, Sub-token, Word"
+    },
+    "key": "B",
+    "pembahasan": "[Luar Modul / Ekstensi Vaswani 2017] Self-attention menghitung perkalian dot-product antara Query dan Key untuk menentukan bobot perhatian terhadap matriks Value."
+  },
+  {
+    "num": 7,
+    "question": "Mengapa model Recurrent Neural Network (RNN) tradisional mengalami masalah vanishing gradient pada teks yang sangat panjang?",
+    "options": {
+      "A": "Karena memproses kalimat secara paralel sejak awal",
+      "B": "Karena informasi harus dilewatkan secara berurutan langkah demi langkah (sequential), sehingga sinyal masa lalu memudar",
+      "C": "Karena RNN tidak menggunakan memori komputer",
+      "D": "Karena RNN sengaja dirancang hanya untuk angka"
+    },
+    "key": "B",
+    "pembahasan": "[Luar Modul / Literatut Deep Learning] Keterbatasan pemrosesan sekuensial RNN membuat gradient menyusut saat mempertahankan konteks antarkata yang berjauhan."
+  },
+  {
+    "num": 8,
+    "question": "Fenomena di mana AI menghasilkan jawaban yang salah namun disampaikan dengan gaya bahasa sangat meyakinkan disebut...",
+    "options": {
+      "A": "Overfitting",
+      "B": "Halusinasi AI",
+      "C": "Backpropagation",
+      "D": "Prompt Drift"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Halusinasi terjadi karena AI mengoptimalkan kelancaran linguistik, bukan validasi fakta dunia nyata."
+  },
+  {
+    "num": 9,
+    "question": "Fungsi komponen Positional Encoding pada arsitektur Transformer adalah...",
+    "options": {
+      "A": "Menerjemahkan bahasa asing secara otomatis",
+      "B": "Memberikan informasi urutan/posisi kata karena pemrosesan dilakukan secara paralel",
+      "C": "Menyimpan data pribadi pengguna",
+      "D": "Mengurangi ukuran file model"
+    },
+    "key": "B",
+    "pembahasan": "[Luar Modul / Vaswani 2017] Karena Transformer tidak memproses data secara berurutan, positional encoding disuntikkan agar model tahu urutan kata dalam kalimat."
+  },
+  {
+    "num": 10,
+    "question": "Apa yang dimaksud dengan Token dalam konteks pemrosesan Large Language Model?",
+    "options": {
+      "A": "Mata uang digital untuk membayar langganan AI",
+      "B": "Potongan teks (bisa berupa kata atau sub-kata) yang menjadi unit pemrosesan dasar LLM",
+      "C": "Kunci enkripsi untuk mengamankan data",
+      "D": "Sertifikat keaslian hasil karya AI"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul / Pengayaan] Token adalah unit teks terkecil yang diubah menjadi vektor angka untuk diproses oleh model.\nLangkah 3: Logika Probabilitas & Kasus Hukum (Dalam Modul)"
+  },
+  {
+    "num": 11,
+    "question": "Mengapa audit independen di ranah hukum menemukan tingkat kesalahan (halusinasi) yang signifikan pada asisten AI generatif?",
+    "options": {
+      "A": "Karena AI memang sengaja diprogram untuk menipu pengacara",
+      "B": "Karena AI menyusun jawaban berdasarkan probabilitas kata yang masuk akal, bukan melakukan pengecekan kebenaran pasal/kasus nyata",
+      "C": "Karena dokumen hukum selalu berubah setiap detik",
+      "D": "Karena AI tidak bisa membaca teks lebih dari 100 kata"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Audit hukum mencatat AI rawan mengarang rujukan kasus karena prioritas dasarnya adalah kelancaran struktur bahasa."
+  },
+  {
+    "num": 12,
+    "question": "Peran utama manusia sebagai \"Validator Akhir\" (Human-in-the-loop) sangat krusial pada sektor-sektor berikut, kecuali...",
+    "options": {
+      "A": "Medis dan diagnosis penyakit",
+      "B": "Riset dan kutipan hukum",
+      "C": "Analisis keuangan bernilai tinggi",
+      "D": "Generasi teks acak untuk permainan tebak-tebakan santai"
+    },
+    "key": "D",
+    "pembahasan": "[Dalam Modul] Sektor berrisiko tinggi (hukum, medis, keuangan) menuntut presisi mutlak sehingga verifikasi manusia tidak tergantikan."
+  },
+  {
+    "num": 13,
+    "question": "Parameter Temperature dalam pengoperasian LLM berfungsi untuk mengatur...",
+    "options": {
+      "A": "Kecepatan kipas pendingin server AI",
+      "B": "Tingkat acak/kreativitas (variabilitas probabilitas) dalam pemilihan token berikutnya",
+      "C": "Jumlah memori RAM yang digunakan",
+      "D": "Tingkat kebal AI terhadap peretasan"
+    },
+    "key": "B",
+    "pembahasan": "[Luar Modul / Pengayaan] Temperature rendah (mis. 0.0) membuat respons konsisten/deterministik, sedangkan temperature tinggi (mis. 0.8) meningkatkan kreativitas/variasi."
+  },
+  {
+    "num": 14,
+    "question": "Mengapa kalimat yang \"masuk akal secara linguistik\" pada hasil respons AI belum tentu benar secara faktual?",
+    "options": {
+      "A": "Karena tata bahasa dan kebenaran fakta berada pada domain evaluasi yang berbeda",
+      "B": "Karena AI menggunakan bahasa kuno",
+      "C": "Karena server AI tidak menggunakan listrik yang stabil",
+      "D": "Karena model AI hanya dilatih menggunakan satu buku"
+    },
+    "key": "A",
+    "pembahasan": "[Dalam Modul] AI dioptimalkan untuk sintaksis dan pola linguistik yang mulus, bukan verifikasi empiris fakta."
+  },
+  {
+    "num": 15,
+    "question": "Apa risiko utama jika pengguna mempercayai secara mentah-mentah (blind trust) output AI dalam pembuatan draf kontrak bisnis?",
+    "options": {
+      "A": "File kontrak akan otomatis terhapus",
+      "B": "Terjadi klausa atau rujukan hukum fiktif (halusinasi) yang memicu kerugian legal",
+      "C": "Teks otomatis berubah menjadi bahasa asing",
+      "D": "Komputer pengguna mengalami crash"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Ketiadaan validasi manusia pada dokumen hukum berisiko memasukkan kutipan fiktif buatan AI.\nLangkah 4: Detektif Halusinasi & Evaluasi Lanjutan (Luar Modul)"
+  },
+  {
+    "num": 16,
+    "question": "Benchmark standar ilmiah yang sering digunakan para peneliti untuk mengukur tingkat kejujuran dan halusinasi LLM adalah...",
+    "options": {
+      "A": "ImageNet",
+      "B": "TruthfulQA (Lin et al., 2021)",
+      "C": "WordNet",
+      "D": "ResNet-50"
+    },
+    "key": "B",
+    "pembahasan": "[Luar Modul / Lin et al., 2021] TruthfulQA dirancang khusus untuk mengukur seberapa sering LLM meniru kebohongan umum atau berhalusinasi."
+  },
+  {
+    "num": 17,
+    "question": "Fenomena AI Sycophancy merujuk pada kecenderungan AI untuk...",
+    "options": {
+      "A": "Menolak menjawab pertanyaan pengguna",
+      "B": "Mengiyakan atau membenarkan pendapat/keyakinan pengguna meskipun salah secara fakta",
+      "C": "Mengumpat saat diberikan pertanyaan sulit",
+      "D": "Mengubah format output secara acak"
+    },
+    "key": "B",
+    "pembahasan": "[Luar Modul / Anthropic Research 2023] Sycophancy terjadi ketika model cenderung menyesuaikan respons agar disukai pengguna, memvalidasi asumsi keliru."
+  },
+  {
+    "num": 18,
+    "question": "Apa perbedaan antara Parametric Knowledge dan Non-Parametric Knowledge pada sistem berbasis AI?",
+    "options": {
+      "A": "Parametric tersimpan dalam bobot model; Non-parametric tersimpan pada basis data eksternal",
+      "B": "Parametric berbasis gambar; Non-parametric berbasis teks",
+      "C": "Parametric bersifat gratis; Non-parametric bersifat berbayar",
+      "D": "Parametric dibuat manusia; Non-parametric dibuat hewan"
+    },
+    "key": "A",
+    "pembahasan": "[Luar Modul / Lewis et al., 2020] Parametric knowledge dihafal saat pelatihan (bobot internal), sedangkan non-parametric diambil dari dokumen eksternal real-time."
+  },
+  {
+    "num": 19,
+    "question": "Metrik evaluasi Perplexity dalam model bahasa digunakan untuk mengukur...",
+    "options": {
+      "A": "Berapa watt listrik yang dikonsumsi model",
+      "B": "Seberapa baik model memprediksi sampel teks (semakin rendah skor, semakin akurat prediksinya)",
+      "C": "Kecepatan unduh data dari server",
+      "D": "Jumlah kata berulang dalam dokumen"
+    },
+    "key": "B",
+    "pembahasan": "[Luar Modul / NLP Evaluation Metrics] Perplexity mengukur ketidakpastian model dalam memprediksi token berikutnya."
+  },
+  {
+    "num": 20,
+    "question": "Periode dalam sejarah perkembangan AI di mana pendanaan dan minat riset merosot drastis akibat keterbatasan komputasi disebut...",
+    "options": {
+      "A": "Summer of AI",
+      "B": "AI Winter",
+      "C": "Transformer Fall",
+      "D": "Neural Freeze"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] AI Winter terjadi beberapa kali (1970-an & 1980-an) sebelum kebangkitan berkat big data dan GPU modern.\nModul 2: Kompas Etika, Keamanan & Privasi\nLangkah 1: Kerangka Etika Global & Nasional (Dalam Modul)"
+  },
+  {
+    "num": 21,
+    "question": "Dokumen standar normatif global pertama mengenai etika AI yang disahkan oleh 193 negara pada November 2021 diterbitkan oleh...",
+    "options": {
+      "A": "WHO",
+      "B": "UNESCO",
+      "C": "WTO",
+      "D": "NATO"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] UNESCO merilis Recommendation on the Ethics of Artificial Intelligence sebagai panduan etik global."
+  },
+  {
+    "num": 22,
+    "question": "Di Indonesia, pedoman etis bagi penyelenggara sistem elektronik berbasis AI diatur melalui Surat Edaran Menkominfo...",
+    "options": {
+      "A": "SE Menkominfo No. 1 Tahun 2019",
+      "B": "SE Menkominfo No. 9 Tahun 2023",
+      "C": "SE Menkominfo No. 15 Tahun 2025",
+      "D": "UU ITE No. 11 Tahun 2008"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] SE Menkominfo No. 9/2023 memberikan pedoman etika AI yang selaras dengan UU PDP."
+  },
+  {
+    "num": 23,
+    "question": "Salah satu prinsip utama kerangka etika AI UNESCO dan Kominfo adalah Human Oversight, yang berarti...",
+    "options": {
+      "A": "Manusia menyerahkan 100% keputusan penting kepada algoritma",
+      "B": "Manusia tetap memiliki kendali penuh dan pengawasan atas sistem AI",
+      "C": "AI diperbolehkan mengawasi seluruh aktivitas pribadi manusia tanpa batas",
+      "D": "Pengembang AI wajib mematikan internet setiap malam"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Human oversight memastikan bahwa keputusan krusial tetap dikendalikan dan dipertanggungjawabkan oleh manusia."
+  },
+  {
+    "num": 24,
+    "question": "Regulasi Perlindungan Data Pribadi (UU PDP) di Indonesia mewajibkan penyelenggara AI untuk...",
+    "options": {
+      "A": "Menjual data pengguna ke pihak ketiga untuk modal pelatihan",
+      "B": "Meminta persetujuan dan menjaga kerahasiaan data pribadi pengguna",
+      "C": "Menyimpan seluruh data pribadi di server luar negeri tanpa enkripsi",
+      "D": "Mengabaikan hak pengguna untuk menghapus data"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] SE Kominfo No. 9/2023 dan UU PDP menegaskan kewajiban melindungi data pribadi dari kebocoran."
+  },
+  {
+    "num": 25,
+    "question": "Prinsip Keberlanjutan Lingkungan dalam etika AI UNESCO menyoroti isu...",
+    "options": {
+      "A": "Penggunaan plastik dalam pembuatan chip AI",
+      "B": "Tingginya konsumsi energi dan jejak karbon pada pelatihan model AI raksasa",
+      "C": "Suara bising dari kipas komputer pengguna",
+      "D": "Limbah kertas akibat pencetakan kode program"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Pelatihan LLM mengkonsumsi energi listrik dan air yang sangat besar sehingga aspek keberlanjutan menjadi sorotan etis.\nLangkah 2: Bias Algoritma & Gender Shades (Dalam & Luar Modul)"
+  },
+  {
+    "num": 26,
+    "question": "Studi kuncian \"Gender Shades\" (2018) dipimpin oleh peneliti dari MIT Media Lab dan Microsoft Research, yaitu...",
+    "options": {
+      "A": "Alan Turing dan John McCarthy",
+      "B": "Joy Buolamwini dan Timnit Gebru",
+      "C": "Vaswani dan Patrick Lewis",
+      "D": "David Autor dan Michael Polanyi"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Buolamwini & Gebru (2018) mempublikasikan riset kredibel mengenai disparitas akurasi pengenal wajah."
+  },
+  {
+    "num": 27,
+    "question": "Berapa tingkat kesalahan pengenalan wajah untuk perempuan berkulit gelap yang ditemukan dalam studi Gender Shades?",
+    "options": {
+      "A": "Hanya 0.8%",
+      "B": "Sekitar 12.5%",
+      "C": "Mencapai 34.7%",
+      "D": "Tepat 99.0%"
+    },
+    "key": "C",
+    "pembahasan": "[Dalam Modul] Tingkat kesalahan melonjak hingga 34,7% untuk subjek perempuan berkulit gelap dibanding 0,8% pada pria berkulit terang."
+  },
+  {
+    "num": 28,
+    "question": "Apa penyebab utama tingginya bias ketimpangan akurasi pada pengenal wajah komersial dalam temuan Buolamwini & Gebru?",
+    "options": {
+      "A": "Kamera komputer yang berkualitas rendah",
+      "B": "Dataset benchmark (seperti Adience) didominasi hingga 86.2% oleh subjek berkulit terang",
+      "C": "Algoritma sengaja diprogram oleh peretas",
+      "D": "Kurangnya koneksi internet saat pengujian"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Ketidakseimbangan representasi data pelatihan memicu coded gaze dan bias sistemik."
+  },
+  {
+    "num": 29,
+    "question": "Istilah Coded Gaze yang dipopulerkan oleh Joy Buolamwini merujuk pada...",
+    "options": {
+      "A": "Tatapan mata AI saat memproses gambar",
+      "B": "Cerminan bias, persepsi, dan keterbatasan para pembuat data/algoritma yang tertanam ke dalam kode program",
+      "C": "Lensa kamera khusus untuk memindai retina",
+      "D": "Bahasa pemrograman visual baru"
+    },
+    "key": "B",
+    "pembahasan": "[Luar Modul / Buolamwini 2018] Coded gaze mengilustrasikan bagaimana pandangan dunia yang terbatas dari pengembang tecermin pada performa algoritma."
+  },
+  {
+    "num": 30,
+    "question": "Dampak nyata dari publikasi riset Gender Shades terhadap industri teknologi adalah...",
+    "options": {
+      "A": "Semua perusahaan AI bangkrut seketika",
+      "B": "IBM dan beberapa perusahaan besar moratorium/menghentikan sementara penjualan pengenal wajah komersial",
+      "C": "Pemerintah melarang penggunaan kamera digital",
+      "D": "Pengenal wajah diwajibkan dipasang di seluruh jalan raya"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Temuan Gender Shades memicu audit publik dan jeda komersialisasi teknologi facial recognition.\nLangkah 3: Bias Bahasa & Word Embedding (Dalam Modul)"
+  },
+  {
+    "num": 31,
+    "question": "Riset Bolukbasi dkk. (2016) menguji bias stereotip gender pada model pemetaan bahasa yang dinamakan...",
+    "options": {
+      "A": "Transformer",
+      "B": "Word2Vec",
+      "C": "ResNet",
+      "D": "BERT"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Bolukbasi dkk. (2016) menganalisis vektor kata Word2Vec yang dilatih dari data teks Google News."
+  },
+  {
+    "num": 32,
+    "question": "Analogi matematis bias yang ditemukan dalam ruang vektor kata oleh Bolukbasi dkk. (2016) adalah...",
+    "options": {
+      "A": "\"Laki-laki : Presiden :: Perempuan : Menteri\"",
+      "B": "\"Man is to Computer Programmer as Woman is to Homemaker\"",
+      "C": "\"Laki-laki : Dokter :: Perempuan : Suster\"",
+      "D": "\"Man is to Fast as Woman is to Slow\""
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Model menyerap hubungan stereotipis sosial secara spasial matematis dalam vektor kata."
+  },
+  {
+    "num": 33,
+    "question": "Bagaimana bias Word Embedding dapat berdampak buruk jika diterapkan pada sistem automatisasi rekrutmen HRD?",
+    "options": {
+      "A": "Sistem akan menerima semua pelamar tanpa seleksi",
+      "B": "Sistem mendiskriminasi CV pelamar perempuan untuk posisi teknis secara otomatis",
+      "C": "Gaji pegawai baru otomatis terpotong 50%",
+      "D": "Format file CV diubah menjadi audio"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Algoritma akan memberi skor rendah pada berkas perempuan untuk pekerjaan berkategori programmer akibat bias asosiasi data."
+  },
+  {
+    "num": 34,
+    "question": "Pendekatan Hard Debiasing yang ditawarkan Bolukbasi dkk. bertujuan untuk...",
+    "options": {
+      "A": "Menghapus seluruh kata dari kamus AI",
+      "B": "Netralisasi secara geometris koordinat vektor kata netral-gender agar memiliki jarak yang seimbang dari pasangan gender",
+      "C": "Mengganti semua kata benda menjadi kata sifat",
+      "D": "Mematikan fungsi pencarian kata"
+    },
+    "key": "B",
+    "pembahasan": "[Luar Modul / Bolukbasi 2016] Teknik ini memproyeksikan kata netral-gender ke sub-ruang yang tegak lurus (orthogonal) terhadap sumbu gender."
+  },
+  {
+    "num": 35,
+    "question": "Perbedaan antara Allocation Bias dan Representation Bias dalam AI adalah...",
+    "options": {
+      "A": "Allocation bias terkait pembagian dana; Representation bias terkait penjualan",
+      "B": "Allocation bias terjadi ketika sistem mendistribusikan sumber daya/kesempatan secara tidak adil; Representation bias terjadi ketika sistem memperkuat stereotip stigmatis",
+      "C": "Keduanya tidak memiliki hubungan dengan data",
+      "D": "Allocation bias hanya ada pada video game"
+    },
+    "key": "B",
+    "pembahasan": "[Luar Modul / Crawford 2017] Allocation bias berdampak langsung pada peluang nyata (mis. pinjaman/pekerjaan), sedangkan representation bias memengaruhi persepsi sosial.\nLangkah 4: Forensik Digital vs C2PA (Dalam Modul & Luar Modul)"
+  },
+  {
+    "num": 36,
+    "question": "Apa pendekatan mendasar dari standar C2PA (Coalition for Content Provenance and Authenticity) dalam mengatasi deepfake?",
+    "options": {
+      "A": "Menganalisis kejanggalan piksel setelah gambar tersebar di media sosial (reaktif)",
+      "B": "Menyematkan metadata kriptografis mengenai asal-usul dan riwayat editan sejak media dibuat (proaktif)",
+      "C": "Menghapus otomatis foto yang memiliki kualitas rendah",
+      "D": "Memblokir seluruh akses unggah foto di internet"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] C2PA bersifat proaktif dengan melacak asal-usul media (provenance) melalui manifest terenkripsi."
+  },
+  {
+    "num": 37,
+    "question": "Anologi yang sering digunakan untuk menggambarkan fungsi standar C2PA pada media digital adalah...",
+    "options": {
+      "A": "\"Pagar Kawat\"",
+      "B": "\"Label Nutrisi\" kemasan makanan",
+      "C": "\"Kaca Pembesar\"",
+      "D": "\"Mesin Penghancur Kertas\""
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] C2PA berfungsi seperti label nutrisi yang menunjukkan bahan/proses pembentukan suatu media digital."
+  },
+  {
+    "num": 38,
+    "question": "Organisasi dan perusahaan penggagas konsorsium C2PA antara lain meliputi...",
+    "options": {
+      "A": "UNESCO, Kominfo, dan PBB",
+      "B": "Adobe, Microsoft, BBC, dan Arm",
+      "C": "OpenAI, Anthropic, dan Google",
+      "D": "Facebook, TikTok, dan Instagram"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] C2PA dibentuk oleh aliansi lintas industri termasuk Adobe, Microsoft, BBC, dan Arm."
+  },
+  {
+    "num": 39,
+    "question": "Teknik Digital Watermarking tingkat lanjut seperti Google SynthID bekerja dengan cara...",
+    "options": {
+      "A": "Menempelkan logo besar transparan di tengah gambar",
+      "B": "Menyisipkan pola sinyal yang tidak kasat mata oleh manusia langsung ke dalam data piksel atau audio",
+      "C": "Menuliskan nama pembuat di bagian pojok bawah gambar",
+      "D": "Mengubah warna gambar menjadi hitam putih"
+    },
+    "key": "B",
+    "pembahasan": "[Luar Modul / DeepMind SynthID] SynthID menyematkan watermark laten langsung pada distribusi piksel/frekuensi audio tanpa merusak kualitas visual."
+  },
+  {
+    "num": 40,
+    "question": "Mengapa deteksi forensik digital reaktif kerap mengalami kesulitan melawan perkembangan deepfake generasi baru?",
+    "options": {
+      "A": "Karena detektor forensik membutuhkan listrik terlalu banyak",
+      "B": "Karena generator AI terus berkembang melatih diri melampaui artefak yang biasa dideteksi oleh forensik (siklus kucing-dan-tikus)",
+      "C": "Karena gambar asli selalu dihapus dari server",
+      "D": "Karena media sosial melarang analisis gambar"
+    },
+    "key": "B",
+    "pembahasan": "[Luar Modul / Security Research] Model generatif baru dilatih untuk meminimalkan artefak visual, membuat metode analisis piksel reaktif makin cepat usang.\nModul 3: Seni Berbicara dengan Mesin (Prompt Engineering)\nLangkah 1: Empat Pilar Prompting (Dalam Modul)"
+  },
+  {
+    "num": 41,
+    "question": "Empat pilar utama penyusunan instruksi (prompt) yang efektif menurut literatur prompt engineering adalah...",
+    "options": {
+      "A": "Subjek, Predikat, Objek, Keterangan",
+      "B": "Konteks, Instruksi, Format, dan Persona",
+      "C": "Input, Output, Process, Storage",
+      "D": "Judul, Isi, Penutup, Lampiran"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Memecah instruksi ke dalam Konteks, Instruksi, Format, dan Persona menghasilkan respons presisi."
+  },
+  {
+    "num": 42,
+    "question": "Fungsi teknis utama dari menetapkan \"Persona\" pada instruksi AI adalah...",
+    "options": {
+      "A": "Membuat AI merasa memiliki kepribadian ganda",
+      "B": "Mempersempit ruang distribusi probabilitas jawaban ke domain keahlian tertentu",
+      "C": "Mempercepat koneksi internet pengguna",
+      "D": "Mengubah bahasa output menjadi bahasa latin"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Persona memfokuskan pola bahasa AI ke ranah profesional/domain spesifik sehingga mengurangi jawaban generik."
+  },
+  {
+    "num": 43,
+    "question": "Mengapa penyebutan \"Format\" luaran secara eksplisit (misal: tabel atau JSON) sangat penting?",
+    "options": {
+      "A": "Supaya AI tidak menghasilkan jawaban berupa gambar",
+      "B": "Memaksa AI menyusun struktur data agar mudah diproses lebih lanjut atau dibaca",
+      "C": "Mencegah server AI mengalami pemadaman",
+      "D": "Menambah kuota harian penggunaan AI"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Penentuan format membatasi cara AI mengorganisasi informasi agar sesuai kebutuhan pengguna."
+  },
+  {
+    "num": 44,
+    "question": "Apa konsekuensi dari memberikan instruksi yang ambigu (vague prompt) kepada LLM?",
+    "options": {
+      "A": "AI akan menolak memberikan jawaban",
+      "B": "AI mengambil \"jalan pintas\" dengan memberikan jawaban generik atau halusinasi",
+      "C": "AI otomatis menghapus akun pengguna",
+      "D": "AI akan meminta uang tambahan"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Ambiguitas memaksa model menebak-nebak maksud pengguna dari ruang probabilitas yang terlalu luas."
+  },
+  {
+    "num": 45,
+    "question": "Manakah contoh instruksi yang menerapkan pilar Persona dan Format secara tepat?",
+    "options": {
+      "A": "\"Tuliskan tentang bahasa Inggris.\"",
+      "B": "\"Bertindaklah sebagai tutor TEFL. Berikan tabel jadwal belajar 30 hari untuk pemula.\"",
+      "C": "\"Tolong bantu aku belajar.\"",
+      "D": "\"Jelaskan tata bahasa Inggris secepat mungkin.\""
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Opsi B menyertakan persona (tutor TEFL) dan format (tabel jadwal 30 hari) secara eksplisit.\nLangkah 2: Taksonomi Prompting Dasar (Dalam & Luar Modul)"
+  },
+  {
+    "num": 46,
+    "question": "Teknik meminta AI menyelesaikan tugas secara langsung tanpa memberikan contoh pasangan input-output sama sekali disebut...",
+    "options": {
+      "A": "Few-Shot Prompting",
+      "B": "Zero-Shot Prompting",
+      "C": "Chain-of-Thought",
+      "D": "ReAct Prompting"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Zero-Shot mengandalkan pengetahuan bawaan model tanpa pengondisian contoh spesifik."
+  },
+  {
+    "num": 47,
+    "question": "Makalah GPT-3 yang mempopulerkan teknik Few-Shot Prompting pada tahun 2020 berjudul...",
+    "options": {
+      "A": "\"Attention Is All You Need\"",
+      "B": "\"Language Models are Few-Shot Learners\" (Brown dkk., OpenAI)",
+      "C": "\"Chain-of-Thought Prompting\"",
+      "D": "\"ReAct: Synergizing Reasoning\""
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Brown dkk. (2020) menunjukkan bahwa menyisipkan beberapa contoh secara dramatis meningkatkan akurasi tugas spesifik."
+  },
+  {
+    "num": 48,
+    "question": "Bagaimana cara kerja Few-Shot Prompting dalam mengarahkan pola jawaban AI?",
+    "options": {
+      "A": "Melatih ulang (retraining) bobot internal jaringan saraf AI",
+      "B": "Menyisipkan beberapa contoh pasangan input-output di dalam teks instruksi sebelum kueri utama",
+      "C": "Mengirimkan dokumen ke server fisik OpenAI",
+      "D": "Mengubah nama akun pengguna"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Few-Shot mengondisikan respons melalui contoh konteks dalam satu sesi prompt."
+  },
+  {
+    "num": 49,
+    "question": "Kemampuan LLM untuk mempelajari pola dari contoh dalam instruksi tanpa mengubah bobot parameternya disebut...",
+    "options": {
+      "A": "Fine-Tuning",
+      "B": "In-Context Learning (ICL)",
+      "C": "Reinforcement Learning",
+      "D": "Transfer Learning"
+    },
+    "key": "B",
+    "pembahasan": "[Luar Modul / Brown et al., 2020] In-Context Learning terjadi sepenuhnya di dalam konteks jendela memori berjalan tanpa penyesuaian bobot (weight updates)."
+  },
+  {
+    "num": 50,
+    "question": "Apa risiko utama dari memberikan contoh yang salah atau bias pada Few-Shot Prompting?",
+    "options": {
+      "A": "AI akan otomatis memperbaiki contoh tersebut",
+      "B": "AI akan meniru pola kesalahan tersebut pada jawaban kueri utama (garbage in, garbage out)",
+      "C": "AI tidak memproses instruksi",
+      "D": "AI mengirimkan laporan ke pengembang"
+    },
+    "key": "B",
+    "pembahasan": "[Luar Modul / Prompt Engineering Research] Model mengadopsi format dan bias yang disajikan dalam contoh konteks secara ketat.\nLangkah 3: Advanced Prompting - CoT (Dalam & Luar Modul)"
+  },
+  {
+    "num": 51,
+    "question": "Teknik Chain-of-Thought (CoT) prompting diperkenalkan secara formal oleh Wei dkk. (Google, 2022) dengan cara menginstruksikan AI untuk...",
+    "options": {
+      "A": "Mempercepat jawaban tanpa alasan",
+      "B": "Menjabarkan langkah-langkah penalaran secara eksplisit (\"berpikirlah selangkah demi selangkah\")",
+      "C": "Mengubah teks menjadi kode Python",
+      "D": "Menerjemahkan jawaban ke 5 bahasa berbeda"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] CoT memaksa model memecah soal rumit menjadi deretan langkah penalaran berurutan."
+  },
+  {
+    "num": 52,
+    "question": "Domain soal apa yang mengalami peningkatan akurasi paling drastis saat menggunakan teknik Chain-of-Thought?",
+    "options": {
+      "A": "Puisi deskriptif dan cerpen",
+      "B": "Soal aritmatika, penalaran logis, dan analisis kompleks",
+      "C": "Pencarian kata kunci tunggal",
+      "D": "Penerjemahan kata per kata"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Wei dkk. (2022) membuktikan CoT sangat efektif mereduksi kesalahan pada soal penalaran matematik."
+  },
+  {
+    "num": 53,
+    "question": "Frasa ajaib yang ditemukan oleh Kojima et al. (2022) untuk mengaktifkan Zero-Shot CoT secara instan adalah...",
+    "options": {
+      "A": "\"Jawab dengan jujur dan singkat\"",
+      "B": "\"Let's think step by step\" (Mari kita berpikir selangkah demi selangkah)",
+      "C": "\"Gunakan format tabel sekarang\"",
+      "D": "\"Jangan berhalusinasi\""
+    },
+    "key": "B",
+    "pembahasan": "[Luar Modul / Kojima et al., 2022] Menambahkan frasa ini di akhir prompt memicu alur penalaran bertahap tanpa contoh."
+  },
+  {
+    "num": 54,
+    "question": "Teknik Self-Consistency CoT (Wang et al., 2022) meningkatkan keandalan jawaban AI dengan cara...",
+    "options": {
+      "A": "Meminta jawaban dari 5 pengguna berbeda",
+      "B": "Menggenerasi beberapa jalur penalaran CoT secara terpisah, lalu mengambil jawaban mayoritas (voting)",
+      "C": "Mengulang prompt yang sama 100 kali",
+      "D": "Menggunakan model paling kecil"
+    },
+    "key": "B",
+    "pembahasan": "[Luar Modul / Wang et al., 2022] Self-consistency mengevaluasi konsistensi hasil dari beberapa sampel jalur pemikiran."
+  },
+  {
+    "num": 55,
+    "question": "Pengembangan CoT yang memungkinkan model mengeksplorasi banyak cabang pemikiran (tree of decisions) dan melakukan backtracking adalah...",
+    "options": {
+      "A": "Tree of Thoughts (ToT) (Yao et al., 2023)",
+      "B": "Single-Shot Prompting",
+      "C": "Direct Answering",
+      "D": "Random Search"
+    },
+    "key": "A",
+    "pembahasan": "[Luar Modul / Yao et al., 2023] Tree of Thoughts meluaskan CoT dengan memungkinkan pencarian cabang pohon keputusan logis.\nLangkah 4: Agentic Framework - ReAct (Dalam & Luar Modul)"
+  },
+  {
+    "num": 56,
+    "question": "Paradigma ReAct yang diperkenalkan oleh Yao dkk. (2022) merupakan singkatan dari...",
+    "options": {
+      "A": "Reactive Action",
+      "B": "Reasoning and Acting",
+      "C": "Real-time Activity",
+      "D": "Recurrent Attention"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] ReAct menggabungkan proses penalaran (reasoning) dan tindakan (acting) dalam alur kerja agentic."
+  },
+  {
+    "num": 57,
+    "question": "Apa yang membedakan paradigma ReAct dari Chain-of-Thought biasa?",
+    "options": {
+      "A": "ReAct hanya bisa menulis teks pendek",
+      "B": "ReAct memungkinkan model memanggil alat eksternal (pencarian web, API, kalkulator) dan mengoreksi langkah berdasarkan tindakan tersebut",
+      "C": "ReAct bekerja tanpa memerlukan komputasi GPU",
+      "D": "ReAct tidak bisa memproses penalaran bahasa"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] ReAct menjembatani model dengan dunia luar melalui alat eksternal untuk memperbarui basis informasinya."
+  },
+  {
+    "num": 58,
+    "question": "Dalam agen AI modern, fungsi Function Calling / Tool Use bertujuan untuk...",
+    "options": {
+      "A": "Mengganti semua pemrogram komputer",
+      "B": "Memperoleh data faktual terkini atau mengeksekusi tindakan konkret di luar model",
+      "C": "Menghapus jejak percakapan",
+      "D": "Memperbesar ukuran teks"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Agen AI menggunakan tool untuk mengatasi keterbatasan data parametrik usang atau perhitungan kaku."
+  },
+  {
+    "num": 59,
+    "question": "Peran dari System Prompt dalam arsitektur instruksi AI adalah...",
+    "options": {
+      "A": "Tempat pengguna memasukkan pertanyaan harian",
+      "B": "Instruksi tingkat tinggi yang menetapkan batasan perilaku, aturan etika, dan peran dasar model sebelum interaksi dimulai",
+      "C": "Catatan riwayat percakapan lama",
+      "D": "Pesan kesalahan dari server"
+    },
+    "key": "B",
+    "pembahasan": "[Luar Modul / System Architecture] System Prompt mengunci aturan operasional utama yang mengarahkan seluruh percakapan."
+  },
+  {
+    "num": 60,
+    "question": "Siklus dasar yang terjadi dalam kerangka kerja ReAct adalah...",
+    "options": {
+      "A": "Thought -> Action -> Observation -> Repeat",
+      "B": "Input -> Print -> Delete -> Exit",
+      "C": "Query -> Output -> End",
+      "D": "Search -> Wait -> Stop"
+    },
+    "key": "A",
+    "pembahasan": "[Luar Modul / Yao et al., 2022] Agen berpikir (Thought), mengeksekusi aksi (Action), mengamati hasil (Observation), lalu mengulang hingga selesai.\nModul 4: AI sebagai Asisten Produktivitas\nLangkah 1: Arsitektur & Prinsip RAG (Dalam Modul)"
+  },
+  {
+    "num": 61,
+    "question": "Arsitektur RAG (Retrieval-Augmented Generation) pertama kali diperkenalkan pada tahun 2020 oleh tim peneliti dari Meta AI (FAIR) yang dipimpin oleh...",
+    "options": {
+      "A": "Alan Turing",
+      "B": "Patrick Lewis",
+      "C": "Joy Buolamwini",
+      "D": "Ashish Vaswani"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Patrick Lewis dkk. (Meta AI/NeurIPS 2020) merancang RAG untuk menggabungkan penelusuran dokumen dengan modul generatif."
+  },
+  {
+    "num": 62,
+    "question": "Mengapa LLM klasik tanpa RAG diibaratkan sebagai sistem \"buku tertutup\" (closed-book)?",
+    "options": {
+      "A": "Karena file model tidak bisa dibuka di komputer biasa",
+      "B": "Karena hanya mengandalkan pengetahuan yang dihafal saat pelatihan tanpa akses ke dokumen terbaru",
+      "C": "Karena pengguna dilarang membaca teks di dalamnya",
+      "D": "Karena model dilatih menggunakan buku fisik"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Model klasik terkunci pada data saat cutoff pelatihan, sehingga rentan halusinasi saat ditanya hal baru."
+  },
+  {
+    "num": 63,
+    "question": "Dua jenis memori yang disatukan dalam arsitektur RAG adalah...",
+    "options": {
+      "A": "RAM dan Harddisk",
+      "B": "Memori Parametrik (bobot model) dan Memori Non-Parametrik (basis data eksternal)",
+      "C": "Memori Audio dan Memori Visual",
+      "D": "Memori Jangka Pendek dan Memori Jangka Panjang Manusia"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] RAG menggabungkan kelancaran bahasa dari memori parametrik dengan fakta segar dari memori non-parametrik."
+  },
+  {
+    "num": 64,
+    "question": "Apa keunggulan ekonomis dan praktis utama penggunaan RAG dibanding melakukan retraining / fine-tuning seluruh model AI?",
+    "options": {
+      "A": "RAG tidak memerlukan komputer sama sekali",
+      "B": "Cukup memperbarui isi basis data eksternal tanpa perlu melatih ulang bobot model yang mahal dan memakan waktu",
+      "C": "RAG membuat gambar secara otomatis",
+      "D": "RAG menghapus seluruh biaya langganan"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Memperbarui basis data eksternal jauh lebih murah dan cepat dibanding retraining model raksasa."
+  },
+  {
+    "num": 65,
+    "question": "Hasil eksperimen Lewis dkk. (2020) membuktikan bahwa respons yang dihasilkan oleh model RAG...",
+    "options": {
+      "A": "Lebih singkat dan sulit dipahami",
+      "B": "Lebih spesifik, beragam, dan faktual dibanding model murni",
+      "C": "Tepat sama dengan model LLM biasa",
+      "D": "Mengandung lebih banyak halusinasi"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Makalah NeurIPS 2020 mencatat keunggulan signifikan RAG pada tugas berbasis pengetahuan intensif.\nLangkah 2: Mekanisme Teknis RAG & Vector DB (Dalam & Luar Modul)"
+  },
+  {
+    "num": 66,
+    "question": "Proses mengubah dokumen teks menjadi deretan angka spasial (vector embeddings) agar dapat dicari berdasarkan kemiripan makna dilakukan oleh...",
+    "options": {
+      "A": "Database SQL Konvensional",
+      "B": "Embedding Model & Vector Database (mis. Pinecone, Chroma, Qdrant)",
+      "C": "Router Wi-Fi",
+      "D": "Compiler C++"
+    },
+    "key": "B",
+    "pembahasan": "[Luar Modul / RAG Technical Stack] Vector database menyimpan representasi semantik teks dalam ruang vektor multidimensi."
+  },
+  {
+    "num": 67,
+    "question": "Metrik matematika yang paling umum digunakan untuk mengukur kemiripan makna antar dua vektor dalam RAG adalah...",
+    "options": {
+      "A": "Pertambahan Matriks",
+      "B": "Cosine Similarity / Dot Product",
+      "C": "Pembagian Panjang Teks",
+      "D": "Teorema Pythagoras 2D"
+    },
+    "key": "B",
+    "pembahasan": "[Luar Modul / Vector Search] Cosine similarity mengukur sudut antara dua vektor semantik untuk menentukan derajat keterkaitannya."
+  },
+  {
+    "num": 68,
+    "question": "Proses memotong dokumen panjang menjadi bagian-bagian kecil yang berukuran konsisten sebelum diindeks ke dalam RAG disebut...",
+    "options": {
+      "A": "Fine-Tuning",
+      "B": "Chunking",
+      "C": "Quantization",
+      "D": "Pruning"
+    },
+    "key": "B",
+    "pembahasan": "[Luar Modul / RAG Pipeline] Chunking membagi dokumen menjadi potongan konteks terkelola agar pas dalam context window LLM."
+  },
+  {
+    "num": 69,
+    "question": "Peran modul Reranker (mis. Cross-Encoder) dalam alur RAG tingkat lanjut adalah...",
+    "options": {
+      "A": "Menerjemahkan teks ke bahasa Indonesia",
+      "B": "Menilai ulang dan mengurutkan kembali dokumen hasil pencarian awal berdasarkan relevansi presisi tinggi sebelum dikirim ke LLM",
+      "C": "Mematikan server jika data terlalu banyak",
+      "D": "Mengubah teks menjadi format PDF"
+    },
+    "key": "B",
+    "pembahasan": "[Luar Modul / Advanced RAG] Reranking menyaring hasil pencarian kasar (dense retrieval) agar hanya dokumen paling relevan yang dijadikan konteks."
+  },
+  {
+    "num": 70,
+    "question": "Pendekatan HyDE (Hypothetical Document Embeddings) dalam RAG bekerja dengan cara...",
+    "options": {
+      "A": "Mengubah pertanyaan pengguna menjadi dokumen hipotetis buatan LLM terlebih dahulu sebelum melakukan pencarian vektor",
+      "B": "Menghapus pertanyaan pengguna",
+      "C": "Membeli basis data baru dari internet",
+      "D": "Menggunakan dokumen kosong"
+    },
+    "key": "A",
+    "pembahasan": "[Luar Modul / Gao et al., 2022] HyDE menggenerasi jawaban hipotetis terlebih dahulu untuk meningkatkan kecocokan pencarian semantik vektor.\nLangkah 3: Etika AI dalam Pendidikan (Dalam Modul)"
+  },
+  {
+    "num": 71,
+    "question": "Dokumen panduan UNESCO (2023) mengenai penggunaan AI dalam dunia akademik berjudul...",
+    "options": {
+      "A": "\"Ethics of Artificial Intelligence 2021\"",
+      "B": "\"Guidance for Generative AI in Education and Research\"",
+      "C": "\"AI for All Students\"",
+      "D": "\"Digital Age Learning Standard\""
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] UNESCO (2023) merilis panduan pemanfaatan AI generatif untuk pendidikan dan riset."
+  },
+  {
+    "num": 72,
+    "question": "Memosisikan AI sebagai \"Tutor Sokratik\" dalam proses belajar berarti...",
+    "options": {
+      "A": "Meminta AI menjawab seluruh soal ujian otomatis",
+      "B": "Meminta AI mengajukan pertanyaan kritis, menguji argumen, dan memicu pemikiran mendalam pengguna",
+      "C": "Menggunakan AI untuk menulis esai tanpa dibaca ulang",
+      "D": "Menyalin jawaban teman menggunakan AI"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Tutor Sokratik menjadikan AI sebagai sparring partner untuk mengasah pemikiran analitis pengguna."
+  },
+  {
+    "num": 73,
+    "question": "Konsep Zero-Drafting dalam penggunaan AI produktivitas adalah...",
+    "options": {
+      "A": "Menghasilkan karya final tanpa revisi manusia",
+      "B": "Memanfaatkan AI untuk menyusun gagasan awal/draf kasar guna mengatasi kebuntuan menulis (writer's block)",
+      "C": "Dilarang membuat draf sama sekali",
+      "D": "Menghapus seluruh tulisan yang dibuat AI"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Zero-drafting menggunakan AI sebagai pemantik ide awal, bukan sebagai penulis laporan akhir."
+  },
+  {
+    "num": 74,
+    "question": "Prinsip \"Kendali Intelektual\" menegaskan bahwa tanggung jawab atas klaim, argumen, dan isi karya ilmiah berada pada...",
+    "options": {
+      "A": "Penyedia layanan AI (OpenAI/Google)",
+      "B": "Pengguna/Manusia yang menyusun karya tersebut",
+      "C": "Pengembang algoritma Transformer",
+      "D": "Kementerian Pendidikan"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Kendali dan tanggung jawab akademik/etis mutlak berada pada manusia, bukan alat AI."
+  },
+  {
+    "num": 75,
+    "question": "Salah satu aspek penting dalam panduan UNESCO 2023 terkait privasi pelajar adalah...",
+    "options": {
+      "A": "Wajib memasukkan nomor NIK siswa ke dalam sistem prompt AI",
+      "B": "Perlindungan data pribadi pelajar dan pembatasan batas usia penggunaan teknologi AI generatif",
+      "C": "Menjual data riset sekolah ke perusahaan teknologi",
+      "D": "Bebas menggunakan data anak-anak untuk pelatihan AI komersial"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] UNESCO menekankan perlindungan privasi data siswa dan usia minimal yang aman.\nLangkah 4: Evaluasi RAG & Tata Kelola (Luar Modul)"
+  },
+  {
+    "num": 76,
+    "question": "Tiga komponen utama dalam RAG Triad untuk mengevaluasi kualitas alur RAG adalah...",
+    "options": {
+      "A": "Speed, Memory, Storage",
+      "B": "Context Relevance, Groundedness (Faithfulness), dan Answer Relevance",
+      "C": "Input, Process, Output",
+      "D": "Accuracy, Precision, Recall"
+    },
+    "key": "B",
+    "pembahasan": "[Luar Modul / TruLens Framework] RAG Triad menguji apakah konteks relevan, apakah jawaban sesuai konteks, dan apakah jawaban menjawab pertanyaan."
+  },
+  {
+    "num": 77,
+    "question": "Risiko keamanan di mana peretas menyuntikkan dokumen palsu/berbahaya ke dalam basis data RAG agar AI memberikan jawaban yang terdistorsi disebut...",
+    "options": {
+      "A": "SQL Injection",
+      "B": "Data Poisoning / Indirect Prompt Injection",
+      "C": "Buffer Overflow",
+      "D": "Cross-Site Scripting"
+    },
+    "key": "B",
+    "pembahasan": "[Luar Modul / AI Security] Indirect prompt injection menyusupkan instruksi berbahaya melalui dokumen eksternal yang diambil oleh RAG."
+  },
+  {
+    "num": 78,
+    "question": "Bagaimana etika penggunaan AI pada proses Peer Review dalam publikasi ilmiah internasional?",
+    "options": {
+      "A": "Diizinkan penuh tanpa pengawasan",
+      "B": "Mayoritas penerbit ilmiah (seperti Nature/IEEE) melarang mengunggah naskah rahasia ke AI guna menjaga kerahasiaan dan integritas evaluasi",
+      "C": "Diwajibkan untuk menggantikan peninjau manusia",
+      "D": "AI diperbolehkan menjadi penulis utama artikel"
+    },
+    "key": "B",
+    "pembahasan": "[Luar Modul / Academic Publishing Ethics] Pengunggahan naskah yang belum terbit ke AI berisiko melanggar kerahasiaan hak cipta penemu."
+  },
+  {
+    "num": 79,
+    "question": "Apa yang dimaksud dengan Epistemic Humility dalam era AI produktivitas?",
+    "options": {
+      "A": "Meyakini AI selalu benar 100%",
+      "B": "Kesadaran kritis akan keterbatasan pengetahuan sendiri maupun keterbatasan/risiko kesalahan dari alat AI yang digunakan",
+      "C": "Menolak semua teknologi digital",
+      "D": "Menganggap manusia tidak perlu belajar lagi"
+    },
+    "key": "B",
+    "pembahasan": "[Luar Modul / Philosophy of Technology] Kerendahan hati epistemik mendorong pengguna untuk selalu menguji ulang fakta dan klaim AI."
+  },
+  {
+    "num": 80,
+    "question": "Sistem Guardrails (seperti NeMo Guardrails) pada aplikasi RAG berfungsi untuk...",
+    "options": {
+      "A": "Mempercepat koneksi internet",
+      "B": "Mencegah AI membahas topik berbahaya, membocorkan data rahasia, atau keluar dari konteks yang diizinkan",
+      "C": "Menghapus database secara otomatis",
+      "D": "Mengubah gaya penulisan menjadi puisi"
+    },
+    "key": "B",
+    "pembahasan": "[Luar Modul / NVIDIA NeMo Guardrails] Guardrails bertindak sebagai penyaring keamanan terprogram di sekeliling input dan output LLM.\nModul 5: Eksplorasi AI Kreatif\nLangkah 1: Enam Sumbu Prompt Visual (Dalam Modul)"
+  },
+  {
+    "num": 81,
+    "question": "Dalam praktik visual prompting, enam sumbu instruksi terstruktur meliputi Subjek, Gaya & Medium, Pencahayaan, Komposisi, Palet Warna, serta...",
+    "options": {
+      "A": "Durasi Video",
+      "B": "Pengubah Kualitas (Quality Modifiers)",
+      "C": "Ukuran File",
+      "D": "Lisensi Hak Cipta"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Enam sumbu tersebut memberikan kejelasan penuh pada model difusi untuk menghasilkan visual yang presisi."
+  },
+  {
+    "num": 82,
+    "question": "Mengapa penyusunan prompt visual yang terstruktur sangat penting pada model difusi (Diffusion Models)?",
+    "options": {
+      "A": "Agar server gambar tidak mengunduh virus",
+      "B": "Mengurangi ambiguitas sehingga mencegah AI mengambil jalan pintas yang merusak proporsi (mis. tangan berjari 6)",
+      "C": "Wajib dilakukan agar gambar berukuran HD",
+      "D": "Agar AI otomatis membayar kompensasi ke seniman"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Instruksi spesifik meminimalisasi anomali bentuk yang sering muncul pada hasil olahan statistik difusi."
+  },
+  {
+    "num": 83,
+    "question": "Sumbu Pencahayaan & Suasana yang menggunakan istilah teknis seperti \"Chiaroscuro\" bertujuan untuk...",
+    "options": {
+      "A": "Menghasilkan gambar tanpa bayangan",
+      "B": "Menciptakan kontras tinggi yang dramatis antara area terang dan gelap",
+      "C": "Membuat gambar menjadi buram",
+      "D": "Menghapus latar belakang secara otomatis"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Istilah pencahayaan spesifik (seperti chiaroscuro) mengarahkan distribusi visual ke estetika klasik tertentu."
+  },
+  {
+    "num": 84,
+    "question": "Istilah \"Bird-eye view\" dan \"Rule of thirds\" dalam prompt visual merupakan bagian dari sumbu...",
+    "options": {
+      "A": "Palet Warna",
+      "B": "Komposisi & Sudut Kamera",
+      "C": "Gaya & Medium",
+      "D": "Subjek Utama"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Sumbu komposisi mengatur letak subjek dan perspektif pengambilan gambar."
+  },
+  {
+    "num": 85,
+    "question": "Riset teknis DDPM (Denoising Diffusion Probabilistic Models) yang menjadi fondasi AI visual modern dipublikasikan oleh...",
+    "options": {
+      "A": "Vaswani dkk. (2017)",
+      "B": "Ho, Jain, & Abbeel (2020)",
+      "C": "Patrick Lewis dkk. (2020)",
+      "D": "David Autor (2015)"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Ho dkk. (2020) merevolusi generasi gambar berbasis iterasi penghilangan noise (difusi).\nLangkah 2: Kebijakan Hak Cipta (Dalam & Luar Modul)"
+  },
+  {
+    "num": 86,
+    "question": "Menurut panduan kebijakan U.S. Copyright Office, syarat mutlak agar suatu karya dapat dilindungi oleh hak cipta adalah...",
+    "options": {
+      "A": "Dibuat menggunakan aplikasi berbayar",
+      "B": "Adanya unsur penciptaan/kepengarangan oleh manusia (human authorship)",
+      "C": "Memiliki resolusi minimal 4K",
+      "D": "Menggunakan prompt lebih dari 500 kata"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] US Copyright Office menegaskan karya yang sepenuhnya dihasilkan mesin tanpa kendali ekspresif manusia tidak bisa diberi hak cipta."
+  },
+  {
+    "num": 87,
+    "question": "Mengapa sekadar mengetikkan prompt yang panjang belum dianggap memberikan \"kendali ekspresif\" yang cukup menurut hukum hak cipta AS?",
+    "options": {
+      "A": "Karena prompt hanya berupa teks pendek",
+      "B": "Karena elemen visual spesifik (garis, tekstur, persisnya komposisi) ditentukan oleh algoritma AI, bukan pengguna",
+      "C": "Karena prompt disimpan di server cloud",
+      "D": "Karena prompt bisa dibaca oleh orang lain"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Proses generasi visual difusi mengandung ketidakpastian matematis yang diatur sistem, bukan interpretasi langsung tangan manusia."
+  },
+  {
+    "num": 88,
+    "question": "Seseorang dapat mengklaim hak cipta atas karya yang melibatkan AI apabila...",
+    "options": {
+      "A": "Ia membayar lisensi bulanan",
+      "B": "Ia melakukan modifikasi, pengolahan, dan penyusunan kembali secara signifikan dan kreatif atas hasil mentah AI tersebut",
+      "C": "Ia mengunduh gambar di tengah malam",
+      "D": "Ia membagikan gambar tersebut ke media sosial"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Kontribusi manusia yang signifikan pada tahap paska-produksi dapat dilindungi hak cipta."
+  },
+  {
+    "num": 89,
+    "question": "Dalam kasus novel grafis \"Zarya of the Dawn\" (2023), U.S. Copyright Office mengambil keputusan untuk...",
+    "options": {
+      "A": "Memberikan hak cipta penuh atas seluruh gambar buatan Midjourney",
+      "B": "Membatalkan hak cipta atas gambar mentah buatan AI, namun tetap melindungi susunan teks dan susunan tata letak buatan manusia",
+      "C": "Melarang total penjualan novel grafis",
+      "D": "Dipenjarakan pembuatnya"
+    },
+    "key": "B",
+    "pembahasan": "[Luar Modul / US Copyright Office Decision 2023] Keputusan landmark ini memisahkan bagian murni AI dari susunan kreatif manusia."
+  },
+  {
+    "num": 90,
+    "question": "Keputusan pengadilan dalam kasus Thaler v. Perlmutter (2023) menegaskan bahwa sistem AI yang dinamakan \"DABUS\"...",
+    "options": {
+      "A": "Diakui sebagai pencipta sah sebuah lukisan",
+      "B": "Tidak dapat didaftarkan sebagai \"pencipta\" (author) karena hukum hak cipta murni melindungi ciptaan manusia",
+      "C": "Wajib membayar pajak",
+      "D": "Berhak menerima royalti lagu"
+    },
+    "key": "B",
+    "pembahasan": "[Luar Modul / US Federal Court 2023] Pengadilan menolak mendaftarkan AI sebagai pencipta tunggal karya seni.\nLangkah 3: Regulasi Internasional (Dalam Modul)"
+  },
+  {
+    "num": 91,
+    "question": "Fasilitas \"Opt-Out\" dalam regulasi Uni Eropa (EU AI Act & Directive 2019/790) memberikan hak kepada pencipta/seniman untuk...",
+    "options": {
+      "A": "Meminta komputasi AI secara gratis",
+      "B": "Menolak karyanya disedot (scraping) sebagai data pelatihan model AI generatif",
+      "C": "Menghapus situs web pengembang AI",
+      "D": "Menjual karya tanpa membayar pajak"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Hak opt-out memberi kendali bagi kreator untuk melindungi ciptaannya dari scraping data pelatihan."
+  },
+  {
+    "num": 92,
+    "question": "Inisiatif kerangka lisensi yang mulai didiskusikan di India pada akhir 2025 bertajuk...",
+    "options": {
+      "A": "\"Free AI for All\"",
+      "B": "\"One Nation, One License, One Payment\"",
+      "C": "\"Digital Copyright Act\"",
+      "D": "\"Global Royalty System\""
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Skema lisensi kolektif India bertujuan memberikan kompensasi royalti kepada kreator dari keuntungan komersial AI."
+  },
+  {
+    "num": 93,
+    "question": "Bagaimana mekanisme kerja skema \"One Nation, One License, One Payment\" yang diusulkan di India?",
+    "options": {
+      "A": "Melarang pengembang AI menggunakan data lokal",
+      "B": "Memberi kebebasan melatih AI dari data berhak cipta, dengan kewajiban menyetor persentase keuntungan ke dana bersama bagi kreator asli",
+      "C": "Mewajibkan seniman membeli lisensi AI setiap tahun",
+      "D": "Menggratiskan seluruh produk AI di pasar tempatan"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Pendekatan ini menyeimbangkan inovasi teknologi dengan retribusi adil bagi pemilik hak cipta."
+  },
+  {
+    "num": 94,
+    "question": "Mengapa undang-undang EU AI Act mewajibkan pengembang model generatif untuk mempublikasikan ringkasan data pelatihan (training data transparency)?",
+    "options": {
+      "A": "Supaya pesaing bisnis bisa menyalin AI tersebut",
+      "B": "Memungkinkan pemilik hak cipta mengecek apakah karya mereka digunakan tanpa izin",
+      "C": "Menambah ukuran file program AI",
+      "D": "Sekadar memenuhi formalitas kertas kerja"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Transparansi data pelatihan penting untuk penegakan hak cipta dan pengujian bias."
+  },
+  {
+    "num": 95,
+    "question": "Doktrin Fair Use di Amerika Serikat saat ini menjadi perdebatan sengit dalam gugatan hukum seniman terhadap perusahaan AI karena...",
+    "options": {
+      "A": "Pengembang AI mengklaim pelatihan model adalah \"penggunaan transformatif\", sementara seniman menganggapnya sebagai pencurian karya massal",
+      "B": "Seniman tidak suka teknologi baru",
+      "C": "Hukum fair use sudah dihapuskan",
+      "D": "AI tidak pernah menggunakan data seniman"
+    },
+    "key": "A",
+    "pembahasan": "[Luar Modul / Legal Analysis] Sengketa Fair Use berpusat pada apakah ekstraksi pola statistik dari gambar berhak cipta tergolong pemanfaatan transformatif.\nLangkah 4: Arsitektur Generatif & Proteksi Seniman (Luar Modul)"
+  },
+  {
+    "num": 96,
+    "question": "Arsitektur Latent Diffusion Model (LDM) seperti Stable Diffusion bekerja pada ruang laten (latent space) dengan tujuan...",
+    "options": {
+      "A": "Memperbesar ukuran gambar secara fisik",
+      "B": "Menghemat komputasi dengan melakukan proses penambahan dan pengurangan noise pada ruang kompresi fitur, bukan pada piksel beresolusi penuh",
+      "C": "Mengubah warna gambar menjadi transparan",
+      "D": "Menghapus teks dari gambar"
+    },
+    "key": "B",
+    "pembahasan": "[Luar Modul / Rombach et al., 2022] LDM beroperasi di ruang kompresi laten yang efisien secara matematis dibanding ruang piksel mentah."
+  },
+  {
+    "num": 97,
+    "question": "Modul ControlNet pada model generatif gambar berfungsi untuk...",
+    "options": {
+      "A": "Mengunci susunan pose, garis tepi (edge), atau kedalaman (depth) gambar agar sesuai referensi sketsa pengguna",
+      "B": "Menghasilkan teks otomatis",
+      "C": "Menerjemahkan prompt bahasa",
+      "D": "Mempercepat koneksi server"
+    },
+    "key": "A",
+    "pembahasan": "[Luar Modul / Zhang & Agrawala, 2023] ControlNet menambahkan kondisi kontrol spasial presisi pada model difusi yang sudah dilatih."
+  },
+  {
+    "num": 98,
+    "question": "Alat proteksi digital bernama Glaze yang dikembangkan oleh University of Chicago berfungsi untuk...",
+    "options": {
+      "A": "Memperindah lukisan digital seniman",
+      "B": "Menyuntikkan perubahan piksel mikro yang tidak kasat mata agar model AI gagal mempelajari gaya artistik (style) unik seniman tersebut",
+      "C": "Menjual gambar dalam bentuk NFT",
+      "D": "Mengubah gambar menjadi animasi 3D"
+    },
+    "key": "B",
+    "pembahasan": "[Luar Modul / Shan et al., 2023 - UChicago] Glaze melindungi gaya khas seniman dari peniruan tanpa izin oleh model AI."
+  },
+  {
+    "num": 99,
+    "question": "Alat tingkat lanjut bernama Nightshade bekerja secara ofensif memproteksi karya seniman dengan cara...",
+    "options": {
+      "A": "Mematikan komputer peretas",
+      "B": "Merusak data pelatihan AI (data poisoning) sehingga model yang menyedot gambar tersebut akan mengalami kekacauan konsep visual (misal: merender kucing saat diminta anjing)",
+      "C": "Menghapus gambar dari server web",
+      "D": "Melaporkan peretas ke polisi"
+    },
+    "key": "B",
+    "pembahasan": "[Luar Modul / Shan et al., 2024 - UChicago] Nightshade merusak representasi fitur dalam dataset pelatihan tak berizin."
+  },
+  {
+    "num": 100,
+    "question": "Dataset skala raksasa LAION-5B yang sering digunakan untuk melatih model difusi visual dikritik oleh publik karena...",
+    "options": {
+      "A": "Terlalu kecil ukurannya",
+      "B": "Memuat miliaran pasangan gambar-teks dari web terbuka tanpa izin eksplisit dari para pembuatnya",
+      "C": "Hanya berisi foto pemandangan alam",
+      "D": "Dibuat oleh satu orang saja"
+    },
+    "key": "B",
+    "pembahasan": "[Luar Modul / AI Dataset Controversy] LAION-5B merupakan dataset web-scraped yang menjadi pusat perdebatan etika hak cipta.\nModul 6: Bertahan & Berdaya di Era AI\nLangkah 1: Ekonomi Ketenagakerjaan (Dalam Modul)"
+  },
+  {
+    "num": 101,
+    "question": "Dalam makalah \"Why Are There Still So Many Jobs?\" (2015), ekonom David H. Autor (MIT) menjelaskan bahwa otomatisasi sering kali...",
+    "options": {
+      "A": "Mengeliminasi seluruh jenis pekerjaan dalam sekejap",
+      "B": "Mengabaikan fakta bahwa AI bergeser menjadi pelengkap (complement) produktivitas manusia untuk tugas non-rutin",
+      "C": "Dilarang oleh undang-undang ketenagakerjaan",
+      "D": "Hanya berpengaruh pada sektor pertanian"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Autor (2015) menekankan bahwa teknologi sering kali meningkatkan nilai tugas manusia yang bersifat komplementer."
+  },
+  {
+    "num": 102,
+    "question": "Berdasarkan analisis ekonomi ketenagakerjaan, jenis tugas yang paling rentan diambil alih oleh otomatisasi adalah...",
+    "options": {
+      "A": "Tugas intuitif yang menuntut empati tinggi",
+      "B": "Tugas yang bersifat rutin dan berpola, baik fisik maupun kognitif dasar",
+      "C": "Kepemimpinan organisasi saat krisis",
+      "D": "Negosiasi diplomasi internasional"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Rutinitas berpola (routine tasks) merupakan penggerak utama otomatisasi."
+  },
+  {
+    "num": 103,
+    "question": "Perbedaan mendasar antara peran AI sebagai Substitute dan Complement dalam pasar kerja adalah...",
+    "options": {
+      "A": "Substitute menggantikan posisi manusia; Complement meningkatkan daya hasil/produktivitas kerja manusia",
+      "B": "Substitute berbiaya murah; Complement berbiaya mahal",
+      "C": "Substitute berbasis hardware; Complement berbasis software",
+      "D": "Keduanya memiliki arti yang persis sama"
+    },
+    "key": "A",
+    "pembahasan": "[Dalam Modul] Pengangkatan nilai kerja terjadi ketika AI membebaskan manusia dari beban rutin (complement)."
+  },
+  {
+    "num": 104,
+    "question": "Laporan \"Future of Jobs\" dari World Economic Forum (WEF) memproyeksikan bahwa keterampilan yang paling dicari di era AI adalah...",
+    "options": {
+      "A": "Kecepatan mengetik manual",
+      "B": "Pemikiran analitis, kreativitas, kecerdasan emosional, dan kepemimpinan",
+      "C": "Penghafalan tabel rumus matematika",
+      "D": "Pengisian data formulir rutin"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Keterampilan human-centric melonjak nilainya saat tugas terstruktur diotomatisasi."
+  },
+  {
+    "num": 105,
+    "question": "Mengapa ketersediaan kode boilerplate otomatis dari AI justru meningkatkan demand bagi arsitek perangkat lunak senior?",
+    "options": {
+      "A": "Karena arsitek senior tidak perlu bekerja lagi",
+      "B": "Karena fokus kerja bergeser dari sekadar mengetik sintaks dasar ke desain arsitektur sistem, keamanan, dan pemecahan masalah kompleks",
+      "C": "Karena gaji pemrogram junior naik 100 kali lipat",
+      "D": "Karena kode AI tidak pernah mengalami error"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Kemudahan sintaks dasar meningkatkan nilai pemikiran arsitektural tingkat tinggi.\nLangkah 2: Paradoks Polanyi (Dalam & Luar Modul)"
+  },
+  {
+    "num": 106,
+    "question": "Filsuf-ekonom Michael Polanyi (1966) mengemukakan gagasan inti yang dikenal sebagai \"Paradoks Polanyi\", yaitu...",
+    "options": {
+      "A": "\"Mesin selalu lebih pintar dari manusia\"",
+      "B": "\"Kita tahu lebih banyak dari yang bisa kita katakan\" (tacit knowledge)",
+      "C": "\"Semua pekerjaan akan hilang dalam 10 tahun\"",
+      "D": "\"Komputer tidak membutuhkan listrik\""
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Polanyi (1966) menjelaskan bahwa banyak keahlian manusia berjalan secara tersirat (tacit) dan intuitif."
+  },
+  {
+    "num": 107,
+    "question": "Contoh keahlian manusia yang tergolong sebagai Tacit Knowledge adalah...",
+    "options": {
+      "A": "Menghitung akar kuadrat dari 144",
+      "B": "Menyeimbangkan badan saat naik sepeda atau membaca nada emosi dalam percakapan",
+      "C": "Mengikuti resep masakan tertulis langkah demi langkah",
+      "D": "Membaca barisan kode HTML"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Tacit knowledge dipraktikkan secara alami tanpa bisa dituliskan penuh sebagai aturan algoritma kaku."
+  },
+  {
+    "num": 108,
+    "question": "Mengapa algoritma AI mengalami kesulitan dalam menangani masalah berbasis Tacit Knowledge?",
+    "options": {
+      "A": "Karena server tidak memiliki daya simpan cukup",
+      "B": "Pengetahuan tersirat sulit diterjemahkan menjadi aturan kode atau persamaan logika eksplisit",
+      "C": "Karena AI dilarang mempelajari emosi",
+      "D": "Karena data internet tidak memuat gambar"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Hambatan memformalkan tacit knowledge menjadi batasan alami bagi jangkauan otomatisasi."
+  },
+  {
+    "num": 109,
+    "question": "Dua bentuk pengetahuan manusia yang dibedakan dalam kajian ekonomi pengetahuan adalah...",
+    "options": {
+      "A": "Hard Knowledge dan Soft Knowledge",
+      "B": "Explicit Knowledge (terdokumentasi) dan Tacit Knowledge (tersirat/pengalaman)",
+      "C": "Digital Knowledge dan Analog Knowledge",
+      "D": "Real Knowledge dan Virtual Knowledge"
+    },
+    "key": "B",
+    "pembahasan": "[Luar Modul / Nonaka & Takeuchi] Explicit knowledge mudah dikodekan ke komputer, sedangkan tacit knowledge tertanam pada pengalaman manusia."
+  },
+  {
+    "num": 110,
+    "question": "Fenomena Moravec's Paradox dalam riset AI menyatakan bahwa...",
+    "options": {
+      "A": "Hal yang sulit bagi manusia (misal: catur/kalkulasi) sangat mudah bagi AI, namun hal yang sangat mudah bagi manusia (misal: berjalan di medan kasar/persepsi sensorimotor) sangat sulit bagi AI",
+      "B": "AI lebih cepat lapar dibanding manusia",
+      "C": "Komputer akan menguasai dunia dalam waktu singkat",
+      "D": "Manusia dan mesin memiliki kemampuan yang persis identik"
+    },
+    "key": "A",
+    "pembahasan": "[Luar Modul / Hans Moravec 1988] Moravec's Paradox membuktikan bahwa kemampuan sensorimotor tingkat rendah manusia membutuhkan komputasi biologis yang sangat kompleks.\nLangkah 3: Tiga Pilar Keterampilan Manusiawi (Dalam Modul)"
+  },
+  {
+    "num": 111,
+    "question": "Tiga wilayah utama yang diproyeksikan tetap dominan dikuasai oleh manusia di era AI adalah Kecerdasan Emosional, Ketajaman Kritis (Ground Truth), serta...",
+    "options": {
+      "A": "Kecepatan Mengetik",
+      "B": "Penilaian Moral & Etika Terapan",
+      "C": "Kapasitas Memori Otak",
+      "D": "Ketahanan Fisik di Pabrik"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Tiga pilar ini membutuhkan empati, nurani, dan pertimbangan nilai otentik manusia."
+  },
+  {
+    "num": 112,
+    "question": "Mengapa peran manusia dalam menentukan \"Ground Truth\" (validasi kebenaran) menjadi semakin krusial di era AI generatif?",
+    "options": {
+      "A": "Karena AI tidak bisa memproses data teks lagi",
+      "B": "Karena maraknya banjir konten sintetis dan risiko halusinasi yang memerlukan interogasi fakta secara ketat",
+      "C": "Karena internet akan dimatikan secara bertahap",
+      "D": "Karena semua buku fisik telah dimusnahkan"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Gelombang konten buatan AI menuntut ketajaman evaluasi manusia untuk memverifikasi kebenaran empiris."
+  },
+  {
+    "num": 113,
+    "question": "Visi awal para perintis AI dalam Konferensi Dartmouth (seperti John Kemeny dan John McCarthy) sejatinya berorientasi pada...",
+    "options": {
+      "A": "Menggantikan seluruh peran pekerja manusia",
+      "B": "Mendemokratisasi akses komputasi agar daya nalar manusia bekerja lebih tajam (augmentasi)",
+      "C": "Menciptakan robot perang mandiri",
+      "D": "Menghapus penggunaan bahasa manusia"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Cita-cita awal pengembangan komputasi interaktif adalah memperluas kapasitas intelektual manusia."
+  },
+  {
+    "num": 114,
+    "question": "Perbedaan pandangan antara \"Ilusi Otomatisasi\" dan \"Realitas Augmentasi\" adalah...",
+    "options": {
+      "A": "Ilusi otomatisasi memandang AI sebagai pengganti total manusia; Realitas augmentasi memandang AI sebagai sekatu pendongkrak kemampuan manusia",
+      "B": "Ilusi otomatisasi terjadi di laboratorium; Realitas augmentasi terjadi di pasar",
+      "C": "Keduanya merupakan istilah untuk robotika fisik",
+      "D": "Realitas augmentasi berarti manusia tunduk pada perintah mesin"
+    },
+    "key": "A",
+    "pembahasan": "[Dalam Modul] Pergeseran paradigma ke augmentasi menempatkan AI sebagai mitra katalis produktivitas."
+  },
+  {
+    "num": 115,
+    "question": "Keputusan berisiko tinggi seperti vonis peradilan, diagnosis medis final, dan tata kelola lingkungan wajib melibatkan pertimbangan nurani manusia karena...",
+    "options": {
+      "A": "AI belum memiliki surat izin praktik",
+      "B": "Keputusan tersebut melibatkan akuntabilitas moral, empati, dan nilai keadilan yang tidak dimiliki statistik probabilitas",
+      "C": "Komputer tidak bisa mencetak dokumen kertas",
+      "D": "AI tidak suka mengambil keputusan"
+    },
+    "key": "B",
+    "pembahasan": "[Dalam Modul] Keputusan bernilai Etika Terapan membutuhkan pertimbangan nurani dan rasa tanggung jawab sosial.\nLangkah 4: Adaptasi & Metakognisi Masa Depan (Luar Modul)"
+  },
+  {
+    "num": 116,
+    "question": "Kemampuan \"Metakognisi\" (Metacognition) yang menjadi kunci daya tahan tenaga kerja di era AI merujuk pada...",
+    "options": {
+      "A": "Menguasai seluruh bahasa pemrograman dalam setahun",
+      "B": "Kesadaran dan kemampuan untuk memahami, mengontrol, dan mengevaluasi proses belajar/berpikir diri sendiri (learning how to learn)",
+      "C": "Mengingat deretan angka tanpa batas",
+      "D": "Menggunakan 5 aplikasi AI secara bersamaan"
+    },
+    "key": "B",
+    "pembahasan": "[Luar Modul / Educational Psychology] Metakognisi memungkinkan individu beradaptasi dengan cepat saat alat dan lanskap teknologi berubah."
+  },
+  {
+    "num": 117,
+    "question": "Istilah Algorithmic Management dalam dunia kerja modern menggambarkan kondisi di mana...",
+    "options": {
+      "A": "Pemrogram menulis kode secara otomatis",
+      "B": "Fungsi pengawasan, evaluasi kinerja, dan pembagian tugas pekerja dilakukan oleh sistem algoritma/AI",
+      "C": "Pekerja mengambil alih saham perusahaan AI",
+      "D": "Perusahaan membuang seluruh komputer"
+    },
+    "key": "B",
+    "pembahasan": "[Luar Modul / Labour Studies] Algorithmic management menimbulkan tantangan baru terkait hak-hak pekerja dan transparansi pengawasan."
+  },
+  {
+    "num": 118,
+    "question": "Proses pengasahan ulang keterampilan (Reskilling) dan peningkatan kualitas keterampilan (Upskilling) secara berkelanjutan bertujuan untuk...",
+    "options": {
+      "A": "Memastikan pekerja tetap relevan seiring pergeseran otomatisasi tugas-tugas rutin",
+      "B": "Memenuhi syarat agar bisa pensiun dini",
+      "C": "Mengganti nama jabatan di kartu nama",
+      "D": "Menghindari pajak penghasilan"
+    },
+    "key": "A",
+    "pembahasan": "[Luar Modul / WEF Skill Framework] Upskilling dan reskilling memperkuat komplementaritas pekerja terhadap alat-alat baru berbasis AI."
+  },
+  {
+    "num": 119,
+    "question": "Konsep Algorithmic Accountability mewajibkan organisasi pengembang AI untuk...",
+    "options": {
+      "A": "Menjamin bahwa algoritma mereka bebas error 100%",
+      "B": "Menjelaskan, mengaudit, dan bertanggung jawab secara hukum atas dampak dari keputusan yang dihasilkan oleh sistem AI mereka",
+      "C": "Menjual kode sumber aplikasi ke publik",
+      "D": "Menutup akses publik ke layanan AI"
+    },
+    "key": "B",
+    "pembahasan": "[Luar Modul / AI Governance Frameworks] Akuntabilitas algoritmik memastikan adanya kejelasan pihak yang bertanggung jawab atas dampak negatif sistem AI."
+  },
+  {
+    "num": 120,
+    "question": "Manakah tindakan yang paling mencerminkan warga digital yang berdaulat (sovereign digital citizen) di era AI?",
+    "options": {
+      "A": "Menerima seluruh informasi dan teks buatan AI tanpa ragu",
+      "B": "Menolak menggunakan seluruh bentuk teknologi AI",
+      "C": "Memanfaatkan AI secara efisien sebagai alat bantu produktivitas sambil tetap mempertahankan daya kritis, validasi fakta, dan tanggung jawab etis",
+      "D": "Menyebarkan konten deepfake untuk hiburan tanpa penandaan"
+    },
+    "key": "C",
+    "pembahasan": "[Dalam Modul] Warga digital berdaulat mampu berkolaborasi cerdas dengan AI tanpa kehilangan kemandirian berpikir dan tanggung jawab kemanusiaan."
+  }
+]

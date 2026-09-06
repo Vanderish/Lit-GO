@@ -1,60 +1,62 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-// Data Silabus & Badge Data (6 Modul Utama x 4 Langkah Penyelesaian Unik + Kuis Evaluasi)
+// Data Silabus & Badge Data (6 Modul Utama x 4 Langkah Penyelesaian Unik + Kuis Evaluasi dari Dokumen Resmi Melek AI)
 export const MODULES = [
   {
     id: 1,
     tag: "Level 1",
-    title: 'Kenalan dengan "Otak" AI',
-    topics: "Definisi AI, UNESCO Framework, Mitos vs Realitas, & Halusinasi Data.",
+    title: 'Kenalan dengan "Otak" Buatan',
+    topics: "Turing Test (1950), Dartmouth 1956, Transformer (Vaswani 2017), Prediksi Token, & Halusinasi AI.",
     badge: "Pionir AI",
     icon: "fa-brain",
-    iconBg: "linear-gradient(135deg, #8B5CF6, #6D28D9)",
+    iconBg: "linear-gradient(135deg, #2563EB, #1D4ED8)",
     quiz: {
-      q: "Apa yang dimaksud dengan fenomena 'Halusinasi' pada model AI?",
+      q: "Apa inovasi utama arsitektur Transformer (Vaswani dkk., 2017) yang membuat perkembangan AI melesat tajam?",
       opts: [
-        "AI mengalami kerusakan sistem total dan mati.",
-        "AI menghasilkan fakta palsu yang terdengar ilmiah & meyakinkan.",
-        "AI bisa membaca emosi dan pikiran pengguna."
+        "Mengubah nama Imitation Game menjadi Turing Test.",
+        "Memungkinkan AI memproses kata secara berurutan agar hasilnya lebih rapi.",
+        "Memungkinkan AI memproses banyak data bahasa secara paralel dalam waktu singkat lewat mekanisme self-attention.",
+        "Memberikan AI kemampuan untuk memiliki perasaan dan kesadaran sendiri."
       ],
-      ans: 1
+      ans: 2,
+      explanation: "Transformer membuang pemrosesan berurutan (seperti pada RNN) dan menggantinya dengan self-attention, sehingga seluruh kalimat bisa diproses bersamaan secara paralel — jauh lebih cepat dan efisien (Vaswani dkk., 2017)."
     },
     steps: [
       {
         id: "1-1",
         type: "dialogue",
         stepNum: 1,
-        title: "Percakapan Interaktif: Anatomi 'Otak' AI",
-        tag: "Langkah 1 • Duolingo Interactive Story",
-        reading: "UNESCO AI Competency Framework (2024) menegaskan bahwa Generative AI (LLM) bekerja berbasis <b>stochastic prediction (probabilitas statistik kata)</b>, bukan kesadaran manusia. Keterbatasan terbesarnya adalah <b>Halusinasi Data</b> (mencetuskan klaim palsu dengan gaya meyakinkan).",
-        keyTakeaway: "AI adalah alat prediksi statistik kata, bukan mesin pencari fakta serba tahu.",
-        source: "UNESCO AI Competency Framework 2024 & Stanford AI Index"
+        title: "Percakapan Interaktif: Dari Turing ke Transformer",
+        tag: "Langkah 1 • Sejarah & Arsitektur AI",
+        reading: "Pada 1950, Alan Turing mengusulkan <b>Imitation Game (Turing Test)</b> untuk menguji kecerdasan mesin. Lompatan besar terjadi pada 2017 saat Vaswani dkk. merilis arsitektur <b>Transformer</b> berbasis <i>self-attention</i> yang memproses bahasa secara paralel.",
+        keyTakeaway: "Transformer adalah fondasi teknis LLM modern seperti ChatGPT, Claude, dan Gemini."
       },
       {
         id: "1-2",
         type: "matching",
         stepNum: 2,
-        title: "Matching Game: Istilah & Mitos AI",
-        tag: "Langkah 2 • Mimo Card Matching Game",
+        title: "Matching Game: Istilah & Konsep Kunci AI",
+        tag: "Langkah 2 • Pasangan Konsep Ilmiah",
         pairs: [
-          { left: "Generative AI (LLM)", right: "Prediksi Probabilitas Kata" },
-          { left: "Halusinasi Data", right: "Sitasi & Nomor UU Fiktif" },
-          { left: "Search Engine", right: "Mengindeks Dokumen Asli" }
+          { left: "Transformer (2017)", right: "Self-Attention Paralel" },
+          { left: "Turing Test (1950)", right: "Imitation Game Teks" },
+          { left: "Halusinasi AI", right: "Fakta Palsu Meyakinkan" },
+          { left: "LLM Modern", right: "Prediksi Probabilitas Kata" }
         ]
       },
       {
         id: "1-3",
         type: "tebakgambar1",
         stepNum: 3,
-        title: "Game Tebak Gambar AI: Prinsip Probabilitas",
-        tag: "Langkah 3 • Game Tebak Gambar Visual",
+        title: "Tebak Gambar: Prediksi Probabilitas Token",
+        tag: "Langkah 3 • Logika Probabilitas",
         clueIcons: ["🧠", "📊", "🎲"],
-        clueText: "Otak AI + Diagram Grafik + Dadu Probabilitas",
-        q: "Apakah arti dari petunjuk gambar di atas?",
+        clueText: "Otak AI + Diagram Grafik Statistik + Dadu Probabilitas",
+        q: "Bagaimanakah sebenarnya cara kerja model bahasa besar (LLM) seperti ChatGPT?",
         opts: [
-          "AI berpikir menggunakan perasaan dan hati nurani.",
-          "AI bekerja memprediksi teks berbasis kalkulasi probabilitas statistik.",
-          "AI adalah mesin ajaib serba tahu."
+          "AI berpikir menggunakan kesadaran batin dan perasaan.",
+          "AI bekerja memprediksi token kata berikutnya berdasarkan probabilitas statistik data latih.",
+          "AI adalah entitas serba tahu yang tak pernah salah."
         ],
         ans: 1
       },
@@ -62,68 +64,77 @@ export const MODULES = [
         id: "1-4",
         type: "bughunter",
         stepNum: 4,
-        title: "Bug Hunter: Berburu Halusinasi Hukum",
-        tag: "Langkah 4 • Duolingo Spot-The-Error Game",
-        caseTitle: "Rangkuman Hukum Fiktif AI",
-        caseDesc: "Berdasarkan Pasal 999 UU Literasi Digital 1945, penggunaan AI wajib didaftarkan ke Kementerian Kebudayaan Kuno."
+        title: "Detektif Halusinasi: Kasus Halusinasi Hukum",
+        tag: "Langkah 4 • Detektif Halusinasi",
+        caseTitle: "Audit Putusan Hukum AI",
+        caseDesc: "Berdasarkan Pasal 999 UU Literasi Digital 1945, seluruh sistem AI wajib diserahkan kepada Kementerian Kebudayaan Kuno dengan sanksi pidana."
       }
     ]
   },
   {
     id: 2,
     tag: "Level 2",
-    title: "Kompas Etika & Privasi",
-    topics: "UNESCO Ethics 2021 & IEEE: Privasi Data, Hak Cipta, & Deteksi Deepfake.",
+    title: "Kompas Etika, Keamanan & Privasi",
+    topics: "UNESCO Ethics 2021, SE Menkominfo No. 9/2023, Bias Gender Shades (Buolamwini), Word2Vec, & C2PA.",
     badge: "Penjaga Etika",
     icon: "fa-shield-halved",
     iconBg: "linear-gradient(135deg, #0EA5E9, #0284C7)",
     quiz: {
-      q: "Data mana yang HARUS DIRAHASIAKAN dan TIDAK BOLEH dimasukkan ke prompt AI publik?",
+      q: "Perbedaan mendasar pendekatan C2PA dibanding deteksi forensik terhadap konten sintetis (deepfake) adalah...",
       opts: [
-        "Rangkuman makalah sejarah Indonesia 1945.",
-        "NIK dan kata sandi perbankan.",
-        "Pertanyaan rumus matematika fisika."
+        "C2PA bekerja reaktif setelah gambar viral, sedangkan forensik bekerja proaktif sejak awal.",
+        "C2PA menyematkan metadata asal-usul sejak media dibuat (proaktif), sedangkan forensik menganalisis kejanggalan piksel setelah tersebar (reaktif).",
+        "Keduanya persis sama, hanya beda nama merek.",
+        "C2PA hanya bisa dipakai untuk video, bukan gambar."
       ],
-      ans: 1
+      ans: 1,
+      explanation: "C2PA bersifat proaktif dengan menyematkan metadata asal-usul (label nutrisi) sejak awal, sedangkan forensik digital menganalisis artefak piksel setelah media beredar (reaktif)."
     },
     steps: [
       {
         id: "2-1",
         type: "swipebin",
         stepNum: 1,
-        title: "Data Privacy Swipe & Shredder",
-        tag: "Langkah 1 • Duolingo Swipe/Drag Bin Game",
-        reading: "UNESCO Ethics 2021 melarang memasukkan NIK, password, dan rekam medis ke prompt AI publik."
+        title: "Data Privacy Swipe: Lindungi Data Pribadi",
+        tag: "Langkah 1 • Pemilahan Privasi Data",
+        reading: "SE Menkominfo No. 9/2023 dan UU PDP menegaskan larangan memasukkan NIK, password, nomor rekening, dan rekam medis ke AI publik."
       },
       {
         id: "2-2",
         type: "tebakgambar2",
         stepNum: 2,
-        title: "Game Tebak Gambar: Artefak Visual Deepfake",
-        tag: "Langkah 2 • Game Tebak Gambar Deepfake",
+        title: "Tebak Gambar: Artefak Visual Deepfake & C2PA",
+        tag: "Langkah 2 • Deteksi Media Sintetis",
         clueIcons: ["📸", "🖐️", "👁️"],
-        clueText: "Kamera Foto + Tangan 6 Jari + Pupil Mata Asimetris",
-        q: "Manakah ciri utama manipulasi foto deepfake AI pada gambar?",
+        clueText: "Kamera Foto + Tangan Berjari 6 + Pupil Mata Asimetris",
+        q: "Manakah ciri utama manipulasi foto sintetis AI yang sering terdeteksi pada forensik visual?",
         opts: [
-          "Warna baju pejabat terlalu terang.",
-          "Anatomi tangan berjumlah 6 jari & refleks pupil mata menyimpang.",
-          "Latar pemandangan sangat bagus."
+          "Warna pakaian subjek terlalu cerah.",
+          "Anatomi abnormal seperti jari berlebih dan pantulan cahaya pupil mata asimetris.",
+          "Latar belakang terlihat sangat indah."
         ],
         ans: 1
       },
       {
         id: "2-3",
-        type: "rpgtree",
+        type: "matching",
         stepNum: 3,
-        title: "Dilema Etika Kantor: RPG Adventure",
-        tag: "Langkah 3 • Duolingo Choice Tree Game"
+        title: "Matching Game: Skandal Bias Algoritma",
+        tag: "Langkah 3 • Riset Bias AI",
+        pairs: [
+          { left: "Gender Shades (2018)", right: "Error 34,7% Kulit Gelap" },
+          { left: "Word2Vec Bias (2016)", right: "Stereotip Gender Linguistik" },
+          { left: "Koalisi C2PA", right: "Label Nutrisi Provenance Media" },
+          { left: "SE Kominfo 9/2023", right: "Pedoman Etika AI Indonesia" }
+        ]
       },
       {
         id: "2-4",
-        type: "stampstudio",
+        type: "dialogue",
         stepNum: 4,
-        title: "Hologram Watermark Stamping Studio",
-        tag: "Langkah 4 • Mimo Stamping Studio"
+        title: "Permainan: Asli atau Rekayasa?",
+        tag: "Langkah 4 • Audit Bukti C2PA",
+        reading: "Dalam sesi 'Asli atau Rekayasa', analis memeriksa apakah sebuah media sintetis dibuat dengan AI atau riil, menggunakan pendekatan bukti asal-usul C2PA."
       }
     ]
   },
@@ -131,121 +142,141 @@ export const MODULES = [
     id: 3,
     tag: "Level 3",
     title: "Seni Berbicara dengan Mesin",
-    topics: "NIST AI RMF & OpenAI Safety: 4 Elemen Anatomi Prompt, Few-Shot, & Safety Guardrails.",
+    topics: "4 Pilar Prompting (Konteks, Instruksi, Format, Persona), Zero-Shot, Few-Shot, CoT (Wei 2022), & ReAct (Yao 2022).",
     badge: "Master Prompt",
     icon: "fa-terminal",
     iconBg: "linear-gradient(135deg, #6366F1, #4F46E5)",
     quiz: {
-      q: "Elemen apa yang menentukan gaya bahasa & perspektif sudut pandang AI?",
+      q: "Apa yang membedakan paradigma ReAct (Yao dkk., 2022) dari Chain-of-Thought biasa?",
       opts: [
-        "Format Output",
-        "Panjang karakter teks",
-        "Persona / Peran AI"
+        "ReAct hanya bisa dipakai untuk menulis karya fiksi.",
+        "ReAct menggabungkan penalaran dengan tindakan nyata seperti memanggil alat eksternal (pencarian web/API), bukan sekadar bernalar dalam teks.",
+        "ReAct tidak membutuhkan instruksi prompt sama sekali.",
+        "ReAct hanya berfungsi secara offline tanpa internet."
       ],
-      ans: 2
+      ans: 1,
+      explanation: "ReAct (Synergizing Reasoning and Acting) memungkinkan model AI tidak hanya bernalar langkah demi langkah tetapi juga mengambil tindakan nyata memanggil alat eksternal."
     },
     steps: [
       {
         id: "3-1",
-        type: "promptpuzzle",
+        type: "tileorder",
         stepNum: 1,
-        title: "NIST 4-Block Prompt Puzzle",
-        tag: "Langkah 1 • Mimo Drag-to-Slot Puzzle"
+        title: "Bengkel Prompt: 4 Pilar Instruksi Presisi",
+        tag: "Langkah 1 • Formula 4 Pilar",
+        checkpoints: [
+          "Persona: Berikan peran keahlian spesifik kepada AI",
+          "Konteks: Jelaskan latar belakang dan audiens target",
+          "Instruksi: Berikan tugas konkret dengan batasan tegas",
+          "Format Output: Tentukan bentuk luaran seperti tabel atau JSON"
+        ]
       },
       {
         id: "3-2",
         type: "tebakgambar3",
         stepNum: 2,
-        title: "Game Tebak Gambar: Kualitas Few-Shot Prompt",
-        tag: "Langkah 2 • Game Tebak Gambar Prompting",
+        title: "Tebak Gambar: Few-Shot In-Context Prompting",
+        tag: "Langkah 2 • Pola Few-Shot",
         clueIcons: ["🎯", "📝", "✨"],
-        clueText: "Target Presisi + Contoh Teks + Hasil Sempurna",
-        q: "Teknik prompting apakah yang menyertakan contoh konkret sebelum meminta hasil?",
+        clueText: "Target Presisi + Contoh Input-Output + Hasil Sempurna",
+        q: "Teknik prompting apakah yang menyertakan 2-3 contoh pasangan input-output sebelum meminta AI menjawab kueri sesungguhnya?",
         opts: [
           "Zero-Shot Prompting (Tanpa Contoh)",
-          "Few-Shot Prompting (Dengan 2-3 Contoh Ideal)",
-          "Random Prompting"
+          "Few-Shot Prompting (Brown dkk., GPT-3 2020)",
+          "Random Sampling Prompting"
         ],
         ans: 1
       },
       {
         id: "3-3",
-        type: "terminalauditor",
+        type: "tileorder",
         stepNum: 3,
-        title: "Cybersecurity Terminal Safety Auditor",
-        tag: "Langkah 3 • Red-Teaming Terminal Auditor"
+        title: "Chain-of-Thought: Penalaran Bertahap",
+        tag: "Langkah 3 • CoT Reasoning",
+        checkpoints: [
+          "Jabarkan premis dan data masalah secara terurai",
+          "Kalkulasikan penalaran langkah demi langkah (Step-by-Step)",
+          "Verifikasi konsistensi logika sebelum menarik konklusi"
+        ]
       },
       {
         id: "3-4",
-        type: "promptrepair",
+        type: "dialogue",
         stepNum: 4,
-        title: "Prompt Repair Workshop",
-        tag: "Langkah 4 • Mimo Prompt Repair Workshop"
+        title: "ReAct Paradigm: Reasoning + Acting Agent",
+        tag: "Langkah 4 • Alur Agen ReAct",
+        reading: "Paradigma ReAct (Yao dkk., 2022) menjalankan alur: Thought (Bernalar) ➔ Action (Panggil Search API/Kalkulator) ➔ Observation (Amati Hasil) ➔ Final Answer."
       }
     ]
   },
   {
     id: 4,
     tag: "Level 4",
-    title: "Asisten Produktivitas AI",
-    topics: "Tips riset anti-hoaks, prompt repair, & faktualisasi verifikasi.",
+    title: "AI sebagai Asisten Produktivitas",
+    topics: "RAG (Lewis 2020 Meta AI), Memori Parametrik vs Non-Parametrik, UNESCO Guidance 2023, & Tutor Sokratik.",
     badge: "Inovator Produktif",
     icon: "fa-rocket",
     iconBg: "linear-gradient(135deg, #EC4899, #F43F5E)",
     quiz: {
-      q: "Cara paling etis menggunakan AI untuk tugas akademis?",
+      q: "Mengapa arsitektur Retrieval-Augmented Generation (RAG) sangat efektif mencegah halusinasi AI?",
       opts: [
-        "Menyalin 100% jawaban AI dan mengakuinya murni sendiri.",
-        "AI sebagai teman diskusi & outline, lalu tulis sendiri dan deklarasikan penggunaan AI.",
-        "Menyuruh AI buatkan seluruh skripsi dari bab 1 hingga 5."
+        "Karena RAG melatih ulang seluruh parameter jaringan saraf setiap ada pertanyaan baru.",
+        "Karena AI dipaksa merumuskan jawaban dari dokumen fakta eksternal yang disuntikkan saat itu juga, bukan sekadar menebak dari ingatan internal.",
+        "Karena RAG menghapus pertanyaan yang dianggap rumit.",
+        "Karena RAG memblokir kemampuan AI menghasilkan teks baru."
       ],
-      ans: 1
+      ans: 1,
+      explanation: "RAG (Lewis dkk., 2020 Meta AI) mengambil dokumen relevan dari basis data eksternal (non-parametrik) lalu menyuntikkannya sebagai konteks faktual ke model generatif."
     },
     steps: [
       {
         id: "4-1",
-        type: "tebakgambar4",
+        type: "matching",
         stepNum: 1,
-        title: "Game Tebak Gambar: Riset Anti-Hoaks",
-        tag: "Langkah 1 • Game Tebak Gambar Produktivitas",
-        clueIcons: ["🔍", "📰", "🛡️"],
-        clueText: "Kaca Pembesar + Berita Berita + Perisai Validasi",
-        q: "Tindakan wajib pertama setelah menerima rangkuman AI adalah...",
-        opts: [
-          "Langsung membagikan ke grup percakapan tanpa dibaca.",
-          "Verifikasi klaim spesifik & sitasi ke sumber resmi primer.",
-          "Menghapus seluruh tugas."
-        ],
-        ans: 1
+        title: "Simulasi RAG Manusia: Dua Jenis Memori",
+        tag: "Langkah 1 • Konsep Inti RAG",
+        pairs: [
+          { left: "Memori Parametrik", right: "Bobot Tersimpan di Model" },
+          { left: "Memori Non-Parametrik", right: "Basis Data Dokumen Eksternal" },
+          { left: "Retriever System", right: "Mengambil Dokumen Relevan" },
+          { left: "Generator System", right: "Merangkum Jawaban Berbasis Fakta" }
+        ]
       },
       {
         id: "4-2",
         type: "tileorder",
         stepNum: 2,
         title: "Rantai Protokol Fact-Checking",
-        tag: "Langkah 2 • Mimo Tile Reorder Game",
+        tag: "Langkah 2 • Verifikasi Fakta",
         checkpoints: [
-          "Verifikasi klaim ke sumber resmi primer",
-          "Uji konsistensi dengan counter-prompt",
-          "Cek DOI/URL asli sebelum menyalin"
+          "Verifikasi klaim numerik dan sitasi ke sumber resmi primer",
+          "Uji konsistensi dengan counter-prompt kritis",
+          "Cek DOI dan repositori terakreditasi sebelum mengutip"
         ]
       },
       {
         id: "4-3",
-        type: "splitslider",
+        type: "dialogue",
         stepNum: 3,
-        title: "Zero-Shot vs Few-Shot Split Slider",
-        tag: "Langkah 3 • Fullscreen Output Slider"
+        title: "Mitra Sokratik & Zero-Drafting (UNESCO 2023)",
+        tag: "Langkah 3 • Integritas Akademik",
+        reading: "UNESCO Guidance (2023) menganjurkan AI sebagai 'Tutor Sokratik' (pengkritik celah argumen) dan 'Zero-Drafting' (pemantik ide draf kasar), bukan penulis penuh."
       },
       {
         id: "4-4",
-        type: "speedquiz",
+        type: "tebakgambar4",
         stepNum: 4,
-        title: "Flash Quiz: Timer 10 Detik Produktivitas",
-        tag: "Langkah 4 • Kuis Kilat 10 Detik",
-        questions: [
-          { q: "Mengapa pembatasan format output (misal: 'Maksimal 3 poin ringkas') sangat penting?", opts: ["Agar AI tidak bertele-tele dan melenceng.", "Agar AI mengakses harddisk.", "Tidak ada pengaruh."], ans: 0 }
-        ]
+        title: "Tebak Gambar: Etika Riset Bebas Plagiarisme",
+        tag: "Langkah 4 • Nalar Kritis Akademis",
+        clueIcons: ["🔍", "📰", "🛡️"],
+        clueText: "Kaca Pembesar + Berita Primer + Perisai Integritas",
+        q: "Tindakan wajib pertama setelah menerima rangkuman karya ilmiah dari AI adalah...",
+        opts: [
+          "Langsung menyalin dan mengumpulkannya ke dosen.",
+          "Memverifikasi setiap klaim spesifik dan nomor sitasi ke jurnal sumber primer aslinya.",
+          "Menolak membaca materi sama sekali."
+        ],
+        ans: 1
       }
     ]
   },
@@ -253,113 +284,144 @@ export const MODULES = [
     id: 5,
     tag: "Level 5",
     title: "Eksplorasi AI Kreatif",
-    topics: "Etika text-to-image, hak cipta karya visual, & transparansi deklarasi.",
+    topics: "Enam Sumbu Visual Prompt (Ho 2020 Diffusion), Hak Cipta US Copyright Office, EU AI Act Opt-Out, & Lisensi India.",
     badge: "Kreator Beretika",
     icon: "fa-palette",
     iconBg: "linear-gradient(135deg, #10B981, #059669)",
     quiz: {
-      q: "Tindakan mana yang melanggar etika dalam pembuatan gambar AI?",
+      q: "Menurut panduan resmi U.S. Copyright Office, syarat mutlak agar karya yang dibantu AI dapat memperoleh perlindungan hak cipta adalah...",
       opts: [
-        "Prompt pencahayaan fotorealistik alam.",
-        "Membuat foto deepfake tokoh publik untuk menyebarkan fitnah.",
-        "Membuat ilustrasi pemandangan gaya cyberpunk."
+        "Membayar biaya langganan komersial ke penyedia model AI.",
+        "Menjadi orang pertama yang mengetikkan prompt tanpa menyentuh hasil gambarnya.",
+        "Terdapat unsur kepengarangan manusia (human authorship) berupa modifikasi kreatif yang signifikan dan substantif atas karya tersebut.",
+        "Semua karya AI dilarang keras dilindungi dalam kondisi apa pun."
       ],
-      ans: 1
+      ans: 2,
+      explanation: "U.S. Copyright Office menegaskan bahwa hanya elemen yang dihasilkan dari kepengarangan manusia (human authorship) yang dapat didaftarkan hak ciptanya."
     },
     steps: [
       {
         id: "5-1",
-        type: "tebakgambar5",
+        type: "tileorder",
         stepNum: 1,
-        title: "Game Tebak Gambar: Style Visual AI",
-        tag: "Langkah 1 • Game Tebak Gambar Style Visual",
+        title: "Sutradara AI: 6 Sumbu Parameter Visual",
+        tag: "Langkah 1 • Formula 6 Sumbu",
+        checkpoints: [
+          "Subjek Utama yang dideskripsikan tanpa ambiguitas",
+          "Gaya & Medium Seni (cat air, 35mm film, atau 3D render)",
+          "Pencahayaan & Suasana (chiaroscuro, golden hour)",
+          "Komposisi & Sudut Kamera (rule of thirds, bird-eye)",
+          "Palet Warna (monokromatik sinematik, neon cyberpunk)",
+          "Pengubah Kualitas & Ketajaman Detail Rendering"
+        ]
+      },
+      {
+        id: "5-2",
+        type: "matching",
+        stepNum: 2,
+        title: "Matching Game: Lanskap Regulasi Hak Cipta AI",
+        tag: "Langkah 2 • Hukum & Etika Hak Cipta",
+        pairs: [
+          { left: "U.S. Copyright Office", right: "Syarat Mutlak Human Authorship" },
+          { left: "Uni Eropa (EU AI Act)", right: "Hak Opt-Out bagi Kreator Asli" },
+          { left: "India (Kerangka 2025)", right: "One Nation One License Payment" },
+          { left: "Diffusion Model (DDPM)", right: "Denoising Noise Bertahap" }
+        ]
+      },
+      {
+        id: "5-3",
+        type: "tebakgambar5",
+        stepNum: 3,
+        title: "Tebak Gambar: Seni Difusi Probabilistik",
+        tag: "Langkah 3 • Model Difusi Visual",
         clueIcons: ["🎨", "🌆", "🤖"],
-        clueText: "Kuas Cat + Kota Masa Depan + Neon Robot",
-        q: "Gaya visual apakah yang direpresentasikan oleh gambar lampu neon & kota futuristik di atas?",
+        clueText: "Kuas Cat + Kota Masa Depan + Neon Cyberpunk",
+        q: "Bagaimana cara kerja model difusi (DDPM Ho dkk., 2020) menghasilkan gambar dari teks?",
         opts: [
-          "Gaya Watercolor Klasik",
-          "Gaya Cyberpunk Futuristik",
-          "Gaya Sketsa Pensil Hitam Putih"
+          "Mengambil potongan foto berhak cipta orang lain di Google Image.",
+          "Menghilangkan noise acak (denoising) secara terarah dan bertahap hingga terbentuk visual utuh.",
+          "Menggabungkan screenshot video kamera otomatis."
         ],
         ans: 1
       },
       {
-        id: "5-2",
-        type: "citationstudio",
-        stepNum: 2,
-        title: "UNESCO Academic Integrity Studio",
-        tag: "Langkah 2 • Citation Studio Generator"
-      },
-      {
-        id: "5-3",
-        type: "stampstudio",
-        stepNum: 3,
-        title: "Hologram Watermark Stamping Studio",
-        tag: "Langkah 3 • Mimo Stamping Studio"
-      },
-      {
         id: "5-4",
-        type: "rpgtree",
+        type: "dialogue",
         stepNum: 4,
-        title: "Dilema Etika Hak Cipta Karya Visual",
-        tag: "Langkah 4 • RPG Choice Adventure"
+        title: "Sidang Mediasi Hak Cipta AI",
+        tag: "Langkah 4 • Simulasi Mediasi Hak Cipta",
+        reading: "Dalam simulasi sidang mediasi hak cipta, kreator harus membuktikan sejauh mana sentuhan modifikasi manusia (human authorship) telah ditambahkan ke atas karya mentah AI."
       }
     ]
   },
   {
     id: 6,
     tag: "Level 6",
-    title: "Bertahan di Era AI",
-    topics: "Human-in-the-Loop, empati, critical thinking, & ikrar cendekia digital.",
+    title: "Bertahan & Berdaya di Era AI",
+    topics: "David Autor MIT (2015) Tugas Rutin vs Fleksibel, Paradoks Polanyi 1966 (Tacit Knowledge), & 3 Human Skills.",
     badge: "Cendekia Digital",
     icon: "fa-graduation-cap",
     iconBg: "linear-gradient(135deg, #F59E0B, #D97706)",
     quiz: {
-      q: "Apa peran utama manusia dalam hubungannya dengan teknologi AI?",
+      q: "Menurut konsep Paradoks Polanyi (1966) yang diulas ekonom David Autor (2015), mengapa AI tidak bisa sepenuhnya menggantikan keahlian manusia?",
       opts: [
-        "Pasrah dan serahkan seluruh keputusan ke AI.",
-        "Pemegang kendali utama (pilot) yang mengevaluasi secara kritis output AI.",
-        "Menolak seluruh penggunaan AI di kehidupan."
+        "Karena daya komputasi awan terlalu mahal bagi industri.",
+        "Karena banyak pengetahuan dan intuisi manusia bersifat tacit (tersirat) — 'kita tahu lebih banyak dari yang bisa kita katakan' — sehingga sulit diformalkan ke aturan eksplisit.",
+        "Karena hukum perburuhan melarang penggunaan mesin.",
+        "Karena AI selalu gagal dalam tugas rutin."
       ],
-      ans: 1
+      ans: 1,
+      explanation: "Paradoks Polanyi menjelaskan bahwa tacit knowledge manusia (seperti empati, intuisi situasi, pertimbangan etis) tidak dapat diterjemahkan menjadi aturan eksplisit bagi algoritma statistik."
     },
     steps: [
       {
         id: "6-1",
-        type: "cockpitwheel",
+        type: "matching",
         stepNum: 1,
-        title: "Pilot vs Copilot Cockpit Console",
-        tag: "Langkah 1 • Duolingo Cockpit Console"
+        title: "Permainan: Manusia vs Mesin (Sortir Polanyi)",
+        tag: "Langkah 1 • Paradoks Polanyi Sort",
+        pairs: [
+          { left: "Hitung Slip Gaji & Data Entry", right: "Otomatisasi Penuh (Rutin Berpola)" },
+          { left: "Draf Awal Kode & Ringkasan", right: "Kolaborasi Manusia-AI (Augmentasi)" },
+          { left: "Vonis Hakim & Konseling Duka", right: "Wajib Manusia (Empati & Moralitas)" },
+          { left: "Intuisi Situasional Tim", right: "Tacit Knowledge Tak Terprogram" }
+        ]
       },
       {
         id: "6-2",
-        type: "equalizersliders",
+        type: "tileorder",
         stepNum: 2,
-        title: "Human-AI Skill Matrix Equalizer",
-        tag: "Langkah 2 • Mimo Equalizer Sliders"
+        title: "Tiga Pilar Keterampilan Human-Centric WEF",
+        tag: "Langkah 2 • Keterampilan Human-Centric",
+        checkpoints: [
+          "Kecerdasan Emosional (EQ) & Manajemen Relasi Autentik",
+          "Ketajaman Kritis & Pengujian Ground Truth Fakta",
+          "Penilaian Moral & Pertimbangan Etika Terapan"
+        ]
       },
       {
         id: "6-3",
         type: "tebakgambar6",
         stepNum: 3,
-        title: "Game Tebak Gambar: Skill Tak Tergantikan",
-        tag: "Langkah 3 • Game Tebak Gambar Human Agency",
+        title: "Tebak Gambar: Komoditas Kemanusiaan Paling Berharga",
+        tag: "Langkah 3 • Nilai Kemanusiaan",
         clueIcons: ["❤️", "🤝", "🧠"],
-        clueText: "Hati Empati + Jabat Tangan + Otak Berpikir Kritis",
-        q: "Keterampilan manusia manakah yang PALING TIDAK BISA DIGANTIKAN oleh AI?",
+        clueText: "Hati Empati + Jabat Tangan Integritas + Otak Kritis",
+        q: "Ketika tugas rutin makin mudah diselesaikan algoritma dalam hitungan detik, keterampilan apakah yang nilai pasarnya melonjak paling tinggi?",
         opts: [
-          "Kecepatan menyalin dokumen berulang.",
-          "Empati Emosional, Moralitas, & Pemikiran Kritis.",
-          "Kecepatan menghitung perkalian matematika."
+          "Kecepatan mengetik dan menyalin dokumen secara berulang.",
+          "Keahlian murni humanistik: Empati Autentik, Pemikiran Kritis Ground Truth, dan Pertimbangan Nurani Moral.",
+          "Kemampuan menghafal data statistik lama."
         ],
         ans: 1
       },
       {
         id: "6-4",
-        type: "signaturepledge",
+        type: "dialogue",
         stepNum: 4,
-        title: "Digital Signature & Pledge Ceremony",
-        tag: "Langkah 4 • Signature Pad & Pledge Ceremony"
+        title: "Manifesto Pilot AI: Warga Digital Berdaulat",
+        tag: "Langkah 4 • Ikrar Cendekia Digital",
+        reading: "Semakin canggih teknologi kecerdasan buatan, semakin krusial peran manusia sebagai 'pilot' yang menentukan nilai, arah, dan etika demi kemaslahatan peradaban."
       }
     ]
   }
