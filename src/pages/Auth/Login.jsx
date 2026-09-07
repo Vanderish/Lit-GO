@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { GoogleOAuthProvider, useGoogleLogin } from '@react-oauth/google';
 import { useNavigate, Link } from 'react-router-dom';
+import { useProgress } from '../../context/ProgressContext';
 import './Login.css';
 
 const LoginForm = () => {
   const navigate = useNavigate();
+  const { refreshState } = useProgress();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -18,6 +20,7 @@ const LoginForm = () => {
       picture: '',
     };
     localStorage.setItem('user_data', JSON.stringify(userDetail));
+    if (refreshState) refreshState();
     navigate('/dashboard');
   };
 
@@ -27,15 +30,16 @@ const LoginForm = () => {
       try {
         const userInfo = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
           headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
-        }).then(res => res.json());
+        }).then((res) => res.json());
 
         const userDetail = {
           name: userInfo.name || 'User Lit-GO',
           email: userInfo.email,
           picture: userInfo.picture || '',
         };
-        
+
         localStorage.setItem('user_data', JSON.stringify(userDetail));
+        if (refreshState) refreshState();
         navigate('/dashboard');
       } catch (error) {
         console.error('Gagal mengambil data user Google:', error);
@@ -72,12 +76,12 @@ const LoginForm = () => {
             </div>
             <div className="input-wrapper">
               <i className="input-icon left fa-solid fa-envelope"></i>
-              <input 
-                type="email" 
-                id="email" 
-                className="form-input" 
-                placeholder="nama@email.com" 
-                required 
+              <input
+                type="email"
+                id="email"
+                className="form-input"
+                placeholder="nama@email.com"
+                required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -87,26 +91,28 @@ const LoginForm = () => {
           <div className="form-group">
             <div className="label-row">
               <label htmlFor="password">Kata Sandi</label>
-              <a href="#forgot" className="link-text">Lupa kata sandi?</a>
+              <a href="#forgot" className="link-text">
+                Lupa kata sandi?
+              </a>
             </div>
             <div className="input-wrapper">
               <i className="input-icon left fa-solid fa-lock"></i>
-              <input 
-                type={showPassword ? "text" : "password"} 
-                id="password" 
-                className="form-input" 
+              <input
+                type={showPassword ? 'text' : 'password'}
+                id="password"
+                className="form-input"
                 style={{ paddingRight: '48px' }}
-                placeholder="••••••••" 
-                required 
+                placeholder="••••••••"
+                required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <button 
-                type="button" 
+              <button
+                type="button"
                 className="input-icon right"
                 onClick={() => setShowPassword(!showPassword)}
               >
-                <i className={`fa-solid ${showPassword ? "fa-eye" : "fa-eye-slash"}`}></i>
+                <i className={`fa-solid ${showPassword ? 'fa-eye' : 'fa-eye-slash'}`}></i>
               </button>
             </div>
           </div>
@@ -132,12 +138,15 @@ const LoginForm = () => {
           >
             <span className="google-login-icon-wrap">
               {isGoogleLoading ? (
-                <i className="fa-solid fa-circle-notch fa-spin" style={{ color: '#4F46E5', fontSize: '18px' }}></i>
+                <i
+                  className="fa-solid fa-circle-notch fa-spin"
+                  style={{ color: '#4F46E5', fontSize: '18px' }}
+                ></i>
               ) : (
-                <img 
-                  src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" 
-                  alt="Google Logo" 
-                  className="google-login-icon" 
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg"
+                  alt="Google Logo"
+                  className="google-login-icon"
                 />
               )}
             </span>
@@ -160,7 +169,7 @@ const LoginForm = () => {
 };
 
 const LoginWrapper = () => {
-  const clientId = import.meta.env.VITE_OAUTH_SECRET || "DUMMY_CLIENT_ID";
+  const clientId = import.meta.env.VITE_OAUTH_SECRET || 'DUMMY_CLIENT_ID';
   return (
     <GoogleOAuthProvider clientId={clientId}>
       <LoginForm />

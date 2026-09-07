@@ -320,63 +320,63 @@ export default function LandingPage() {
 
               <div className="module-carousel-track" ref={carouselTrackRef} id="landing-modules-track">
                 {/* Modul 1 */}
-                <div className={`mod-carousel-card mod-card-theme-1 info-only ${doneModules.includes(1) ? 'done-card' : ''}`}>
+                <div className={`mod-carousel-card mod-card-theme-1 info-only`}>
                   <div className="mod-card-level">1</div>
                   <div className="mod-card-icon" style={{ background: 'linear-gradient(135deg, #8B5CF6, #6D28D9)' }}>
                     <i className="fa-solid fa-brain"></i>
                   </div>
                   <div className="mod-card-title">{isEnglish ? 'Understanding AI "Brain"' : 'Kenalan dengan "Otak" AI'}</div>
-                  <div className="mod-card-desc">{isEnglish ? 'AI definition, history, myths vs facts, main limitations & hallucinations.' : 'Definisi AI, sejarah singkat, mitos vs fakta, keterbatasan & halusinasi.'}</div>
+                  <div className="mod-card-desc">{isEnglish ? '4 steps: interactive story, matching game, Tebak Gambar AI, bug hunter.' : '4 Langkah: story interaktif, card matching, Tebak Gambar AI, bug hunter.'}</div>
                 </div>
 
                 {/* Modul 2 */}
-                <div className={`mod-carousel-card mod-card-theme-2 info-only ${doneModules.includes(2) ? 'done-card' : ''}`}>
+                <div className={`mod-carousel-card mod-card-theme-2 info-only`}>
                   <div className="mod-card-level">2</div>
                   <div className="mod-card-icon" style={{ background: 'linear-gradient(135deg, #0EA5E9, #0284C7)' }}>
                     <i className="fa-solid fa-shield-halved"></i>
                   </div>
                   <div className="mod-card-title">{isEnglish ? 'Ethics & Privacy Compass' : 'Kompas Etika & Privasi'}</div>
-                  <div className="mod-card-desc">{isEnglish ? 'Copyright, plagiarism, data privacy risks, AI bias & deepfakes.' : 'Hak cipta, plagiarisme, bahaya data pribadi, bias AI & deepfake.'}</div>
+                  <div className="mod-card-desc">{isEnglish ? '4 steps: data swipe shredder, Tebak Gambar Deepfake, RPG choice tree, watermark studio.' : '4 Langkah: data swipe bin, Tebak Gambar Deepfake, RPG choice, watermark studio.'}</div>
                 </div>
 
                 {/* Modul 3 */}
-                <div className={`mod-carousel-card mod-card-theme-3 info-only ${doneModules.includes(3) ? 'done-card' : ''}`}>
+                <div className={`mod-carousel-card mod-card-theme-3 info-only`}>
                   <div className="mod-card-level">3</div>
                   <div className="mod-card-icon" style={{ background: 'linear-gradient(135deg, #6366F1, #4F46E5)' }}>
                     <i className="fa-solid fa-terminal"></i>
                   </div>
                   <div className="mod-card-title">{isEnglish ? 'Art of Talking to Machines' : 'Seni Berbicara dengan Mesin'}</div>
-                  <div className="mod-card-desc">{isEnglish ? 'Prompt anatomy: context, instruction, format, persona & few-shot.' : 'Anatomi prompt: konteks, instruksi, format, persona & few-shot.'}</div>
+                  <div className="mod-card-desc">{isEnglish ? '4 steps: 4-block puzzle, Tebak Gambar Prompting, terminal auditor, prompt repair.' : '4 Langkah: 4-block puzzle, Tebak Gambar Prompting, terminal auditor, prompt repair.'}</div>
                 </div>
 
                 {/* Modul 4 */}
-                <div className={`mod-carousel-card mod-card-theme-4 info-only ${doneModules.includes(4) ? 'done-card' : ''}`}>
+                <div className={`mod-carousel-card mod-card-theme-4 info-only`}>
                   <div className="mod-card-level">4</div>
                   <div className="mod-card-icon" style={{ background: 'linear-gradient(135deg, #EC4899, #F43F5E)' }}>
                     <i className="fa-solid fa-rocket"></i>
                   </div>
                   <div className="mod-card-title">{isEnglish ? 'AI Productivity Assistant' : 'Asisten Produktivitas AI'}</div>
-                  <div className="mod-card-desc">{isEnglish ? 'Anti-hoax research, AI personal tutor, & professional emails.' : 'Riset anti-hoaks, AI sebagai tutor pribadi, & email profesional.'}</div>
+                  <div className="mod-card-desc">{isEnglish ? '4 steps: Tebak Gambar Anti-Hoaks, tile reorder, split slider, speed quiz.' : '4 Langkah: Tebak Gambar Anti-Hoaks, tile reorder, split slider, speed quiz.'}</div>
                 </div>
 
                 {/* Modul 5 */}
-                <div className={`mod-carousel-card mod-card-theme-5 info-only ${doneModules.includes(5) ? 'done-card' : ''}`}>
+                <div className={`mod-carousel-card mod-card-theme-5 info-only`}>
                   <div className="mod-card-level">5</div>
                   <div className="mod-card-icon" style={{ background: 'linear-gradient(135deg, #10B981, #059669)' }}>
                     <i className="fa-solid fa-palette"></i>
                   </div>
                   <div className="mod-card-title">{isEnglish ? 'Creative AI Exploration' : 'Eksplorasi AI Kreatif'}</div>
-                  <div className="mod-card-desc">{isEnglish ? 'Text-to-image ethics, copyright in visual arts, & visual prompts.' : 'Etika text-to-image/video, hak cipta karya visual, & visual prompt.'}</div>
+                  <div className="mod-card-desc">{isEnglish ? '4 steps: Tebak Gambar Style Visual, UNESCO citation, watermark builder, rights choice.' : '4 Langkah: Tebak Gambar Style Visual, citation studio, watermark builder, rights choice.'}</div>
                 </div>
 
                 {/* Modul 6 */}
-                <div className={`mod-carousel-card mod-card-theme-6 info-only ${doneModules.includes(6) ? 'done-card' : ''}`}>
+                <div className={`mod-carousel-card mod-card-theme-6 info-only`}>
                   <div className="mod-card-level">6</div>
                   <div className="mod-card-icon" style={{ background: 'linear-gradient(135deg, #F59E0B, #D97706)' }}>
                     <i className="fa-solid fa-graduation-cap"></i>
                   </div>
                   <div className="mod-card-title">{isEnglish ? 'Thriving in the AI Era' : 'Bertahan di Era AI'}</div>
-                  <div className="mod-card-desc">{isEnglish ? 'Irreplaceable human skills, empathy, critical thinking & career.' : 'Keterampilan tak tergantikan, empati, critical thinking & karier.'}</div>
+                  <div className="mod-card-desc">{isEnglish ? '4 steps: cockpit console, equalizer sliders, Tebak Gambar Human Skill, digital pledge.' : '4 Langkah: cockpit console, equalizer sliders, Tebak Gambar Human Skill, ikrar digital.'}</div>
                 </div>
               </div>
 

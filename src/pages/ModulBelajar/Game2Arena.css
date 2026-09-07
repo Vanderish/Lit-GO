@@ -1,0 +1,789 @@
+/* ==========================================================================
+   LIT-GO GAME 2: MIMO CODE & PROMPT STUDIO STYLES
+   Inspired by Mimo Interactive Code Playground (Dark Navy, Code Editor & Live Preview)
+   ========================================================================== */
+
+.mimo-arena-root {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background-color: #13152a;
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.15) 0%, transparent 60%),
+    radial-gradient(circle at 100% 100%, rgba(37, 99, 235, 0.1) 0%, transparent 50%);
+  display: flex;
+  flex-direction: column;
+  color: #f8fafc;
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  user-select: none;
+  overflow-x: hidden;
+}
+
+/* 1. MIMO TOP NAVIGATION BAR */
+.mimo-header {
+  height: 64px;
+  min-height: 64px;
+  padding: 0 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(19, 21, 42, 0.85);
+  backdrop-filter: blur(12px);
+  z-index: 10;
+}
+
+.mimo-close-btn {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 1.35rem;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.mimo-close-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+/* Segmented Capsule Progress Bar */
+.mimo-progress-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  max-width: 600px;
+  margin: 0 24px;
+}
+
+.mimo-nav-arrow {
+  background: transparent;
+  border: none;
+  color: #64748b;
+  font-size: 0.95rem;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+}
+
+.mimo-nav-arrow:hover:not(:disabled) {
+  color: #f8fafc;
+}
+
+.mimo-nav-arrow:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.mimo-segmented-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.mimo-segment {
+  height: 6px;
+  flex: 1;
+  border-radius: 999px;
+  background: #252848;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mimo-segment.active {
+  background: #6366f1;
+  box-shadow: 0 0 12px rgba(99, 102, 241, 0.8);
+}
+
+.mimo-segment.filled {
+  background: #818cf8;
+}
+
+/* Top Right Badges */
+.mimo-header-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.mimo-mode-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(99, 102, 241, 0.15);
+  border: 1px solid rgba(99, 102, 241, 0.35);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #c7d2fe;
+  letter-spacing: 0.3px;
+}
+
+.mimo-switch-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #cbd5e1;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mimo-switch-btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+}
+
+/* 2. MAIN MIMO WORKSPACE CONTAINER */
+.mimo-workspace {
+  flex: 1;
+  padding: 24px 36px 120px;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+/* Instruction Prompt */
+.mimo-instruction-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.mimo-instruction-text {
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: #f1f5f9;
+  line-height: 1.5;
+  margin: 0 0 6px 0;
+}
+
+.mimo-tag-pill {
+  display: inline-block;
+  background: #2a2e54;
+  border: 1px solid #43487c;
+  color: #a5b4fc;
+  font-family: 'JetBrains Mono', monospace, Consolas, monospace;
+  font-size: 0.95rem;
+  padding: 1px 8px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.mimo-sub-instruction {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  margin: 0;
+}
+
+/* Dual Panel: Code Editor (Left) & Live Preview (Right) */
+.mimo-split-workspace {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: stretch;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 900px) {
+  .mimo-split-workspace {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Left Card: Code Editor */
+.mimo-card {
+  background: #191c38;
+  border: 1px solid #2e3360;
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+  min-height: 320px;
+}
+
+.mimo-card-header {
+  height: 42px;
+  background: #14162e;
+  border-bottom: 1px solid #282d56;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mimo-card-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  font-family: 'JetBrains Mono', monospace, monospace;
+  color: #e2e8f0;
+  font-weight: 600;
+}
+
+.mimo-file-badge {
+  background: #252a54;
+  color: #818cf8;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+/* Code Lines Area */
+.mimo-code-content {
+  flex: 1;
+  padding: 20px 22px;
+  font-family: 'JetBrains Mono', Consolas, 'Fira Code', monospace;
+  font-size: 0.94rem;
+  line-height: 1.85;
+  color: #e2e8f0;
+  overflow-x: auto;
+  white-space: pre-wrap;
+}
+
+.mimo-code-line {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.mimo-code-tag {
+  color: #ec4899; /* Pink tag like html tags */
+  font-weight: 600;
+}
+
+.mimo-code-attr {
+  color: #38bdf8; /* Cyan attribute */
+}
+
+.mimo-code-string {
+  color: #34d399; /* Emerald string */
+}
+
+.mimo-code-keyword {
+  color: #818cf8; /* Indigo keyword */
+  font-weight: 600;
+}
+
+.mimo-code-comment {
+  color: #64748b;
+  font-style: italic;
+}
+
+/* Interactive Slots inside Code Editor */
+.mimo-slot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 68px;
+  height: 28px;
+  padding: 0 10px;
+  border-radius: 7px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.88rem;
+  font-weight: 700;
+  vertical-align: middle;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.mimo-slot.empty {
+  background: rgba(99, 102, 241, 0.12);
+  border: 1.5px dashed rgba(129, 140, 248, 0.4);
+  color: transparent;
+  animation: slotPulse 2s infinite ease-in-out;
+}
+
+.mimo-slot.empty:hover {
+  border-color: #818cf8;
+  background: rgba(99, 102, 241, 0.22);
+}
+
+@keyframes slotPulse {
+  0%, 100% { border-color: rgba(129, 140, 248, 0.35); }
+  50% { border-color: rgba(129, 140, 248, 0.8); }
+}
+
+.mimo-slot.filled {
+  background: #4f46e5;
+  border: 1.5px solid #6366f1;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.4);
+}
+
+.mimo-slot.filled:hover {
+  background: #4338ca;
+  transform: scale(0.98);
+}
+
+/* Code Card Footer Actions */
+.mimo-card-footer {
+  height: 42px;
+  background: #14162e;
+  border-top: 1px solid #282d56;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.mimo-action-icon-btn {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: all 0.15s ease;
+}
+
+.mimo-action-icon-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Right Card: Live Browser / AI Output */
+.mimo-preview-card {
+  background: #ffffff;
+  border: 1px solid #333866;
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+  min-height: 320px;
+  color: #1e293b;
+}
+
+.mimo-preview-header {
+  height: 42px;
+  background: #1e2246;
+  border-bottom: 1px solid #2d3363;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #e2e8f0;
+}
+
+.mimo-traffic-lights {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mimo-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.mimo-dot.red { background: #ef4444; }
+.mimo-dot.yellow { background: #f59e0b; }
+.mimo-dot.green { background: #10b981; }
+
+.mimo-preview-canvas {
+  flex: 1;
+  padding: 24px 28px;
+  overflow-y: auto;
+  font-family: Georgia, serif;
+}
+
+.mimo-preview-canvas h1 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 16px 0;
+}
+
+.mimo-preview-canvas p {
+  font-size: 1rem;
+  color: #334155;
+  line-height: 1.7;
+  margin: 0 0 14px 0;
+}
+
+.mimo-preview-canvas em {
+  font-style: italic;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+/* AI Literacy Specific Preview Badges */
+.mimo-preview-ai-box {
+  font-family: 'Outfit', sans-serif;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.mimo-ai-header-tag {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #4f46e5;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+/* 3. TOKEN TRAY (OPTIONS PILLS) */
+.mimo-token-tray-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.mimo-token-tray-title {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+.mimo-token-tray {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+
+.mimo-token-pill {
+  background: #202344;
+  border: 1.5px solid #3d4376;
+  border-radius: 10px;
+  color: #f1f5f9;
+  font-family: 'JetBrains Mono', Consolas, monospace;
+  font-size: 0.94rem;
+  font-weight: 600;
+  padding: 10px 22px;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #12142a;
+  transition: all 0.15s ease;
+  position: relative;
+}
+
+.mimo-token-pill:hover:not(:disabled) {
+  background: #2b305c;
+  border-color: #6366f1;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 #12142a;
+  color: #ffffff;
+}
+
+.mimo-token-pill:active:not(:disabled) {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #12142a;
+}
+
+.mimo-token-pill:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  border-style: dashed;
+  box-shadow: none;
+}
+
+/* 4. BOTTOM ACTION & VALIDATION BAR (MIMO STYLE) */
+.mimo-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 94px;
+  background: #14162e;
+  border-top: 2px solid #262a4e; /* Default accent line */
+  padding: 0 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 99;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.mimo-footer.correct {
+  border-top-color: #22c55e;
+  background: #111e29;
+}
+
+.mimo-footer.incorrect {
+  border-top-color: #ef4444;
+  background: #261622;
+}
+
+/* Mascot + Feedback Box */
+.mimo-footer-left {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+/* Robot Mascot (Monitor Character) */
+.mimo-mascot-box {
+  width: 54px;
+  height: 52px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.mimo-monitor-head {
+  width: 48px;
+  height: 38px;
+  background: #e2e8f0;
+  border: 3px solid #cbd5e1;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  position: relative;
+}
+
+.mimo-monitor-screen {
+  width: 36px;
+  height: 26px;
+  background: #1e293b;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
+
+.mimo-mascot-box.idle .mimo-monitor-screen {
+  color: #38bdf8;
+  font-size: 0.8rem;
+  font-family: monospace;
+}
+
+.mimo-mascot-box.correct .mimo-monitor-head {
+  border-color: #86efac;
+  background: #ffffff;
+}
+
+.mimo-mascot-box.correct .mimo-monitor-screen {
+  background: #22c55e;
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 900;
+}
+
+.mimo-mascot-box.incorrect .mimo-monitor-head {
+  border-color: #fca5a5;
+}
+
+.mimo-mascot-box.incorrect .mimo-monitor-screen {
+  background: #ef4444;
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 900;
+}
+
+.mimo-monitor-legs {
+  display: flex;
+  gap: 12px;
+  margin-top: 1px;
+}
+
+.mimo-monitor-leg {
+  width: 6px;
+  height: 7px;
+  background: #94a3b8;
+  border-radius: 0 0 3px 3px;
+}
+
+/* Mascot Speech / Feedback */
+.mimo-feedback-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mimo-feedback-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+.mimo-feedback-title.correct {
+  color: #4ade80;
+}
+
+.mimo-feedback-title.incorrect {
+  color: #f87171;
+}
+
+.mimo-explain-btn {
+  background: rgba(99, 102, 241, 0.15);
+  border: 1px solid rgba(99, 102, 241, 0.35);
+  color: #c7d2fe;
+  padding: 4px 12px;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+  margin-top: 2px;
+  width: fit-content;
+}
+
+.mimo-explain-btn:hover {
+  background: rgba(99, 102, 241, 0.28);
+  color: #ffffff;
+}
+
+/* Footer Action Buttons */
+.mimo-footer-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.mimo-main-btn {
+  padding: 13px 34px;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 12px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border: none;
+  letter-spacing: 0.3px;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mimo-main-btn.check {
+  background: #6366f1;
+  color: #ffffff;
+  box-shadow: 0 4px 0 #4338ca;
+}
+
+.mimo-main-btn.check:hover:not(:disabled) {
+  background: #4f46e5;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 #3730a3;
+}
+
+.mimo-main-btn.check:disabled {
+  background: #292d52;
+  color: #64748b;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.mimo-main-btn.continue {
+  background: #7c3aed; /* Vibrant Mimo Purple */
+  color: #ffffff;
+  box-shadow: 0 4px 0 #5b21b6;
+}
+
+.mimo-main-btn.continue:hover {
+  background: #6d28d9;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 #4c1d95;
+}
+
+.mimo-main-btn.retry {
+  background: #ef4444;
+  color: #ffffff;
+  box-shadow: 0 4px 0 #b91c1c;
+}
+
+.mimo-main-btn.retry:hover {
+  background: #dc2626;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 #991b1b;
+}
+
+.mimo-main-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.2) !important;
+}
+
+/* 5. ACADEMIC EXPLANATION MODAL (CTRL+K) */
+.mimo-explain-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  z-index: 100000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.mimo-explain-modal-box {
+  background: #1a1d3b;
+  border: 1px solid #373d70;
+  border-radius: 20px;
+  max-width: 640px;
+  width: 100%;
+  padding: 28px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+  color: #f1f5f9;
+  animation: modalScaleIn 0.25s ease-out;
+}
+
+@keyframes modalScaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.mimo-explain-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.mimo-explain-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #a5b4fc;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}

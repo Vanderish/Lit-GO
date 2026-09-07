@@ -1,0 +1,598 @@
+/* =========================================================
+   LIT-GO GAMIFIED LESSON STYLES (BLUE-DOMINANT DUOLINGO UX/UI)
+   ========================================================= */
+
+.duo-viewport {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 99999;
+  background: #ffffff;
+  color: #1e293b;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  user-select: none;
+}
+
+/* 1. TOP HEADER BAR */
+.duo-header {
+  height: 60px;
+  padding: 0 28px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  max-width: 840px;
+  margin: 0 auto;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.duo-close-btn {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 1.4rem;
+  font-weight: 800;
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: color 0.15s, background 0.15s;
+}
+
+.duo-close-btn:hover {
+  color: #1e40af;
+  background: #eff6ff;
+}
+
+.duo-progress-container {
+  flex: 1;
+}
+
+.duo-progress-track {
+  width: 100%;
+  height: 14px;
+  background: #eff6ff;
+  border: 1px solid #dbeafe;
+  border-radius: 9999px;
+  overflow: hidden;
+  position: relative;
+}
+
+.duo-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #1d4ed8 0%, #2563eb 50%, #06b6d4 100%);
+  border-radius: 9999px;
+  transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+}
+
+.duo-progress-highlight {
+  position: absolute;
+  top: 2px;
+  left: 8px;
+  right: 8px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.45);
+  border-radius: 9999px;
+}
+
+/* 2. MAIN QUESTION ARENA */
+.duo-arena-body {
+  flex: 1;
+  width: 100%;
+  max-width: 620px;
+  margin: 0 auto;
+  padding: 6px 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+.duo-arena-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.duo-arena-body::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 999px;
+}
+
+.duo-category-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  align-self: flex-start;
+}
+
+.duo-question-title {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.25;
+  margin-bottom: 12px;
+  letter-spacing: -0.01em;
+}
+
+/* 3. CHARACTER + SPEECH BUBBLE ROW */
+.duo-dialogue-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.duo-avatar-wrap {
+  width: 72px;
+  height: 72px;
+  flex-shrink: 0;
+  position: relative;
+  border-radius: 18px;
+  background: #eff6ff;
+  border: 2px solid #dbeafe;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.08);
+}
+
+.duo-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.duo-speech-bubble {
+  position: relative;
+  background: #ffffff;
+  border: 2px solid #bfdbfe;
+  border-radius: 16px;
+  padding: 12px 18px;
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: #1e293b;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 4px 14px rgba(30, 58, 138, 0.05);
+}
+
+/* Speech Bubble Tail pointing to avatar */
+.duo-speech-bubble::before {
+  content: '';
+  position: absolute;
+  left: -11px;
+  bottom: 16px;
+  width: 0;
+  height: 0;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-right: 11px solid #bfdbfe;
+}
+
+.duo-speech-bubble::after {
+  content: '';
+  position: absolute;
+  left: -8px;
+  bottom: 16px;
+  width: 0;
+  height: 0;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+  border-right: 9px solid #ffffff;
+}
+
+.duo-sound-btn {
+  background: transparent;
+  border: none;
+  color: #2563eb;
+  font-size: 1.15rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.1s;
+}
+
+.duo-sound-btn:hover {
+  transform: scale(1.15);
+  color: #1d4ed8;
+}
+
+/* 4. EXERCISE TYPE 1: MULTIPLE CHOICE STACK (BLUE FOCUSED) */
+.duo-options-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.duo-option-card {
+  width: 100%;
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
+  border-bottom: 4px solid #cbd5e1;
+  border-radius: 14px;
+  padding: 12px 18px;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: #1e293b;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.12s, border-color 0.12s;
+}
+
+.duo-option-card:hover:not(:disabled) {
+  background: #f8fafc;
+  border-color: #bfdbfe;
+}
+
+.duo-option-card:active:not(:disabled) {
+  transform: translateY(2px);
+  border-bottom-width: 2px;
+}
+
+/* Selected State: Dominant Royal Blue */
+.duo-option-card.selected {
+  background: #eff6ff;
+  border-color: #2563eb;
+  border-bottom: 4px solid #1d4ed8;
+  color: #1e3a8a;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.12);
+}
+
+/* Correct Answer State: Crisp Green */
+.duo-option-card.correct {
+  background: #f0fdf4 !important;
+  border-color: #22c55e !important;
+  border-bottom: 4px solid #16a34a !important;
+  color: #15803d !important;
+}
+
+/* Wrong Answer State: Soft Red */
+.duo-option-card.wrong {
+  background: #fef2f2 !important;
+  border-color: #ef4444 !important;
+  border-bottom: 4px solid #dc2626 !important;
+  color: #b91c1c !important;
+}
+
+.duo-option-num {
+  width: 28px;
+  height: 28px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #64748b;
+  flex-shrink: 0;
+  transition: all 0.12s;
+}
+
+.duo-option-card.selected .duo-option-num {
+  border-color: #2563eb;
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.duo-option-card.correct .duo-option-num {
+  border-color: #22c55e;
+  background: #22c55e;
+  color: #ffffff;
+}
+
+.duo-option-card.wrong .duo-option-num {
+  border-color: #ef4444;
+  background: #ef4444;
+  color: #ffffff;
+}
+
+.duo-option-text {
+  flex: 1;
+}
+
+/* 5. EXERCISE TYPE 2: WORD BANK SENTENCE BUILDER */
+.duo-wordbank-container {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+}
+
+.duo-sentence-slot-line {
+  min-height: 56px;
+  border-bottom: 2px solid #bfdbfe;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 4px 12px 4px;
+}
+
+.duo-slot-empty-placeholder {
+  color: #94a3b8;
+  font-size: 0.92rem;
+  font-weight: 600;
+  font-style: italic;
+}
+
+.duo-words-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.duo-word-tile {
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
+  border-bottom: 4px solid #cbd5e1;
+  border-radius: 12px;
+  padding: 9px 16px;
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: #1e293b;
+  cursor: pointer;
+  transition: all 0.12s;
+}
+
+.duo-word-tile:hover {
+  background: #eff6ff;
+  border-color: #93c5fd;
+}
+
+.duo-word-tile:active {
+  transform: translateY(2px);
+  border-bottom-width: 2px;
+}
+
+.duo-word-tile.slotted {
+  background: #eff6ff;
+  border-color: #2563eb;
+  border-bottom: 4px solid #1d4ed8;
+  color: #1e3a8a;
+}
+
+/* 6. BOTTOM ACTION BAR (DOMINANT BLUE THEME) */
+.duo-footer-wrap {
+  width: 100%;
+  border-top: 2px solid #e2e8f0;
+  background: #ffffff;
+  transition: background 0.25s ease, border-color 0.25s ease;
+  flex-shrink: 0;
+}
+
+/* Correct Answer: Fresh Vibrant Green */
+.duo-footer-wrap.correct {
+  background: #dcfce7;
+  border-top-color: #86efac;
+}
+
+/* Wrong Answer: Clean Alert Red */
+.duo-footer-wrap.wrong {
+  background: #fee2e2;
+  border-top-color: #fca5a5;
+}
+
+.duo-footer-content {
+  max-width: 840px;
+  margin: 0 auto;
+  height: 84px;
+  padding: 0 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+/* Skip Button */
+.duo-btn-skip {
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
+  border-bottom: 4px solid #cbd5e1;
+  border-radius: 14px;
+  padding: 12px 24px;
+  font-weight: 800;
+  font-size: 0.88rem;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.duo-btn-skip:hover {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border-color: #bfdbfe;
+}
+
+.duo-btn-skip:active {
+  transform: translateY(2px);
+  border-bottom-width: 2px;
+}
+
+/* Check / Verify Button: Royal Blue */
+.duo-btn-check {
+  margin-left: auto;
+  border: none;
+  border-radius: 14px;
+  padding: 14px 44px;
+  font-weight: 800;
+  font-size: 0.94rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.12s;
+}
+
+.duo-btn-check.disabled {
+  background: #e2e8f0;
+  border-bottom: 4px solid #cbd5e1;
+  color: #94a3b8;
+  cursor: not-allowed;
+}
+
+.duo-btn-check.active {
+  background: #2563eb;
+  border-bottom: 4px solid #1d4ed8;
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+}
+
+.duo-btn-check.active:hover {
+  background: #1d4ed8;
+}
+
+.duo-btn-check.active:active {
+  transform: translateY(2px);
+  border-bottom-width: 2px;
+}
+
+/* FEEDBACK BANNER (CORRECT / WRONG) */
+.duo-feedback-area {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.duo-feedback-circle {
+  width: 54px;
+  height: 54px;
+  background: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  font-weight: 900;
+  flex-shrink: 0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+}
+
+.duo-footer-wrap.correct .duo-feedback-circle {
+  color: #16a34a;
+  border: 2px solid #86efac;
+}
+
+.duo-footer-wrap.wrong .duo-feedback-circle {
+  color: #dc2626;
+  border: 2px solid #fca5a5;
+}
+
+.duo-feedback-text-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.duo-feedback-headline {
+  font-size: 1.45rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.duo-footer-wrap.correct .duo-feedback-headline {
+  color: #15803d;
+}
+
+.duo-footer-wrap.wrong .duo-feedback-headline {
+  color: #b91c1c;
+}
+
+.duo-feedback-sublinks {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #16a34a;
+  opacity: 0.9;
+}
+
+.duo-feedback-hint {
+  font-size: 0.85rem;
+  color: #b91c1c;
+  font-weight: 600;
+}
+
+/* Continue Button */
+.duo-btn-continue {
+  border: none;
+  border-radius: 14px;
+  padding: 14px 44px;
+  font-weight: 800;
+  font-size: 0.94rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.12s;
+}
+
+.duo-footer-wrap.correct .duo-btn-continue {
+  background: #22c55e;
+  border-bottom: 4px solid #16a34a;
+  box-shadow: 0 4px 14px rgba(34, 197, 94, 0.35);
+}
+
+.duo-footer-wrap.correct .duo-btn-continue:hover {
+  background: #16a34a;
+}
+
+.duo-footer-wrap.wrong .duo-btn-continue {
+  background: #ef4444;
+  border-bottom: 4px solid #b91c1c;
+  box-shadow: 0 4px 14px rgba(239, 68, 68, 0.35);
+}
+
+.duo-footer-wrap.wrong .duo-btn-continue:hover {
+  background: #b91c1c;
+}
+
+.duo-btn-continue:active {
+  transform: translateY(2px);
+  border-bottom-width: 2px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .duo-header { padding: 0 16px; height: 60px; }
+  .duo-arena-body { padding: 12px; }
+  .duo-question-title { font-size: 1.35rem; margin-bottom: 14px; }
+  .duo-dialogue-row { gap: 12px; margin-bottom: 16px; }
+  .duo-avatar-wrap { width: 70px; height: 70px; }
+  .duo-speech-bubble { font-size: 0.92rem; padding: 10px 14px; }
+  .duo-footer-content { height: 84px; padding: 0 16px; }
+  .duo-feedback-sublinks { display: none; }
+  .duo-feedback-headline { font-size: 1.2rem; }
+}
