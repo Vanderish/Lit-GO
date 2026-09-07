@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useProgress } from '../../context/ProgressContext';
 import './Sidebar.css';
@@ -6,14 +6,18 @@ import './Sidebar.css';
 export default function Sidebar() {
   const { badgeCount, doneCount, completedModulesCount } = useProgress();
   const navigate = useNavigate();
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState(() => {
+    try {
+      const savedUser = localStorage.getItem('user_data');
+      return savedUser ? JSON.parse(savedUser) : null;
+    } catch {
+      return null;
+    }
+  });
   
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   useEffect(() => {
-    const savedUser = localStorage.getItem('user_data');
-    if (savedUser) setUserData(JSON.parse(savedUser));
-
     // Menangkap sinyal dari DashboardNavbar untuk toggle menu
     const toggleMenu = () => setIsMobileOpen(prev => !prev);
     window.addEventListener('toggleMobileMenu', toggleMenu);
@@ -69,16 +73,18 @@ export default function Sidebar() {
           </div>
 
           <div className="sidebar-profile-card">
-            {userPicture ? (
-              <img src={userPicture} alt={userName} className="user-avatar-img" />
-            ) : (
-              <div className="user-avatar-initial">{userName.charAt(0).toUpperCase()}</div>
-            )}
+            <div className="user-avatar-wrapper">
+              {userPicture ? (
+                <img src={userPicture} alt={userName} className="user-avatar-img" />
+              ) : (
+                <div className="user-avatar-initial">{userName.charAt(0).toUpperCase()}</div>
+              )}
+              <span className="profile-status-dot" title="Aktif"></span>
+            </div>
             <div className="user-profile-info">
               <div className="user-name" title={userName}>{userName}</div>
               <div className="user-email" title={userEmail}>{userEmail}</div>
             </div>
-            <div className="profile-status-dot" title="Aktif"></div>
           </div>
         </div>
 

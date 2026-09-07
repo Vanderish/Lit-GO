@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Chart as ChartJS,
@@ -10,69 +10,19 @@ import {
 } from 'chart.js';
 import { Radar } from 'react-chartjs-2';
 import { useProgress } from '../../context/ProgressContext';
+import PretestModal from '../../components/PretestModal/PretestModal';
 import './Dashboard.css';
 
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip);
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const { state, saveState, showToast } = useProgress();
+  const { state } = useProgress();
 
-  const [isPretestViewOpen, setIsPretestViewOpen] = useState(!state.hasRadar);
-  const [currentStep, setCurrentStep] = useState(0);
-  // Default kosong (null) agar pengguna wajib memilih
-  const [radarAnswers, setRadarAnswers] = useState([null, null, null, null, null, null, null, null]);
+  const [isManualPretestOpen, setIsManualPretestOpen] = useState(false);
+  const isPretestViewOpen = !state?.hasRadar || isManualPretestOpen;
 
-  // Wajib: Otomatis tampilkan halaman Pre-Test Fullscreen jika pengguna belum menyelesaikan asesmen
-  useEffect(() => {
-    setIsPretestViewOpen(!state.hasRadar);
-  }, [state.hasRadar]);
 
-  const handleCircleSelect = (questionIndex, val) => {
-    const newAns = [...radarAnswers];
-    newAns[questionIndex] = val;
-    setRadarAnswers(newAns);
-  };
-
-  const isAllAnswered = radarAnswers.every((ans) => ans !== null && ans !== undefined);
-  const answeredCount = radarAnswers.filter((ans) => ans !== null && ans !== undefined).length;
-  const progressPercentage = Math.round((answeredCount / 8) * 100);
-
-  const handleRadarSubmit = () => {
-    if (!isAllAnswered) {
-      showToast('Harap jawab seluruh 8 pertanyaan sebelum menyimpan.', 'error');
-      return;
-    }
-
-    const vals = radarAnswers;
-    // Skala 1-10 (2 soal per pilar, total maksimum 20 poin = 100%)
-    const newRadar = [
-      Math.round(((vals[0] + vals[1]) / 20) * 100),
-      Math.round(((vals[2] + vals[3]) / 20) * 100),
-      Math.round(((vals[4] + vals[5]) / 20) * 100),
-      Math.round(((vals[6] + vals[7]) / 20) * 100),
-    ];
-
-    let newBadges = [...(state.badges || [])];
-    if (!newBadges.includes(1)) newBadges.push(1);
-
-    const newPts = (state.pts || 0) + 50;
-    const newLv = Math.floor(newPts / 100) + 1;
-    const newExpPct = newPts % 100;
-
-    saveState({
-      ...state,
-      radar: newRadar,
-      hasRadar: true,
-      badges: newBadges,
-      pts: newPts,
-      lv: newLv,
-      expPct: newExpPct,
-    });
-
-    setIsPretestViewOpen(false);
-    showToast('Pre-Test Berhasil Diselesaikan! Radar Readiness & Badge Pionir AI kamu telah aktif.', 'success');
-  };
 
   const hasRadar = Boolean(state?.hasRadar);
   const radar = Array.isArray(state?.radar) && state.radar.length === 4 ? state.radar : [0, 0, 0, 0];
@@ -128,142 +78,15 @@ export default function Dashboard() {
     plugins: { legend: { display: false } },
   };
 
-  const pretestQuestions = [
-    { pilar: 'Pemahaman Dasar', q: 'Saya memahami konsep dasar, cara kerja, dan keterbatasan sistem AI.' },
-    { pilar: 'Pemahaman Dasar', q: 'Saya mengetahui risiko fenomena halusinasi data dan bias informasi pada AI.' },
-    { pilar: 'Etika & Keamanan', q: 'Saya selalu memeriksa hak cipta sebelum mempublikasikan karya buatan AI.' },
-    { pilar: 'Etika & Keamanan', q: 'Saya tidak pernah memasukkan data rahasia atau sensitif ke dalam prompt publik.' },
-    { pilar: 'Prompting', q: 'Saya mampu menyusun prompt dengan konteks, instruksi, dan format yang jelas.' },
-    { pilar: 'Prompting', q: 'Saya terbiasa menggunakan teknik few-shot dan persona dalam prompting.' },
-    { pilar: 'Berpikir Kritis', q: 'Saya selalu melakukan fact-checking terhadap klaim dan jawaban dari AI.' },
-    { pilar: 'Berpikir Kritis', q: 'Saya mampu mengenali kejanggalan visual pada gambar atau foto deepfake.' },
-  ];
-
-  const currentQ = pretestQuestions[currentStep];
-
   return (
     <div className="dashboard-container">
-      {/* MANDATORY FULLSCREEN PRE-TEST ONBOARDING VIEW (MDQuiz Inspired Layout) */}
-      {isPretestViewOpen && (
-        <div className="fullscreen-pretest-overlay">
-          <div className="pretest-container">
-            {/* Top Brand Header */}
-            <div className="pretest-brand-header">
-              <div className="pretest-brand-logo">
-                <i className="fa-solid fa-brain text-indigo"></i> Lit-GO Pre-Test
-              </div>
-            </div>
-
-            {/* MDQuiz 2-Column Layout */}
-            <div className="pretest-mdquiz-layout">
-              {/* Left Main Card Area */}
-              <div className="pretest-main-card">
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <h2 className="pretest-title-large">AI Readiness Radar</h2>
-                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.82rem', fontWeight: 700, color: 'var(--indigo)' }}>
-                    {progressPercentage}%
-                  </span>
-                </div>
-
-                {/* Progress Bar Fill Track */}
-                <div className="pretest-progress-bar-track">
-                  <div className="pretest-progress-bar-fill" style={{ width: `${progressPercentage}%` }}></div>
-                </div>
-
-                {/* Question Header */}
-                <div className="pretest-q-header">
-                  <span style={{ display: 'block', fontSize: '0.76rem', color: 'var(--indigo)', textTransform: 'uppercase', fontFamily: 'var(--font-mono)', letterSpacing: '0.08em', marginBottom: '6px' }}>
-                    Pertanyaan {currentStep + 1} dari 8 &nbsp;•&nbsp; Pilar: {currentQ.pilar}
-                  </span>
-                  {currentQ.q}
-                </div>
-
-                {/* 1 to 10 Circle Buttons */}
-                <div className="pretest-scale-wrapper">
-                  <div className="pretest-scale-circles">
-                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
-                      <button
-                        key={num}
-                        type="button"
-                        className={`scale-circle-btn ${radarAnswers[currentStep] === num ? 'active' : ''}`}
-                        onClick={() => handleCircleSelect(currentStep, num)}
-                      >
-                        {num}
-                      </button>
-                    ))}
-                  </div>
-                  <div className="pretest-scale-labels">
-                    <span>1 (Sangat Tidak Setuju)</span>
-                    <span>10 (Sangat Setuju)</span>
-                  </div>
-                </div>
-
-                {/* Navigation Action Buttons */}
-                <div className="pretest-nav-actions">
-                  <button
-                    type="button"
-                    className="btn-pretest-nav"
-                    onClick={() => setCurrentStep((prev) => Math.max(0, prev - 1))}
-                    disabled={currentStep === 0}
-                  >
-                    Previous
-                  </button>
-
-                  {currentStep < 7 ? (
-                    <button
-                      type="button"
-                      className="btn-pretest-nav primary"
-                      onClick={() => setCurrentStep((prev) => Math.min(7, prev + 1))}
-                    >
-                      Next
-                    </button>
-                  ) : (
-                    <button
-                      type="button"
-                      className="btn-pretest-nav primary"
-                      onClick={handleRadarSubmit}
-                      disabled={!isAllAnswered}
-                    >
-                      {isAllAnswered ? 'Selesaikan Pre-Test' : `Jawab (${answeredCount}/8)`}
-                    </button>
-                  )}
-                </div>
-              </div>
-
-              {/* Right Sidebar Navigator */}
-              <div className="pretest-sidebar">
-                <div className="pretest-sidebar-card">
-                  <div className="pretest-sidebar-score">{progressPercentage}%</div>
-                  <div className="pretest-sidebar-sub">
-                    Terjawab {answeredCount} dari 8 Pertanyaan
-                  </div>
-                </div>
-
-                {/* List of 8 Question Pill Buttons */}
-                <div className="pretest-nav-pills">
-                  {pretestQuestions.map((q, idx) => {
-                    const isDone = radarAnswers[idx] !== null && radarAnswers[idx] !== undefined;
-                    const isActive = currentStep === idx;
-                    return (
-                      <button
-                        key={idx}
-                        type="button"
-                        className={`pretest-pill-btn ${isActive ? 'active' : ''} ${isDone ? 'done' : ''}`}
-                        onClick={() => setCurrentStep(idx)}
-                      >
-                        <span className={`pretest-pill-icon ${isDone ? 'done' : 'pending'}`}>
-                          {isDone ? <i className="fa-solid fa-check"></i> : ''}
-                        </span>
-                        <span>Question {idx + 1}</span>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* MANDATORY FULLSCREEN PRE-TEST ONBOARDING VIEW */}
+      <PretestModal
+        isOpen={isPretestViewOpen}
+        onClose={() => setIsManualPretestOpen(false)}
+        canClose={Boolean(state?.hasRadar)}
+        onComplete={() => setIsManualPretestOpen(false)}
+      />
 
       {/* DASHBOARD OVERVIEW LOBBY */}
       <div className="wrap">
@@ -293,7 +116,7 @@ export default function Dashboard() {
               <div className="hub-section-title">AI Readiness Radar</div>
               <div className="hub-section-sub">Statistik General Kecakapan Literasi Kecerdasan Buatan Kamu</div>
             </div>
-            <button className="btn-lab" onClick={() => { setCurrentStep(0); setIsPretestViewOpen(true); }}>
+            <button className="btn-lab" onClick={() => setIsManualPretestOpen(true)}>
               <i className="fa-solid fa-rotate-right"></i> {state.hasRadar ? 'Ulangi Pre-Test' : 'Mulai Pre-Test'}
             </button>
           </div>
