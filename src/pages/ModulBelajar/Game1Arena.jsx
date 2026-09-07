@@ -64,8 +64,8 @@ const DIALOGUE_DATA = {
   }
 };
 
-export default function Game1Arena({ activeStep, onClose, onComplete }) {
-  const { mod, step } = activeStep;
+export default function Game1Arena({ activeStep, onClose, onComplete, onSwitchToGame2 }) {
+  const { step } = activeStep;
 
   // Game States
   const [selectedOption, setSelectedOption] = useState(null);
@@ -241,13 +241,13 @@ export default function Game1Arena({ activeStep, onClose, onComplete }) {
                 gap: '6px',
                 transition: 'all 0.15s ease'
               }}
-              title="Ganti ke Tampilan Game 2 (Mimo Concept)"
+              title="Ganti ke Tampilan Arena Game 2"
             >
-              <i className="fa-solid fa-code"></i> Ganti Game 2
+              <i className="fa-solid fa-code"></i> Ganti ke Arena Game 2
             </button>
           )}
           <span style={{ fontSize: '0.76rem', color: '#64748b', fontWeight: 700 }}>
-            Game 1
+            {step?.stepNum === 1 ? 'Arena Game 1' : (step?.tag ? step.tag.split('•')[0].trim() : 'Langkah Pembelajaran')}
           </span>
         </div>
       </header>

@@ -558,7 +558,7 @@ const MIMO_CHALLENGES = {
 };
 
 export default function Game2Arena({ activeStep, onClose, onComplete, onSwitchToGame1 }) {
-  const { mod, step } = activeStep;
+  const { step } = activeStep;
   const challengeKey = step ? step.id : '1-1';
   const challenge = MIMO_CHALLENGES[challengeKey] || MIMO_CHALLENGES['1-1'];
 
@@ -568,6 +568,31 @@ export default function Game2Arena({ activeStep, onClose, onComplete, onSwitchTo
   const [usedTokenIndices, setUsedTokenIndices] = useState([]);
   const [checkedState, setCheckedState] = useState(null); // 'correct' | 'incorrect' | null
   const [showExplainModal, setShowExplainModal] = useState(false);
+
+  // Check Answer Validation
+  const handleCheckAnswer = () => {
+    // Must fill all slots
+    if (placedSlots.some((s) => s === null)) return;
+
+    const userAnswers = placedSlots.map((s) => s.value);
+    const isCorrect = userAnswers.every((val, idx) => val === challenge.solution[idx]);
+
+    if (isCorrect) {
+      setCheckedState('correct');
+    } else {
+      setCheckedState('incorrect');
+    }
+  };
+
+  const handleRetry = () => {
+    setCheckedState(null);
+  };
+
+  const handleContinue = () => {
+    if (onComplete) {
+      onComplete(step.id);
+    }
+  };
 
   // Reset when challenge step changes
   useEffect(() => {
@@ -644,34 +669,6 @@ export default function Game2Arena({ activeStep, onClose, onComplete, onSwitchTo
     setPlacedSlots(Array(totalSlots).fill(null));
     setUsedTokenIndices([]);
     setCheckedState(null);
-  };
-
-  // Check Answer Validation
-  const handleCheckAnswer = () => {
-    // Must fill all slots
-    if (placedSlots.some((s) => s === null)) return;
-
-    const userAnswers = placedSlots.map((s) => s.value);
-    const isCorrect = userAnswers.every((val, idx) => val === challenge.solution[idx]);
-
-    if (isCorrect) {
-      setCheckedState('correct');
-    } else {
-      setCheckedState('incorrect');
-    }
-  };
-
-  const handleRetry = () => {
-    setCheckedState(null);
-  };
-
-  const handleContinue = () => {
-    if (onComplete) {
-      onComplete(step.id);
-    }
-    if (onClose) {
-      onClose();
-    }
   };
 
   // Dynamic live preview renderer
@@ -816,12 +813,12 @@ export default function Game2Arena({ activeStep, onClose, onComplete, onSwitchTo
         {/* Right Info Badges & Game Switcher */}
         <div className="mimo-header-right">
           {onSwitchToGame1 && (
-            <button className="mimo-switch-btn" onClick={onSwitchToGame1} title="Ganti ke Tampilan Game 1 (Duolingo Style)">
-              <i className="fa-solid fa-gamepad"></i> Ganti Game 1
+            <button className="mimo-switch-btn" onClick={onSwitchToGame1} title="Ganti ke Tampilan Arena Game 1">
+              <i className="fa-solid fa-gamepad"></i> Ganti ke Arena Game 1
             </button>
           )}
           <span className="mimo-mode-badge">
-            <i className="fa-solid fa-code"></i> Game 2: Mimo Studio
+            <i className="fa-solid fa-code"></i> Arena Game 2
           </span>
         </div>
       </header>

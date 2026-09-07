@@ -31,7 +31,6 @@ export default function ModulBelajarPage() {
 
   const [activeModule, setActiveModule] = useState(null); // Selected module card
   const [activeStep, setActiveStep] = useState(null); // Selected step (triggers Full-Screen Gamified View)
-  const [selectedGameMode, setSelectedGameMode] = useState('game1'); // 'game1' (Duolingo) | 'game2' (Mimo)
   const [isModuleOpen, setModuleOpen] = useState(false);
   const [activeModId, setActiveModId] = useState(null);
   const [showQuizView, setShowQuizView] = useState(false);
@@ -96,56 +95,11 @@ export default function ModulBelajarPage() {
   };
 
 
-  // Duolingo, Mimo, & Tebak Gambar Interactive States
-  const [dialogueIdx, setDialogueIdx] = useState(0);
-  const [matchedPairs, setMatchedPairs] = useState({});
-  const [selectedLeft, setSelectedLeft] = useState(null);
-  const [bugFound, setBugFound] = useState({ b1: false, b2: false });
-  const [tileOrder, setTileOrder] = useState([]);
-  const [swipeBinAns, setSwipeBinAns] = useState({});
-  const [tebakAns, setTebakAns] = useState(null);
-  const [rpgChoice, setRpgChoice] = useState(null);
-  const [stampsPlaced, setStampsPlaced] = useState({ s1: false, s2: false, s3: false });
-  const [puzzleSlots, setPuzzleSlots] = useState({ persona: null, context: null, instruction: null, format: null });
-  const [splitSliderPos, setSplitSliderPos] = useState(50);
-  const [terminalAudited, setTerminalAudited] = useState(false);
-  const [repairGauge, setRepairGauge] = useState(20);
-  const [repairChips, setRepairChips] = useState({ c1: false, c2: false, c3: false });
-  const [cockpitWheel, setCockpitWheel] = useState({});
-  const [equalizerValues, setEqualizerValues] = useState({ empathy: 90, critical: 85, speed: 40 });
-  const [citationTitle, setCitationTitle] = useState('');
-  const [citationDone, setCitationDone] = useState(false);
-  const [sigName, setSigName] = useState('');
-  const [pledges, setPledges] = useState({ p1: false, p2: false, p3: false });
-
-  const [feedback, setFeedback] = useState({ show: false, correct: false, msg: '' });
-
   const doneSteps = state.doneModules || [];
 
   // Launch Full-Screen Gamified Lesson Overlay
   const startGamifiedLesson = (mod, step) => {
     setActiveStep({ mod, step });
-    setFeedback({ show: false, correct: false, msg: '' });
-    setDialogueIdx(0);
-    setMatchedPairs({});
-    setSelectedLeft(null);
-    setBugFound({ b1: false, b2: false });
-    setTileOrder([]);
-    setSwipeBinAns({});
-    setTebakAns(null);
-    setRpgChoice(null);
-    setStampsPlaced({ s1: false, s2: false, s3: false });
-    setPuzzleSlots({ persona: null, context: null, instruction: null, format: null });
-    setSplitSliderPos(50);
-    setTerminalAudited(false);
-    setRepairGauge(20);
-    setRepairChips({ c1: false, c2: false, c3: false });
-    setCockpitWheel({});
-    setEqualizerValues({ empathy: 90, critical: 85, speed: 40 });
-    setCitationTitle('');
-    setCitationDone(false);
-    setSigName('');
-    setPledges({ p1: false, p2: false, p3: false });
   };
 
   const finishStepAndReward = (stepId) => {
@@ -173,12 +127,6 @@ export default function ModulBelajarPage() {
       ...state,
       doneModules: newDone,
       badges: newBadges,
-    });
-
-    setFeedback({
-      show: true,
-      correct: true,
-      msg: '🎉 LUAR BIASA! Langkah Gamifikasi Tuntas (+100 Gems & EXP)!',
     });
 
     setTimeout(() => {
@@ -293,8 +241,6 @@ export default function ModulBelajarPage() {
               </button>
             </div>
 
-            <p style={{ fontSize: '0.84rem', color: 'var(--text-dim)', marginBottom: '18px' }}>
-              
             {/* Quick Link to Markdown Theory & Quiz */}
             <div style={{ marginBottom: '18px', padding: '14px 18px', background: 'rgba(99, 102, 241, 0.08)', borderRadius: '12px', border: '1px solid rgba(99, 102, 241, 0.2)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
               <div>
@@ -315,65 +261,9 @@ export default function ModulBelajarPage() {
               </button>
             </div>
 
-            {/* GAME CONCEPT SELECTOR (GAME 1 vs GAME 2) */}
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: '1fr 1fr',
-              gap: '10px',
-              background: 'rgba(99, 102, 241, 0.08)',
-              padding: '6px',
-              borderRadius: '12px',
-              border: '1px solid rgba(99, 102, 241, 0.2)',
-              marginBottom: '16px'
-            }}>
-              <button
-                type="button"
-                onClick={() => setSelectedGameMode('game1')}
-                style={{
-                  padding: '10px 14px',
-                  borderRadius: '9px',
-                  border: 'none',
-                  background: selectedGameMode === 'game1' ? 'var(--blue)' : 'transparent',
-                  color: selectedGameMode === 'game1' ? '#ffffff' : 'var(--navy)',
-                  fontWeight: 700,
-                  fontSize: '0.84rem',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '8px',
-                  boxShadow: selectedGameMode === 'game1' ? '0 3px 10px rgba(37, 99, 235, 0.35)' : 'none',
-                  transition: 'all 0.18s ease'
-                }}
-              >
-                <i className="fa-solid fa-gamepad"></i> Game 1 (Duolingo Arena)
-              </button>
-              <button
-                type="button"
-                onClick={() => setSelectedGameMode('game2')}
-                style={{
-                  padding: '10px 14px',
-                  borderRadius: '9px',
-                  border: 'none',
-                  background: selectedGameMode === 'game2' ? '#6366f1' : 'transparent',
-                  color: selectedGameMode === 'game2' ? '#ffffff' : 'var(--navy)',
-                  fontWeight: 700,
-                  fontSize: '0.84rem',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '8px',
-                  boxShadow: selectedGameMode === 'game2' ? '0 3px 10px rgba(99, 102, 241, 0.35)' : 'none',
-                  transition: 'all 0.18s ease'
-                }}
-              >
-                <i className="fa-solid fa-code"></i> Game 2 (Mimo Code Studio)
-              </button>
+            <div style={{ fontSize: '0.84rem', color: 'var(--text-dim)', marginBottom: '18px' }}>
+              Pilih salah satu dari <strong>4 Langkah Aktivitas Full-Screen</strong> di bawah ini:
             </div>
-
-            Pilih salah satu dari <strong>4 Langkah Aktivitas Full-Screen</strong> ({selectedGameMode === 'game1' ? 'Game 1: Duolingo Arena' : 'Game 2: Mimo Code Studio'}) di bawah ini:
-            </p>
 
             {/* 4 Step Cards per Module */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '14px' }}>
@@ -406,6 +296,8 @@ export default function ModulBelajarPage() {
                   '6-4': 'fa-award',
                 };
 
+                const stepArenaLabel = step.stepNum === 1 ? 'Arena Game 1' : (step.stepNum === 2 ? 'Arena Game 2' : null);
+
                 return (
                   <div
                     key={step.id}
@@ -431,11 +323,27 @@ export default function ModulBelajarPage() {
                       >
                         <i className={`fa-solid ${stepIcons[step.id] || 'fa-star'} mr-1`}></i> {step.tag}
                       </span>
-                      {isStepDone ? (
-                        <i className="fa-solid fa-circle-check text-emerald"></i>
-                      ) : (
-                        <i className="fa-solid fa-chevron-right text-dim" style={{ fontSize: '0.8rem' }}></i>
-                      )}
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        {stepArenaLabel && (
+                          <span
+                            style={{
+                              fontSize: '0.66rem',
+                              fontWeight: 700,
+                              padding: '2px 8px',
+                              borderRadius: '6px',
+                              background: step.stepNum === 1 ? 'rgba(37, 99, 235, 0.12)' : 'rgba(99, 102, 241, 0.12)',
+                              color: step.stepNum === 1 ? '#2563eb' : '#6366f1',
+                            }}
+                          >
+                            {stepArenaLabel}
+                          </span>
+                        )}
+                        {isStepDone ? (
+                          <i className="fa-solid fa-circle-check text-emerald"></i>
+                        ) : (
+                          <i className="fa-solid fa-chevron-right text-dim" style={{ fontSize: '0.8rem' }}></i>
+                        )}
+                      </div>
                     </div>
 
                     <div style={{ fontWeight: 700, fontSize: '0.92rem', color: 'var(--navy)', marginBottom: isStepDone ? '4px' : '0px' }}>
@@ -456,25 +364,24 @@ export default function ModulBelajarPage() {
       )}
 
       {/* ========================================================================= */}
-      {/* FULL-SCREEN GAMIFIED LESSON OVERLAY (GAME 1 vs GAME 2) */}
+      {/* FULL-SCREEN GAMIFIED LESSON OVERLAY */}
+      {/* Langkah 1 -> Arena Game 1 */}
+      {/* Langkah 2 -> Arena Game 2 */}
+      {/* Langkah 3 & 4 -> Game 1 (Tebak Gambar, Detektif Halusinasi, dsb.) */}
       {/* ========================================================================= */}
-      {activeStep && selectedGameMode === 'game1' && (
-        <Game1Arena
-          activeStep={activeStep}
-          onClose={() => setActiveStep(null)}
-          onComplete={(stepId) => finishStepAndReward(stepId)}
-          onSwitchToGame2={() => setSelectedGameMode('game2')}
-        />
-      )}
-
-      {activeStep && selectedGameMode === 'game2' && (
+      {activeStep && activeStep.step?.stepNum === 2 ? (
         <Game2Arena
           activeStep={activeStep}
           onClose={() => setActiveStep(null)}
           onComplete={(stepId) => finishStepAndReward(stepId)}
-          onSwitchToGame1={() => setSelectedGameMode('game1')}
         />
-      )}
+      ) : activeStep ? (
+        <Game1Arena
+          activeStep={activeStep}
+          onClose={() => setActiveStep(null)}
+          onComplete={(stepId) => finishStepAndReward(stepId)}
+        />
+      ) : null}
 
       {/* FULL PAGE OVERLAY MODUL (ILLUSTRATED HANDBOOK & EVALUATION QUIZ) */}
       {isModuleOpen && activeMod && (
