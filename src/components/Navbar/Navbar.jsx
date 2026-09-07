@@ -9,6 +9,10 @@ export default function Navbar() {
     navigate('/login');
   };
 
+  const handleRegister = () => {
+    navigate('/register');
+  };
+
   return (
     <nav>
       <div className="nav-inner">
@@ -52,6 +56,9 @@ export default function Navbar() {
 
           <button className="btn-nav-cta" onClick={handleLogin}>
             {isEnglish ? 'Sign In' : 'Masuk'}
+          </button>
+          <button className="btn-nav-reg" onClick={handleRegister}>
+            {isEnglish ? 'Sign Up' : 'Daftar'}
           </button>
         </div>
       </div>
