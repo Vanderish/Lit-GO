@@ -8,6 +8,10 @@ export default function Navbar() {
     navigate('/login');
   };
 
+  const handleRegister = () => {
+    navigate('/register');
+  };
+
   return (
     <nav>
       <div className="nav-inner">
@@ -25,6 +29,7 @@ export default function Navbar() {
 
         <div className="nav-hud">
           <button className="btn-nav-cta" onClick={handleLogin}>SignIn</button>
+          <button className="btn-nav-reg" onClick={handleRegister}>SignUp</button>
         </div>
       </div>
     </nav>
