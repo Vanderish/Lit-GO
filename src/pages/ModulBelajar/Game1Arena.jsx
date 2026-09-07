@@ -1,210 +1,228 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './Game1Arena.css';
+import quizBank120 from '../../data/quizBank120.json';
 
-const DIALOGUE_DATA = {
-  '1-1': {
-    title: 'Dari Turing ke Transformer',
-    q: 'Menurut Alan Turing (1950) dan Vaswani dkk. (2017), apa fondasi teknis AI generatif modern?',
-    opts: [
-      'Arsitektur Transformer berbasis prediksi probabilitas token kata secara paralel',
-      'Komputer yang memiliki kesadaran rohani dan perasaan manusiawi',
-      'Kekuatan magis yang tidak memerlukan kalkulasi data'
-    ],
-    ans: 0
-  },
-  '2-4': {
-    title: 'Permainan: Asli atau Rekayasa?',
-    q: 'Dalam audit C2PA, apa bukti paling kuat bahwa sebuah media digital belum direkayasa oleh AI?',
-    opts: [
-      'Metadata kriptografis asal-usul (provenance) yang utuh sejak perangkat perekam',
-      'Resolusi foto sangat tinggi di atas 8K',
-      'Banyak komentar positif dari netizen di media sosial'
-    ],
-    ans: 0
-  },
-  '3-4': {
-    title: 'ReAct Agentic Workflow (Yao dkk., 2022)',
-    q: 'Apa yang membedakan paradigma agen ReAct (Reasoning + Acting) dari prompting teks biasa?',
-    opts: [
-      'AI menggabungkan penalaran dengan tindakan nyata memanggil alat eksternal/API untuk memvalidasi fakta',
-      'AI bekerja tanpa menggunakan instruksi sama sekali',
-      'AI menolak menjawab pertanyaan analitis'
-    ],
-    ans: 0
-  },
-  '4-3': {
-    title: 'Mitra Sokratik & Zero-Drafting (UNESCO 2023)',
-    q: 'Bagaimana cara pemanfaatan AI yang paling etis untuk karya ilmiah menurut panduan UNESCO (2023)?',
-    opts: [
-      'Sebagai sparring partner (Tutor Sokratik) penguji argumen & pemantik draf awal, dengan kendali pada manusia',
-      'Meminta AI menulis seluruh makalah dari bab 1 hingga daftar pustaka tanpa dicek',
-      'Menyembunyikan penggunaan AI dari dosen pembimbing'
-    ],
-    ans: 0
-  },
-  '5-4': {
-    title: 'Sidang Mediasi Hak Cipta AI',
-    q: 'Menurut U.S. Copyright Office, kapan seorang kreator berhak mendapatkan hak cipta atas karya yang dibantu AI?',
-    opts: [
-      'Ketika terdapat kontribusi kepengarangan manusia (human authorship) berupa modifikasi kreatif yang substantif',
-      'Cukup mengetik satu baris prompt teks tanpa menyentuh hasilnya',
-      'Membayar biaya langganan aplikasi AI komersial'
-    ],
-    ans: 0
-  },
-  '6-4': {
-    title: 'Manifesto Pilot AI: Warga Digital Berdaulat',
-    q: 'Apa prinsip fundamental yang menjadi komitmen seorang "Pilot AI" berdaulat?',
-    opts: [
-      'Manusia adalah pilot penentu nilai, arah, dan etika; AI adalah kopilot peningkat produktivitas',
-      'Manusia harus menyerahkan seluruh keputusan moral dan vonis hukum kepada AI',
-      'Menolak seluruh kemajuan teknologi komputasi di kehidupan'
-    ],
-    ans: 0
-  }
-};
+export default function Game1Arena({ activeStep, onClose, onComplete }) {
+  const { step, mod } = activeStep;
+  const stepId = step?.id || '1-1';
+  const [modIdStr, stepNumStr] = stepId.split('-');
+  const moduleId = parseInt(modIdStr, 10) || mod?.id || 1;
+  const stepIndex = parseInt(stepNumStr, 10) || step?.stepNum || 1;
 
-export default function Game1Arena({ activeStep, onClose, onComplete, onSwitchToGame2 }) {
-  const { step } = activeStep;
+  // Retrieve 5 quizzes for this module and step from quizBank120
+  const modData = quizBank120.find((m) => m.moduleId === moduleId);
+  const stepData = modData?.steps?.find((s) => s.stepIndex === stepIndex);
+  const quizzes = stepData?.quizzes || [];
 
-  // Game States
+  // State management
+  const [quizIdx, setQuizIdx] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
   const [checked, setChecked] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
-  const [dialogueIdx, setDialogueIdx] = useState(0);
+  const [score, setScore] = useState(0);
+  const [autoNext, setAutoNext] = useState(false);
+  const [isFinished, setIsFinished] = useState(false);
 
-  // For Word Bank / Sentence Builder (tileorder & promptpuzzle)
-  const defaultWords = step.checkpoints || [
-    'Verifikasi klaim ke sumber primer',
-    'Uji konsistensi counter-prompt',
-    'Cek DOI/URL asli sebelum menyalin'
-  ];
-  const [placedWords, setPlacedWords] = useState([]);
-  const [availableWords, setAvailableWords] = useState(defaultWords);
+  const autoNextTimerRef = useRef(null);
 
-  // For Bug Hunter
-  const [selectedBugs, setSelectedBugs] = useState({ b1: false, b2: false });
-
-  // For Matching Pairs
-  const [matchedPairs, setMatchedPairs] = useState({});
-  const [selectedLeft, setSelectedLeft] = useState(null);
-
-  // For Swipe Bin (Private vs Safe)
-  const [swipeBin, setSwipeBin] = useState({ k1: null, k2: null });
-
-  // Re-sync states when step changes
+  // Clear pending timers on unmount
   useEffect(() => {
-    const words = step.checkpoints || [
-      'Verifikasi klaim ke sumber primer',
-      'Uji konsistensi counter-prompt',
-      'Cek DOI/URL asli sebelum menyalin'
-    ];
-    setPlacedWords([]);
-    setAvailableWords(words);
-    setSelectedOption(null);
-    setChecked(false);
-    setIsCorrect(false);
-    setMatchedPairs({});
-    setSelectedLeft(null);
-    setSelectedBugs({ b1: false, b2: false });
-    setSwipeBin({ k1: null, k2: null });
-    setDialogueIdx(0);
-  }, [step.id]);
+    return () => {
+      if (autoNextTimerRef.current) {
+        clearTimeout(autoNextTimerRef.current);
+      }
+    };
+  }, []);
 
-  // Calculate Progress (0% to 100%)
-  const progress = checked && isCorrect ? 100 : (checked ? 40 : 25);
+  const currentQuiz = quizzes[quizIdx] || quizzes[0];
+  const totalQuizzes = quizzes.length || 5;
 
-  // Handle Verify / Check button
-  const handleCheck = () => {
+  // Progress Bar percentage
+  const progressPercent = Math.min(
+    100,
+    Math.round(((quizIdx + (checked ? 1 : 0)) / totalQuizzes) * 100)
+  );
+
+  const handleNextQuestionDirect = (nextIdx) => {
+    if (autoNextTimerRef.current) clearTimeout(autoNextTimerRef.current);
+
+    if (nextIdx < totalQuizzes) {
+      setQuizIdx(nextIdx);
+      setSelectedOption(null);
+      setChecked(false);
+      setIsCorrect(false);
+    } else {
+      setIsFinished(true);
+    }
+  };
+
+  const handleSelectOption = (key) => {
     if (checked) return;
+    setSelectedOption(key);
 
-    let correct = false;
+    if (autoNext && currentQuiz) {
+      const correct = key === currentQuiz.answerKey;
+      setIsCorrect(correct);
+      setChecked(true);
+      if (correct) {
+        setScore((prev) => prev + 1);
+        if (autoNextTimerRef.current) clearTimeout(autoNextTimerRef.current);
+        autoNextTimerRef.current = setTimeout(() => {
+          handleNextQuestionDirect(quizIdx + 1);
+        }, 1200);
+      }
+    }
+  };
 
-    // Type 1: Tebak Gambar & Speed Quiz (Multiple Choice)
-    if (step.type?.startsWith('tebakgambar') || step.type === 'speedquiz' || step.opts) {
-      const correctAns = step.ans ?? 1;
-      correct = selectedOption === correctAns;
-    }
-    // Type 2: Dialogue Story
-    else if (step.type === 'dialogue') {
-      const dData = DIALOGUE_DATA[step.id];
-      const correctAns = dData ? dData.ans : 0;
-      correct = selectedOption === correctAns;
-    }
-    // Type 3: Word Bank Tile Order
-    else if (step.type === 'tileorder' || step.type === 'promptpuzzle') {
-      const words = step.checkpoints || defaultWords;
-      correct = placedWords.length === words.length;
-    }
-    // Type 4: Bug Hunter
-    else if (step.type === 'bughunter') {
-      correct = selectedBugs.b1 && selectedBugs.b2;
-    }
-    // Type 5: Matching Pairs
-    else if (step.type === 'matching') {
-      const pairs = step.pairs || [1, 2, 3];
-      correct = Object.keys(matchedPairs).length >= pairs.length;
-    }
-    // Type 6: Swipe Bin
-    else if (step.type === 'swipebin') {
-      correct = swipeBin.k1 === 'shred' && swipeBin.k2 === 'safe';
-    }
-    // Fallback
-    else {
-      correct = true;
-    }
+  const handleCheck = () => {
+    if (checked || !selectedOption || !currentQuiz) return;
 
+    const correct = selectedOption === currentQuiz.answerKey;
     setIsCorrect(correct);
     setChecked(true);
-  };
+    if (correct) {
+      setScore((prev) => prev + 1);
+    }
 
-  // Handle Continue button
-  const handleContinue = () => {
-    if (isCorrect) {
-      // If there's dialogue progression
-      if (step.type === 'dialogue' && dialogueIdx === 0) {
-        setDialogueIdx(1);
-        setSelectedOption(null);
-        setChecked(false);
-        setIsCorrect(false);
-      } else {
-        onComplete(step.id);
-      }
-    } else {
-      // Retry
-      setChecked(false);
-      setSelectedOption(null);
+    if (autoNext && correct) {
+      if (autoNextTimerRef.current) clearTimeout(autoNextTimerRef.current);
+      autoNextTimerRef.current = setTimeout(() => {
+        handleNextQuestionDirect(quizIdx + 1);
+      }, 1200);
     }
   };
 
-  // Check if "PERIKSA" button should be active
-  const isCheckEnabled = () => {
-    if (checked) return false;
-    if (step.opts || step.type?.startsWith('tebakgambar')) {
-      return selectedOption !== null;
-    }
-    if (step.type === 'dialogue') {
-      return selectedOption !== null;
-    }
-    if (step.type === 'tileorder' || step.type === 'promptpuzzle') {
-      return placedWords.length > 0;
-    }
-    if (step.type === 'bughunter') {
-      return selectedBugs.b1 || selectedBugs.b2;
-    }
-    if (step.type === 'matching') {
-      return Object.keys(matchedPairs).length > 0;
-    }
-    if (step.type === 'swipebin') {
-      return swipeBin.k1 !== null || swipeBin.k2 !== null;
-    }
-    return true;
+  const handleNextClick = () => {
+    if (autoNextTimerRef.current) clearTimeout(autoNextTimerRef.current);
+    handleNextQuestionDirect(quizIdx + 1);
   };
 
-  // Select Avatar (student or AI robot depending on step)
-  const avatarImg = (step.type === 'dialogue' || step.type?.startsWith('tebakgambar'))
+  const handleFinalClaim = () => {
+    onComplete(stepId);
+  };
+
+  const avatarImg = (stepIndex % 2 === 1)
     ? '/illustrations/duo_avatar_student.jpg'
     : '/illustrations/duo_avatar_robot.jpg';
+
+  // Completion screen when all 5 quizzes finished
+  if (isFinished) {
+    const accuracy = Math.round((score / totalQuizzes) * 100);
+    return (
+      <div className="duo-viewport animate-fade-in" style={{ justifyContent: 'center', alignItems: 'center' }}>
+        <div
+          className="duo-completion-card"
+          style={{
+            maxWidth: '560px',
+            width: '90%',
+            background: '#FFFFFF',
+            border: '2px solid #E2E8F0',
+            borderRadius: '24px',
+            padding: '36px 28px',
+            textAlign: 'center',
+            boxShadow: '0 20px 40px -15px rgba(37, 99, 235, 0.15)',
+          }}
+        >
+          <div
+            style={{
+              width: '76px',
+              height: '76px',
+              margin: '0 auto 18px',
+              borderRadius: '50%',
+              background: 'radial-gradient(circle at 35% 35%, #FEF08A 0%, #F59E0B 70%, #D97706 100%)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '2.2rem',
+              color: '#FFFFFF',
+              boxShadow: '0 8px 24px rgba(245, 158, 11, 0.35)',
+            }}
+          >
+            <i className="fa-solid fa-trophy"></i>
+          </div>
+
+          <div
+            style={{
+              fontFamily: 'var(--font-mono)',
+              fontSize: '0.78rem',
+              fontWeight: 800,
+              color: '#2563EB',
+              letterSpacing: '0.1em',
+              textTransform: 'uppercase',
+              marginBottom: '6px',
+            }}
+          >
+            Modul {moduleId} • Langkah {stepIndex}
+          </div>
+
+          <h2 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#0F172A', marginBottom: '8px' }}>
+            Langkah Pembelajaran Tuntas!
+          </h2>
+
+          <p style={{ fontSize: '0.92rem', color: '#64748B', maxWidth: '440px', margin: '0 auto 24px', lineHeight: 1.5 }}>
+            Selamat! Kamu telah menyelesaikan seluruh <strong>5 Kuis Berbasis Jurnal Ilmiah</strong> untuk topik{' '}
+            <em>&quot;{stepData?.stepTitle || step?.title}&quot;</em>.
+          </p>
+
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(3, 1fr)',
+              gap: '12px',
+              marginBottom: '28px',
+            }}
+          >
+            <div style={{ background: '#EFF6FF', border: '1px solid #BFDBFE', borderRadius: '14px', padding: '12px 8px' }}>
+              <div style={{ fontSize: '1.25rem', fontWeight: 800, color: '#1D4ED8' }}>
+                {score}/{totalQuizzes}
+              </div>
+              <div style={{ fontSize: '0.72rem', color: '#60A5FA', fontWeight: 700, textTransform: 'uppercase', marginTop: '2px' }}>
+                Akurasi ({accuracy}%)
+              </div>
+            </div>
+
+            <div style={{ background: '#ECFDF5', border: '1px solid #A7F3D0', borderRadius: '14px', padding: '12px 8px' }}>
+              <div style={{ fontSize: '1.25rem', fontWeight: 800, color: '#059669' }}>
+                +100
+              </div>
+              <div style={{ fontSize: '0.72rem', color: '#34D399', fontWeight: 700, textTransform: 'uppercase', marginTop: '2px' }}>
+                Gems Lit-GO
+              </div>
+            </div>
+
+            <div style={{ background: '#FAF5FF', border: '1px solid #E9D5FF', borderRadius: '14px', padding: '12px 8px' }}>
+              <div style={{ fontSize: '1.25rem', fontWeight: 800, color: '#7E22CE' }}>
+                +50 EXP
+              </div>
+              <div style={{ fontSize: '0.72rem', color: '#C084FC', fontWeight: 700, textTransform: 'uppercase', marginTop: '2px' }}>
+                Penguasaan AI
+              </div>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            className="duo-btn-continue"
+            onClick={handleFinalClaim}
+            style={{
+              width: '100%',
+              padding: '16px',
+              background: 'linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)',
+              borderBottom: '4px solid #1E40AF',
+              color: '#FFFFFF',
+              fontSize: '1rem',
+              fontWeight: 800,
+              borderRadius: '16px',
+              cursor: 'pointer',
+              boxShadow: '0 8px 20px rgba(37, 99, 235, 0.3)',
+            }}
+          >
+            <i className="fa-solid fa-circle-check mr-2"></i> Klaim Hadiah &amp; Selesai
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="duo-viewport animate-fade-in">
@@ -216,376 +234,152 @@ export default function Game1Arena({ activeStep, onClose, onComplete, onSwitchTo
 
         <div className="duo-progress-container">
           <div className="duo-progress-track">
-            <div className="duo-progress-fill" style={{ width: `${progress}%` }}>
+            <div className="duo-progress-fill" style={{ width: `${progressPercent}%` }}>
               <div className="duo-progress-highlight"></div>
             </div>
           </div>
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          {onSwitchToGame2 && (
-            <button
-              type="button"
-              onClick={onSwitchToGame2}
-              style={{
-                background: 'rgba(37, 99, 235, 0.1)',
-                border: '1px solid rgba(37, 99, 235, 0.3)',
-                color: '#2563eb',
-                padding: '5px 12px',
-                borderRadius: '8px',
-                fontSize: '0.78rem',
-                fontWeight: 700,
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '6px',
-                transition: 'all 0.15s ease'
-              }}
-              title="Ganti ke Tampilan Arena Game 2"
-            >
-              <i className="fa-solid fa-code"></i> Ganti ke Arena Game 2
-            </button>
-          )}
-          <span style={{ fontSize: '0.76rem', color: '#64748b', fontWeight: 700 }}>
-            {step?.stepNum === 1 ? 'Arena Game 1' : (step?.tag ? step.tag.split('•')[0].trim() : 'Langkah Pembelajaran')}
+          {/* Auto-Next Switch Button */}
+          <button
+            type="button"
+            onClick={() => setAutoNext((prev) => !prev)}
+            style={{
+              background: autoNext ? '#EFF6FF' : '#F1F5F9',
+              border: autoNext ? '1px solid #3B82F6' : '1px solid #CBD5E1',
+              color: autoNext ? '#1D4ED8' : '#64748B',
+              padding: '5px 10px',
+              borderRadius: '999px',
+              fontSize: '0.74rem',
+              fontWeight: 800,
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              transition: 'all 0.15s ease',
+            }}
+            title={autoNext ? 'Auto-Next aktif: otomatis lanjut saat benar' : 'Klik untuk mengaktifkan auto-next'}
+          >
+            <i className={`fa-solid fa-bolt ${autoNext ? 'text-amber-500' : ''}`}></i>
+            <span>{autoNext ? 'Auto-Next: ON' : 'Auto-Next: OFF'}</span>
+          </button>
+
+          <span style={{ fontSize: '0.76rem', color: '#64748B', fontWeight: 800, whiteSpace: 'nowrap' }}>
+            Soal {quizIdx + 1} / {totalQuizzes}
           </span>
         </div>
       </header>
 
       {/* 2. MAIN QUESTION ARENA */}
       <main className="duo-arena-body">
-        {/* Category Pill Tag */}
-        <div className="duo-category-pill">
-          ✦ {step.tag ? step.tag.split('•')[0].trim() : 'LITERASI AI'}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+          <span className="duo-category-pill">
+            <i className="fa-solid fa-award"></i> Kuis #{currentQuiz?.num || quizIdx + 1} • Langkah {stepIndex}
+          </span>
+
+          <span
+            style={{
+              fontFamily: 'var(--font-mono)',
+              fontSize: '0.72rem',
+              fontWeight: 700,
+              color: '#64748B',
+              background: '#F8FAFC',
+              padding: '3px 8px',
+              borderRadius: '6px',
+              border: '1px solid #E2E8F0',
+            }}
+          >
+            Rujukan Jurnal
+          </span>
         </div>
 
-        {/* ---------------------------------------------------- */}
-        {/* CASE A: TEBAK GAMBAR (3-Options Stack with Speech Bubble) */}
-        {/* ---------------------------------------------------- */}
-        {step.type?.startsWith('tebakgambar') && (
-          <>
-            <h1 className="duo-question-title">Pilih arti yang benar</h1>
+        <h1 className="duo-question-title" style={{ fontSize: '1.28rem', lineHeight: 1.35 }}>
+          {currentQuiz?.question}
+        </h1>
 
-            <div className="duo-dialogue-row">
-              <div className="duo-avatar-wrap">
-                <img src={avatarImg} alt="Karakter Duolingo" className="duo-avatar-img" />
-              </div>
-              <div className="duo-speech-bubble">
-                <button 
-                  className="duo-sound-btn" 
-                  title="Dengarkan"
-                  onClick={() => {
-                    const utterance = new SpeechSynthesisUtterance(step.clueText || 'Kecerdasan Buatan');
-                    utterance.lang = 'id-ID';
-                    window.speechSynthesis?.speak(utterance);
-                  }}
-                >
-                  🔊
-                </button>
-                <span>
-                  {step.clueIcons?.join(' ')} {step.clueText || 'Probabilitas Statistik AI'}
-                </span>
-              </div>
-            </div>
-
-            <div className="duo-options-stack">
-              {step.opts?.map((opt, i) => (
-                <button
-                  key={i}
-                  className={`duo-option-card ${selectedOption === i ? 'selected' : ''} ${checked ? (i === step.ans ? 'correct' : (selectedOption === i ? 'wrong' : '')) : ''}`}
-                  onClick={() => !checked && setSelectedOption(i)}
-                >
-                  <span className="duo-option-num">{i + 1}</span>
-                  <span className="duo-option-text">{opt}</span>
-                </button>
-              ))}
-            </div>
-          </>
-        )}
-
-        {/* ---------------------------------------------------- */}
-        {/* CASE B: DUOLINGO DIALOGUE STORY */}
-        {/* ---------------------------------------------------- */}
-        {step.type === 'dialogue' && (() => {
-          const dData = DIALOGUE_DATA[step.id] || {
-            title: step.title || 'Pilih respon yang benar',
-            q: step.reading || 'Pahami materi dan pilih opsi terbaik di bawah ini:',
-            opts: [
-              'Memposisikan manusia sebagai validator akhir (Human-in-the-Loop)',
-              'Menyerahkan seluruh keputusan otomatis kepada mesin',
-              'Mengabaikan batasan etika penggunaan data'
-            ],
-            ans: 0
-          };
-          return (
-            <>
-              <h1 className="duo-question-title">{dData.title}</h1>
-
-              <div className="duo-dialogue-row">
-                <div className="duo-avatar-wrap">
-                  <img src="/illustrations/duo_avatar_robot.jpg" alt="Tutor Robot" className="duo-avatar-img" />
-                </div>
-                <div className="duo-speech-bubble">
-                  <button 
-                    className="duo-sound-btn" 
-                    title="Dengarkan"
-                    onClick={() => {
-                      const utterance = new SpeechSynthesisUtterance(dData.q);
-                      utterance.lang = 'id-ID';
-                      window.speechSynthesis?.speak(utterance);
-                    }}
-                  >
-                    🔊
-                  </button>
-                  <span>{dData.q}</span>
-                </div>
-              </div>
-
-              <div className="duo-options-stack">
-                {dData.opts.map((opt, i) => (
-                  <button
-                    key={i}
-                    className={`duo-option-card ${selectedOption === i ? 'selected' : ''} ${checked ? (i === dData.ans ? 'correct' : (selectedOption === i ? 'wrong' : '')) : ''}`}
-                    onClick={() => !checked && setSelectedOption(i)}
-                  >
-                    <span className="duo-option-num">{i + 1}</span>
-                    <span className="duo-option-text">{opt}</span>
-                  </button>
-                ))}
-              </div>
-            </>
-          );
-        })()}
-
-        {/* ---------------------------------------------------- */}
-        {/* CASE C: WORD BANK SENTENCE BUILDER / TILE ORDER */}
-        {/* ---------------------------------------------------- */}
-        {(step.type === 'tileorder' || step.type === 'promptpuzzle') && (
-          <div className="duo-wordbank-container">
-            <h1 className="duo-question-title">{step.title || 'Susun urutan yang tepat'}</h1>
-
-            <div className="duo-dialogue-row">
-              <div className="duo-avatar-wrap">
-                <img src={avatarImg} alt="Karakter Duolingo" className="duo-avatar-img" />
-              </div>
-              <div className="duo-speech-bubble">
-                <span>{step.reading || 'Susun urutan tahapan di bawah ini dengan mengetuk kartu secara berurutan:'}</span>
-              </div>
-            </div>
-
-            {/* Answer Line Slots */}
-            <div className="duo-sentence-slot-line">
-              {placedWords.length === 0 ? (
-                <span className="duo-slot-empty-placeholder">Ketuk kartu di bawah untuk menyusun urutan...</span>
-              ) : (
-                placedWords.map((word, idx) => (
-                  <button
-                    key={idx}
-                    className="duo-word-tile slotted"
-                    onClick={() => {
-                      if (checked) return;
-                      setPlacedWords(placedWords.filter((_, i) => i !== idx));
-                      setAvailableWords([...availableWords, word]);
-                    }}
-                  >
-                    {word}
-                  </button>
-                ))
-              )}
-            </div>
-
-            {/* Word Bank */}
-            <div className="duo-words-grid">
-              {availableWords.map((word, idx) => (
-                <button
-                  key={idx}
-                  className="duo-word-tile"
-                  onClick={() => {
-                    if (checked) return;
-                    setPlacedWords([...placedWords, word]);
-                    setAvailableWords(availableWords.filter((_, i) => i !== idx));
-                  }}
-                >
-                  {word}
-                </button>
-              ))}
-            </div>
+        {/* Character Dialogue context card */}
+        <div className="duo-dialogue-row" style={{ marginBottom: '14px' }}>
+          <div className="duo-avatar-wrap" style={{ width: '56px', height: '56px', borderRadius: '14px' }}>
+            <img src={avatarImg} alt="Avatar" className="duo-avatar-img" />
           </div>
-        )}
+          <div className="duo-speech-bubble" style={{ padding: '8px 14px', fontSize: '0.86rem' }}>
+            <span>
+              Pilih opsi paling tepat berdasarkan temuan riset akademik kurikulum <strong>Lit-GO</strong>:
+            </span>
+          </div>
+        </div>
 
-        {/* ---------------------------------------------------- */}
-        {/* CASE D: BUG HUNTER / SPOT THE ERROR (Step 1-4) */}
-        {/* ---------------------------------------------------- */}
-        {step.type === 'bughunter' && (
-          <>
-            <h1 className="duo-question-title">{step.title || 'Detektif Halusinasi: Bongkar Karangan AI'}</h1>
+        {/* 4 Multiple Choice Options (A, B, C, D) */}
+        <div className="duo-options-stack">
+          {['A', 'B', 'C', 'D'].map((key) => {
+            const optText = currentQuiz?.options?.[key];
+            if (!optText) return null;
 
-            <div className="duo-dialogue-row">
-              <div className="duo-avatar-wrap">
-                <img src="/illustrations/duo_avatar_robot.jpg" alt="Robot" className="duo-avatar-img" />
-              </div>
-              <div className="duo-speech-bubble">
-                <span>Ketuk 2 bagian teks fiktif yang dikarang oleh AI di bawah ini:</span>
-              </div>
-            </div>
+            const isSelected = selectedOption === key;
+            const isCorrectOption = key === currentQuiz?.answerKey;
 
-            <div style={{ background: '#F8FAFC', border: '2px solid #E2E8F0', borderRadius: '16px', padding: '20px', lineHeight: 2.2, fontSize: '1.05rem', color: '#1E293B', fontWeight: 600 }}>
-              "Berdasarkan{' '}
+            let cardClass = 'duo-option-card';
+            if (checked) {
+              if (isCorrectOption) {
+                cardClass += ' correct';
+              } else if (isSelected && !isCorrectOption) {
+                cardClass += ' wrong';
+              }
+            } else if (isSelected) {
+              cardClass += ' selected';
+            }
+
+            return (
               <button
-                className={`duo-word-tile ${selectedBugs.b1 ? 'slotted' : ''}`}
-                style={{ display: 'inline-block', margin: '0 4px', fontSize: '0.96rem', color: selectedBugs.b1 ? '#DC2626' : 'inherit' }}
-                onClick={() => !checked && setSelectedBugs({ ...selectedBugs, b1: !selectedBugs.b1 })}
+                key={key}
+                type="button"
+                className={cardClass}
+                onClick={() => handleSelectOption(key)}
+                disabled={checked}
+                style={{
+                  minHeight: '46px',
+                  padding: '10px 14px',
+                  fontSize: '0.9rem',
+                }}
               >
-                Pasal 999 UU Literasi Digital 1945
+                <span className="duo-option-num">{key}</span>
+                <span className="duo-option-text" style={{ lineHeight: 1.4 }}>
+                  {optText}
+                </span>
+                {checked && isCorrectOption && (
+                  <i className="fa-solid fa-circle-check text-emerald" style={{ fontSize: '1.1rem', flexShrink: 0 }}></i>
+                )}
+                {checked && isSelected && !isCorrectOption && (
+                  <i className="fa-solid fa-circle-xmark text-rose" style={{ fontSize: '1.1rem', flexShrink: 0 }}></i>
+                )}
               </button>
-              , seluruh operasional AI wajib diserahkan kepada{' '}
-              <button
-                className={`duo-word-tile ${selectedBugs.b2 ? 'slotted' : ''}`}
-                style={{ display: 'inline-block', margin: '0 4px', fontSize: '0.96rem', color: selectedBugs.b2 ? '#DC2626' : 'inherit' }}
-                onClick={() => !checked && setSelectedBugs({ ...selectedBugs, b2: !selectedBugs.b2 })}
-              >
-                Kementerian Kebudayaan Kuno
-              </button>
-              {' '}dengan sanksi pidana."
+            );
+          })}
+        </div>
+
+        {/* Detailed Scientific Explanation & Reference Box */}
+        {checked && currentQuiz?.explanation && (
+          <div
+            className="animate-fade-in"
+            style={{
+              marginTop: '14px',
+              padding: '12px 16px',
+              background: isCorrect ? 'rgba(16, 185, 129, 0.08)' : 'rgba(244, 63, 94, 0.08)',
+              border: isCorrect ? '1.5px solid rgba(16, 185, 129, 0.3)' : '1.5px solid rgba(244, 63, 94, 0.3)',
+              borderRadius: '14px',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+              <i className={`fa-solid ${isCorrect ? 'fa-lightbulb text-emerald' : 'fa-triangle-exclamation text-rose'}`}></i>
+              <span style={{ fontWeight: 800, fontSize: '0.82rem', color: isCorrect ? '#065F46' : '#9F1239' }}>
+                Pembahasan &amp; Referensi Ilmiah:
+              </span>
             </div>
-          </>
-        )}
-
-        {/* ---------------------------------------------------- */}
-        {/* CASE E: MATCHING CARDS */}
-        {/* ---------------------------------------------------- */}
-        {step.type === 'matching' && (() => {
-          const pairs = step.pairs || [
-            { left: "Generative AI", right: "Prediksi Probabilitas Kata" },
-            { left: "Halusinasi Data", right: "Sitasi & Nomor UU Fiktif" },
-            { left: "Search Engine", right: "Mengindeks Dokumen Asli" }
-          ];
-          return (
-            <>
-              <h1 className="duo-question-title">{step.title || 'Cocokkan pasangan istilah AI'}</h1>
-
-              <div className="duo-dialogue-row">
-                <div className="duo-avatar-wrap">
-                  <img src={avatarImg} alt="Karakter" className="duo-avatar-img" />
-                </div>
-                <div className="duo-speech-bubble">
-                  <span>Ketuk istilah di kiri, lalu ketuk padanan yang cocok di kanan:</span>
-                </div>
-              </div>
-
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                  {pairs.map((p, idx) => (
-                    <button
-                      key={idx}
-                      className={`duo-option-card ${selectedLeft === idx ? 'selected' : ''} ${matchedPairs[idx] ? 'correct' : ''}`}
-                      onClick={() => setSelectedLeft(idx)}
-                    >
-                      <span className="duo-option-text">{p.left}</span>
-                      {matchedPairs[idx] && <span style={{ color: '#2563eb', fontWeight: 800 }}>✓</span>}
-                    </button>
-                  ))}
-                </div>
-
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                  {pairs.map((p, idx) => (
-                    <button
-                      key={idx}
-                      className={`duo-option-card ${matchedPairs[idx] ? 'correct' : ''}`}
-                      onClick={() => {
-                        if (selectedLeft !== null && selectedLeft === idx) {
-                          setMatchedPairs({ ...matchedPairs, [idx]: true });
-                          setSelectedLeft(null);
-                        }
-                      }}
-                    >
-                      <span className="duo-option-text">{p.right}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </>
-          );
-        })()}
-
-        {/* ---------------------------------------------------- */}
-        {/* CASE F: SWIPE / CLASSIFICATION BIN (Step 2-1) */}
-        {/* ---------------------------------------------------- */}
-        {step.type === 'swipebin' && (
-          <>
-            <h1 className="duo-question-title">Pilah privasi data AI</h1>
-
-            <div className="duo-dialogue-row">
-              <div className="duo-avatar-wrap">
-                <img src="/illustrations/duo_avatar_robot.jpg" alt="Robot" className="duo-avatar-img" />
-              </div>
-              <div className="duo-speech-bubble">
-                <span>Tentukan mana data yang HARUS DIRAHASIAKAN vs AMAN UNTUK AI:</span>
-              </div>
-            </div>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-              {[
-                { id: 'k1', label: 'NIK, Password Rekening, & Rekam Medis' },
-                { id: 'k2', label: 'Ringkasan Makalah Sejarah Umum' }
-              ].map(item => (
-                <div key={item.id} style={{ background: '#FFFFFF', border: '2px solid #E5E5E5', borderRadius: '16px', padding: '16px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontWeight: 700, fontSize: '1rem', color: '#4B4B4B' }}>{item.label}</span>
-                  <div style={{ display: 'flex', gap: '8px' }}>
-                    <button
-                      className={`duo-word-tile ${swipeBin[item.id] === 'shred' ? 'slotted' : ''}`}
-                      style={{ fontSize: '0.82rem', padding: '8px 14px', color: swipeBin[item.id] === 'shred' ? '#DC2626' : '#4B4B4B' }}
-                      onClick={() => setSwipeBin({ ...swipeBin, [item.id]: 'shred' })}
-                    >
-                      🚫 Rahasia
-                    </button>
-                    <button
-                      className={`duo-word-tile ${swipeBin[item.id] === 'safe' ? 'slotted' : ''}`}
-                      style={{ fontSize: '0.82rem', padding: '8px 14px', color: swipeBin[item.id] === 'safe' ? '#16A34A' : '#4B4B4B' }}
-                      onClick={() => setSwipeBin({ ...swipeBin, [item.id]: 'safe' })}
-                    >
-                      ✅ Aman untuk AI
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </>
-        )}
-
-        {/* ---------------------------------------------------- */}
-        {/* FALLBACK / OTHER STEPS: MULTIPLE CHOICE */}
-        {/* ---------------------------------------------------- */}
-        {!step.type?.startsWith('tebakgambar') && step.type !== 'dialogue' && step.type !== 'tileorder' && step.type !== 'promptpuzzle' && step.type !== 'bughunter' && step.type !== 'matching' && step.type !== 'swipebin' && (
-          <>
-            <h1 className="duo-question-title">{step.title || 'Pilih jawaban yang benar'}</h1>
-
-            <div className="duo-dialogue-row">
-              <div className="duo-avatar-wrap">
-                <img src={avatarImg} alt="Avatar" className="duo-avatar-img" />
-              </div>
-              <div className="duo-speech-bubble">
-                <span>{step.reading || step.caseDesc || 'Pahami materi dan pilih opsi terbaik di bawah ini:'}</span>
-              </div>
-            </div>
-
-            <div className="duo-options-stack">
-              {(step.opts || [
-                'Verifikasi fakta ke sumber primer terpercaya',
-                'Menyalin mentah seluruh keluaran AI tanpa diedit',
-                'Mengabaikan batasan etika penggunaan data'
-              ]).map((opt, i) => (
-                <button
-                  key={i}
-                  className={`duo-option-card ${selectedOption === i ? 'selected' : ''} ${checked ? (i === 0 ? 'correct' : (selectedOption === i ? 'wrong' : '')) : ''}`}
-                  onClick={() => !checked && setSelectedOption(i)}
-                >
-                  <span className="duo-option-num">{i + 1}</span>
-                  <span className="duo-option-text">{opt}</span>
-                </button>
-              ))}
-            </div>
-          </>
+            <p style={{ fontSize: '0.82rem', color: '#334155', margin: 0, lineHeight: 1.45 }}>
+              {currentQuiz.explanation}
+            </p>
+          </div>
         )}
       </main>
 
@@ -594,11 +388,12 @@ export default function Game1Arena({ activeStep, onClose, onComplete, onSwitchTo
         <div className="duo-footer-content">
           {!checked ? (
             <button
-              className={`duo-btn-check ${isCheckEnabled() ? 'active' : 'disabled'}`}
-              disabled={!isCheckEnabled()}
+              type="button"
+              className={`duo-btn-check ${selectedOption ? 'active' : 'disabled'}`}
+              disabled={!selectedOption}
               onClick={handleCheck}
             >
-              Periksa
+              Periksa Jawaban
             </button>
           ) : (
             <>
@@ -608,26 +403,22 @@ export default function Game1Arena({ activeStep, onClose, onComplete, onSwitchTo
                 </div>
                 <div className="duo-feedback-text-stack">
                   <div className="duo-feedback-headline">
-                    {isCorrect ? 'Luar biasa!' : 'Sayang sekali!'}
+                    {isCorrect ? 'Jawaban Benar! Luar Biasa!' : 'Jawaban Kurang Tepat!'}
                   </div>
-                  {isCorrect ? (
-                    <div className="duo-feedback-sublinks">
-                      <span>TERLALU MUDAH</span>
-                      <span>•</span>
-                      <span>TERLALU SULIT</span>
-                      <span>•</span>
-                      <span>LAPORKAN</span>
-                    </div>
-                  ) : (
-                    <div className="duo-feedback-hint">
-                      Jawaban belum tepat. Coba telaah kembali!
-                    </div>
-                  )}
+                  <div className="duo-feedback-hint" style={{ fontSize: '0.82rem' }}>
+                    {isCorrect
+                      ? 'Pemahaman teoritis dan rujukannya sangat tepat.'
+                      : `Jawaban yang benar adalah Opsi [${currentQuiz?.answerKey}]. Perhatikan pembahasannya.`}
+                  </div>
                 </div>
               </div>
 
-              <button className="duo-btn-continue" onClick={handleContinue}>
-                {isCorrect ? 'Lanjutkan' : 'Coba Lagi'}
+              <button
+                type="button"
+                className="duo-btn-continue"
+                onClick={handleNextClick}
+              >
+                {quizIdx + 1 === totalQuizzes ? 'Selesaikan Langkah 🏆' : 'Lanjutkan →'}
               </button>
             </>
           )}

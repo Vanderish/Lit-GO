@@ -36,11 +36,11 @@ export default function Sidebar() {
 
   const modulNav = [
     { to: '/dashboard', title: 'Dashboard', icon: 'fa-gauge-high', color: '#6366F1' },
+    { to: '/radar-readiness', title: 'Radar Readiness', icon: 'fa-chart-pie', color: '#3B82F6' },
     { to: '/modul-belajar', title: 'Modul Belajar', icon: 'fa-book-bookmark', color: '#D97706', counter: `${completedModulesCount}/6` },
   ];
 
   const sandboxNav = [
-    { to: '/radar-readiness', title: 'Radar Readiness', icon: 'fa-chart-pie', color: '#3B82F6' },
     { to: '/sandbox/deepfake-detective', title: 'Deepfake Detective', icon: 'fa-eye', color: '#0EA5E9' },
     { to: '/sandbox/bias-breaker', title: 'Bias Breaker', icon: 'fa-quote-left', color: '#F59E0B' },
     { to: '/sandbox/ethical-dilemma', title: 'Ethical Dilemma', icon: 'fa-scale-balanced', color: '#6366F1' },

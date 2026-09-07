@@ -22,44 +22,66 @@
   font-family: var(--font-display);
 }
 
-/* Badges Grid */
+/* Badges Grid (5 Columns across, responsive) */
 .badges-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  align-items: start;
   margin-bottom: 28px;
 }
 
+@media (max-width: 900px) {
+  .badges-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .badges-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .badge-hub-card {
-  padding: 20px;
-  border-radius: 14px;
-  background: var(--bg-light);
+  background: var(--white);
   border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 20px 16px;
   text-align: center;
-  transition: all 0.3s ease;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
   cursor: pointer;
 }
 
 .badge-hub-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  transform: translateY(-3px);
+  border-color: rgba(59, 130, 246, 0.35);
+  box-shadow: 0 4px 12px rgba(30, 41, 59, 0.05);
 }
 
 .badge-hub-card.unlocked {
-  border-color: rgba(16, 185, 129, 0.3);
-  background: rgba(16, 185, 129, 0.02);
+  background: var(--white);
+  border-color: rgba(59, 130, 246, 0.25);
 }
 
 .badge-hub-icon {
-  width: 60px;
-  height: 60px;
-  border-radius: 12px;
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  margin: 0 auto 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 12px;
-  font-size: 1.8rem;
-  transition: all 0.3s ease;
+  font-size: 1.35rem;
+  transition: transform 0.3s ease;
+  filter: none;
+  border: none;
+}
+
+.badge-hub-card:hover .badge-hub-icon {
+  transform: scale(1.12) rotate(-4deg);
 }
 
 .badge-hub-icon.unlocked {
@@ -73,26 +95,27 @@
 }
 
 .badge-hub-name {
+  font-family: var(--font-display);
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   color: var(--navy);
-  margin-bottom: 6px;
 }
 
 .badge-hub-req {
-  font-size: 0.76rem;
+  font-size: 0.73rem;
   color: var(--text-dim);
-  margin-bottom: 10px;
+  margin-top: 4px;
+  line-height: 1.35;
   font-weight: 500;
 }
 
 .badge-hub-status {
-  display: inline-block;
-  font-size: 0.76rem;
+  font-size: 0.68rem;
   font-weight: 700;
-  padding: 6px 12px;
-  border-radius: 20px;
-  margin-bottom: 10px;
+  margin-top: 6px;
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 6px;
 }
 
 .badge-hub-status.unlocked {
@@ -101,15 +124,31 @@
 }
 
 .badge-hub-status.locked {
-  background: rgba(79, 70, 229, 0.05);
-  color: var(--indigo);
+  background: rgba(30, 41, 59, 0.05);
+  color: var(--text-dim);
 }
 
 .badge-hub-desc {
-  font-size: 0.78rem;
-  color: var(--text-dim);
-  line-height: 1.5;
-  margin-top: 10px;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease, margin-top 0.35s ease, padding-top 0.35s ease;
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 1px dashed transparent;
+  font-size: 0.74rem;
+  color: var(--navy-light);
+  text-align: center;
+  line-height: 1.45;
+  font-weight: 400;
+}
+
+.badge-hub-card:hover .badge-hub-desc {
+  max-height: 140px;
+  opacity: 1;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top-color: var(--line);
 }
 
 /* Certificate Panel */
@@ -199,11 +238,6 @@
 }
 
 @media (max-width: 768px) {
-  .badges-grid {
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 16px;
-  }
-
   .cert-panel-wrapper {
     flex-direction: column;
     align-items: stretch;

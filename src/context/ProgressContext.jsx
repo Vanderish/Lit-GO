@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 
 // Data Silabus & Badge Data (6 Modul Utama x 4 Langkah Penyelesaian Unik + Kuis Evaluasi dari Dokumen Resmi Melek AI)
 export const MODULES = [
@@ -24,50 +24,31 @@ export const MODULES = [
     steps: [
       {
         id: "1-1",
-        type: "dialogue",
         stepNum: 1,
-        title: "Percakapan Interaktif: Dari Turing ke Transformer",
-        tag: "Langkah 1 • Sejarah & Arsitektur AI",
-        reading: "Pada 1950, Alan Turing mengusulkan <b>Imitation Game (Turing Test)</b> untuk menguji kecerdasan mesin. Lompatan besar terjadi pada 2017 saat Vaswani dkk. merilis arsitektur <b>Transformer</b> berbasis <i>self-attention</i> yang memproses bahasa secara paralel.",
-        keyTakeaway: "Transformer adalah fondasi teknis LLM modern seperti ChatGPT, Claude, dan Gemini."
+        title: "Sejarah & Arsitektur AI",
+        tag: "Langkah 1 • 5 Kuis Jurnal",
+        reading: "Alan Turing (1950), Dartmouth (1956), & Transformer Vaswani dkk. (2017)."
       },
       {
         id: "1-2",
-        type: "matching",
         stepNum: 2,
-        title: "Matching Game: Istilah & Konsep Kunci AI",
-        tag: "Langkah 2 • Pasangan Konsep Ilmiah",
-        pairs: [
-          { left: "Transformer (2017)", right: "Self-Attention Paralel" },
-          { left: "Turing Test (1950)", right: "Imitation Game Teks" },
-          { left: "Halusinasi AI", right: "Fakta Palsu Meyakinkan" },
-          { left: "LLM Modern", right: "Prediksi Probabilitas Kata" }
-        ]
+        title: "Pasangan Konsep Ilmiah",
+        tag: "Langkah 2 • 5 Kuis Jurnal",
+        reading: "Self-attention paralel, model probabilistik, dan mekanisme tokenisasi."
       },
       {
         id: "1-3",
-        type: "tebakgambar1",
         stepNum: 3,
-        title: "Tebak Gambar: Prediksi Probabilitas Token",
-        tag: "Langkah 3 • Logika Probabilitas",
-        clueIcons: ["🧠", "📊", "🎲"],
-        clueText: "Otak AI + Diagram Grafik Statistik + Dadu Probabilitas",
-        q: "Bagaimanakah sebenarnya cara kerja model bahasa besar (LLM) seperti ChatGPT?",
-        opts: [
-          "AI berpikir menggunakan kesadaran batin dan perasaan.",
-          "AI bekerja memprediksi token kata berikutnya berdasarkan probabilitas statistik data latih.",
-          "AI adalah entitas serba tahu yang tak pernah salah."
-        ],
-        ans: 1
+        title: "Logika Probabilitas & Kasus Hukum",
+        tag: "Langkah 3 • 5 Kuis Jurnal",
+        reading: "Prediksi distribusi token berikutnya dan audit halusinasi pada putusan hukum."
       },
       {
         id: "1-4",
-        type: "bughunter",
         stepNum: 4,
-        title: "Detektif Halusinasi: Kasus Halusinasi Hukum",
-        tag: "Langkah 4 • Detektif Halusinasi",
-        caseTitle: "Audit Putusan Hukum AI",
-        caseDesc: "Berdasarkan Pasal 999 UU Literasi Digital 1945, seluruh sistem AI wajib diserahkan kepada Kementerian Kebudayaan Kuno dengan sanksi pidana."
+        title: "Detektif Halusinasi & Evaluasi Lanjutan",
+        tag: "Langkah 4 • 5 Kuis Jurnal",
+        reading: "Pencegahan kutipan fiktif, pelacakan sumber primer, dan validasi ground truth."
       }
     ]
   },
@@ -93,48 +74,31 @@ export const MODULES = [
     steps: [
       {
         id: "2-1",
-        type: "swipebin",
         stepNum: 1,
-        title: "Data Privacy Swipe: Lindungi Data Pribadi",
-        tag: "Langkah 1 • Pemilahan Privasi Data",
-        reading: "SE Menkominfo No. 9/2023 dan UU PDP menegaskan larangan memasukkan NIK, password, nomor rekening, dan rekam medis ke AI publik."
+        title: "Kerangka Etika Global & Nasional",
+        tag: "Langkah 1 • 5 Kuis Jurnal",
+        reading: "UNESCO Recommendation on the Ethics of AI (2021) & Surat Edaran Menkominfo No. 9/2023."
       },
       {
         id: "2-2",
-        type: "tebakgambar2",
         stepNum: 2,
-        title: "Tebak Gambar: Artefak Visual Deepfake & C2PA",
-        tag: "Langkah 2 • Deteksi Media Sintetis",
-        clueIcons: ["📸", "🖐️", "👁️"],
-        clueText: "Kamera Foto + Tangan Berjari 6 + Pupil Mata Asimetris",
-        q: "Manakah ciri utama manipulasi foto sintetis AI yang sering terdeteksi pada forensik visual?",
-        opts: [
-          "Warna pakaian subjek terlalu cerah.",
-          "Anatomi abnormal seperti jari berlebih dan pantulan cahaya pupil mata asimetris.",
-          "Latar belakang terlihat sangat indah."
-        ],
-        ans: 1
+        title: "Bias Algoritma & Gender Shades",
+        tag: "Langkah 2 • 5 Kuis Jurnal",
+        reading: "Riset Joy Buolamwini & Timnit Gebru (MIT 2018) serta fenomena Coded Gaze pada visi komputer."
       },
       {
         id: "2-3",
-        type: "matching",
         stepNum: 3,
-        title: "Matching Game: Skandal Bias Algoritma",
-        tag: "Langkah 3 • Riset Bias AI",
-        pairs: [
-          { left: "Gender Shades (2018)", right: "Error 34,7% Kulit Gelap" },
-          { left: "Word2Vec Bias (2016)", right: "Stereotip Gender Linguistik" },
-          { left: "Koalisi C2PA", right: "Label Nutrisi Provenance Media" },
-          { left: "SE Kominfo 9/2023", right: "Pedoman Etika AI Indonesia" }
-        ]
+        title: "Bias Bahasa & Word Embedding",
+        tag: "Langkah 3 • 5 Kuis Jurnal",
+        reading: "Riset Bolukbasi dkk. (2016) membuktikan embedding vektor menyerap stereotip sosial data latih."
       },
       {
         id: "2-4",
-        type: "dialogue",
         stepNum: 4,
-        title: "Permainan: Asli atau Rekayasa?",
-        tag: "Langkah 4 • Audit Bukti C2PA",
-        reading: "Dalam sesi 'Asli atau Rekayasa', analis memeriksa apakah sebuah media sintetis dibuat dengan AI atau riil, menggunakan pendekatan bukti asal-usul C2PA."
+        title: "Forensik Digital vs C2PA",
+        tag: "Langkah 4 • 5 Kuis Jurnal",
+        reading: "Koalisi C2PA dengan metadata kriptografis provenance asal-usul vs analisis artefak forensik."
       }
     ]
   },
@@ -160,52 +124,31 @@ export const MODULES = [
     steps: [
       {
         id: "3-1",
-        type: "tileorder",
         stepNum: 1,
-        title: "Bengkel Prompt: 4 Pilar Instruksi Presisi",
-        tag: "Langkah 1 • Formula 4 Pilar",
-        checkpoints: [
-          "Persona: Berikan peran keahlian spesifik kepada AI",
-          "Konteks: Jelaskan latar belakang dan audiens target",
-          "Instruksi: Berikan tugas konkret dengan batasan tegas",
-          "Format Output: Tentukan bentuk luaran seperti tabel atau JSON"
-        ]
+        title: "Empat Pilar Prompting",
+        tag: "Langkah 1 • 5 Kuis Jurnal",
+        reading: "Formula 4 Pilar: Persona spesifik, Konteks latar belakang, Instruksi terarah, dan Format luaran."
       },
       {
         id: "3-2",
-        type: "tebakgambar3",
         stepNum: 2,
-        title: "Tebak Gambar: Few-Shot In-Context Prompting",
-        tag: "Langkah 2 • Pola Few-Shot",
-        clueIcons: ["🎯", "📝", "✨"],
-        clueText: "Target Presisi + Contoh Input-Output + Hasil Sempurna",
-        q: "Teknik prompting apakah yang menyertakan 2-3 contoh pasangan input-output sebelum meminta AI menjawab kueri sesungguhnya?",
-        opts: [
-          "Zero-Shot Prompting (Tanpa Contoh)",
-          "Few-Shot Prompting (Brown dkk., GPT-3 2020)",
-          "Random Sampling Prompting"
-        ],
-        ans: 1
+        title: "Taksonomi Prompting Dasar",
+        tag: "Langkah 2 • 5 Kuis Jurnal",
+        reading: "Zero-Shot prompting tanpa contoh vs Few-Shot in-context learning (Brown dkk., GPT-3 2020)."
       },
       {
         id: "3-3",
-        type: "tileorder",
         stepNum: 3,
-        title: "Chain-of-Thought: Penalaran Bertahap",
-        tag: "Langkah 3 • CoT Reasoning",
-        checkpoints: [
-          "Jabarkan premis dan data masalah secara terurai",
-          "Kalkulasikan penalaran langkah demi langkah (Step-by-Step)",
-          "Verifikasi konsistensi logika sebelum menarik konklusi"
-        ]
+        title: "Advanced Prompting - CoT",
+        tag: "Langkah 3 • 5 Kuis Jurnal",
+        reading: "Chain-of-Thought (Wei dkk., 2022 Google Research) untuk penalaran bertahap soal analitis kompleks."
       },
       {
         id: "3-4",
-        type: "dialogue",
         stepNum: 4,
-        title: "ReAct Paradigm: Reasoning + Acting Agent",
-        tag: "Langkah 4 • Alur Agen ReAct",
-        reading: "Paradigma ReAct (Yao dkk., 2022) menjalankan alur: Thought (Bernalar) ➔ Action (Panggil Search API/Kalkulator) ➔ Observation (Amati Hasil) ➔ Final Answer."
+        title: "Agentic Framework - ReAct",
+        tag: "Langkah 4 • 5 Kuis Jurnal",
+        reading: "Paradigma ReAct (Yao dkk., ICLR 2023): Sinergi alur Thought, Action, Observation, & Final Answer."
       }
     ]
   },
@@ -231,52 +174,31 @@ export const MODULES = [
     steps: [
       {
         id: "4-1",
-        type: "matching",
         stepNum: 1,
-        title: "Simulasi RAG Manusia: Dua Jenis Memori",
-        tag: "Langkah 1 • Konsep Inti RAG",
-        pairs: [
-          { left: "Memori Parametrik", right: "Bobot Tersimpan di Model" },
-          { left: "Memori Non-Parametrik", right: "Basis Data Dokumen Eksternal" },
-          { left: "Retriever System", right: "Mengambil Dokumen Relevan" },
-          { left: "Generator System", right: "Merangkum Jawaban Berbasis Fakta" }
-        ]
+        title: "Arsitektur & Prinsip RAG",
+        tag: "Langkah 1 • 5 Kuis Jurnal",
+        reading: "Pemisahan memori parametrik (bobot statis) dan memori non-parametrik (dokumen fakta eksternal)."
       },
       {
         id: "4-2",
-        type: "tileorder",
         stepNum: 2,
-        title: "Rantai Protokol Fact-Checking",
-        tag: "Langkah 2 • Verifikasi Fakta",
-        checkpoints: [
-          "Verifikasi klaim numerik dan sitasi ke sumber resmi primer",
-          "Uji konsistensi dengan counter-prompt kritis",
-          "Cek DOI dan repositori terakreditasi sebelum mengutip"
-        ]
+        title: "Mekanisme Teknis RAG & Vector DB",
+        tag: "Langkah 2 • 5 Kuis Jurnal",
+        reading: "Proses chunking teks, representasi embedding ruang vektor, dan pencarian kemiripan kosinus."
       },
       {
         id: "4-3",
-        type: "dialogue",
         stepNum: 3,
-        title: "Mitra Sokratik & Zero-Drafting (UNESCO 2023)",
-        tag: "Langkah 3 • Integritas Akademik",
-        reading: "UNESCO Guidance (2023) menganjurkan AI sebagai 'Tutor Sokratik' (pengkritik celah argumen) dan 'Zero-Drafting' (pemantik ide draf kasar), bukan penulis penuh."
+        title: "Etika AI dalam Pendidikan",
+        tag: "Langkah 3 • 5 Kuis Jurnal",
+        reading: "Panduan UNESCO (2023) menggunakan AI sebagai Tutor Sokratik dan pemantik draf kasar (zero-drafting)."
       },
       {
         id: "4-4",
-        type: "tebakgambar4",
         stepNum: 4,
-        title: "Tebak Gambar: Etika Riset Bebas Plagiarisme",
-        tag: "Langkah 4 • Nalar Kritis Akademis",
-        clueIcons: ["🔍", "📰", "🛡️"],
-        clueText: "Kaca Pembesar + Berita Primer + Perisai Integritas",
-        q: "Tindakan wajib pertama setelah menerima rangkuman karya ilmiah dari AI adalah...",
-        opts: [
-          "Langsung menyalin dan mengumpulkannya ke dosen.",
-          "Memverifikasi setiap klaim spesifik dan nomor sitasi ke jurnal sumber primer aslinya.",
-          "Menolak membaca materi sama sekali."
-        ],
-        ans: 1
+        title: "Evaluasi RAG & Tata Kelola",
+        tag: "Langkah 4 • 5 Kuis Jurnal",
+        reading: "Evaluasi tripartit RAG (Faithfulness, Answer Relevance, Context Recall) dan tata kelola privasi data."
       }
     ]
   },
@@ -302,55 +224,31 @@ export const MODULES = [
     steps: [
       {
         id: "5-1",
-        type: "tileorder",
         stepNum: 1,
-        title: "Sutradara AI: 6 Sumbu Parameter Visual",
-        tag: "Langkah 1 • Formula 6 Sumbu",
-        checkpoints: [
-          "Subjek Utama yang dideskripsikan tanpa ambiguitas",
-          "Gaya & Medium Seni (cat air, 35mm film, atau 3D render)",
-          "Pencahayaan & Suasana (chiaroscuro, golden hour)",
-          "Komposisi & Sudut Kamera (rule of thirds, bird-eye)",
-          "Palet Warna (monokromatik sinematik, neon cyberpunk)",
-          "Pengubah Kualitas & Ketajaman Detail Rendering"
-        ]
+        title: "Enam Sumbu Prompt Visual",
+        tag: "Langkah 1 • 5 Kuis Jurnal",
+        reading: "Formula 6 Sumbu: Subjek, Gaya seni, Pencahayaan, Komposisi kamera, Palet warna, dan Kualitas render."
       },
       {
         id: "5-2",
-        type: "matching",
         stepNum: 2,
-        title: "Matching Game: Lanskap Regulasi Hak Cipta AI",
-        tag: "Langkah 2 • Hukum & Etika Hak Cipta",
-        pairs: [
-          { left: "U.S. Copyright Office", right: "Syarat Mutlak Human Authorship" },
-          { left: "Uni Eropa (EU AI Act)", right: "Hak Opt-Out bagi Kreator Asli" },
-          { left: "India (Kerangka 2025)", right: "One Nation One License Payment" },
-          { left: "Diffusion Model (DDPM)", right: "Denoising Noise Bertahap" }
-        ]
+        title: "Kebijakan Hak Cipta",
+        tag: "Langkah 2 • 5 Kuis Jurnal",
+        reading: "Preseden U.S. Copyright Office (Zarya of the Dawn) dan syarat modifikasi substantif human authorship."
       },
       {
         id: "5-3",
-        type: "tebakgambar5",
         stepNum: 3,
-        title: "Tebak Gambar: Seni Difusi Probabilistik",
-        tag: "Langkah 3 • Model Difusi Visual",
-        clueIcons: ["🎨", "🌆", "🤖"],
-        clueText: "Kuas Cat + Kota Masa Depan + Neon Cyberpunk",
-        q: "Bagaimana cara kerja model difusi (DDPM Ho dkk., 2020) menghasilkan gambar dari teks?",
-        opts: [
-          "Mengambil potongan foto berhak cipta orang lain di Google Image.",
-          "Menghilangkan noise acak (denoising) secara terarah dan bertahap hingga terbentuk visual utuh.",
-          "Menggabungkan screenshot video kamera otomatis."
-        ],
-        ans: 1
+        title: "Regulasi Internasional",
+        tag: "Langkah 3 • 5 Kuis Jurnal",
+        reading: "Hak opt-out seniman dalam EU AI Act dan skema kompensasi terpadu India One Nation One License."
       },
       {
         id: "5-4",
-        type: "dialogue",
         stepNum: 4,
-        title: "Sidang Mediasi Hak Cipta AI",
-        tag: "Langkah 4 • Simulasi Mediasi Hak Cipta",
-        reading: "Dalam simulasi sidang mediasi hak cipta, kreator harus membuktikan sejauh mana sentuhan modifikasi manusia (human authorship) telah ditambahkan ke atas karya mentah AI."
+        title: "Arsitektur Generatif & Proteksi Seniman",
+        tag: "Langkah 4 • 5 Kuis Jurnal",
+        reading: "Mekanisme difusi denoising bertahap (DDPM Ho dkk. 2020) dan protokol watermarking C2PA."
       }
     ]
   },
@@ -376,52 +274,31 @@ export const MODULES = [
     steps: [
       {
         id: "6-1",
-        type: "matching",
         stepNum: 1,
-        title: "Permainan: Manusia vs Mesin (Sortir Polanyi)",
-        tag: "Langkah 1 • Paradoks Polanyi Sort",
-        pairs: [
-          { left: "Hitung Slip Gaji & Data Entry", right: "Otomatisasi Penuh (Rutin Berpola)" },
-          { left: "Draf Awal Kode & Ringkasan", right: "Kolaborasi Manusia-AI (Augmentasi)" },
-          { left: "Vonis Hakim & Konseling Duka", right: "Wajib Manusia (Empati & Moralitas)" },
-          { left: "Intuisi Situasional Tim", right: "Tacit Knowledge Tak Terprogram" }
-        ]
+        title: "Ekonomi Ketenagakerjaan",
+        tag: "Langkah 1 • 5 Kuis Jurnal",
+        reading: "Analisis David Autor MIT (2015) memetakan kerentanan tugas rutin berpola vs tugas kognitif non-rutin."
       },
       {
         id: "6-2",
-        type: "tileorder",
         stepNum: 2,
-        title: "Tiga Pilar Keterampilan Human-Centric WEF",
-        tag: "Langkah 2 • Keterampilan Human-Centric",
-        checkpoints: [
-          "Kecerdasan Emosional (EQ) & Manajemen Relasi Autentik",
-          "Ketajaman Kritis & Pengujian Ground Truth Fakta",
-          "Penilaian Moral & Pertimbangan Etika Terapan"
-        ]
+        title: "Paradoks Polanyi",
+        tag: "Langkah 2 • 5 Kuis Jurnal",
+        reading: "Michael Polanyi (1966) membuktikan bahwa tacit knowledge manusia melampaui aturan eksplisit kode."
       },
       {
         id: "6-3",
-        type: "tebakgambar6",
         stepNum: 3,
-        title: "Tebak Gambar: Komoditas Kemanusiaan Paling Berharga",
-        tag: "Langkah 3 • Nilai Kemanusiaan",
-        clueIcons: ["❤️", "🤝", "🧠"],
-        clueText: "Hati Empati + Jabat Tangan Integritas + Otak Kritis",
-        q: "Ketika tugas rutin makin mudah diselesaikan algoritma dalam hitungan detik, keterampilan apakah yang nilai pasarnya melonjak paling tinggi?",
-        opts: [
-          "Kecepatan mengetik dan menyalin dokumen secara berulang.",
-          "Keahlian murni humanistik: Empati Autentik, Pemikiran Kritis Ground Truth, dan Pertimbangan Nurani Moral.",
-          "Kemampuan menghafal data statistik lama."
-        ],
-        ans: 1
+        title: "Tiga Pilar Keterampilan Manusiawi",
+        tag: "Langkah 3 • 5 Kuis Jurnal",
+        reading: "Keterampilan human-centric WEF: Kecerdasan emosional (EQ), nalar kritis, dan pertimbangan etis moral."
       },
       {
         id: "6-4",
-        type: "dialogue",
         stepNum: 4,
-        title: "Manifesto Pilot AI: Warga Digital Berdaulat",
-        tag: "Langkah 4 • Ikrar Cendekia Digital",
-        reading: "Semakin canggih teknologi kecerdasan buatan, semakin krusial peran manusia sebagai 'pilot' yang menentukan nilai, arah, dan etika demi kemaslahatan peradaban."
+        title: "Adaptasi & Metakognisi Masa Depan",
+        tag: "Langkah 4 • 5 Kuis Jurnal",
+        reading: "Transisi dari ilusi otomatisasi menuju realitas augmentasi: Manusia sebagai pilot, AI sebagai kopilot."
       }
     ]
   }
@@ -444,7 +321,9 @@ const getStorageKey = () => {
         return `litgo_complete_${u.email}`;
       }
     }
-  } catch (err) {}
+  } catch {
+    // fallback
+  }
   return 'litgo_complete_v1';
 };
 
@@ -489,10 +368,6 @@ export function ProgressProvider({ children }) {
     setState(loadInitialState());
   };
 
-  useEffect(() => {
-    refreshState();
-  }, []);
-
   const saveState = (newState) => {
     setState(newState);
     const key = getStorageKey();
@@ -535,6 +410,124 @@ export function ProgressProvider({ children }) {
   // EXP % proporsional terhadap total 24 langkah
   const expPct = Math.min(100, Math.round((doneCount / 24) * 100));
 
+  // Accessibility global states
+  const [fontSize, setFontSizeState] = useState(() => {
+    try {
+      const saved = localStorage.getItem('litgo_font_size');
+      return saved ? parseInt(saved, 10) : 16;
+    } catch {
+      return 16;
+    }
+  });
+
+  const [isDyslexic, setIsDyslexic] = useState(() => {
+    try {
+      return localStorage.getItem('litgo_dyslexic') === 'true';
+    } catch {
+      return false;
+    }
+  });
+
+  const [isContrast, setIsContrast] = useState(() => {
+    try {
+      return localStorage.getItem('litgo_contrast') === 'true';
+    } catch {
+      return false;
+    }
+  });
+
+  const [isEnglish, setIsEnglish] = useState(() => {
+    try {
+      return localStorage.getItem('litgo_lang') === 'en';
+    } catch {
+      return false;
+    }
+  });
+
+  const [isSpeaking, setIsSpeaking] = useState(false);
+
+  // Apply accessibility settings to DOM on change & on initial mount
+  useEffect(() => {
+    document.documentElement.style.fontSize = fontSize + 'px';
+    document.body.style.fontSize = fontSize + 'px';
+
+    if (isDyslexic) {
+      document.body.classList.add('font-dyslexic');
+    } else {
+      document.body.classList.remove('font-dyslexic');
+    }
+
+    if (isContrast) {
+      document.body.classList.add('high-contrast');
+    } else {
+      document.body.classList.remove('high-contrast');
+    }
+
+    document.documentElement.lang = isEnglish ? 'en' : 'id';
+  }, [fontSize, isDyslexic, isContrast, isEnglish]);
+
+  const handleFontSize = (val, notify = true) => {
+    const num = parseInt(val, 10) || 16;
+    let size = 16;
+    if (num >= 19) {
+      size = 20;
+    } else if (num >= 17) {
+      size = 18;
+    }
+
+    setFontSizeState(size);
+    localStorage.setItem('litgo_font_size', size.toString());
+    if (notify) {
+      const label = size === 16 ? '16px (Normal)' : size === 18 ? '18px (Sedang)' : '20px (Besar)';
+      showToast('Ukuran teks: ' + label, 'info');
+    }
+  };
+
+  const toggleDyslexia = () => {
+    const next = !isDyslexic;
+    setIsDyslexic(next);
+    localStorage.setItem('litgo_dyslexic', next.toString());
+    showToast(next ? 'Font ramah disleksia diaktifkan' : 'Font ramah disleksia dinonaktifkan', 'info');
+  };
+
+  const toggleContrast = () => {
+    const next = !isContrast;
+    setIsContrast(next);
+    localStorage.setItem('litgo_contrast', next.toString());
+    showToast(next ? 'Mode kontras tinggi diaktifkan' : 'Mode kontras tinggi dinonaktifkan', 'info');
+  };
+
+  const toggleLanguage = () => {
+    const next = !isEnglish;
+    setIsEnglish(next);
+    localStorage.setItem('litgo_lang', next ? 'en' : 'id');
+    showToast(next ? 'English language mode activated' : 'Mode Bahasa Indonesia diaktifkan', 'info');
+  };
+
+  const toggleTTS = () => {
+    if (!('speechSynthesis' in window)) {
+      showToast('Fitur Text-to-Speech tidak didukung browser kamu.', 'error');
+      return;
+    }
+    if (!isSpeaking) {
+      window.speechSynthesis.cancel();
+      const textToSpeak = isEnglish
+        ? 'Welcome to Lit-GO. An inclusive AI literacy and ethics learning platform. Complete assessment radars, syllabus modules, and interactive sandbox labs.'
+        : 'Selamat datang di Lit-GO. Platform edukasi literasi dan etika kecerdasan buatan. Silakan selesaikan radar asesmen, modul pembelajaran, dan simulasi lab interaktif.';
+      const u = new SpeechSynthesisUtterance(textToSpeak);
+      u.lang = isEnglish ? 'en-US' : 'id-ID';
+      u.onend = () => setIsSpeaking(false);
+      u.onerror = () => setIsSpeaking(false);
+      setIsSpeaking(true);
+      window.speechSynthesis.speak(u);
+      showToast(isEnglish ? 'Reading summary in English...' : 'Membacakan ringkasan platform...', 'info');
+    } else {
+      window.speechSynthesis.cancel();
+      setIsSpeaking(false);
+      showToast(isEnglish ? 'Text-to-Speech stopped.' : 'Text-to-Speech dihentikan.', 'info');
+    }
+  };
+
   return (
     <ProgressContext.Provider
       value={{
@@ -555,6 +548,16 @@ export function ProgressProvider({ children }) {
         expPct,
         MODULES,
         BADGE_DATA,
+        fontSize,
+        handleFontSize,
+        isDyslexic,
+        toggleDyslexia,
+        isContrast,
+        toggleContrast,
+        isEnglish,
+        toggleLanguage,
+        isSpeaking,
+        toggleTTS,
       }}
     >
       {children}

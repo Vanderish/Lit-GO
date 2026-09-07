@@ -1,7 +1,7 @@
-import React from 'react';
 import { Outlet } from 'react-router-dom';
 import Sidebar from '../Sidebar/Sidebar';
 import DashboardNavbar from '../Navbar/DashboardNavbar';
+import AccessibilityPanel from '../AccessibilityPanel';
 import { useProgress } from '../../context/ProgressContext';
 import './DashboardLayout.css';
 
@@ -63,6 +63,9 @@ export default function DashboardLayout() {
           <Outlet />
         </main>
       </div>
+
+      {/* Floating Global Accessibility Panel */}
+      <AccessibilityPanel />
 
       {/* Global Reset Modal */}
       {isConfirmModalOpen && (

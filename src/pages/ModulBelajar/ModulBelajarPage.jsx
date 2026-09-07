@@ -1,32 +1,10 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import { useProgress } from '../../context/ProgressContext';
-import { marked } from 'marked';
 import './ModulBelajarPage.css';
 import HandbookReader from './HandbookReader';
 import Game1Arena from './Game1Arena';
-import Game2Arena from './Game2Arena';
-
-// Import file markdown luar menggunakan fitur raw Vite (?raw)
-import mdModul1 from '../../content/modul-1.md?raw';
-import mdModul2 from '../../content/modul-2.md?raw';
-import mdModul3 from '../../content/modul-3.md?raw';
-import mdModul4 from '../../content/modul-4.md?raw';
-import mdModul5 from '../../content/modul-5.md?raw';
-import mdModul6 from '../../content/modul-6.md?raw';
-
-const markdownContents = {
-  1: mdModul1,
-  2: mdModul2,
-  3: mdModul3,
-  4: mdModul4,
-  5: mdModul5,
-  6: mdModul6,
-};
-
 
 export default function ModulBelajarPage() {
-  const navigate = useNavigate();
   const { state, saveState, showToast, MODULES } = useProgress();
 
   const [activeModule, setActiveModule] = useState(null); // Selected module card
@@ -36,7 +14,6 @@ export default function ModulBelajarPage() {
   const [showQuizView, setShowQuizView] = useState(false);
   const [selectedAnsIndex, setSelectedAnsIndex] = useState(null);
   const [quizFeedback, setQuizFeedback] = useState({ show: false, correct: false, msg: '' });
-  const [parsedHtmlContent, setParsedHtmlContent] = useState('');
 
   const activeMod = MODULES.find((m) => m.id === activeModId);
 
@@ -45,11 +22,6 @@ export default function ModulBelajarPage() {
     setShowQuizView(false);
     setSelectedAnsIndex(null);
     setQuizFeedback({ show: false, correct: false, msg: '' });
-
-    const rawMarkdown = markdownContents[id] || 'Materi belum tersedia.';
-    const htmlContent = marked.parse(rawMarkdown);
-    setParsedHtmlContent(htmlContent);
-
     setModuleOpen(true);
   };
 
@@ -137,17 +109,6 @@ export default function ModulBelajarPage() {
 
   return (
     <div className="page-wrap">
-      {/* Top Header */}
-      <div style={{ marginBottom: '16px' }}>
-        <button
-          className="btn-lab-ghost"
-          onClick={() => navigate('/dashboard')}
-          style={{ padding: '8px 16px', fontSize: '0.85rem', fontWeight: 600 }}
-        >
-          <i className="fa-solid fa-arrow-left mr-2"></i> Kembali ke Dashboard
-        </button>
-      </div>
-
       <div className="hub-section-head" style={{ marginBottom: '28px' }}>
         <div>
           <h1 className="hub-section-title" style={{ fontSize: '1.65rem' }}>Modul Belajar Literasi AI</h1>
@@ -296,8 +257,6 @@ export default function ModulBelajarPage() {
                   '6-4': 'fa-award',
                 };
 
-                const stepArenaLabel = step.stepNum === 1 ? 'Arena Game 1' : (step.stepNum === 2 ? 'Arena Game 2' : null);
-
                 return (
                   <div
                     key={step.id}
@@ -321,23 +280,21 @@ export default function ModulBelajarPage() {
                           color: 'var(--indigo)',
                         }}
                       >
-                        <i className={`fa-solid ${stepIcons[step.id] || 'fa-star'} mr-1`}></i> {step.tag}
+                        <i className={`fa-solid ${stepIcons[step.id] || 'fa-star'} mr-1`}></i> {step.tag || `Langkah ${step.stepNum}`}
                       </span>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                        {stepArenaLabel && (
-                          <span
-                            style={{
-                              fontSize: '0.66rem',
-                              fontWeight: 700,
-                              padding: '2px 8px',
-                              borderRadius: '6px',
-                              background: step.stepNum === 1 ? 'rgba(37, 99, 235, 0.12)' : 'rgba(99, 102, 241, 0.12)',
-                              color: step.stepNum === 1 ? '#2563eb' : '#6366f1',
-                            }}
-                          >
-                            {stepArenaLabel}
-                          </span>
-                        )}
+                        <span
+                          style={{
+                            fontSize: '0.66rem',
+                            fontWeight: 700,
+                            padding: '2px 8px',
+                            borderRadius: '6px',
+                            background: 'rgba(37, 99, 235, 0.12)',
+                            color: '#2563eb',
+                          }}
+                        >
+                          5 Kuis Jurnal
+                        </span>
                         {isStepDone ? (
                           <i className="fa-solid fa-circle-check text-emerald"></i>
                         ) : (
@@ -364,24 +321,17 @@ export default function ModulBelajarPage() {
       )}
 
       {/* ========================================================================= */}
-      {/* FULL-SCREEN GAMIFIED LESSON OVERLAY */}
-      {/* Langkah 1 -> Arena Game 1 */}
-      {/* Langkah 2 -> Arena Game 2 */}
-      {/* Langkah 3 & 4 -> Game 1 (Tebak Gambar, Detektif Halusinasi, dsb.) */}
+      {/* FULL-SCREEN GAMIFIED 5-QUIZ LESSON OVERLAY */}
+      {/* Setiap Langkah berisi 5 Kuis Interaktif Berbasis Jurnal Riset (Total 20 per Modul) */}
       {/* ========================================================================= */}
-      {activeStep && activeStep.step?.stepNum === 2 ? (
-        <Game2Arena
-          activeStep={activeStep}
-          onClose={() => setActiveStep(null)}
-          onComplete={(stepId) => finishStepAndReward(stepId)}
-        />
-      ) : activeStep ? (
+      {activeStep && (
         <Game1Arena
+          key={activeStep.step?.id}
           activeStep={activeStep}
           onClose={() => setActiveStep(null)}
           onComplete={(stepId) => finishStepAndReward(stepId)}
         />
-      ) : null}
+      )}
 
       {/* FULL PAGE OVERLAY MODUL (ILLUSTRATED HANDBOOK & EVALUATION QUIZ) */}
       {isModuleOpen && activeMod && (

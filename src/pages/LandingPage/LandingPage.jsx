@@ -1,45 +1,44 @@
-import React, { useEffect, useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import Navbar from '../../components/Navbar/Navbar'; 
+import CertificateModal from '../../components/CertificateModal/CertificateModal';
+import AccessibilityPanel from '../../components/AccessibilityPanel';
+import { useProgress } from '../../context/ProgressContext';
 import './LandingPage.css';
 
 export default function LandingPage() {
-  const [state, setState] = useState({ radar: [0, 0, 0, 0], hasRadar: false, doneModules: [], badges: [] });
-  const [isResetModalOpen, setIsResetModalOpen] = useState(false);
+  const {
+    state,
+    fontSize,
+    handleFontSize,
+    isDyslexic,
+    toggleDyslexia,
+    isContrast,
+    toggleContrast,
+    isEnglish,
+    toggleLanguage,
+    isSpeaking,
+    toggleTTS,
+    toastMsg,
+    toastType,
+    handleReset,
+  } = useProgress();
 
-  const [toastMsg, setToastMsg] = useState(null);
-  const [toastType, setToastType] = useState('info');
-  
-  // Accessibility controls state
-  const [fontSize, setFontSizeState] = useState(16);
-  const [isDyslexic, setIsDyslexic] = useState(false);
-  const [isContrast, setIsContrast] = useState(false);
-  const [isSpeaking, setIsSpeaking] = useState(false);
-  const [isEnglish, setIsEnglish] = useState(() => {
-    return localStorage.getItem('litgo_lang') === 'en';
+  const [isResetModalOpen, setIsResetModalOpen] = useState(false);
+  const [isCertModalOpen, setIsCertModalOpen] = useState(false);
+  const [userName] = useState(() => {
+    try {
+      const u = localStorage.getItem('user_data');
+      if (u) {
+        const parsed = JSON.parse(u);
+        if (parsed?.name) return parsed.name;
+      }
+    } catch {
+      // ignore JSON parse error
+    }
+    return '';
   });
 
   const carouselTrackRef = useRef(null);
-
-  useEffect(() => {
-    loadState();
-    setIsDyslexic(document.body.classList.contains('font-dyslexic'));
-    setIsContrast(document.body.classList.contains('high-contrast'));
-  }, []);
-
-  const loadState = () => {
-    const s = localStorage.getItem('litgo_complete_v1');
-    if (s) {
-      try {
-        setState(JSON.parse(s));
-      } catch (e) {}
-    }
-  };
-
-  const showToast = (msg, type = 'info') => {
-    setToastMsg(msg);
-    setToastType(type);
-    setTimeout(() => setToastMsg(null), 3500);
-  };
 
   const scrollCarousel = (direction) => {
     if (carouselTrackRef.current) {
@@ -48,71 +47,6 @@ export default function LandingPage() {
     }
   };
 
-  const handleFontSizeValue = (val) => {
-    let num = parseInt(val, 10) || 16;
-    let size = 16;
-    if (num >= 19) size = 20;
-    else if (num >= 17) size = 18;
-    else size = 16;
-
-    setFontSizeState(size);
-    document.documentElement.style.fontSize = size + 'px';
-    document.body.style.fontSize = size + 'px';
-    const label = size === 16 ? '16px (Normal)' : size === 18 ? '18px (Sedang)' : '20px (Besar)';
-    showToast('Ukuran teks: ' + label, 'info');
-  };
-
-  const toggleDyslexia = () => {
-    const next = !isDyslexic;
-    setIsDyslexic(next);
-    if (next) document.body.classList.add('font-dyslexic');
-    else document.body.classList.remove('font-dyslexic');
-    showToast(next ? 'Font ramah disleksia diaktifkan' : 'Font ramah disleksia dinonaktifkan', 'info');
-  };
-
-  const toggleContrast = () => {
-    const next = !isContrast;
-    setIsContrast(next);
-    if (next) document.body.classList.add('high-contrast');
-    else document.body.classList.remove('high-contrast');
-    showToast(next ? 'Mode kontras tinggi diaktifkan' : 'Mode kontras tinggi dinonaktifkan', 'info');
-  };
-
-  const toggleLanguage = () => {
-    const next = !isEnglish;
-    setIsEnglish(next);
-    localStorage.setItem('litgo_lang', next ? 'en' : 'id');
-    showToast(
-      next ? 'English language mode activated' : 'Mode Bahasa Indonesia diaktifkan',
-      'info'
-    );
-  };
-
-  const toggleTTS = () => {
-    if (!('speechSynthesis' in window)) {
-      showToast('Fitur Text-to-Speech tidak didukung browser kamu.', 'error');
-      return;
-    }
-    if (!isSpeaking) {
-      window.speechSynthesis.cancel();
-      const textToSpeak = isEnglish
-        ? 'Welcome to Lit-GO. An inclusive AI literacy and ethics learning platform. Complete assessment radars, syllabus modules, and interactive sandbox labs.'
-        : 'Selamat datang di Lit-GO. Platform edukasi literasi dan etika kecerdasan buatan. Silakan selesaikan radar asesmen, modul pembelajaran, dan simulasi lab interaktif.';
-      const u = new SpeechSynthesisUtterance(textToSpeak);
-      u.lang = isEnglish ? 'en-US' : 'id-ID';
-      u.onend = () => setIsSpeaking(false);
-      u.onerror = () => setIsSpeaking(false);
-      setIsSpeaking(true);
-      window.speechSynthesis.speak(u);
-      showToast(isEnglish ? 'Reading summary in English...' : 'Membacakan ringkasan platform...', 'info');
-    } else {
-      window.speechSynthesis.cancel();
-      setIsSpeaking(false);
-      showToast(isEnglish ? 'Text-to-Speech stopped.' : 'Text-to-Speech dihentikan.', 'info');
-    }
-  };
-
-  const doneModules = state.doneModules || [];
   const radar = state.radar || [0, 0, 0, 0];
   const hasRadar = state.hasRadar || false;
 
@@ -352,53 +286,56 @@ export default function LandingPage() {
                 {/* Modul 4 */}
                 <div className={`mod-carousel-card mod-card-theme-4 info-only`}>
                   <div className="mod-card-level">4</div>
-                  <div className="mod-card-icon" style={{ background: 'linear-gradient(135deg, #EC4899, #F43F5E)' }}>
-                    <i className="fa-solid fa-rocket"></i>
+                  <div className="mod-card-icon" style={{ background: 'linear-gradient(135deg, #F59E0B, #D97706)' }}>
+                    <i className="fa-solid fa-microscope"></i>
                   </div>
-                  <div className="mod-card-title">{isEnglish ? 'AI Productivity Assistant' : 'Asisten Produktivitas AI'}</div>
-                  <div className="mod-card-desc">{isEnglish ? '4 steps: Tebak Gambar Anti-Hoaks, tile reorder, split slider, speed quiz.' : '4 Langkah: Tebak Gambar Anti-Hoaks, tile reorder, split slider, speed quiz.'}</div>
+                  <div className="mod-card-title">{isEnglish ? 'AI Detective in Daily Life' : 'Detektif AI di Kehidupan'}</div>
+                  <div className="mod-card-desc">{isEnglish ? '4 steps: 3-column sort, Tebak Gambar Bot, timeline auditor, claim verification.' : '4 Langkah: 3-column sort, Tebak Gambar Bot, timeline auditor, klaim verifikasi.'}</div>
                 </div>
 
                 {/* Modul 5 */}
                 <div className={`mod-carousel-card mod-card-theme-5 info-only`}>
                   <div className="mod-card-level">5</div>
                   <div className="mod-card-icon" style={{ background: 'linear-gradient(135deg, #10B981, #059669)' }}>
-                    <i className="fa-solid fa-palette"></i>
+                    <i className="fa-solid fa-wand-magic-sparkles"></i>
                   </div>
-                  <div className="mod-card-title">{isEnglish ? 'Creative AI Exploration' : 'Eksplorasi AI Kreatif'}</div>
-                  <div className="mod-card-desc">{isEnglish ? '4 steps: Tebak Gambar Style Visual, UNESCO citation, watermark builder, rights choice.' : '4 Langkah: Tebak Gambar Style Visual, citation studio, watermark builder, rights choice.'}</div>
+                  <div className="mod-card-title">{isEnglish ? 'Work Smarter with AI' : 'Bekerja Cerdas Bersama AI'}</div>
+                  <div className="mod-card-desc">{isEnglish ? '4 steps: flashcard tool, Tebak Gambar Workflow, human auditor, SOP builder.' : '4 Langkah: flashcard tool, Tebak Gambar Workflow, human auditor, SOP builder.'}</div>
                 </div>
 
                 {/* Modul 6 */}
                 <div className={`mod-carousel-card mod-card-theme-6 info-only`}>
                   <div className="mod-card-level">6</div>
-                  <div className="mod-card-icon" style={{ background: 'linear-gradient(135deg, #F59E0B, #D97706)' }}>
-                    <i className="fa-solid fa-graduation-cap"></i>
+                  <div className="mod-card-icon" style={{ background: 'linear-gradient(135deg, #EC4899, #BE185D)' }}>
+                    <i className="fa-solid fa-compass"></i>
                   </div>
-                  <div className="mod-card-title">{isEnglish ? 'Thriving in the AI Era' : 'Bertahan di Era AI'}</div>
-                  <div className="mod-card-desc">{isEnglish ? '4 steps: cockpit console, equalizer sliders, Tebak Gambar Human Skill, digital pledge.' : '4 Langkah: cockpit console, equalizer sliders, Tebak Gambar Human Skill, ikrar digital.'}</div>
+                  <div className="mod-card-title">{isEnglish ? 'Future & Survival in AI Era' : 'Masa Depan & Bertahan di Era AI'}</div>
+                  <div className="mod-card-desc">{isEnglish ? '4 steps: matrix sort, Tebak Gambar Job, manifesto canvas, final challenge.' : '4 Langkah: matrix sort, Tebak Gambar Job, manifesto canvas, final challenge.'}</div>
                 </div>
               </div>
 
-              <button className="carousel-arrow next" onClick={() => scrollCarousel(1)} title="Berikutnya">
+              <button className="carousel-arrow next" onClick={() => scrollCarousel(1)} title="Selanjutnya">
                 <i className="fa-solid fa-chevron-right"></i>
               </button>
             </div>
           </div>
         </section>
 
-        {/* Gamification / Rewards Showcase */}
+        {/* Gamification & Badges Showcase */}
         <section className="section" id="section-gamifikasi">
           <div className="wrap">
             <div className="section-head">
-              <div className="section-tag">Reward System</div>
+              <div className="section-tag">{isEnglish ? 'Achievement Badges' : 'Lencana Pencapaian'}</div>
               <div className="section-title">
                 {isEnglish ? 'Collect five badges, print one certificate.' : 'Kumpulkan lima badge, cetak satu sertifikat.'}
               </div>
               <div className="section-desc">
-                {isEnglish ? 'Passing quizzes with 80%+ score unlocks E-Badges saved on your device.' : 'Lulus kuis minimum 80% membuka E-Badge yang tersimpan di perangkatmu.'}
+                {isEnglish
+                  ? 'Each badge represents mastery of a specific skill, complete with unlock criteria and direct evaluation.'
+                  : 'Tiap badge mewakili penguasaan satu kecakapan spesifik, lengkap dengan syarat perolehan dan evaluasi langsung.'}
               </div>
             </div>
+
             <div className="badge-strip">
               <div className="badge-card">
                 <div className="badge-emoji" style={{ background: 'linear-gradient(135deg, #F59E0B, #D97706)', boxShadow: '0 2px 6px rgba(0,0,0,0.06)' }}>
@@ -406,7 +343,7 @@ export default function LandingPage() {
                 </div>
                 <div className="badge-name">{isEnglish ? 'AI Pioneer' : 'Pionir AI'}</div>
                 <div className="badge-req">{isEnglish ? 'Radar & AI Foundations' : 'Asesmen Radar & Fondasi AI'}</div>
-                <div className="badge-desc">{isEnglish ? 'Badge for completing initial assessment and understanding core AI principles.' : 'Lencana pembuka atas keberhasilan menyelesaikan asesmen awal dan memahami prinsip fondasi kecerdasan buatan.'}</div>
+                <div className="badge-desc">{isEnglish ? 'Introductory badge for completing initial assessment and foundational concepts.' : 'Lencana pembuka atas keberhasilan menyelesaikan asesmen awal dan memahami prinsip fondasi.'}</div>
               </div>
               <div className="badge-card">
                 <div className="badge-emoji" style={{ background: 'linear-gradient(135deg, #0EA5E9, #0284C7)', boxShadow: '0 2px 6px rgba(0,0,0,0.06)' }}>
@@ -414,14 +351,14 @@ export default function LandingPage() {
                 </div>
                 <div className="badge-name">{isEnglish ? 'Ethics Guardian' : 'Penjaga Etika'}</div>
                 <div className="badge-req">{isEnglish ? 'Deepfake & Ethics' : 'Deteksi Deepfake & Etika'}</div>
-                <div className="badge-desc">{isEnglish ? 'Honor badge for data privacy awareness and deepfake detection skills.' : 'Lencana kehormatan atas pemahaman etika data, privasi, serta kecakapan mendeteksi rekayasa deepfake.'}</div>
+                <div className="badge-desc">{isEnglish ? 'Honor badge for data ethics, privacy, and deepfake detection skills.' : 'Lencana kehormatan atas pemahaman etika data, privasi, serta kecakapan mendeteksi deepfake.'}</div>
               </div>
               <div className="badge-card">
                 <div className="badge-emoji" style={{ background: 'linear-gradient(135deg, #6366F1, #4F46E5)', boxShadow: '0 2px 6px rgba(0,0,0,0.06)' }}>
                   <i className="fa-solid fa-feather-pointed"></i>
                 </div>
                 <div className="badge-name">{isEnglish ? 'Prompt Master' : 'Master Prompt'}</div>
-                <div className="badge-req">{isEnglish ? 'Prompt Safety & Comms' : 'Prompt Safety & Komunikasi'}</div>
+                <div className="badge-req">{isEnglish ? 'Prompt Safety & Structure' : 'Prompt Safety & Komunikasi'}</div>
                 <div className="badge-desc">{isEnglish ? 'Badge for crafting safe, structured, relevant, and bias-free prompts.' : 'Lencana keahlian menyusun instruksi prompt yang aman, terstruktur, relevan, serta bebas dari bias.'}</div>
               </div>
               <div className="badge-card">
@@ -443,7 +380,7 @@ export default function LandingPage() {
             </div>
 
             {/* Certificate Section & Humanized Famous Quote */}
-            <div className="cert-section" style={{ marginTop: '36px' }}>
+            <div className="cert-section">
               <div>
                 <div className="section-tag">{isEnglish ? 'Recognition & Certificate' : 'Apresiasi & Sertifikasi'}</div>
                 <div className="section-title" style={{ fontSize: '1.42rem', marginTop: '8px', lineHeight: 1.4, fontStyle: 'italic', fontWeight: 700 }}>
@@ -456,40 +393,91 @@ export default function LandingPage() {
                 </div>
                 <p className="section-desc" style={{ marginTop: '16px' }}>
                   {isEnglish
-                    ? 'Tunjukkan pencapaianmu setelah menguasai seluruh modul etika dan literasi AI. Sertifikat digital kamu dicetak secara instan langsung di perangkatmu, tanpa perlu unggah data ke server.'
-                    : 'Tunjukkan pencapaianmu setelah menguasai seluruh modul etika dan literasi AI. Sertifikat digital kamu dicetak secara instan langsung di perangkatmu, tanpa perlu unggah data ke server.'}
+                    ? 'Showcase your accomplishments upon mastering the comprehensive AI literacy & ethics curriculum. Your official digital certificate can be previewed and printed directly to high-quality PDF in your browser.'
+                    : 'Tunjukkan pencapaianmu setelah menguasai seluruh modul etika dan literasi AI. Sertifikat kelulusan digital resmi kamu dapat dipratinjau dan dicetak langsung ke PDF berkualitas tinggi dari browsermu.'}
                 </p>
+                <div style={{ marginTop: '20px' }}>
+                  <button className="btn-cert-preview" onClick={() => setIsCertModalOpen(true)}>
+                    <i className="fa-solid fa-certificate"></i>
+                    {isEnglish ? 'Preview & Print Certificate' : 'Pratinjau & Cetak Sertifikat'}
+                  </button>
+                </div>
               </div>
 
-              {/* Enhanced Official Certificate Mock Card */}
-              <div className="cert-mock">
-                <div className="cert-header">
-                  <div className="cert-logo-mark"><i className="fa-solid fa-graduation-cap"></i></div>
-                  <div className="cert-label">{isEnglish ? 'CERTIFICATE OF COMPLETION' : 'SERTIFIKAT KELULUSAN'}</div>
-                </div>
+              {/* Prestigious Official Certificate Mock Card */}
+              <div 
+                className="cert-mock" 
+                onClick={() => setIsCertModalOpen(true)}
+                title={isEnglish ? 'Click to preview full certificate' : 'Klik untuk melihat sertifikat lengkap'}
+              >
+                <div className="cert-mock-inner">
+                  <span className="cert-mock-corner top-left">✦</span>
+                  <span className="cert-mock-corner top-right">✦</span>
+                  <span className="cert-mock-corner bottom-left">✦</span>
+                  <span className="cert-mock-corner bottom-right">✦</span>
 
-                <div className="cert-body">
-                  <div className="cert-given">{isEnglish ? 'This is proudly presented to:' : 'Diberikan Kepada:'}</div>
-                  <div className="cert-name">{isEnglish ? 'Participant Name' : 'Nama Peserta'}</div>
-                  <div className="cert-sub">
-                    {isEnglish
-                      ? 'For successfully completing the full Lit-GO AI Ethics & Literacy curriculum'
-                      : 'Telah menyelesaikan seluruh modul kurikulum etika & literasi AI Lit-GO'}
+                  <div className="cert-mock-header">
+                    <div className="cert-mock-institution">
+                      <i className="fa-solid fa-shield-halved"></i>
+                      <span>{isEnglish ? 'LIT-GO INDONESIA • NATIONAL AI LITERACY' : 'LIT-GO INDONESIA • LITERASI AI NASIONAL'}</span>
+                    </div>
+                    <div className="cert-mock-title">
+                      {isEnglish ? 'CERTIFICATE OF EXCELLENCE' : 'SERTIFIKAT KELULUSAN'}
+                    </div>
+                    <div className="cert-mock-sub">
+                      {isEnglish ? 'ARTIFICIAL INTELLIGENCE & DIGITAL ETHICS' : 'KECERDASAN BUATAN & ETIKA DIGITAL'}
+                    </div>
                   </div>
-                </div>
 
-                <div className="cert-footer">
-                  <div className="cert-badges">
-                    <span className="cert-badge-chip dark" title="Pionir AI"><i className="fa-solid fa-award"></i></span>
-                    <span className="cert-badge-chip dark" title="Penjaga Etika"><i className="fa-solid fa-shield-halved"></i></span>
-                    <span className="cert-badge-chip dark" title="Master Prompt"><i className="fa-solid fa-feather-pointed"></i></span>
-                    <span className="cert-badge-chip dark" title="Inovator Produktif"><i className="fa-solid fa-rocket"></i></span>
-                    <span className="cert-badge-chip dark" title="Cendekia Digital"><i className="fa-solid fa-graduation-cap"></i></span>
+                  <div className="cert-mock-body">
+                    <div className="cert-mock-given">
+                      {isEnglish ? 'Proudly presented to:' : 'Diberikan dengan bangga kepada:'}
+                    </div>
+                    <div className="cert-mock-name">
+                      {userName || (isEnglish ? 'Distinguished Learner' : 'Peserta Didik Lit-GO')}
+                    </div>
+                    <div className="cert-mock-desc">
+                      {isEnglish
+                        ? 'For outstanding dedication in successfully completing the comprehensive AI Literacy Curriculum on Lit-GO.'
+                        : 'Atas dedikasi luar biasa dalam menyelesaikan kurikulum komprehensif Literasi Kecerdasan Buatan pada Lit-GO.'}
+                    </div>
                   </div>
 
-                  <div className="cert-signature">
-                    <div className="cert-sig-line"></div>
-                    <div className="cert-sig-title">{isEnglish ? 'Lit-GO Evaluation Team' : 'Tim Evaluasi Lit-GO'}</div>
+                  <div className="cert-mock-badges">
+                    <span className="cert-mock-badge-item" style={{ background: 'linear-gradient(135deg, #F59E0B, #D97706)' }} title="Pionir AI">
+                      <i className="fa-solid fa-award"></i>
+                    </span>
+                    <span className="cert-mock-badge-item" style={{ background: 'linear-gradient(135deg, #0EA5E9, #0284C7)' }} title="Penjaga Etika">
+                      <i className="fa-solid fa-shield-halved"></i>
+                    </span>
+                    <span className="cert-mock-badge-item" style={{ background: 'linear-gradient(135deg, #6366F1, #4F46E5)' }} title="Master Prompt">
+                      <i className="fa-solid fa-feather-pointed"></i>
+                    </span>
+                    <span className="cert-mock-badge-item" style={{ background: 'linear-gradient(135deg, #EC4899, #F43F5E)' }} title="Inovator Produktif">
+                      <i className="fa-solid fa-rocket"></i>
+                    </span>
+                    <span className="cert-mock-badge-item" style={{ background: 'linear-gradient(135deg, #10B981, #059669)' }} title="Cendekia Digital">
+                      <i className="fa-solid fa-graduation-cap"></i>
+                    </span>
+                  </div>
+
+                  <div className="cert-mock-footer">
+                    <div className="cert-mock-id">
+                      <div>ID: LITGO-2026-CERT</div>
+                      <div style={{ color: '#059669', fontWeight: 600 }}>
+                        <i className="fa-solid fa-circle-check"></i> {isEnglish ? 'Verified' : 'Terverifikasi'}
+                      </div>
+                    </div>
+
+                    <div className="cert-mock-seal">
+                      <i className="fa-solid fa-award"></i>
+                      <span>LIT-GO</span>
+                    </div>
+
+                    <div className="cert-mock-sig">
+                      <div className="cert-mock-sig-draw">Dr. Hendra Gunawan</div>
+                      <div className="cert-mock-sig-name">{isEnglish ? 'AI Literacy Council' : 'Dewan Literasi AI'}</div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -508,11 +496,12 @@ export default function LandingPage() {
                   </div>
                   <div className="a11y-desc">
                     {isEnglish
-                      ? 'Floating accessibility panel accompanies you across all pages, without leaving the content you are reading.'
-                      : 'Floating panel aksesibilitas menyertai kamu di seluruh halaman, tanpa perlu keluar dari materi yang sedang dibaca.'}
+                      ? 'Floating accessibility panel accompanies you across all pages, without leaving the content you are reading. Settings are automatically synchronized across the entire platform.'
+                      : 'Floating panel aksesibilitas menyertai kamu di seluruh halaman, tanpa perlu keluar dari materi yang sedang dibaca. Pengaturan tersinkronisasi otomatis di seluruh platform.'}
                   </div>
                 </div>
                 <div className="a11y-toggle-list">
+                  {/* Font size slider */}
                   <div className="a11y-toggle" style={{ flexDirection: 'column', alignItems: 'stretch', gap: '6px' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                       <div className="a11y-toggle-label">
@@ -531,13 +520,15 @@ export default function LandingPage() {
                         max="20"
                         step="2"
                         value={fontSize}
-                        onChange={(e) => handleFontSizeValue(e.target.value)}
+                        onChange={(e) => handleFontSize(e.target.value)}
                         className="a11y-size-slider"
                         style={{ flex: 1, accentColor: 'var(--teal)', cursor: 'pointer' }}
                       />
                       <span style={{ fontSize: '0.75rem', opacity: 0.7 }}>20px</span>
                     </div>
                   </div>
+
+                  {/* Dyslexia toggle */}
                   <div className="a11y-toggle">
                     <div className="a11y-toggle-label">
                       <div className="a11y-icon-chip"><i className="fa-solid fa-wand-magic-sparkles"></i></div>
@@ -545,6 +536,8 @@ export default function LandingPage() {
                     </div>
                     <button className={`switch-toggle a11y-switch-dyslexia ${isDyslexic ? 'on' : ''}`} onClick={toggleDyslexia}></button>
                   </div>
+
+                  {/* High Contrast toggle */}
                   <div className="a11y-toggle">
                     <div className="a11y-toggle-label">
                       <div className="a11y-icon-chip"><i className="fa-solid fa-circle-half-stroke"></i></div>
@@ -552,6 +545,8 @@ export default function LandingPage() {
                     </div>
                     <button className={`switch-toggle a11y-switch-contrast ${isContrast ? 'on' : ''}`} onClick={toggleContrast}></button>
                   </div>
+
+                  {/* TTS toggle */}
                   <div className="a11y-toggle">
                     <div className="a11y-toggle-label">
                       <div className="a11y-icon-chip"><i className="fa-solid fa-volume-high"></i></div>
@@ -559,6 +554,8 @@ export default function LandingPage() {
                     </div>
                     <button className={`switch-toggle a11y-switch-tts ${isSpeaking ? 'on' : ''}`} onClick={toggleTTS}></button>
                   </div>
+
+                  {/* Language toggle */}
                   <div className="a11y-toggle">
                     <div className="a11y-toggle-label">
                       <div className="a11y-icon-chip"><i className="fa-solid fa-globe"></i></div>
@@ -573,28 +570,52 @@ export default function LandingPage() {
         </section>
       </main>
 
+      {/* Floating Accessibility Panel FAB everywhere on Landing Page */}
+      <AccessibilityPanel />
+
+      {/* Official Certificate Preview Modal */}
+      <CertificateModal
+        isOpen={isCertModalOpen}
+        onClose={() => setIsCertModalOpen(false)}
+        recipientName={userName}
+      />
+
       {/* Footer */}
       <footer>
         <div className="wrap footer-container">
           <div className="footer-grid">
             <div className="footer-brand-col">
-              <div className="footer-logo">
-                <span className="footer-logo-text">Lit<span>-GO</span></span>
+              <div className="logo" style={{ marginBottom: '12px' }}>
+                <div className="logo-mark">L</div>
+                Lit - GO
               </div>
-              <p className="footer-mission">
+              <p className="footer-desc">
                 {isEnglish
-                  ? 'Inclusive Educational Platform for Artificial Intelligence (AI) Literacy & Ethics for Indonesia Digital Community.'
-                  : 'Platform Edukasi Inklusif Literasi & Etika Kecerdasan Buatan (AI) untuk Komunitas Digital Indonesia.'}
+                  ? 'Interactive, client-side, inclusive AI & ethics digital literacy platform.'
+                  : 'Platform edukasi literasi kecerdasan buatan & etika digital yang interaktif, client-side, dan inklusif.'}
               </p>
             </div>
 
             <div className="footer-nav-col">
-              <div className="footer-col-title">{isEnglish ? 'Platform Navigation' : 'Navigasi Platform'}</div>
+              <div className="footer-col-title">{isEnglish ? 'Learning Curriculum' : 'Kurikulum Belajar'}</div>
               <ul className="footer-links">
-                <li>{isEnglish ? 'Home Page' : 'Halaman Utama'}</li>
-                <li>{isEnglish ? 'Self-Assessment Radar' : 'Radar Asesmen Mandiri'}</li>
-                <li>{isEnglish ? 'Learning Path Modules' : 'Modul Learning Path'}</li>
-                <li>{isEnglish ? 'Interactive AI Labs' : 'Lab Interaktif AI'}</li>
+                <li>{isEnglish ? '1. Understanding AI Brain' : '1. Kenalan Otak AI'}</li>
+                <li>{isEnglish ? '2. Ethics & Privacy' : '2. Kompas Etika'}</li>
+                <li>{isEnglish ? '3. Prompt Engineering' : '3. Seni Berbicara'}</li>
+                <li>{isEnglish ? '4. AI Detective' : '4. Detektif AI'}</li>
+                <li>{isEnglish ? '5. Work Smarter' : '5. Kerja Cerdas'}</li>
+                <li>{isEnglish ? '6. Future in AI Era' : '6. Masa Depan AI'}</li>
+              </ul>
+            </div>
+
+            <div className="footer-nav-col">
+              <div className="footer-col-title">{isEnglish ? 'Interactive Sandbox' : 'Sandbox Interaktif'}</div>
+              <ul className="footer-links">
+                <li>Bias Breaker</li>
+                <li>Deepfake Detective</li>
+                <li>Ethical Dilemma</li>
+                <li>Prompt Safety Lab</li>
+                <li>AI Readiness Radar</li>
                 <li>{isEnglish ? 'Certificates & E-Badges' : 'Sertifikat & E-Badge'}</li>
               </ul>
             </div>

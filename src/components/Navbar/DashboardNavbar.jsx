@@ -1,7 +1,8 @@
-import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import { useProgress } from '../../context/ProgressContext';
 
 export default function DashboardNavbar({ pts = 0, badgeCount = 0, expPct = 0, lv = 1, onRequestReset }) {
+  const { isEnglish, toggleLanguage } = useProgress();
   
   // Fungsi untuk memicu event membuka/menutup sidebar
   const handleToggleSidebar = () => {
@@ -27,10 +28,10 @@ export default function DashboardNavbar({ pts = 0, badgeCount = 0, expPct = 0, l
             Dashboard
           </NavLink>
           <NavLink to="/progres" className={({ isActive }) => (isActive ? 'active' : '')}>
-            Progres
+            {isEnglish ? 'Progress' : 'Progres'}
           </NavLink>
           <NavLink to="/koleksi-badge" className={({ isActive }) => (isActive ? 'active' : '')}>
-            Reward
+            {isEnglish ? 'Rewards' : 'Reward'}
           </NavLink>
         </div>
 
@@ -40,7 +41,7 @@ export default function DashboardNavbar({ pts = 0, badgeCount = 0, expPct = 0, l
               💎 <strong>{pts}</strong>
             </span>
             <div className="hud-sep"></div>
-            <span title="E-Badge Terkumpul">
+            <span title={isEnglish ? 'E-Badges Earned' : 'E-Badge Terkumpul'}>
               🏅 <strong>{badgeCount}/5</strong>
             </span>
             <div className="hud-sep"></div>
@@ -52,6 +53,31 @@ export default function DashboardNavbar({ pts = 0, badgeCount = 0, expPct = 0, l
             LV.
             <span className="hud-lv-badge">{lv}</span>
           </div>
+
+          {/* Language Switcher Button */}
+          <button
+            className="btn-lang-toggle"
+            onClick={toggleLanguage}
+            title={isEnglish ? 'Switch to Indonesian' : 'Beralih ke Bahasa Inggris'}
+            style={{
+              background: 'var(--white)',
+              border: '1px solid var(--line)',
+              borderRadius: '10px',
+              padding: '6px 10px',
+              fontWeight: 700,
+              fontSize: '0.78rem',
+              color: 'var(--navy)',
+              cursor: 'pointer',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              transition: 'all 0.2s ease',
+            }}
+          >
+            <i className="fa-solid fa-globe" style={{ color: 'var(--indigo)' }}></i>
+            <span>{isEnglish ? 'EN' : 'ID'}</span>
+          </button>
+
           <button className="btn-reset" onClick={onRequestReset} title="Reset Progres Platform">
             <i className="fa-solid fa-rotate-right"></i>
           </button>
