@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useProgress } from '../../context/ProgressContext';
+import Logo from '../Logo/Logo';
 import './PretestModal.css';
 
 const PRETEST_QUESTIONS = [
@@ -20,6 +21,14 @@ export default function PretestModal({ isOpen, onClose, canClose = false, onComp
   const [radarAnswers, setRadarAnswers] = useState([null, null, null, null, null, null, null, null]);
 
   const autoNextTimerRef = useRef(null);
+  const startTimeRef = useRef(null);
+
+  // Set start time whenever modal opens
+  useEffect(() => {
+    if (isOpen) {
+      startTimeRef.current = Date.now();
+    }
+  }, [isOpen]);
 
   // Clear pending timer on unmount or close
   useEffect(() => {
@@ -72,6 +81,10 @@ export default function PretestModal({ isOpen, onClose, canClose = false, onComp
       return;
     }
 
+    const durationSeconds = startTimeRef.current
+      ? Math.max(1, Math.round((Date.now() - startTimeRef.current) / 1000))
+      : 30;
+
     const vals = radarAnswers;
     // Skala 1-10 (2 soal per pilar, total maksimum 20 poin = 100%)
     const newRadar = [
@@ -96,6 +109,7 @@ export default function PretestModal({ isOpen, onClose, canClose = false, onComp
       pts: newPts,
       lv: newLv,
       expPct: newExpPct,
+      pretestDurationSeconds: durationSeconds,
     });
 
     showToast('Pre-Test Berhasil Diselesaikan! Radar Readiness & Badge Pionir AI kamu telah aktif.', 'success');
@@ -113,7 +127,7 @@ export default function PretestModal({ isOpen, onClose, canClose = false, onComp
         {/* Top Brand Header */}
         <div className="pretest-brand-header">
           <div className="pretest-brand-logo">
-            <i className="fa-solid fa-brain"></i>
+            <Logo size={22} color="#FFFFFF" />
             <span>Lit-GO Pre-Test</span>
             <span className="pretest-header-badge">AI Readiness Radar</span>
           </div>

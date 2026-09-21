@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useProgress } from '../../context/ProgressContext';
+import Logo from '../../components/Logo/Logo';
 import './Login.css';
 
 const LoginForm = () => {
@@ -11,11 +12,54 @@ const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleManualLogin = (e) => {
-    e.preventDefault();
+    if (e) e.preventDefault();
+    
+    // Cari nama user jika sudah pernah mendaftar dengan email ini
+    let resolvedName = '';
+    try {
+      const existingUsers = JSON.parse(localStorage.getItem('litgo_registered_users') || '[]');
+      const found = existingUsers.find((u) => u.email && email && u.email.toLowerCase() === email.toLowerCase());
+      if (found && found.name) {
+        resolvedName = found.name;
+      }
+    } catch {
+      // ignore
+    }
+
+    // Jika tidak ditemukan di riwayat register, format nama dari email
+    if (!resolvedName) {
+      if (email && email.includes('@')) {
+        resolvedName = email
+          .split('@')[0]
+          .replace(/[._-]+/g, ' ')
+          .replace(/\b\w/g, (c) => c.toUpperCase());
+      } else {
+        resolvedName = 'Pengguna Lit-GO';
+      }
+    }
+
     const userDetail = {
-      name: 'Budi',
-      email: email,
+      name: resolvedName,
+      email: email || 'pengguna@litgo.id',
       picture: '',
+    };
+    localStorage.setItem('user_data', JSON.stringify(userDetail));
+    if (refreshState) refreshState();
+    navigate('/dashboard');
+  };
+
+  const handleGoogleLogin = () => {
+    let resolvedName = 'Pengguna Google';
+    if (email && email.includes('@')) {
+      resolvedName = email
+        .split('@')[0]
+        .replace(/[._-]+/g, ' ')
+        .replace(/\b\w/g, (c) => c.toUpperCase());
+    }
+    const userDetail = {
+      name: resolvedName,
+      email: email || 'user.google@litgo.id',
+      picture: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80',
     };
     localStorage.setItem('user_data', JSON.stringify(userDetail));
     if (refreshState) refreshState();
@@ -35,8 +79,8 @@ const LoginForm = () => {
 
       <main className="login-card">
         <div className="brand-header">
-          <div className="brand-logo">L</div>
-          <h1 className="brand-title">Lit-GO</h1>
+          <Logo size={46} color="#0A2540" />
+          <h1 className="brand-title">LIT-GO</h1>
         </div>
 
         <form onSubmit={handleManualLogin}>
@@ -98,7 +142,7 @@ const LoginForm = () => {
           <button
             type="button"
             className="google-login-btn"
-            onClick={handleManualLogin}
+            onClick={handleGoogleLogin}
           >
             <span className="google-login-icon-wrap">
               <img

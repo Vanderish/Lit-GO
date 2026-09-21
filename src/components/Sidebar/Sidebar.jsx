@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useProgress } from '../../context/ProgressContext';
+import Logo from '../Logo/Logo';
 import './Sidebar.css';
 
 export default function Sidebar() {
@@ -66,10 +67,15 @@ export default function Sidebar() {
       <aside className={`sidebar-card ${isMobileOpen ? 'mobile-open' : ''}`}>
         <div className="sidebar-header">
 
-          <div className="sidebar-traffic-lights desktop-only">
-            <span className="dot dot-red"></span>
-            <span className="dot dot-yellow"></span>
-            <span className="dot dot-green"></span>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px', paddingBottom: '12px', borderBottom: '1px solid var(--line, rgba(30,41,59,0.08))' }}>
+            <div style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }} onClick={() => navigate('/dashboard')}>
+              <Logo size={22} showText={true} color="#3B82F6" textColor="var(--navy, #1E293B)" />
+            </div>
+            <div className="sidebar-traffic-lights desktop-only" style={{ margin: 0 }}>
+              <span className="dot dot-red"></span>
+              <span className="dot dot-yellow"></span>
+              <span className="dot dot-green"></span>
+            </div>
           </div>
 
           <div className="sidebar-profile-card">

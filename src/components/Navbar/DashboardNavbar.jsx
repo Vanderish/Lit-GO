@@ -1,5 +1,6 @@
 import { Link, NavLink } from 'react-router-dom';
 import { useProgress } from '../../context/ProgressContext';
+import Logo from '../Logo/Logo';
 
 export default function DashboardNavbar({ pts = 0, badgeCount = 0, expPct = 0, lv = 1, onRequestReset }) {
   const { isEnglish, toggleLanguage } = useProgress();
@@ -19,8 +20,7 @@ export default function DashboardNavbar({ pts = 0, badgeCount = 0, expPct = 0, l
         </button>
 
         <Link to="/dashboard" className="logo" style={{ textDecoration: 'none', marginRight: 'auto' }}>
-          <div className="logo-mark">L</div>
-          Lit - GO
+          <Logo size={28} showText={true} color="#3B82F6" textColor="var(--navy, #1E293B)" />
         </Link>
 
         <div className="nav-links">

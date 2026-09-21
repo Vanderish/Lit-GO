@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 200" fill="none">
+  <!-- Symbol Icon Mark -->
+  <g transform="translate(10, 10) scale(0.9)">
+    <!-- Left Outer Diamond Wing -->
+    <path d="M 97 14 L 14 97 L 14 103 L 97 186 L 97 146 L 51 100 L 97 54 Z" fill="#0A2540"/>
+    <!-- Right Outer Diamond Wing -->
+    <path d="M 103 14 L 186 97 L 186 103 L 103 186 L 103 146 L 149 100 L 103 54 Z" fill="#0A2540"/>
+    <!-- Core Top-Left -->
+    <path d="M 97 66 L 66 97 L 97 97 Z" fill="#0A2540"/>
+    <!-- Core Top-Right -->
+    <path d="M 103 66 L 103 97 L 134 97 Z" fill="#0A2540"/>
+    <!-- Core Bottom-Left -->
+    <path d="M 97 134 L 66 103 L 97 103 Z" fill="#0A2540"/>
+    <!-- Core Bottom-Right -->
+    <path d="M 103 134 L 134 103 L 103 103 Z" fill="#0A2540"/>
+    <!-- Center Spark Diamond -->
+    <polygon points="100,94 106,100 100,106 94,100" fill="#0A2540"/>
+  </g>
+  <!-- Text Lockup -->
+  <text x="210" y="118" font-family="'Plus Jakarta Sans', -apple-system, sans-serif" font-weight="900" font-size="64" letter-spacing="6" fill="#0A2540">LIT-GO</text>
+  <text x="214" y="152" font-family="'Plus Jakarta Sans', -apple-system, sans-serif" font-weight="600" font-size="16" letter-spacing="3" fill="#64748B">AI READINESS &amp; ETHICS</text>
+</svg>

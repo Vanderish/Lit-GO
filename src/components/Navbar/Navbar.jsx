@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../../context/ProgressContext';
+import Logo from '../Logo/Logo';
 import './Navbar.css';
 
 export default function Navbar() {
@@ -18,9 +19,8 @@ export default function Navbar() {
   return (
     <nav>
       <div className="nav-inner">
-        <div className="logo">
-          <div className="logo-mark">L</div>
-          Lit - GO
+        <div className="logo" style={{ cursor: 'pointer' }} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+          <Logo size={28} showText={true} color="#3B82F6" textColor="var(--navy, #1E293B)" />
         </div>
 
         <div className="nav-links">

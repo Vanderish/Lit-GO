@@ -7,6 +7,17 @@ export default function Dashboard() {
   const navigate = useNavigate();
   const { state } = useProgress();
 
+  let userName = 'Sobat Lit-GO';
+  try {
+    const raw = localStorage.getItem('user_data');
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (parsed?.name) userName = parsed.name;
+    }
+  } catch {
+    // ignore
+  }
+
   // Ekstrak state radar untuk digunakan di 4 kotak rekomendasi bawah
   const radar = Array.isArray(state?.radar) && state.radar.length === 4 ? state.radar : [0, 0, 0, 0];
 
@@ -21,9 +32,11 @@ export default function Dashboard() {
             <div className="hub-center">
               <div className="mascot-dialog">
                 <i className="fa-solid fa-quote-left mascot-quote-icon"></i>
-                Halo! Selamat datang di Lit-GO. Yuk mulai dari Radar Readiness untuk kenali level literasi AI kamu!
+                Halo, <strong>{userName}</strong>! Selamat datang di Lit-GO. Yuk mulai dari Radar Readiness untuk kenali level literasi AI kamu!
               </div>
-              <div className="mascot-slot-hub">[ ruang maskot — diisi kemudian ]</div>
+              <div className="mascot-slot-hub" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2.4rem', color: '#6366F1' }}>
+                <i className="fa-solid fa-robot fa-bounce" style={{ animationDuration: '2.5s' }} title="Lit-GO AI Companion"></i>
+              </div>
               <button className="btn-hub-start" onClick={() => navigate('/sandbox/deepfake-detective')}>
                 <i className="fa-solid fa-play"></i> Mulai Jelajahi Lab
               </button>

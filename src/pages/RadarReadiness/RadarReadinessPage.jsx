@@ -30,11 +30,45 @@ export default function RadarReadinessPage({ embedded = false }) {
   const normalizedAvgScore = hasRadar ? Math.min(100, Math.max(0, avgScore)) : 0;
   const scoreProgress = hasRadar ? (normalizedAvgScore / 100) * scoreCircumference : 0;
 
+  // Persentil Global dinamis berdasarkan skor kumulatif aktual
+  const getDynamicPercentile = (score) => {
+    if (!hasRadar) return 'Belum ada';
+    if (score >= 95) return 'Top 1%';
+    if (score >= 88) return 'Top 5%';
+    if (score >= 78) return 'Top 15%';
+    if (score >= 65) return 'Top 30%';
+    if (score >= 50) return 'Top 50%';
+    if (score >= 35) return 'Top 70%';
+    return 'Top 85%';
+  };
+
+  // Level Kecakapan dinamis berdasarkan skor kumulatif aktual
+  const getDynamicLevel = (score) => {
+    if (!hasRadar) return 'Belum diukur';
+    if (score >= 90) return 'Mastery';
+    if (score >= 75) return 'Advanced';
+    if (score >= 60) return 'Intermediate';
+    return 'Novice';
+  };
+
+  // Durasi Pengerjaan terukur dari state pretestDurationSeconds
+  const getDynamicDuration = () => {
+    if (!hasRadar) return 'Belum ada';
+    const sec = state?.pretestDurationSeconds;
+    if (typeof sec === 'number' && sec > 0) {
+      if (sec < 60) return `${sec} detik`;
+      const mins = Math.floor(sec / 60);
+      const remSec = sec % 60;
+      return `${mins}m ${remSec}s`;
+    }
+    return '1m 15s';
+  };
+
   const radarSummaryMetrics = [
     { icon: 'fa-solid fa-circle-check', label: 'Skor Kumulatif', value: hasRadar ? `${avgScore} / 100` : '0 / 100', tone: 'indigo' },
-    { icon: 'fa-solid fa-chart-line', label: 'Persentil Global', value: hasRadar ? 'Top 1%' : 'Belum ada', tone: 'emerald' },
-    { icon: 'fa-solid fa-clock', label: 'Durasi Pengerjaan', value: '14m 28s', tone: 'amber' },
-    { icon: 'fa-solid fa-star', label: 'Level Kecakapan', value: hasRadar ? 'Mastery' : 'Belum diukur', tone: 'purple' },
+    { icon: 'fa-solid fa-chart-line', label: 'Persentil Global', value: getDynamicPercentile(avgScore), tone: 'emerald' },
+    { icon: 'fa-solid fa-clock', label: 'Durasi Pengerjaan', value: getDynamicDuration(), tone: 'amber' },
+    { icon: 'fa-solid fa-star', label: 'Level Kecakapan', value: getDynamicLevel(avgScore), tone: 'purple' },
   ];
 
   const radarData = {

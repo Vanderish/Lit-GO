@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useProgress } from '../../context/ProgressContext';
+import Logo from '../../components/Logo/Logo';
 import './Login.css';
 
 const RegisterForm = () => {
   const navigate = useNavigate();
+  const { refreshState } = useProgress();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -15,18 +18,43 @@ const RegisterForm = () => {
     e.preventDefault();
     setErrorMsg('');
 
-    if (password !== confirmPassword) {
+    if (password && confirmPassword && password !== confirmPassword) {
       setErrorMsg('Kata sandi dan konfirmasi kata sandi tidak cocok!');
       return;
     }
 
+    const trimmedName = name.trim() || (email && email.includes('@') ? email.split('@')[0].replace(/[._-]+/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()) : 'Pengguna Lit-GO');
     const userDetail = {
-      name: 'Budi',
-      email: email,
+      name: trimmedName,
+      email: email || 'pengguna@litgo.id',
       picture: '',
     };
     
     localStorage.setItem('user_data', JSON.stringify(userDetail));
+    
+    // Simpan ke daftar akun terdaftar agar saat login nama tetap tersimpan
+    try {
+      const existingUsers = JSON.parse(localStorage.getItem('litgo_registered_users') || '[]');
+      const filtered = existingUsers.filter((u) => u.email.toLowerCase() !== (email || '').toLowerCase());
+      filtered.push({ ...userDetail, password: password || '' });
+      localStorage.setItem('litgo_registered_users', JSON.stringify(filtered));
+    } catch {
+      // ignore
+    }
+
+    if (refreshState) refreshState();
+    navigate('/dashboard');
+  };
+
+  const handleGoogleRegister = () => {
+    const trimmedName = name.trim() || 'Pelajar Lit-GO';
+    const userDetail = {
+      name: trimmedName,
+      email: email || 'pelajar@google.com',
+      picture: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80',
+    };
+    localStorage.setItem('user_data', JSON.stringify(userDetail));
+    if (refreshState) refreshState();
     navigate('/dashboard');
   };
 
@@ -43,8 +71,8 @@ const RegisterForm = () => {
 
       <main className="login-card">
         <div className="brand-header" style={{ marginBottom: '24px' }}>
-          <div className="brand-logo">L</div>
-          <h1 className="brand-title">Daftar Akun</h1>
+          <Logo size={46} color="#0A2540" />
+          <h1 className="brand-title">Daftar Akun LIT-GO</h1>
         </div>
 
         <form onSubmit={handleManualRegister}>
@@ -142,7 +170,7 @@ const RegisterForm = () => {
           <button
             type="button"
             className="google-login-btn"
-            onClick={handleManualRegister}
+            onClick={handleGoogleRegister}
           >
             <span className="google-login-icon-wrap">
               <img 
