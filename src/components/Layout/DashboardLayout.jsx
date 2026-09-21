@@ -1,12 +1,15 @@
 import { Outlet } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import Sidebar from '../Sidebar/Sidebar';
 import DashboardNavbar from '../Navbar/DashboardNavbar';
 import AccessibilityPanel from '../AccessibilityPanel';
+import PretestModal from '../PretestModal/PretestModal';
 import { useProgress } from '../../context/ProgressContext';
 import './DashboardLayout.css';
 
 export default function DashboardLayout() {
   const {
+    state,
     pts,
     badgeCount,
     expPct,
@@ -18,11 +21,29 @@ export default function DashboardLayout() {
     handleReset,
   } = useProgress();
 
+  const [isGlobalPretestOpen, setIsGlobalPretestOpen] = useState(false);
+
+  useEffect(() => {
+    if (!state.hasRadar) {
+      setIsGlobalPretestOpen(true);
+    } else {
+      setIsGlobalPretestOpen(false);
+    }
+  }, [state.hasRadar]);
+
   return (
     <div className="layout-root">
       <div className="bg-grid"></div>
       <div className="bg-glow"></div>
       <div className="bg-glow2"></div>
+
+      {/* Global Pretest Modal */}
+      <PretestModal 
+        isOpen={isGlobalPretestOpen} 
+        onClose={() => setIsGlobalPretestOpen(false)} 
+        canClose={state.hasRadar} 
+        onComplete={() => setIsGlobalPretestOpen(false)} 
+      />
 
       {/* Sidebar on the Left */}
       <Sidebar />

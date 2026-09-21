@@ -81,7 +81,7 @@ export default function LandingPage() {
         <header className="hero">
           <div className="wrap">
             <div className="hero-grid">
-              <div>
+              <div className='hero-wrap'>
                 <h1 className="hero-title">
                   {isEnglish ? (
                     <>Understand AI, not just <span className="accent">using it</span>, but <span className="accent">evaluating it</span>.</>
@@ -92,8 +92,9 @@ export default function LandingPage() {
                 <p className="hero-sub">
                   {isEnglish
                     ? 'Lit-GO trains critical awareness of artificial intelligence through real simulations: identify hallucinations, detect deepfakes, and write safe prompts, all running client-side in your browser.'
-                    : 'Lit-GO melatih kepekaan kritis terhadap kecerdasan buatan lewat simulasi nyata: kenali halusinasi, deteksi deepfake, dan susun prompt yang aman, semua berjalan langsung di browser kamu tanpa server.'}
+                    : 'Lit-GO melatih kepekaan kritis terhadap kecerdasan buatan lewat simulasi nyata: kenali halusinasi, deteksi deepfake, dan susun prompt yang aman, semua berjalan langsung di browser tanpa server.'}
                 </p>
+                
                 <div className="hero-actions">
                   <button
                     className="btn-primary"
@@ -108,16 +109,18 @@ export default function LandingPage() {
                     {isEnglish ? 'View Syllabus' : 'Lihat Silabus'}
                   </button>
                 </div>
+                
+                {/* Penambahan className stat-item untuk mempermudah styling mobile */}
                 <div className="hero-stats">
-                  <div>
+                  <div className="stat-item">
                     <div className="stat-num">98%</div>
                     <div className="stat-label">{isEnglish ? 'respondents interested in this platform' : 'responden tertarik pakai platform ini'}</div>
                   </div>
-                  <div>
+                  <div className="stat-item">
                     <div className="stat-num">6</div>
                     <div className="stat-label">{isEnglish ? 'modules + interactive labs' : 'modul + lab interaktif'}</div>
                   </div>
-                  <div>
+                  <div className="stat-item">
                     <div className="stat-num">100%</div>
                     <div className="stat-label">{isEnglish ? 'client-side, no database' : 'client-side, tanpa database'}</div>
                   </div>
@@ -166,7 +169,7 @@ export default function LandingPage() {
           </div>
         </header>
 
-        {/* Bento Sandbox Hub Showcase */}
+        {/* Infinite Carousel Sandbox Hub Showcase */}
         <section className="section" id="section-labs">
           <div className="wrap">
             <div className="section-head">
@@ -180,48 +183,105 @@ export default function LandingPage() {
                   : 'Bukan kuis hafalan, tiap lab mensimulasikan situasi nyata yang membuatmu berlatih menilai output AI secara kritis.'}
               </div>
             </div>
-            <div className="bento">
-              <div className="bento-item b1">
+          </div>
+
+          <div className="lab-marquee-container">
+            <div className="lab-marquee-track">
+              {/* === SET PERTAMA (ASLI) === */}
+              <div className="bento-item">
                 <div className="lab-icon" style={{ background: 'rgba(59,130,246,0.1)', color: 'var(--indigo)' }}><i className="fa-solid fa-quote-left"></i></div>
                 <div className="lab-title">Bias Breaker</div>
                 <div className="lab-desc">
                   {isEnglish
                     ? 'Text-highlighting sandbox, click suspicious phrases. Real-time Fact Score highlights accurate claims (green) and hallucinations (red).'
-                    : 'Text-highlighting sandbox, klik kalimat yang kamu curigai keliru. Sistem menghitung Fact Score real-time dengan penanda hijau (benar) dan merah (halusinasi), melatihmu membaca AI dengan skeptis yang sehat.'}
+                    : 'Text-highlighting sandbox, klik kalimat yang dicurigai keliru. Sistem menghitung Fact Score real-time dengan penanda hijau (benar) dan merah (halusinasi).'}
                 </div>
                 <span className="lab-tag">{isEnglish ? 'AI Foundations' : 'Fondasi AI'}</span>
               </div>
-              <div className="bento-item b2">
+              <div className="bento-item">
                 <div className="lab-icon" style={{ background: 'rgba(245,158,11,0.12)', color: 'var(--amber)' }}><i className="fa-solid fa-eye"></i></div>
                 <div className="lab-title">Deepfake Detective</div>
                 <div className="lab-desc">
                   {isEnglish
                     ? 'Magnifying lens to inspect AI manipulation artifacts: uncanny lighting, finger anatomy, over-smoothed skin textures.'
-                    : 'Magnifying glass dengan zoom untuk menyorot artefak rekayasa AI: pencahayaan janggal, anatomi jari, tekstur kulit terlalu halus.'}
+                    : 'Gunakan magnifying glass untuk menyorot artefak rekayasa AI: pencahayaan janggal, anatomi yang tidak simetris, dan tekstur kulit terlalu halus.'}
                 </div>
                 <span className="lab-tag">{isEnglish ? 'Deepfake Detection' : 'Deteksi Deepfake'}</span>
               </div>
-              <div className="bento-item b3">
+              <div className="bento-item">
                 <div className="lab-icon" style={{ background: 'rgba(16,185,129,0.12)', color: 'var(--emerald)' }}><i className="fa-solid fa-scale-balanced"></i></div>
                 <div className="lab-title">Ethical Dilemma</div>
                 <div className="lab-desc">
                   {isEnglish
                     ? 'Branching case studies, choices impact Copyright Risk, Data Privacy, and Academic Integrity.'
-                    : 'Studi kasus bercabang, tiap keputusan menggeser tiga indikator: Risiko Hak Cipta, Privasi Data, dan Integritas Akademik.'}
+                    : 'Studi kasus bercabang, tiap keputusan menggeser tiga indikator vital: Risiko Hak Cipta, Privasi Data, dan Integritas Akademik.'}
                 </div>
                 <span className="lab-tag">{isEnglish ? 'Ethics Study' : 'Studi Etika'}</span>
               </div>
-              <div className="bento-item b4">
+              <div className="bento-item">
                 <div className="lab-icon" style={{ background: 'rgba(20,184,166,0.12)', color: 'var(--teal)' }}><i className="fa-solid fa-code"></i></div>
                 <div className="lab-title">Live Prompt Safety Lab</div>
                 <div className="lab-desc">
                   {isEnglish
                     ? 'Split-screen analyzer highlighting risky keywords (red) vs clear context (green) with safety score.'
-                    : 'Split-screen analyzer mewarnai kata berisiko (merah) dan konteks jelas (hijau), menghitung Safety & Quality Score.'}
+                    : 'Split-screen analyzer mewarnai kata berisiko (merah) dan instruksi yang aman (hijau), serta menghitung Safety & Quality Score.'}
                 </div>
                 <span className="lab-tag">Prompt Safety</span>
               </div>
-              <div className="bento-item b5">
+              <div className="bento-item">
+                <div className="lab-icon" style={{ background: 'rgba(30,41,59,0.07)', color: 'var(--navy)' }}><i className="fa-solid fa-chart-pie"></i></div>
+                <div className="lab-title">AI Readiness Radar</div>
+                <div className="lab-desc">
+                  {isEnglish
+                    ? '8-question pre & post assessment visualized on a 4-pillar radar chart to make progress visible.'
+                    : 'Asesmen 8 pertanyaan di awal dan akhir belajar, divisualisasikan sebagai grafik radar 4 pilar agar progres terlihat nyata.'}
+                </div>
+                <span className="lab-tag">Pre &amp; Post Test</span>
+              </div>
+
+              {/* === SET KEDUA (DUPLIKAT UNTUK ILUSI INFINITY SCROLL) === */}
+              {/* Atribut aria-hidden="true" menyembunyikan kloning ini dari screen-reader untuk aksesibilitas */}
+              <div className="bento-item" aria-hidden="true">
+                <div className="lab-icon" style={{ background: 'rgba(59,130,246,0.1)', color: 'var(--indigo)' }}><i className="fa-solid fa-quote-left"></i></div>
+                <div className="lab-title">Bias Breaker</div>
+                <div className="lab-desc">
+                  {isEnglish
+                    ? 'Text-highlighting sandbox, click suspicious phrases. Real-time Fact Score highlights accurate claims (green) and hallucinations (red).'
+                    : 'Text-highlighting sandbox, klik kalimat yang dicurigai keliru. Sistem menghitung Fact Score real-time dengan penanda hijau (benar) dan merah (halusinasi).'}
+                </div>
+                <span className="lab-tag">{isEnglish ? 'AI Foundations' : 'Fondasi AI'}</span>
+              </div>
+              <div className="bento-item" aria-hidden="true">
+                <div className="lab-icon" style={{ background: 'rgba(245,158,11,0.12)', color: 'var(--amber)' }}><i className="fa-solid fa-eye"></i></div>
+                <div className="lab-title">Deepfake Detective</div>
+                <div className="lab-desc">
+                  {isEnglish
+                    ? 'Magnifying lens to inspect AI manipulation artifacts: uncanny lighting, finger anatomy, over-smoothed skin textures.'
+                    : 'Gunakan magnifying glass untuk menyorot artefak rekayasa AI: pencahayaan janggal, anatomi yang tidak simetris, dan tekstur kulit terlalu halus.'}
+                </div>
+                <span className="lab-tag">{isEnglish ? 'Deepfake Detection' : 'Deteksi Deepfake'}</span>
+              </div>
+              <div className="bento-item" aria-hidden="true">
+                <div className="lab-icon" style={{ background: 'rgba(16,185,129,0.12)', color: 'var(--emerald)' }}><i className="fa-solid fa-scale-balanced"></i></div>
+                <div className="lab-title">Ethical Dilemma</div>
+                <div className="lab-desc">
+                  {isEnglish
+                    ? 'Branching case studies, choices impact Copyright Risk, Data Privacy, and Academic Integrity.'
+                    : 'Studi kasus bercabang, tiap keputusan menggeser tiga indikator vital: Risiko Hak Cipta, Privasi Data, dan Integritas Akademik.'}
+                </div>
+                <span className="lab-tag">{isEnglish ? 'Ethics Study' : 'Studi Etika'}</span>
+              </div>
+              <div className="bento-item" aria-hidden="true">
+                <div className="lab-icon" style={{ background: 'rgba(20,184,166,0.12)', color: 'var(--teal)' }}><i className="fa-solid fa-code"></i></div>
+                <div className="lab-title">Live Prompt Safety Lab</div>
+                <div className="lab-desc">
+                  {isEnglish
+                    ? 'Split-screen analyzer highlighting risky keywords (red) vs clear context (green) with safety score.'
+                    : 'Split-screen analyzer mewarnai kata berisiko (merah) dan instruksi yang aman (hijau), serta menghitung Safety & Quality Score.'}
+                </div>
+                <span className="lab-tag">Prompt Safety</span>
+              </div>
+              <div className="bento-item" aria-hidden="true">
                 <div className="lab-icon" style={{ background: 'rgba(30,41,59,0.07)', color: 'var(--navy)' }}><i className="fa-solid fa-chart-pie"></i></div>
                 <div className="lab-title">AI Readiness Radar</div>
                 <div className="lab-desc">

@@ -1,0 +1,110 @@
+/* ============================
+   NAVBAR COMPONENT STYLES
+   ============================ */
+
+/* Hud Container (Area Kanan) */
+.nav-hud {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Tombol Toggle Bahasa */
+.btn-lang-toggle {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-weight: 700;
+  font-size: 0.82rem;
+  color: var(--navy);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.btn-lang-toggle:hover {
+  background: rgba(241, 245, 249, 0.9);
+  border-color: var(--indigo);
+}
+
+.icon-lang {
+  color: var(--indigo);
+}
+
+/* Tombol Masuk (Sign In) - Ghost/Outline Style */
+.btn-nav-cta {
+  padding: 10px 20px;
+  border-radius: 10px;
+  background: var(--white);
+  color: var(--navy);
+  border: 1px solid var(--line);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-nav-cta:hover {
+  border-color: var(--indigo);
+  color: var(--indigo);
+  background: rgba(59, 130, 246, 0.05);
+}
+
+/* Tombol Daftar (Sign Up) - Solid Style */
+.btn-nav-reg {
+  padding: 10px 20px;
+  border-radius: 10px;
+  background: var(--navy);
+  color: var(--white);
+  border: none;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-nav-reg:hover {
+  background: var(--indigo);
+  transform: translateY(-1px);
+}
+
+/* ============================
+   MOBILE RESPONSIVENESS
+   ============================ */
+@media (max-width: 480px) {
+  /* Perkecil gap antar tombol agar tidak melebar keluar layar */
+  .nav-hud {
+    gap: 6px;
+  }
+
+  /* Perkecil ukuran logo agar memberi ruang lebih untuk tombol */
+  .logo {
+    font-size: 1rem;
+    gap: 6px;
+  }
+  
+  .logo-mark {
+    width: 32px;
+    height: 32px;
+    font-size: 0.85rem;
+  }
+
+  /* Perkecil tombol bahasa */
+  .btn-lang-toggle {
+    padding: 6px 8px;
+    font-size: 0.75rem;
+    border-radius: 8px;
+  }
+
+  /* Perkecil tombol auth (Masuk & Daftar) */
+  .btn-nav-cta, 
+  .btn-nav-reg {
+    padding: 8px 12px;
+    font-size: 0.78rem;
+    border-radius: 8px;
+  }
+}

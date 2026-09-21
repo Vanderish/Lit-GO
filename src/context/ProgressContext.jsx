@@ -313,18 +313,7 @@ export const BADGE_DATA = [
 ];
 
 const getStorageKey = () => {
-  try {
-    const s = localStorage.getItem('user_data');
-    if (s) {
-      const u = JSON.parse(s);
-      if (u && u.email) {
-        return `litgo_complete_${u.email}`;
-      }
-    }
-  } catch {
-    // fallback
-  }
-  return 'litgo_complete_v1';
+  return 'litgo_complete_device';
 };
 
 const defaultState = {

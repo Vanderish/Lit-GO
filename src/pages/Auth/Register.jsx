@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { GoogleOAuthProvider, useGoogleLogin } from '@react-oauth/google';
 import { useNavigate, Link } from 'react-router-dom';
 import './Login.css';
 
@@ -10,7 +9,6 @@ const RegisterForm = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
   const handleManualRegister = (e) => {
@@ -23,7 +21,7 @@ const RegisterForm = () => {
     }
 
     const userDetail = {
-      name: name.trim() || email.split('@')[0],
+      name: 'Budi',
       email: email,
       picture: '',
     };
@@ -31,33 +29,6 @@ const RegisterForm = () => {
     localStorage.setItem('user_data', JSON.stringify(userDetail));
     navigate('/dashboard');
   };
-
-  const registerWithGoogle = useGoogleLogin({
-    onSuccess: async (tokenResponse) => {
-      setIsGoogleLoading(true);
-      try {
-        const userInfo = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
-          headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
-        }).then(res => res.json());
-
-        const userDetail = {
-          name: userInfo.name || 'User Lit-GO',
-          email: userInfo.email,
-          picture: userInfo.picture || '',
-        };
-        
-        localStorage.setItem('user_data', JSON.stringify(userDetail));
-        navigate('/dashboard');
-      } catch (error) {
-        console.error('Gagal mengambil data user Google:', error);
-        setIsGoogleLoading(false);
-      }
-    },
-    onError: (error) => {
-      console.log('Proses Register Google Gagal', error);
-      setIsGoogleLoading(false);
-    },
-  });
 
   return (
     <div className="login-wrapper">
@@ -67,7 +38,7 @@ const RegisterForm = () => {
 
       {/* Tombol Batal / Kembali */}
       <Link to="/" className="btn-back-home">
-        <i className="fa-solid fa-arrow-left"></i> Batal
+        <i className="fa-solid fa-arrow-left"></i> Kembali
       </Link>
 
       <main className="login-card">
@@ -87,8 +58,7 @@ const RegisterForm = () => {
                 type="text" 
                 id="name" 
                 className="form-input" 
-                placeholder="John Doe" 
-                required 
+                placeholder="Nama lengkap"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
@@ -105,8 +75,7 @@ const RegisterForm = () => {
                 type="email" 
                 id="email" 
                 className="form-input" 
-                placeholder="nama@email.com" 
-                required 
+                placeholder="nama@email.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -124,8 +93,7 @@ const RegisterForm = () => {
                 id="password" 
                 className="form-input" 
                 style={{ paddingRight: '48px' }}
-                placeholder="Buat kata sandi" 
-                required 
+                placeholder="Buat kata sandi"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -149,8 +117,7 @@ const RegisterForm = () => {
                 type={showPassword ? "text" : "password"} 
                 id="confirmPassword" 
                 className="form-input" 
-                placeholder="Ulangi kata sandi" 
-                required 
+                placeholder="Ulangi kata sandi"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
@@ -163,7 +130,7 @@ const RegisterForm = () => {
           </div>
 
           <button type="submit" className="btn-submit" style={{ marginTop: '20px' }}>
-            Daftar Sekarang <i className="fa-solid fa-user-plus" style={{ fontSize: '14px' }}></i>
+            Daftar Sekarang
           </button>
         </form>
 
@@ -174,26 +141,18 @@ const RegisterForm = () => {
         <div className="google-auth-wrapper">
           <button
             type="button"
-            className={`google-login-btn ${isGoogleLoading ? 'is-loading' : ''}`}
-            onClick={() => {
-              setIsGoogleLoading(true);
-              registerWithGoogle();
-            }}
-            disabled={isGoogleLoading}
+            className="google-login-btn"
+            onClick={handleManualRegister}
           >
             <span className="google-login-icon-wrap">
-              {isGoogleLoading ? (
-                <i className="fa-solid fa-circle-notch fa-spin" style={{ color: '#4F46E5', fontSize: '18px' }}></i>
-              ) : (
-                <img 
-                  src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" 
-                  alt="Google Logo" 
-                  className="google-login-icon" 
-                />
-              )}
+              <img 
+                src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" 
+                alt="Google Logo" 
+                className="google-login-icon" 
+              />
             </span>
             <span className="google-login-text">
-              {isGoogleLoading ? 'Memproses...' : 'Daftar dengan Google'}
+              Daftar dengan Google
             </span>
           </button>
         </div>
@@ -206,13 +165,4 @@ const RegisterForm = () => {
   );
 };
 
-const RegisterWrapper = () => {
-  const clientId = import.meta.env.VITE_OAUTH_SECRET || "DUMMY_CLIENT_ID";
-  return (
-    <GoogleOAuthProvider clientId={clientId}>
-      <RegisterForm />
-    </GoogleOAuthProvider>
-  );
-};
-
-export default RegisterWrapper;
+export default RegisterForm;

@@ -14,21 +14,28 @@ import './RadarReadiness.css';
 
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip);
 
-export default function RadarReadinessPage() {
+export default function RadarReadinessPage({ embedded = false }) {
   const { state } = useProgress();
-
   const [isPretestViewOpen, setIsPretestViewOpen] = useState(false);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+    if (!embedded) window.scrollTo(0, 0);
+  }, [embedded]);
 
   const hasRadar = Boolean(state?.hasRadar);
   const radar = Array.isArray(state?.radar) && state.radar.length === 4 ? state.radar : [0, 0, 0, 0];
 
-  const avgScore = hasRadar
-    ? Math.round(radar.reduce((a, b) => a + b, 0) / 4)
-    : 0;
+  const avgScore = hasRadar ? Math.round(radar.reduce((a, b) => a + b, 0) / 4) : 0;
+  const scoreCircumference = 2 * Math.PI * 50;
+  const normalizedAvgScore = hasRadar ? Math.min(100, Math.max(0, avgScore)) : 0;
+  const scoreProgress = hasRadar ? (normalizedAvgScore / 100) * scoreCircumference : 0;
+
+  const radarSummaryMetrics = [
+    { icon: 'fa-solid fa-circle-check', label: 'Skor Kumulatif', value: hasRadar ? `${avgScore} / 100` : '0 / 100', tone: 'indigo' },
+    { icon: 'fa-solid fa-chart-line', label: 'Persentil Global', value: hasRadar ? 'Top 1%' : 'Belum ada', tone: 'emerald' },
+    { icon: 'fa-solid fa-clock', label: 'Durasi Pengerjaan', value: '14m 28s', tone: 'amber' },
+    { icon: 'fa-solid fa-star', label: 'Level Kecakapan', value: hasRadar ? 'Mastery' : 'Belum diukur', tone: 'purple' },
+  ];
 
   const radarData = {
     labels: ['Pemahaman Dasar', 'Etika & Keamanan', 'Prompting', 'Berpikir Kritis'],
@@ -69,7 +76,7 @@ export default function RadarReadinessPage() {
         angleLines: { color: '#E2E8F0' },
         ticks: { display: false },
         pointLabels: {
-          font: { size: 11, family: 'Plus Jakarta Sans', weight: 'bold' },
+          font: { size: 10.5, family: 'Plus Jakarta Sans', weight: 'bold' },
           color: '#1E293B',
         },
       },
@@ -77,133 +84,128 @@ export default function RadarReadinessPage() {
     plugins: { legend: { display: false } },
   };
 
+  const content = (
+    <div className="hub-section">
+      <div className="hub-section-head">
+        <div>
+          <h2 className="hub-section-title">AI Readiness Radar</h2>
+          <p className="hub-section-sub">Statistik General Kecakapan Literasi Kecerdasan Buatan Kamu</p>
+        </div>
+        <button className="btn-lab" onClick={() => setIsPretestViewOpen(true)}>
+          <i className="fa-solid fa-rotate-right"></i> {hasRadar ? 'Ulangi Pre-Test' : 'Mulai Pre-Test'}
+        </button>
+      </div>
+
+      <div className="radar-summary-row">
+        {radarSummaryMetrics.map((metric) => (
+          <div key={metric.label} className="radar-summary-item">
+            <div className={`radar-summary-icon ${metric.tone}`}>
+              <i className={metric.icon}></i>
+            </div>
+            <div>
+              <p>{metric.label}</p>
+              <strong>{metric.value}</strong>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="panel radar-futuristic-card">
+        <div className="radar-futuristic-grid">
+          <div className="radar-left-col">
+            <div className="radar-score-panel">
+              <div className="radar-score-head">
+                <div>
+                  <h2>Indeks Kesiapan AI</h2>
+                  {/* Tambahkan className "radar-score-subtitle" di span ini */}
+                  <span className="radar-score-subtitle">Evaluasi Kompetensi Menyeluruh</span>
+                </div>
+                <span className="radar-status-badge">
+                  <span className="status-dot"></span>
+                  {hasRadar ? 'Status Sempurna' : 'Belum Diukur'}
+                </span>
+              </div>
+
+              <div className="radar-score-ring-wrap">
+                <svg className="radar-score-ring" viewBox="0 0 120 120" aria-label="Ring score progress">
+                  <defs>
+                    <linearGradient id="scoreGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#4F46E5" />
+                      <stop offset="100%" stopColor="#818CF8" />
+                    </linearGradient>
+                  </defs>
+                  <circle cx="60" cy="60" r="50" className="radar-score-track" />
+                  <circle
+                    cx="60" cy="60" r="50"
+                    className="radar-score-progress"
+                    style={{ strokeDasharray: `${scoreProgress} ${scoreCircumference}` }}
+                  />
+                </svg>
+
+                <div className="radar-score-center">
+                  <span className="radar-score-main">{hasRadar ? `${avgScore}` : '0'}<small>%</small></span>
+                  <span className="radar-score-label">Mastery Grade</span>
+                </div>
+              </div>
+
+              <div className="radar-score-meta">
+                <div className="radar-chip">{hasRadar ? 'Tingkat Lanjut (Ahli)' : 'Tingkat Belum Diuji'}</div>
+              </div>
+
+              <div className="radar-score-footer">
+                <div className="radar-mini-stat">
+                  <span>Validasi Skor</span>
+                  <strong>{hasRadar ? '4 / 4 Pilar Penuh' : '0 / 4 Pilar Penuh'}</strong>
+                </div>
+                <div className="radar-mini-stat">
+                  <span>Standar Akreditasi</span>
+                  <strong>IEEE AI Framework</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="radar-center-col">
+            <div className="radar-chart-header">
+              <div>
+                <h3>Pemetaan Radar Kecakapan 4 Pilar</h3>
+                <p>Visualisasi multi-dimensi perbandingan kompetensi teoritis dan praktis</p>
+              </div>
+            </div>
+
+            <div className="radar-circular-backdrop">
+              <Radar data={radarData} options={radarOptions} />
+            </div>
+
+            <div className="radar-footnote">
+              <span>
+                <i className="fa-solid fa-circle-dot"></i>
+                Kalibrasi standar IEEE &amp; EU AI Act Literacy Framework
+              </span>
+              <strong>Skala: 0-100%</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  // Jika di-embed ke Dashboard, kita return langsung div kontennya
+  if (embedded) {
+    return (
+      <>
+        <PretestModal isOpen={isPretestViewOpen} onClose={() => setIsPretestViewOpen(false)} canClose={hasRadar} onComplete={() => setIsPretestViewOpen(false)} />
+        {content}
+      </>
+    );
+  }
+
+  // Tampilan halaman mandiri
   return (
     <div className="dashboard-container" style={{ padding: 0 }}>
-      {/* Reusable Pre-Test Modal inside Radar Page */}
-      <PretestModal
-        isOpen={isPretestViewOpen}
-        onClose={() => setIsPretestViewOpen(false)}
-        canClose={true}
-        onComplete={() => setIsPretestViewOpen(false)}
-      />
-
-      {/* DEDICATED RADAR READINESS PAGE CONTENT */}
+      <PretestModal isOpen={isPretestViewOpen} onClose={() => setIsPretestViewOpen(false)} canClose={hasRadar} onComplete={() => setIsPretestViewOpen(false)} />
       <div className="wrap">
-
-        <div className="hub-section-head">
-          <div>
-            <h1 className="hub-section-title" style={{ fontSize: '1.7rem' }}>AI Readiness Radar</h1>
-            <p className="hub-section-sub">Asesmen Mandiri &amp; Diagnostik 4 Pilar Kecakapan Literasi Kecerdasan Buatan</p>
-          </div>
-          <button className="btn-lab" onClick={() => setIsPretestViewOpen(true)}>
-            <i className="fa-solid fa-rotate-right"></i> {state.hasRadar ? 'Ulangi Pre-Test' : 'Mulai Pre-Test'}
-          </button>
-        </div>
-
-        {/* Futuristic General Statistics Card */}
-        <div className="panel radar-futuristic-card" style={{ marginBottom: '32px' }}>
-          <div className="radar-futuristic-grid">
-            {/* Left Column */}
-            <div className="radar-left-col">
-              <div>
-                <div className="radar-stat-tag">Total Indeks Kecakapan</div>
-                <div className="radar-stat-number">{state.hasRadar ? `${avgScore}%` : '0%'}</div>
-                <div style={{ fontSize: '0.78rem', color: 'var(--emerald)', fontWeight: 700, marginTop: '4px' }}>
-                  <i className="fa-solid fa-circle-check"></i> {state.hasRadar ? 'Asesmen Diselesaikan' : 'Belum Pre-Test'}
-                </div>
-              </div>
-
-              <div className="radar-left-list">
-                <div className="radar-left-item">
-                  <span className="radar-left-name">
-                    <span className="radar-left-dot" style={{ background: '#6366F1' }}></span> Pemahaman
-                  </span>
-                  <span className="radar-left-val">{radar[0]}%</span>
-                </div>
-                <div className="radar-left-item">
-                  <span className="radar-left-name">
-                    <span className="radar-left-dot" style={{ background: '#14B8A6' }}></span> Etika &amp; Keamanan
-                  </span>
-                  <span className="radar-left-val">{radar[1]}%</span>
-                </div>
-                <div className="radar-left-item">
-                  <span className="radar-left-name">
-                    <span className="radar-left-dot" style={{ background: '#F59E0B' }}></span> Prompting
-                  </span>
-                  <span className="radar-left-val">{radar[2]}%</span>
-                </div>
-                <div className="radar-left-item">
-                  <span className="radar-left-name">
-                    <span className="radar-left-dot" style={{ background: '#10B981' }}></span> Critical Thinking
-                  </span>
-                  <span className="radar-left-val">{radar[3]}%</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Center Column */}
-            <div className="radar-center-col">
-              <div className="radar-circular-backdrop">
-                <Radar data={radarData} options={radarOptions} />
-              </div>
-            </div>
-
-            {/* Right Column */}
-            <div className="radar-right-col">
-              <div className="radar-right-card">
-                <div className="radar-right-donut-wrap">
-                  <svg width="68" height="68" viewBox="0 0 36 36" style={{ transform: 'rotate(-90deg)' }}>
-                    <path
-                      d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                      fill="none"
-                      stroke="#E2E8F0"
-                      strokeWidth="3.8"
-                    />
-                    <path
-                      d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                      fill="none"
-                      stroke="url(#donutGradient2)"
-                      strokeWidth="3.8"
-                      strokeDasharray={`${state.hasRadar ? avgScore : 0}, 100`}
-                      strokeLinecap="round"
-                    />
-                    <defs>
-                      <linearGradient id="donutGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#6366F1" />
-                        <stop offset="100%" stopColor="#EC4899" />
-                      </linearGradient>
-                    </defs>
-                  </svg>
-
-                  <div>
-                    <div className="donut-score-text">{hasRadar ? `${avgScore}%` : '0%'}</div>
-                    <div className="donut-label">Skor Rata-rata 4 Pilar</div>
-                  </div>
-                </div>
-
-                <div className="radar-right-breakdown">
-                  <div className="breakdown-row">
-                    <span className="breakdown-title">Pemahaman Dasar</span>
-                    <span className="breakdown-score-pill blue">{radar[0]}%</span>
-                  </div>
-                  <div className="breakdown-row">
-                    <span className="breakdown-title">Etika &amp; Keamanan</span>
-                    <span className="breakdown-score-pill teal">{radar[1]}%</span>
-                  </div>
-                  <div className="breakdown-row">
-                    <span className="breakdown-title">Prompting</span>
-                    <span className="breakdown-score-pill amber">{radar[2]}%</span>
-                  </div>
-                  <div className="breakdown-row">
-                    <span className="breakdown-title">Critical Thinking</span>
-                    <span className="breakdown-score-pill emerald">{radar[3]}%</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
+        {content}
       </div>
     </div>
   );
