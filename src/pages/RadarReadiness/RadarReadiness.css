@@ -1,4 +1,51 @@
 /* ============================================================
+   0. RADAR PAGE HEADER
+   ============================================================ */
+.radar-hub-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  gap: 16px;
+}
+
+.radar-hub-head .hub-section-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--navy, #0f172a);
+  margin: 0 0 4px;
+}
+
+.radar-hub-head .hub-section-sub {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text-dim, #64748b);
+}
+
+.btn-radar-pretest {
+  background: #2563EB;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-radar-pretest:hover {
+  background: #1D4ED8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+}
+
+/* ============================================================
    1. RADAR SUMMARY METRICS (TOP CARDS)
    ============================================================ */
 .radar-summary-row {
@@ -12,17 +59,17 @@
   display: flex;
   align-items: center;
   gap: 14px;
-  background: var(--white);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: 16px 20px;
-  box-shadow: 0 4px 18px -8px rgba(15, 23, 42, 0.08);
+  background: var(--white, #ffffff);
+  border: 1px solid var(--line, #e2e8f0);
+  border-radius: 16px;
+  padding: 18px 20px;
+  box-shadow: 0 4px 18px -8px rgba(15, 23, 42, 0.06);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .radar-summary-item:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px -8px rgba(15, 23, 42, 0.12);
+  box-shadow: 0 8px 24px -8px rgba(15, 23, 42, 0.1);
 }
 
 .radar-summary-icon {
@@ -32,29 +79,43 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   flex-shrink: 0;
 }
 
-.radar-summary-icon.indigo { background: rgba(99, 102, 241, 0.12); color: var(--indigo); }
-.radar-summary-icon.emerald { background: rgba(16, 185, 129, 0.12); color: var(--emerald); }
-.radar-summary-icon.amber { background: rgba(245, 158, 11, 0.12); color: var(--amber); }
-.radar-summary-icon.purple { background: rgba(168, 85, 247, 0.12); color: #7c3aed; }
+.radar-summary-icon.indigo { background: rgba(99, 102, 241, 0.1); color: #4F46E5; }
+.radar-summary-icon.emerald { background: rgba(16, 185, 129, 0.1); color: #10B981; }
+.radar-summary-icon.amber { background: rgba(245, 158, 11, 0.1); color: #F59E0B; }
+.radar-summary-icon.purple { background: rgba(168, 85, 247, 0.1); color: #9333EA; }
+
+.radar-summary-info {
+  display: flex;
+  flex-direction: column;
+}
 
 .radar-summary-item p {
   margin: 0 0 4px;
-  font-size: 0.72rem;
-  color: var(--text-dim);
-  font-weight: 600;
+  font-size: 0.68rem;
+  color: var(--text-dim, #64748b);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .radar-summary-item strong {
   display: block;
-  font-size: 1.15rem;
-  color: var(--navy);
+  font-size: 1.25rem;
+  color: var(--navy, #0f172a);
   line-height: 1.1;
   font-weight: 800;
   letter-spacing: -0.01em;
+}
+
+.radar-val-sub {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-dim, #64748b);
+  margin-left: 2px;
 }
 
 /* ============================================================
@@ -238,11 +299,11 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 6px 14px;
-  border-radius: 8px;
-  background: rgba(99, 102, 241, 0.1);
+  padding: 6px 18px;
+  border-radius: 100px;
+  background: rgba(99, 102, 241, 0.08);
   border: 1px solid rgba(99, 102, 241, 0.2);
-  color: var(--indigo);
+  color: var(--indigo, #4f46e5);
   font-size: 0.75rem;
   font-weight: 700;
 }

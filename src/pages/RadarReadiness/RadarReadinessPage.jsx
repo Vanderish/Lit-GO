@@ -65,10 +65,34 @@ export default function RadarReadinessPage({ embedded = false }) {
   };
 
   const radarSummaryMetrics = [
-    { icon: 'fa-solid fa-circle-check', label: 'Skor Kumulatif', value: hasRadar ? `${avgScore} / 100` : '0 / 100', tone: 'indigo' },
-    { icon: 'fa-solid fa-chart-line', label: 'Persentil Global', value: getDynamicPercentile(avgScore), tone: 'emerald' },
-    { icon: 'fa-solid fa-clock', label: 'Durasi Pengerjaan', value: getDynamicDuration(), tone: 'amber' },
-    { icon: 'fa-solid fa-star', label: 'Level Kecakapan', value: getDynamicLevel(avgScore), tone: 'purple' },
+    {
+      icon: 'fa-regular fa-circle-check',
+      label: 'SKOR KUMULATIF',
+      valMain: hasRadar ? `${avgScore}` : '0',
+      valSub: '/100',
+      tone: 'indigo',
+    },
+    {
+      icon: 'fa-solid fa-arrow-trend-up',
+      label: 'PERSENTIL GLOBAL',
+      valMain: getDynamicPercentile(avgScore),
+      valSub: '',
+      tone: 'emerald',
+    },
+    {
+      icon: 'fa-regular fa-clock',
+      label: 'DURASI PENGERJAAN',
+      valMain: getDynamicDuration(),
+      valSub: '',
+      tone: 'amber',
+    },
+    {
+      icon: 'fa-regular fa-star',
+      label: 'LEVEL KECAKAPAN',
+      valMain: getDynamicLevel(avgScore),
+      valSub: '',
+      tone: 'purple',
+    },
   ];
 
   const radarData = {
@@ -77,24 +101,15 @@ export default function RadarReadinessPage({ embedded = false }) {
       {
         label: 'Skor Kecakapan Kamu (%)',
         data: radar,
-        backgroundColor: 'rgba(99, 102, 241, 0.22)',
-        borderColor: '#6366F1',
-        pointBackgroundColor: '#818CF8',
+        backgroundColor: 'rgba(99, 102, 241, 0.18)',
+        borderColor: '#4F46E5',
+        pointBackgroundColor: '#4F46E5',
         pointBorderColor: '#FFFFFF',
         pointHoverBackgroundColor: '#FFFFFF',
-        pointHoverBorderColor: '#6366F1',
-        pointRadius: 5,
-        borderWidth: 2.5,
-      },
-      {
-        label: 'Target Ideal (%)',
-        data: [100, 100, 100, 100],
-        backgroundColor: 'rgba(236, 72, 153, 0.03)',
-        borderColor: 'rgba(236, 72, 153, 0.35)',
-        borderDash: [4, 4],
-        pointRadius: 2,
-        pointBackgroundColor: '#F43F5E',
-        borderWidth: 1.5,
+        pointHoverBorderColor: '#4F46E5',
+        pointRadius: 4.5,
+        pointBorderWidth: 2,
+        borderWidth: 2,
       },
     ],
   };
@@ -106,26 +121,33 @@ export default function RadarReadinessPage({ embedded = false }) {
       r: {
         min: 0,
         max: 100,
-        grid: { color: '#E2E8F0' },
-        angleLines: { color: '#E2E8F0' },
-        ticks: { display: false },
+        grid: { color: '#E2E8F0', lineWidth: 1 },
+        angleLines: { color: '#E2E8F0', lineWidth: 1 },
+        ticks: { display: false, stepSize: 20 },
         pointLabels: {
-          font: { size: 10.5, family: 'Plus Jakarta Sans', weight: 'bold' },
+          font: { size: 11, family: 'Plus Jakarta Sans', weight: '700' },
           color: '#1E293B',
         },
       },
     },
-    plugins: { legend: { display: false } },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: (context) => ` Skor: ${context.parsed.r}%`,
+        },
+      },
+    },
   };
 
   const content = (
     <div className="hub-section">
-      <div className="hub-section-head">
+      <div className="radar-hub-head">
         <div>
           <h2 className="hub-section-title">AI Readiness Radar</h2>
           <p className="hub-section-sub">Statistik General Kecakapan Literasi Kecerdasan Buatan Kamu</p>
         </div>
-        <button className="btn-lab" onClick={() => setIsPretestViewOpen(true)}>
+        <button className="btn-radar-pretest" onClick={() => setIsPretestViewOpen(true)}>
           <i className="fa-solid fa-rotate-right"></i> {hasRadar ? 'Ulangi Pre-Test' : 'Mulai Pre-Test'}
         </button>
       </div>
@@ -136,9 +158,12 @@ export default function RadarReadinessPage({ embedded = false }) {
             <div className={`radar-summary-icon ${metric.tone}`}>
               <i className={metric.icon}></i>
             </div>
-            <div>
+            <div className="radar-summary-info">
               <p>{metric.label}</p>
-              <strong>{metric.value}</strong>
+              <strong>
+                {metric.valMain}
+                {metric.valSub && <span className="radar-val-sub">{metric.valSub}</span>}
+              </strong>
             </div>
           </div>
         ))}
@@ -151,7 +176,6 @@ export default function RadarReadinessPage({ embedded = false }) {
               <div className="radar-score-head">
                 <div>
                   <h2>Indeks Kesiapan AI</h2>
-                  {/* Tambahkan className "radar-score-subtitle" di span ini */}
                   <span className="radar-score-subtitle">Evaluasi Kompetensi Menyeluruh</span>
                 </div>
                 <span className="radar-status-badge">
@@ -213,10 +237,10 @@ export default function RadarReadinessPage({ embedded = false }) {
 
             <div className="radar-footnote">
               <span>
-                <i className="fa-solid fa-circle-dot"></i>
+                <i className="fa-solid fa-circle" style={{ color: '#10B981', fontSize: '0.45rem', verticalAlign: 'middle', marginRight: '6px' }}></i>
                 Kalibrasi standar IEEE &amp; EU AI Act Literacy Framework
               </span>
-              <strong>Skala: 0-100%</strong>
+              <strong>Skala: 0–100%</strong>
             </div>
           </div>
         </div>

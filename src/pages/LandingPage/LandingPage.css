@@ -1,4 +1,20 @@
 /* =========================================================
+   LANDING PAGE ENTRANCE FADE-IN ANIMATION
+   ========================================================= */
+.landing-page-root {
+  animation: landingRootFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes landingRootFade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* =========================================================
    BASE & HERO SECTION
    ========================================================= */
 .hero {
@@ -34,6 +50,7 @@
   border-radius: 100px;
   margin-bottom: 26px;
   text-transform: uppercase;
+  animation: landingFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
 }
 
 .eyebrow .dot {
@@ -62,6 +79,7 @@ h1.hero-title {
   font-size: clamp(2.2rem, 4.8vw, 3.6rem);
   letter-spacing: -0.03em;
   line-height: 1.1;
+  animation: landingFadeUp 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
 }
 
 h1.hero-title .accent {
@@ -77,10 +95,42 @@ h1.hero-title .accent {
   color: var(--text-dim);
   max-width: 520px;
   line-height: 1.65;
+  animation: landingFadeUp 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.35s both;
 }
 
 .hero-actions {
   display: flex;
+  gap: 14px;
+  margin-top: 32px;
+  flex-wrap: wrap;
+  animation: landingFadeUp 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both;
+}
+
+.hero-preview {
+  animation: landingFadeScale 0.95s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+}
+
+@keyframes landingFadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes landingFadeScale {
+  0% {
+    opacity: 0;
+    transform: scale(0.94) translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
   gap: 14px;
   margin-top: 32px;
   flex-wrap: wrap;

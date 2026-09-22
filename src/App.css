@@ -22,6 +22,21 @@
   --radius-sm: 10px;
   --radius-lg: 24px;
 
+  /* =========================================
+     TYPOGRAPHIC MODULAR SCALE (GOLDEN RATIO)
+     Base: 16px (1rem) | Ratio: Phi (1.618) & Harmonic Sub-steps
+     ========================================= */
+  --font-ratio: 1.618;
+  --text-xs: 0.68rem;      /* ~11px  - Micro label, Tag, Status Badges */
+  --text-sm: 0.85rem;      /* ~13.6px - Secondary Text, Subtitle, Caption */
+  --text-base: 1rem;       /* 16px   - Base Body Text */
+  --text-md: 1.15rem;      /* ~18.4px - Sub-headings, Card Title */
+  --text-lg: 1.25rem;      /* 20px   - Emphasized Metric Value */
+  --text-xl: 1.618rem;     /* ~25.9px - H2 Section Title (Base x 1.618) */
+  --text-2xl: 2.25rem;     /* ~36px  - H1 Page Title */
+  --text-3xl: 3.64rem;     /* ~58px  - Hero Display / Main Number (Base x 1.618 x 1.4) */
+  --line-height-golden: 1.618; /* Golden Ratio Line Height for readability */
+
   /* shadow */
   --shadow-s:
   inset 0 1px 2px #ffffff30,

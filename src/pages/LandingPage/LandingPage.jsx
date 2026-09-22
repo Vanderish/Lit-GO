@@ -51,7 +51,7 @@ export default function LandingPage() {
   const hasRadar = state.hasRadar || false;
 
   return (
-    <>
+    <div className="landing-page-root">
       {/* Background Layer */}
       <div className="bg-grid"></div>
       <div className="bg-glow"></div>
@@ -749,6 +749,6 @@ export default function LandingPage() {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }
