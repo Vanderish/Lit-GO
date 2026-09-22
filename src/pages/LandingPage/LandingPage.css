@@ -1,5 +1,5 @@
 /* =========================================================
-   LANDING PAGE ENTRANCE FADE-IN ANIMATION
+   LANDING PAGE ENTRANCE & SCROLL REVEAL ANIMATIONS
    ========================================================= */
 .landing-page-root {
   animation: landingRootFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -12,6 +12,28 @@
   100% {
     opacity: 1;
   }
+}
+
+/* Scroll Reveal on Scroll (Fade-In as you scroll) */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(34px);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-on-scroll.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-on-scroll.reveal-scale {
+  transform: scale(0.95) translateY(24px);
+}
+
+.reveal-on-scroll.reveal-scale.is-revealed {
+  transform: scale(1) translateY(0);
 }
 
 /* =========================================================

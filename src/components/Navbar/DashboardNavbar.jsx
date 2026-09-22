@@ -78,8 +78,8 @@ export default function DashboardNavbar({ pts = 0, badgeCount = 0, expPct = 0, l
             <span>{isEnglish ? 'EN' : 'ID'}</span>
           </button>
 
-          <button className="btn-reset" onClick={onRequestReset} title="Reset Progres Platform">
-            <i className="fa-solid fa-rotate-right"></i>
+          <button className="btn-reset" onClick={onRequestReset} title={isEnglish ? 'Manage Demo Data & Reset' : 'Kelola Data Demo & Reset'}>
+            <i className="fa-solid fa-sliders"></i>
           </button>
         </div>
       </div>

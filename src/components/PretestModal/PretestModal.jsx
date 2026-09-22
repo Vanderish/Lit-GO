@@ -101,6 +101,18 @@ export default function PretestModal({ isOpen, onClose, canClose = false, onComp
     const newLv = Math.floor(newPts / 100) + 1;
     const newExpPct = newPts % 100;
 
+    const avgScore = Math.round(newRadar.reduce((a, b) => a + b, 0) / 4);
+    const newActivity = {
+      id: Date.now(),
+      text: `Menyelesaikan Pre-Test AI Readiness Radar (${avgScore}% Kumulatif)`,
+      icon: 'fa-solid fa-bullseye',
+      tone: 'indigo',
+      time: 'Baru saja',
+      timestamp: Date.now(),
+    };
+    const currentActs = Array.isArray(state.activities) ? state.activities : [];
+    const updatedActs = [newActivity, ...currentActs.slice(0, 9)];
+
     saveState({
       ...state,
       radar: newRadar,
@@ -110,6 +122,7 @@ export default function PretestModal({ isOpen, onClose, canClose = false, onComp
       lv: newLv,
       expPct: newExpPct,
       pretestDurationSeconds: durationSeconds,
+      activities: updatedActs,
     });
 
     showToast('Pre-Test Berhasil Diselesaikan! Radar Readiness & Badge Pionir AI kamu telah aktif.', 'success');

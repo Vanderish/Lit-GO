@@ -321,6 +321,7 @@ const defaultState = {
   hasRadar: false,
   doneModules: [],
   badges: [],
+  activities: [],
 };
 
 const loadInitialState = () => {
@@ -336,6 +337,7 @@ const loadInitialState = () => {
         hasRadar: Boolean(parsed?.hasRadar),
         doneModules: Array.isArray(parsed?.doneModules) ? parsed.doneModules : [],
         badges: Array.isArray(parsed?.badges) ? parsed.badges : [],
+        activities: Array.isArray(parsed?.activities) ? parsed.activities : [],
       };
     } catch (err) {
       console.error('Failed to parse ' + key, err);
@@ -363,6 +365,20 @@ export function ProgressProvider({ children }) {
     localStorage.setItem(key, JSON.stringify(newState));
   };
 
+  const logActivity = (text, icon = 'fa-solid fa-clock-rotate-left', tone = 'indigo') => {
+    const newAct = {
+      id: Date.now(),
+      text,
+      icon,
+      tone,
+      time: 'Baru saja',
+      timestamp: Date.now(),
+    };
+    const current = Array.isArray(state.activities) ? state.activities : [];
+    const updated = [newAct, ...current.slice(0, 9)];
+    saveState({ ...state, activities: updated });
+  };
+
   const showToast = (msg, type = 'info') => {
     setToastMsg(msg);
     setToastType(type);
@@ -374,7 +390,56 @@ export function ProgressProvider({ children }) {
     localStorage.removeItem(key);
     localStorage.removeItem('litgo_complete_v1');
     setState(defaultState);
-    window.location.reload();
+    setConfirmModalOpen(false);
+    showToast('Seluruh progres telah direset ke Cold-Start (State Awal).', 'info');
+  };
+
+  const loadDemoPreset = () => {
+    const now = Date.now();
+    const demoState = {
+      radar: [85, 60, 90, 75], // 4 pilar: Literasi Teknis (85%), Etika & Privasi (60% -> lowest, fires Focus Utama badge!), Prompting Efektif (90%), AI Kolaboratif (75%)
+      hasRadar: true,
+      doneModules: ['1-1', '1-2', '1-3', '1-4', 1, '2-1', '2-2', '2-3', '2-4', 2],
+      badges: [1, 2],
+      pretestDurationSeconds: 145,
+      activities: [
+        {
+          id: now - 1000 * 60 * 2,
+          text: 'Menuntaskan Modul 2: Kompas Etika, Keamanan & Privasi',
+          icon: 'fa-solid fa-shield-halved',
+          tone: 'blue',
+          time: '2 menit lalu',
+          timestamp: now - 1000 * 60 * 2,
+        },
+        {
+          id: now - 1000 * 60 * 15,
+          text: 'Membuka Lencana Penjaga Etika 🏅',
+          icon: 'fa-solid fa-award',
+          tone: 'amber',
+          time: '15 menit lalu',
+          timestamp: now - 1000 * 60 * 15,
+        },
+        {
+          id: now - 1000 * 60 * 45,
+          text: 'Menyelesaikan Modul 1: Kenalan dengan "Otak" Buatan',
+          icon: 'fa-solid fa-circle-check',
+          tone: 'green',
+          time: '45 menit lalu',
+          timestamp: now - 1000 * 60 * 45,
+        },
+        {
+          id: now - 1000 * 60 * 120,
+          text: 'Menyelesaikan Asesmen Radar Kesiapan AI (Skor: 78%)',
+          icon: 'fa-solid fa-compass',
+          tone: 'indigo',
+          time: '2 jam lalu',
+          timestamp: now - 1000 * 60 * 120,
+        },
+      ],
+    };
+    saveState(demoState);
+    setConfirmModalOpen(false);
+    showToast('Skenario Demo Showcase berhasil dimuat! 🎉', 'success');
   };
 
   // Kalkulasi 24 langkah gamifikasi terstruktur
@@ -523,10 +588,12 @@ export function ProgressProvider({ children }) {
         state,
         saveState,
         refreshState,
+        logActivity,
         showToast,
         toastMsg,
         toastType,
         handleReset,
+        loadDemoPreset,
         isConfirmModalOpen,
         setConfirmModalOpen,
         doneCount,

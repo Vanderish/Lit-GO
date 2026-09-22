@@ -27,12 +27,110 @@ export default function Dashboard() {
     ? Math.round(radar.reduce((a, b) => a + b, 0) / 4)
     : 0;
 
+  // Log aktivitas terbaru dari ProgressContext
+  const activities = Array.isArray(state?.activities) ? state.activities : [];
+
+  // Formatter waktu relatif aman (mencegah NaN / epoch 1970)
+  const formatRelativeTime = (act) => {
+    if (!act) return 'Baru saja';
+    const ts = typeof act.timestamp === 'number' ? act.timestamp : null;
+    if (!ts || isNaN(ts) || ts <= 0) {
+      return act.time || 'Baru saja';
+    }
+
+    const diffMs = Date.now() - ts;
+    if (diffMs < 0 || diffMs < 45 * 1000) {
+      return 'Baru saja';
+    }
+
+    const diffMins = Math.floor(diffMs / (60 * 1000));
+    if (diffMins < 60) {
+      return `${diffMins} menit lalu`;
+    }
+
+    const diffHours = Math.floor(diffMs / (60 * 60 * 1000));
+    if (diffHours < 24) {
+      return `${diffHours} jam lalu`;
+    }
+
+    const diffDays = Math.floor(diffMs / (24 * 60 * 60 * 1000));
+    if (diffDays <= 7) {
+      return `${diffDays} hari lalu`;
+    }
+
+    try {
+      const d = new Date(ts);
+      return d.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+    } catch {
+      return act.time || 'Baru saja';
+    }
+  };
+
+  // Adaptive Priority: Temukan pilar dengan skor terendah untuk dijadikan rekomendasi utama
+  const minScore = hasRadar ? Math.min(...radar) : 0;
+  const priorityPillarIndex = hasRadar ? radar.indexOf(minScore) : -1;
+
+  const pillarsData = [
+    {
+      id: 1,
+      num: '01',
+      title: 'Pemahaman Dasar AI',
+      icon: 'fa-solid fa-brain',
+      tone: 'indigo',
+      borderClass: 'pillar-border-indigo',
+      badgeClass: 'badge-indigo',
+      score: radar[0],
+      desc: 'Memahami definisi fundamental AI, sejarah perkembangan Transformer, keterbatasan model LLM, dan mitigasi halusinasi.',
+      moduleTarget: '/modul-belajar',
+      btnLabel: 'Pelajari Modul 1',
+    },
+    {
+      id: 2,
+      num: '02',
+      title: 'Etika & Keamanan Data',
+      icon: 'fa-solid fa-shield-halved',
+      tone: 'teal',
+      borderClass: 'pillar-border-teal',
+      badgeClass: 'badge-teal',
+      score: radar[1],
+      desc: 'Memahami hak cipta karya AI, regulasi privasi data, bias algoritma Gender Shades, dan deteksi forensik deepfake.',
+      moduleTarget: '/modul-belajar',
+      btnLabel: 'Pelajari Modul 2',
+    },
+    {
+      id: 3,
+      num: '03',
+      title: 'Prompt Engineering',
+      icon: 'fa-solid fa-terminal',
+      tone: 'amber',
+      borderClass: 'pillar-border-amber',
+      badgeClass: 'badge-amber',
+      score: radar[2],
+      desc: 'Menyusun instruksi terstruktur dengan formula persona, konteks, format output, zero-shot, few-shot, dan teknik ReAct.',
+      moduleTarget: '/modul-belajar',
+      btnLabel: 'Pelajari Modul 3',
+    },
+    {
+      id: 4,
+      num: '04',
+      title: 'Critical Thinking',
+      icon: 'fa-solid fa-magnifying-glass',
+      tone: 'emerald',
+      borderClass: 'pillar-border-emerald',
+      badgeClass: 'badge-emerald',
+      score: radar[3],
+      desc: 'Melatih skeptisisme sehat, melakukan fact-checking silang, evaluasi bias informasi, dan verifikasi klaim output AI.',
+      moduleTarget: '/modul-belajar',
+      btnLabel: 'Pelajari Modul 6',
+    },
+  ];
+
   return (
     <div className="dashboard-container">
       <div className="wrap">
         
         {/* ========================================================= */}
-        {/* HERO BENTO BANNER (Personalized Greeting & Quick Launch)  */}
+        {/* 1. HERO BENTO BANNER (Personalized Greeting & Quick Metrics) */}
         {/* ========================================================= */}
         <div className="dashboard-hero-bento">
           <div className="bento-left-col">
@@ -65,8 +163,10 @@ export default function Dashboard() {
               </div>
               <div className="bento-metric-divider"></div>
               <div className="bento-metric-item">
-                <span className="metric-val text-indigo">{hasRadar ? `${avgRadarScore}%` : 'Pre-test'}</span>
-                <span className="metric-lbl">AI Readiness</span>
+                <span className={`metric-val ${hasRadar ? 'text-indigo' : 'text-amber'}`}>
+                  {hasRadar ? `${avgRadarScore}%` : 'Belum Tes'}
+                </span>
+                <span className="metric-lbl">Indeks Kesiapan</span>
               </div>
             </div>
 
@@ -89,8 +189,8 @@ export default function Dashboard() {
               <div className="mascot-speech-bubble">
                 <i className="fa-solid fa-quote-left mr-1 text-indigo"></i>
                 {hasRadar 
-                  ? "Kesiapan AI kamu sudah terpetakan! Tingkatkan skor pilar yang masih rendah di modul belajar ya!"
-                  : "Mulai petualanganmu dengan mengikuti Pre-test Radar Readiness untuk mengetahui level kesiapanmu!"}
+                  ? `Kesiapan AI kamu rata-rata ${avgRadarScore}%. Fokus tingkatkan pilar "${pillarsData[priorityPillarIndex]?.title}" untuk hasil optimal!`
+                  : "Selamat datang! Yuk ikuti Pre-test AI Readiness Radar untuk memetakan kekuatan dan kelemahan literasi AI kamu!"}
               </div>
               <div className="mascot-action-tag">
                 <span className="pulse-dot-indigo"></span> AI Companion Active
@@ -99,149 +199,143 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* ==================================================
-            KOMPONEN RADAR DI-EMBED DI SINI (Termasuk Modalnya)
-            ================================================== */}
+        {/* ========================================================= */}
+        {/* 2. AI READINESS RADAR (Diagnostik Kompetensi & Pre-Test) */}
+        {/* ========================================================= */}
         <RadarReadinessPage embedded={true} />
 
         {/* ========================================================= */}
-        {/* 4-PILLAR RECOMMENDATIONS GRID (Rapi, Sejajar, Proporsional)*/}
+        {/* 3. ADAPTIVE LEARNING ROADMAP (Rekomendasi Terarah Adaptif) */}
         {/* ========================================================= */}
         <div className="section-header-block">
           <div className="section-badge-pre">
-            <i className="fa-solid fa-compass text-indigo mr-1"></i> 4 PILAR UTAMA
+            <i className="fa-solid fa-route text-indigo mr-1"></i> RENCANA BELAJAR ADAPTIF
           </div>
-          <h2 className="section-title-clean">Rekomendasi Pembelajaran Terarah</h2>
+          <h2 className="section-title-clean">Rekomendasi Modul Berdasarkan Skor Radar</h2>
           <p className="section-desc-clean">
-            Tingkatkan pemahaman pada tiap pilar kecerdasan buatan melalui silabus komprehensif terstandarisasi.
+            Sistem menganalisis performa radar kamu dan merekomendasikan pilar mana yang perlu diprioritaskan terlebih dahulu.
           </p>
         </div>
 
         <div className="dashboard-pillars-grid">
-          
-          {/* Pilar 1 */}
-          <div className="panel dashboard-pillar-panel pillar-border-indigo">
-            <div className="pillar-header">
-              <div className="pillar-icon pillar-icon-indigo">
-                <i className="fa-solid fa-brain"></i>
+          {pillarsData.map((pilar, index) => {
+            const isPriority = hasRadar && index === priorityPillarIndex;
+            const isMastered = hasRadar && pilar.score >= 80;
+
+            return (
+              <div 
+                key={pilar.id} 
+                className={`panel dashboard-pillar-panel ${pilar.borderClass} ${isPriority ? 'is-priority-focus' : ''}`}
+              >
+                <div className="pillar-header">
+                  <div className={`pillar-icon pillar-icon-${pilar.tone}`}>
+                    <i className={pilar.icon}></i>
+                  </div>
+                  <div className="pillar-title-wrap">
+                    <div className="pillar-badge-row">
+                      <span className={`pillar-badge ${pilar.badgeClass}`}>Pilar {pilar.num}</span>
+                      {hasRadar ? (
+                        isPriority ? (
+                          <span className="pillar-status-chip priority">
+                            <i className="fa-solid fa-fire"></i> Fokus Utama
+                          </span>
+                        ) : isMastered ? (
+                          <span className="pillar-status-chip mastered">
+                            <i className="fa-solid fa-circle-check"></i> Mahir
+                          </span>
+                        ) : (
+                          <span className="pillar-status-chip regular">
+                            <i className="fa-solid fa-chart-line"></i> Terpetakan
+                          </span>
+                        )
+                      ) : (
+                        <span className="pillar-status-chip unmeasured">
+                          <i className="fa-solid fa-hourglass-start"></i> Belum Diuji
+                        </span>
+                      )}
+                    </div>
+                    <h3 className="pillar-title">{pilar.title}</h3>
+                  </div>
+                </div>
+
+                <div className="pillar-progress-track">
+                  <div 
+                    className={`pillar-progress-fill fill-${pilar.tone}`} 
+                    style={{ width: `${hasRadar ? pilar.score : 0}%` }}
+                  ></div>
+                </div>
+
+                <div className="pillar-score-row">
+                  <span className="score-label">Tingkat Penguasaan:</span>
+                  <strong className={`score-val text-${pilar.tone}`}>
+                    {hasRadar ? `${pilar.score}%` : '—'}
+                  </strong>
+                </div>
+
+                <p className="pillar-desc">{pilar.desc}</p>
+
+                <button className="btn-pillar-cta" onClick={() => navigate(pilar.moduleTarget)}>
+                  <span>{pilar.btnLabel}</span>
+                  <i className="fa-solid fa-arrow-right"></i>
+                </button>
               </div>
-              <div className="pillar-title-wrap">
-                <span className="pillar-badge badge-indigo">Pilar 01</span>
-                <h3 className="pillar-title">Pemahaman Dasar AI</h3>
+            );
+          })}
+        </div>
+
+        {/* ========================================================= */}
+        {/* 4. RECENT ACTIVITY FEED (Log Jejak Pembelajaran Terakhir)  */}
+        {/* ========================================================= */}
+        <div className="dashboard-activity-section">
+          <div className="panel dashboard-activity-card">
+            <div className="activity-card-header">
+              <div>
+                <h3 className="activity-title">
+                  <i className="fa-solid fa-clock-rotate-left text-indigo mr-2"></i>
+                  Aktivitas &amp; Jejak Belajar Terakhir
+                </h3>
+                <p className="activity-subtitle">Riwayat pencapaian, simulasi lab, dan asesmen yang kamu selesaikan</p>
               </div>
-            </div>
-            
-            <div className="pillar-progress-track">
-              <div className="pillar-progress-fill fill-indigo" style={{ width: `${radar[0]}%` }}></div>
-            </div>
-            <div className="pillar-score-row">
-              <span className="score-label">Skor Kesiapan:</span>
-              <strong className="score-val text-indigo">{radar[0]}%</strong>
+              <span className="activity-counter-pill">
+                {activities.length > 0 ? `${activities.length} Aktivitas` : 'Siap Memulai'}
+              </span>
             </div>
 
-            <p className="pillar-desc">
-              Memahami definisi fundamental AI, sejarah perkembangan, keterbatasan sistem LLM, dan mitigasi halusinasi data.
-            </p>
-            
-            <button className="btn-pillar-cta" onClick={() => navigate('/modul-belajar')}>
-              <span>Pelajari Modul 1</span>
-              <i className="fa-solid fa-arrow-right"></i>
-            </button>
+            {activities.length > 0 ? (
+              <div className="activity-timeline-list">
+                {activities.slice(0, 5).map((act) => (
+                  <div key={act.id} className="activity-timeline-item">
+                    <div className={`activity-icon-bubble ${act.tone || 'indigo'}`}>
+                      <i className={act.icon || 'fa-solid fa-circle-check'}></i>
+                    </div>
+                    <div className="activity-info">
+                      <div className="activity-text">{act.text}</div>
+                      <span className="activity-time">{act.time || 'Baru saja'}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="activity-empty-state">
+                <div className="activity-empty-icon">
+                  <i className="fa-solid fa-seedling"></i>
+                </div>
+                <div className="activity-empty-text">
+                  <strong>Belum ada catatan aktivitas baru</strong>
+                  <p>Mulai dengan menyelesaikan Pre-Test atau buka Modul 1 untuk memulai rekaman jejak belajarmu di platform ini!</p>
+                </div>
+                <button 
+                  className="btn-activity-start"
+                  onClick={() => navigate('/modul-belajar')}
+                >
+                  <i className="fa-solid fa-play mr-1"></i> Mulai Belajar Sekarang
+                </button>
+              </div>
+            )}
           </div>
-
-          {/* Pilar 2 */}
-          <div className="panel dashboard-pillar-panel pillar-border-teal">
-            <div className="pillar-header">
-              <div className="pillar-icon pillar-icon-teal">
-                <i className="fa-solid fa-shield-halved"></i>
-              </div>
-              <div className="pillar-title-wrap">
-                <span className="pillar-badge badge-teal">Pilar 02</span>
-                <h3 className="pillar-title">Etika &amp; Keamanan Data</h3>
-              </div>
-            </div>
-
-            <div className="pillar-progress-track">
-              <div className="pillar-progress-fill fill-teal" style={{ width: `${radar[1]}%` }}></div>
-            </div>
-            <div className="pillar-score-row">
-              <span className="score-label">Skor Kesiapan:</span>
-              <strong className="score-val text-teal">{radar[1]}%</strong>
-            </div>
-
-            <p className="pillar-desc">
-              Memahami hak cipta AI, regulasi perlindungan data pribadi, bias algoritma, dan deteksi rekayasa deepfake visual.
-            </p>
-            
-            <button className="btn-pillar-cta" onClick={() => navigate('/modul-belajar')}>
-              <span>Pelajari Modul 2</span>
-              <i className="fa-solid fa-arrow-right"></i>
-            </button>
-          </div>
-
-          {/* Pilar 3 */}
-          <div className="panel dashboard-pillar-panel pillar-border-amber">
-            <div className="pillar-header">
-              <div className="pillar-icon pillar-icon-amber">
-                <i className="fa-solid fa-terminal"></i>
-              </div>
-              <div className="pillar-title-wrap">
-                <span className="pillar-badge badge-amber">Pilar 03</span>
-                <h3 className="pillar-title">Prompt Engineering</h3>
-              </div>
-            </div>
-
-            <div className="pillar-progress-track">
-              <div className="pillar-progress-fill fill-amber" style={{ width: `${radar[2]}%` }}></div>
-            </div>
-            <div className="pillar-score-row">
-              <span className="score-label">Skor Kesiapan:</span>
-              <strong className="score-val text-amber">{radar[2]}%</strong>
-            </div>
-
-            <p className="pillar-desc">
-              Menyusun instruksi terstruktur dengan formula persona, konteks, format output, zero-shot, dan few-shot prompting.
-            </p>
-            
-            <button className="btn-pillar-cta" onClick={() => navigate('/modul-belajar')}>
-              <span>Pelajari Modul 3</span>
-              <i className="fa-solid fa-arrow-right"></i>
-            </button>
-          </div>
-
-          {/* Pilar 4 */}
-          <div className="panel dashboard-pillar-panel pillar-border-emerald">
-            <div className="pillar-header">
-              <div className="pillar-icon pillar-icon-emerald">
-                <i className="fa-solid fa-magnifying-glass"></i>
-              </div>
-              <div className="pillar-title-wrap">
-                <span className="pillar-badge badge-emerald">Pilar 04</span>
-                <h3 className="pillar-title">Critical Thinking</h3>
-              </div>
-            </div>
-
-            <div className="pillar-progress-track">
-              <div className="pillar-progress-fill fill-emerald" style={{ width: `${radar[3]}%` }}></div>
-            </div>
-            <div className="pillar-score-row">
-              <span className="score-label">Skor Kesiapan:</span>
-              <strong className="score-val text-emerald">{radar[3]}%</strong>
-            </div>
-
-            <p className="pillar-desc">
-              Melatih skeptisisme sehat, melakukan verifikasi fakta silang (*cross-check*), dan mengevaluasi validitas output AI.
-            </p>
-            
-            <button className="btn-pillar-cta" onClick={() => navigate('/modul-belajar')}>
-              <span>Pelajari Modul 6</span>
-              <i className="fa-solid fa-arrow-right"></i>
-            </button>
-          </div>
-
         </div>
 
       </div>
     </div>
   );
-}
+}

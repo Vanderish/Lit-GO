@@ -9,8 +9,6 @@ import { ProgressProvider } from './context/ProgressContext';
 import ProtectedRoute from './routes/ProtectedRoutes';
 import DashboardLayout from './components/Layout/DashboardLayout';
 
-import SplashScreen from './components/SplashScreen/SplashScreen';
-
 // Pages
 import LandingPage from './pages/LandingPage/LandingPage';
 import Login from './pages/Auth/Login';
@@ -30,7 +28,6 @@ import TransparencyCheckPage from './pages/Sandbox/TransparencyCheckPage';
 function App() {
   return (
     <ProgressProvider>
-      <SplashScreen minDuration={1800} />
       <Router>
         <Routes>
           {/* Route Publik */}

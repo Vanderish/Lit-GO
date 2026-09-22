@@ -1,5 +1,6 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Navbar from '../../components/Navbar/Navbar'; 
+import SplashScreen from '../../components/SplashScreen/SplashScreen';
 import CertificateModal from '../../components/CertificateModal/CertificateModal';
 import AccessibilityPanel from '../../components/AccessibilityPanel';
 import { useProgress } from '../../context/ProgressContext';
@@ -47,11 +48,38 @@ export default function LandingPage() {
     }
   };
 
+  // Scroll Reveal Observer Effect
+  useEffect(() => {
+    const observerCallback = (entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-revealed');
+          observer.unobserve(entry.target);
+        }
+      });
+    };
+
+    const observerOptions = {
+      root: null,
+      threshold: 0.1,
+      rootMargin: '0px 0px -40px 0px',
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+    const elements = document.querySelectorAll('.reveal-on-scroll');
+    elements.forEach((el) => observer.observe(el));
+
+    return () => observer.disconnect();
+  }, []);
+
   const radar = state.radar || [0, 0, 0, 0];
   const hasRadar = state.hasRadar || false;
 
   return (
     <div className="landing-page-root">
+      {/* Animated Splash Screen Logo Intro */}
+      <SplashScreen minDuration={1800} />
+
       {/* Background Layer */}
       <div className="bg-grid"></div>
       <div className="bg-glow"></div>
@@ -81,7 +109,7 @@ export default function LandingPage() {
         <header className="hero">
           <div className="wrap">
             <div className="hero-grid">
-              <div className='hero-wrap'>
+              <div className='hero-wrap reveal-on-scroll'>
                 <h1 className="hero-title">
                   {isEnglish ? (
                     <>Understand AI, not just <span className="accent">using it</span>, but <span className="accent">evaluating it</span>.</>
@@ -128,7 +156,7 @@ export default function LandingPage() {
               </div>
 
               {/* Radar Card Showcase (Kosong / Strip jika belum login & mengisi Pre-test) */}
-              <div className="radar-preview">
+              <div className="radar-preview reveal-on-scroll reveal-scale">
                 <div className="radar-preview-head">
                   <h3>AI Readiness Radar</h3>
                   <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--text-dim)' }}>
@@ -172,7 +200,7 @@ export default function LandingPage() {
         {/* Infinite Carousel Sandbox Hub Showcase */}
         <section className="section" id="section-labs">
           <div className="wrap">
-            <div className="section-head">
+            <div className="section-head reveal-on-scroll">
               <div className="section-tag">Sandbox Hub</div>
               <div className="section-title">
                 {isEnglish ? 'Five labs, one new habit: think before trusting.' : 'Lima lab, satu kebiasaan baru: berpikir sebelum percaya.'}
@@ -185,7 +213,7 @@ export default function LandingPage() {
             </div>
           </div>
 
-          <div className="lab-marquee-container">
+          <div className="lab-marquee-container reveal-on-scroll">
             <div className="lab-marquee-track">
               {/* === SET PERTAMA (ASLI) === */}
               <div className="bento-item">
@@ -298,7 +326,7 @@ export default function LandingPage() {
         {/* Modules Timeline Section */}
         <section className="section-tight" id="section-modules">
           <div className="wrap">
-            <div className="section-head">
+            <div className="section-head reveal-on-scroll">
               <div className="section-tag">{isEnglish ? 'Syllabus' : 'Silabus'}</div>
               <div className="section-title">
                 {isEnglish ? 'Six modules, from foundations to thriving in the AI era.' : 'Enam modul, dari dasar sampai bertahan di era AI.'}
@@ -307,7 +335,7 @@ export default function LandingPage() {
                 {isEnglish ? 'Sequential learning path, each module unlocks relevant sandbox labs upon completion.' : 'Alur belajar berurutan, tiap modul membuka lab yang relevan begitu materinya selesai.'}
               </div>
             </div>
-            <div className="module-carousel-container">
+            <div className="module-carousel-container reveal-on-scroll">
               <button className="carousel-arrow prev" onClick={() => scrollCarousel(-1)} title="Sebelumnya">
                 <i className="fa-solid fa-chevron-left"></i>
               </button>
@@ -384,7 +412,7 @@ export default function LandingPage() {
         {/* Gamification & Badges Showcase */}
         <section className="section" id="section-gamifikasi">
           <div className="wrap">
-            <div className="section-head">
+            <div className="section-head reveal-on-scroll">
               <div className="section-tag">{isEnglish ? 'Achievement Badges' : 'Lencana Pencapaian'}</div>
               <div className="section-title">
                 {isEnglish ? 'Collect five badges, print one certificate.' : 'Kumpulkan lima badge, cetak satu sertifikat.'}
@@ -396,7 +424,7 @@ export default function LandingPage() {
               </div>
             </div>
 
-            <div className="badge-strip">
+            <div className="badge-strip reveal-on-scroll">
               <div className="badge-card">
                 <div className="badge-emoji" style={{ background: 'linear-gradient(135deg, #F59E0B, #D97706)', boxShadow: '0 2px 6px rgba(0,0,0,0.06)' }}>
                   <i className="fa-solid fa-award"></i>
@@ -440,7 +468,7 @@ export default function LandingPage() {
             </div>
 
             {/* Certificate Section & Humanized Famous Quote */}
-            <div className="cert-section">
+            <div className="cert-section reveal-on-scroll">
               <div>
                 <div className="section-tag">{isEnglish ? 'Recognition & Certificate' : 'Apresiasi & Sertifikasi'}</div>
                 <div className="section-title" style={{ fontSize: '1.42rem', marginTop: '8px', lineHeight: 1.4, fontStyle: 'italic', fontWeight: 700 }}>
@@ -548,7 +576,7 @@ export default function LandingPage() {
         {/* Accessibility Showcase Section */}
         <section className="section" id="section-akses">
           <div className="wrap">
-            <div className="a11y-section">
+            <div className="a11y-section reveal-on-scroll">
               <div className="a11y-grid">
                 <div>
                   <div className="a11y-title">
@@ -643,7 +671,7 @@ export default function LandingPage() {
       {/* Footer */}
       <footer>
         <div className="wrap footer-container">
-          <div className="footer-grid">
+          <div className="footer-grid reveal-on-scroll">
             <div className="footer-brand-col">
               <div className="logo" style={{ marginBottom: '12px' }}>
                 <div className="logo-mark">L</div>
