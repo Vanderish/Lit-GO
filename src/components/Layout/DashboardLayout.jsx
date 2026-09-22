@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Sidebar from '../Sidebar/Sidebar';
 import DashboardNavbar from '../Navbar/DashboardNavbar';
 import AccessibilityPanel from '../AccessibilityPanel';
@@ -22,15 +22,8 @@ export default function DashboardLayout() {
     loadDemoPreset,
   } = useProgress();
 
-  const [isGlobalPretestOpen, setIsGlobalPretestOpen] = useState(false);
-
-  useEffect(() => {
-    if (!state.hasRadar) {
-      setIsGlobalPretestOpen(true);
-    } else {
-      setIsGlobalPretestOpen(false);
-    }
-  }, [state.hasRadar]);
+  const [isDismissedPretest, setIsDismissedPretest] = useState(false);
+  const isGlobalPretestOpen = !state.hasRadar && !isDismissedPretest;
 
   return (
     <div className="layout-root">
@@ -41,9 +34,9 @@ export default function DashboardLayout() {
       {/* Global Pretest Modal */}
       <PretestModal 
         isOpen={isGlobalPretestOpen} 
-        onClose={() => setIsGlobalPretestOpen(false)} 
+        onClose={() => setIsDismissedPretest(true)} 
         canClose={state.hasRadar} 
-        onComplete={() => setIsGlobalPretestOpen(false)} 
+        onComplete={() => setIsDismissedPretest(true)} 
       />
 
       {/* Sidebar on the Left */}

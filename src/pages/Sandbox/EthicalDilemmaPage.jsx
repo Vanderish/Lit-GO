@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { useProgress } from '../../context/ProgressContext';
 import './EthicalDilemmaPage.css';
 
@@ -424,24 +424,14 @@ const AUDIT_CASES = [
 ];
 
 export default function EthicalDilemmaPage() {
-  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const { logActivity, showToast } = useProgress();
 
   // Tab utama: 'dilemma' (Simulator Dilema AI) vs 'transparency' (Audit Transparansi Produk)
-  const [activeTab, setActiveTab] = useState(
-    searchParams.get('tab') === 'transparency' ? 'transparency' : 'dilemma'
-  );
-
-  useEffect(() => {
-    const tabParam = searchParams.get('tab');
-    if (tabParam === 'transparency' || tabParam === 'dilemma') {
-      setActiveTab(tabParam);
-    }
-  }, [searchParams]);
+  const tabParam = searchParams.get('tab');
+  const activeTab = tabParam === 'transparency' ? 'transparency' : 'dilemma';
 
   const handleTabSwitch = (tabKey) => {
-    setActiveTab(tabKey);
     setSearchParams({ tab: tabKey });
   };
 

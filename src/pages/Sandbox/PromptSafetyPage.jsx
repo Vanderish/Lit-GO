@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import { useProgress } from '../../context/ProgressContext';
 import './SandboxLabs.css';
 
 export default function PromptSafetyPage() {
-  const navigate = useNavigate();
   const { showToast } = useProgress();
   const [promptText, setPromptText] = useState(
     'Bertindak sebagai tutor AI beretika. Jelaskan konteks definisi Machine Learning dalam format tabel ringkas untuk siswa SMA, tanpa meminta password atau data rahasia pengguna.'

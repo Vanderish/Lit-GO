@@ -9,7 +9,6 @@ export default function ModulBelajarPage() {
   const { state, saveState, showToast, MODULES } = useProgress();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const [activeModule, setActiveModule] = useState(null); // Selected module card
   const [activeStep, setActiveStep] = useState(null); // Selected step (triggers Full-Screen Gamified View)
   const [isModuleOpen, setModuleOpen] = useState(false);
   const [activeModId, setActiveModId] = useState(null);
@@ -18,18 +17,17 @@ export default function ModulBelajarPage() {
   const [quizFeedback, setQuizFeedback] = useState({ show: false, correct: false, msg: '' });
 
   // Sinkronisasi modul aktif via URL query param (?mod=1..6)
+  const modIdParam = searchParams.get('mod');
+  const activeModule = modIdParam ? MODULES.find((m) => String(m.id) === String(modIdParam)) || null : null;
+
   useEffect(() => {
-    const modIdParam = searchParams.get('mod');
     if (modIdParam) {
       const targetMod = MODULES.find((m) => String(m.id) === String(modIdParam));
-      if (targetMod) {
-        setActiveModule(targetMod);
-        if (state.lastVisitedModuleId !== targetMod.id) {
-          saveState({ ...state, lastVisitedModuleId: targetMod.id });
-        }
+      if (targetMod && state.lastVisitedModuleId !== targetMod.id) {
+        saveState({ ...state, lastVisitedModuleId: targetMod.id });
       }
     }
-  }, [searchParams]);
+  }, [modIdParam, MODULES, saveState, state]);
 
   const activeMod = MODULES.find((m) => m.id === activeModId);
 
@@ -163,7 +161,6 @@ export default function ModulBelajarPage() {
               key={mod.id}
               className={`mod-carousel-card mod-card-theme-${mod.id}`}
               onClick={() => {
-                setActiveModule(mod);
                 setSearchParams({ mod: String(mod.id) });
                 if (state.lastVisitedModuleId !== mod.id) {
                   saveState({ ...state, lastVisitedModuleId: mod.id });
@@ -239,7 +236,6 @@ export default function ModulBelajarPage() {
               <button
                 className="modal-close"
                 onClick={() => {
-                  setActiveModule(null);
                   setSearchParams({});
                 }}
               >

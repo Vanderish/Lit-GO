@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import { useProgress } from '../../context/ProgressContext';
 import './SandboxLabs.css';
 
@@ -68,7 +67,6 @@ const AUDIT_CASES = [
 ];
 
 export default function TransparencyCheckPage() {
-  const navigate = useNavigate();
   const { logActivity, showToast } = useProgress();
 
   const [activeCaseIndex, setActiveCaseIndex] = useState(0);

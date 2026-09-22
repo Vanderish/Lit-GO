@@ -1,5 +1,3 @@
-import React from 'react';
-
 export default function ResetModal({ isOpen, onClose, onReset }) {
   if (!isOpen) return null;
 

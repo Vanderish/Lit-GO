@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
 
@@ -23,7 +22,6 @@ import DeepfakeDetectivePage from './pages/Sandbox/DeepfakeDetectivePage';
 import BiasBreakerPage from './pages/Sandbox/BiasBreakerPage';
 import EthicalDilemmaPage from './pages/Sandbox/EthicalDilemmaPage';
 import PromptSafetyPage from './pages/Sandbox/PromptSafetyPage';
-import TransparencyCheckPage from './pages/Sandbox/TransparencyCheckPage';
 
 function App() {
   return (

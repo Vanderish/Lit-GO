@@ -325,7 +325,7 @@ export default function Dashboard() {
                     </div>
                     <div className="activity-info">
                       <div className="activity-text">{act.text}</div>
-                      <span className="activity-time">{act.time || 'Baru saja'}</span>
+                      <span className="activity-time">{formatRelativeTime(act)}</span>
                     </div>
                   </div>
                 ))}

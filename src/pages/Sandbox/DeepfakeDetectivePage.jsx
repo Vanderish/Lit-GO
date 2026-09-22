@@ -1,5 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useRef } from 'react';
 import { useProgress } from '../../context/ProgressContext';
 import './DeepfakeDetectivePage.css';
 
@@ -113,7 +112,6 @@ const CURATED_CASES = [
 ];
 
 export default function DeepfakeDetectivePage() {
-  const navigate = useNavigate();
   const { state, saveState, logActivity, showToast } = useProgress();
   
   // State untuk dataset kasus aktif

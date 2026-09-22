@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../../context/ProgressContext';
 import Logo from '../Logo/Logo';

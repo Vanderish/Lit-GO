@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import './Game2Arena.css';
 
 // 24 MIMO-STYLE INTERACTIVE CODE & PROMPT CHALLENGES (4 STEPS x 6 MODULES)
@@ -569,12 +569,22 @@ export default function Game2Arena({ activeStep, onClose, onComplete, onSwitchTo
   const [checkedState, setCheckedState] = useState(null); // 'correct' | 'incorrect' | null
   const [showExplainModal, setShowExplainModal] = useState(false);
 
+  // Reset when challenge step changes
+  const [prevChallengeKey, setPrevChallengeKey] = useState(challengeKey);
+  if (prevChallengeKey !== challengeKey) {
+    setPrevChallengeKey(challengeKey);
+    setPlacedSlots(Array(challenge.solution.length).fill(null));
+    setUsedTokenIndices([]);
+    setCheckedState(null);
+    setShowExplainModal(false);
+  }
+
   // Check Answer Validation
-  const handleCheckAnswer = () => {
+  const handleCheckAnswer = useCallback(() => {
     // Must fill all slots
     if (placedSlots.some((s) => s === null)) return;
 
-    const userAnswers = placedSlots.map((s) => s.value);
+    const userAnswers = placedSlots.map((s) => s?.value);
     const isCorrect = userAnswers.every((val, idx) => val === challenge.solution[idx]);
 
     if (isCorrect) {
@@ -582,25 +592,17 @@ export default function Game2Arena({ activeStep, onClose, onComplete, onSwitchTo
     } else {
       setCheckedState('incorrect');
     }
-  };
+  }, [placedSlots, challenge.solution]);
 
-  const handleRetry = () => {
+  const handleRetry = useCallback(() => {
     setCheckedState(null);
-  };
+  }, []);
 
-  const handleContinue = () => {
-    if (onComplete) {
+  const handleContinue = useCallback(() => {
+    if (onComplete && step) {
       onComplete(step.id);
     }
-  };
-
-  // Reset when challenge step changes
-  useEffect(() => {
-    setPlacedSlots(Array(challenge.solution.length).fill(null));
-    setUsedTokenIndices([]);
-    setCheckedState(null);
-    setShowExplainModal(false);
-  }, [challengeKey]);
+  }, [onComplete, step]);
 
   // Keyboard shortcut listener (Enter for Check/Continue, Ctrl+K for Explain)
   useEffect(() => {
@@ -621,7 +623,7 @@ export default function Game2Arena({ activeStep, onClose, onComplete, onSwitchTo
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [checkedState, placedSlots]);
+  }, [checkedState, handleCheckAnswer, handleContinue, handleRetry]);
 
   // Handle placing a token from tray into the first available slot
   const handleSelectToken = (tokenValue, tokenIdx) => {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useProgress } from '../../context/ProgressContext';
 import Logo from '../../components/Logo/Logo';

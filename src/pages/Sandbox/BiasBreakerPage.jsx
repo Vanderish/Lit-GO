@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import { useProgress } from '../../context/ProgressContext';
 import './SandboxLabs.css';
 
@@ -60,11 +59,16 @@ function shuffleArray(array) {
 }
 
 export default function BiasBreakerPage() {
-  const navigate = useNavigate();
   const { logActivity, showToast } = useProgress();
 
   const [activeCaseIndex, setActiveCaseIndex] = useState(0);
-  const [factWords, setFactWords] = useState([]);
+  const [factWords, setFactWords] = useState(() => {
+    const initialItems = DATASET_CASES[0].items.map(item => ({
+      ...item,
+      clicked: false
+    }));
+    return shuffleArray(initialItems);
+  });
   const [factScore, setFactScore] = useState(0);
   const [feedbackState, setFeedbackState] = useState({
     type: 'neutral',
@@ -75,7 +79,7 @@ export default function BiasBreakerPage() {
   const currentCase = DATASET_CASES[activeCaseIndex];
   const totalHallu = currentCase.items.filter(w => w.isHallu).length;
 
-  // Inisialisasi & acak urutan kalimat saat ganti kasus atau load
+  // Inisialisasi & acak urutan kalimat saat ganti kasus
   const loadCase = (caseIdx, shouldShuffle = true) => {
     setActiveCaseIndex(caseIdx);
     const selectedCase = DATASET_CASES[caseIdx];
@@ -91,10 +95,6 @@ export default function BiasBreakerPage() {
       message: 'Klik pada salah satu kalimat di dokumen sebelah kiri yang kamu curigai mengandung bias atau halusinasi.',
     });
   };
-
-  useEffect(() => {
-    loadCase(0, true);
-  }, []);
 
   const handleFactClick = (id) => {
     const word = factWords.find((w) => w.id === id);

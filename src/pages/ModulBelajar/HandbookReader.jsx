@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { HANDBOOK_MODULES } from './HandbookData';
 
-export default function HandbookReader({ moduleId, onProceedToQuiz, onClose }) {
+export default function HandbookReader({ moduleId, onProceedToQuiz }) {
   const [currentPageIndex, setCurrentPageIndex] = useState(0);
   const [viewMode, setViewMode] = useState('booklet'); // 'booklet' | 'continuous'
-  const [activeMythTab, setActiveMythTab] = useState(null);
 
   const moduleData = HANDBOOK_MODULES[moduleId] || HANDBOOK_MODULES[1];
   const pages = moduleData.pages || [];
@@ -132,8 +131,6 @@ export default function HandbookReader({ moduleId, onProceedToQuiz, onClose }) {
         <div className="handbook-sheet animate-fade-in" key={currentPageIndex}>
           <HandbookPageRender 
             page={currentPage} 
-            activeMythTab={activeMythTab} 
-            setActiveMythTab={setActiveMythTab}
           />
         </div>
       ) : (
@@ -146,8 +143,6 @@ export default function HandbookReader({ moduleId, onProceedToQuiz, onClose }) {
               </div>
               <HandbookPageRender 
                 page={pg} 
-                activeMythTab={activeMythTab} 
-                setActiveMythTab={setActiveMythTab}
               />
             </div>
           ))}
@@ -197,7 +192,7 @@ export default function HandbookReader({ moduleId, onProceedToQuiz, onClose }) {
 }
 
 // Subkomponen untuk merender isi tiap halaman dengan layout editorial 2-kolom & infografis
-function HandbookPageRender({ page, activeMythTab, setActiveMythTab }) {
+function HandbookPageRender({ page }) {
   return (
     <div className="hb-page-content">
       {/* Chapter Number Badge & Header */}
