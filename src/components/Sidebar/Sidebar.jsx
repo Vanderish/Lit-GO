@@ -5,7 +5,7 @@ import Logo from '../Logo/Logo';
 import './Sidebar.css';
 
 export default function Sidebar() {
-  const { badgeCount, doneCount, completedModulesCount } = useProgress();
+  const { completedModulesCount } = useProgress();
   const navigate = useNavigate();
   const [userData, setUserData] = useState(() => {
     try {
@@ -47,11 +47,6 @@ export default function Sidebar() {
     { to: '/sandbox/ethical-dilemma', title: 'Ethical Dilemma', icon: 'fa-scale-balanced', color: '#6366F1' },
     { to: '/sandbox/prompt-safety', title: 'Prompt Safety Lab', icon: 'fa-code', color: '#10B981' },
     { to: '/sandbox/transparency-check', title: 'Transparency Check', icon: 'fa-file-shield', color: '#14B8A6' },
-  ];
-
-  const badgeNav = [
-    { to: '/progres', title: 'Progres Belajar', icon: 'fa-chart-line', color: '#3B82F6', counter: `${doneCount}/24` },
-    { to: '/koleksi-badge', title: 'Koleksi Badge', icon: 'fa-award', color: '#059669', counter: `${badgeCount}/5` },
   ];
 
   const userName = userData?.name || 'User Lit-GO';
@@ -116,19 +111,6 @@ export default function Sidebar() {
                 <NavLink key={item.to} to={item.to} onClick={closeMobileMenu} className={({ isActive }) => `sidebar-menu-item ${isActive ? 'active' : ''}`}>
                   <div className="menu-item-icon-clean" style={{ color: item.color }}><i className={`fa-solid ${item.icon}`}></i></div>
                   <div className="menu-item-info"><span className="menu-item-title">{item.title}</span></div>
-                </NavLink>
-              ))}
-            </div>
-          </div>
-
-          <div className="sidebar-section">
-            <div className="sidebar-section-title"><span>PENCAPAIAN</span></div>
-            <div className="sidebar-menu-list">
-              {badgeNav.map((item) => (
-                <NavLink key={item.to} to={item.to} onClick={closeMobileMenu} className={({ isActive }) => `sidebar-menu-item ${isActive ? 'active' : ''}`}>
-                  <div className="menu-item-icon-clean" style={{ color: item.color }}><i className={`fa-solid ${item.icon}`}></i></div>
-                  <div className="menu-item-info"><span className="menu-item-title">{item.title}</span></div>
-                  {item.counter && <span className="menu-item-count">{item.counter}</span>}
                 </NavLink>
               ))}
             </div>

@@ -70,6 +70,21 @@ export default function Dashboard() {
   const minScore = hasRadar ? Math.min(...radar) : 0;
   const priorityPillarIndex = hasRadar ? radar.indexOf(minScore) : -1;
 
+  // Handler Lanjutkan Belajar: Membuka modul terakhir yang dikunjungi atau modul belum tuntas berikutnya
+  const handleContinueLearning = () => {
+    const lastMod = state?.lastVisitedModuleId;
+    if (lastMod) {
+      navigate(`/modul-belajar?mod=${lastMod}`);
+    } else {
+      const doneList = state?.doneModules || [];
+      const firstUnfinished = [1, 2, 3, 4, 5, 6].find((mId) => {
+        const steps = [`${mId}-1`, `${mId}-2`, `${mId}-3`, `${mId}-4`];
+        return !steps.every((s) => doneList.includes(s)) && !doneList.includes(mId);
+      }) || 1;
+      navigate(`/modul-belajar?mod=${firstUnfinished}`);
+    }
+  };
+
   const pillarsData = [
     {
       id: 1,
@@ -81,7 +96,7 @@ export default function Dashboard() {
       badgeClass: 'badge-indigo',
       score: radar[0],
       desc: 'Memahami definisi fundamental AI, sejarah perkembangan Transformer, keterbatasan model LLM, dan mitigasi halusinasi.',
-      moduleTarget: '/modul-belajar',
+      moduleTarget: '/modul-belajar?mod=1',
       btnLabel: 'Pelajari Modul 1',
     },
     {
@@ -94,7 +109,7 @@ export default function Dashboard() {
       badgeClass: 'badge-teal',
       score: radar[1],
       desc: 'Memahami hak cipta karya AI, regulasi privasi data, bias algoritma Gender Shades, dan deteksi forensik deepfake.',
-      moduleTarget: '/modul-belajar',
+      moduleTarget: '/modul-belajar?mod=2',
       btnLabel: 'Pelajari Modul 2',
     },
     {
@@ -107,7 +122,7 @@ export default function Dashboard() {
       badgeClass: 'badge-amber',
       score: radar[2],
       desc: 'Menyusun instruksi terstruktur dengan formula persona, konteks, format output, zero-shot, few-shot, dan teknik ReAct.',
-      moduleTarget: '/modul-belajar',
+      moduleTarget: '/modul-belajar?mod=3',
       btnLabel: 'Pelajari Modul 3',
     },
     {
@@ -120,7 +135,7 @@ export default function Dashboard() {
       badgeClass: 'badge-emerald',
       score: radar[3],
       desc: 'Melatih skeptisisme sehat, melakukan fact-checking silang, evaluasi bias informasi, dan verifikasi klaim output AI.',
-      moduleTarget: '/modul-belajar',
+      moduleTarget: '/modul-belajar?mod=6',
       btnLabel: 'Pelajari Modul 6',
     },
   ];
@@ -171,7 +186,7 @@ export default function Dashboard() {
             </div>
 
             <div className="bento-cta-row">
-              <button className="btn-bento-primary" onClick={() => navigate('/modul-belajar')}>
+              <button className="btn-bento-primary" onClick={handleContinueLearning}>
                 <i className="fa-solid fa-book-open-reader mr-2"></i> Lanjutkan Belajar
               </button>
               <button className="btn-bento-ghost" onClick={() => navigate('/sandbox/deepfake-detective')}>

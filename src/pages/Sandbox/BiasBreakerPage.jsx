@@ -61,7 +61,7 @@ function shuffleArray(array) {
 
 export default function BiasBreakerPage() {
   const navigate = useNavigate();
-  const { showToast } = useProgress();
+  const { logActivity, showToast } = useProgress();
 
   const [activeCaseIndex, setActiveCaseIndex] = useState(0);
   const [factWords, setFactWords] = useState([]);
@@ -113,6 +113,7 @@ export default function BiasBreakerPage() {
       });
 
       if (newScore === totalHallu) {
+        logActivity(`Menuntaskan Analisis Bias Breaker: ${currentCase.title} ⚡`, 'fa-solid fa-bolt', 'amber');
         showToast('Luar biasa! Semua anomali pada dataset ini berhasil ditemukan!', 'success');
       }
     } else {

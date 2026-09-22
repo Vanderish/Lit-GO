@@ -142,37 +142,56 @@
 }
 
 .fp-quiz-option-card {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   width: 100%;
   background: var(--white);
-  border: 1px solid var(--line);
+  border: 1.5px solid var(--line);
   border-radius: 12px;
-  padding: 20px 24px;
+  padding: 18px 22px;
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   color: var(--navy);
   font-weight: 500;
   font-size: 0.95rem;
+  line-height: 1.5;
 }
 
 .fp-quiz-option-card:hover {
-  border-color: var(--teal); /* Menggunakan warna teal dari global css sebagai hover state */
-  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+  border-color: var(--indigo);
+  box-shadow: 0 4px 20px rgba(99, 102, 241, 0.08);
 }
 
 .fp-quiz-option-card.selected {
-  border-color: var(--teal);
-  background-color: rgba(20, 184, 166, 0.06); /* Teal transparan */
+  border-color: var(--indigo);
+  background-color: rgba(99, 102, 241, 0.06);
   color: var(--navy);
+  font-weight: 600;
+}
+
+.fp-quiz-option-card.is-correct {
+  border-color: #10B981 !important;
+  background-color: rgba(16, 185, 129, 0.08) !important;
+  color: #065F46 !important;
+  font-weight: 600;
+}
+
+.fp-quiz-option-card.is-wrong {
+  border-color: #EF4444 !important;
+  background-color: rgba(239, 68, 68, 0.08) !important;
+  color: #991B1B !important;
+  font-weight: 600;
 }
 
 /* Feedback Box */
 .fp-quiz-feedback {
   margin-top: 24px;
-  padding: 16px 20px;
-  border-radius: 10px;
-  font-size: 0.9rem;
-  font-weight: 600;
+  margin-bottom: 48px;
+  padding: 18px 22px;
+  border-radius: 12px;
+  font-size: 0.92rem;
+  font-weight: 500;
   animation: slideUpFb 0.3s ease;
 }
 
@@ -182,15 +201,31 @@
 }
 
 .fp-quiz-feedback.correct {
-  background: rgba(16, 185, 129, 0.1);
-  color: var(--emerald);
-  border: 1px solid rgba(16, 185, 129, 0.3);
+  background: #ECFDF5;
+  color: #065F46;
+  border: 1.5px solid #A7F3D0;
 }
 
 .fp-quiz-feedback.wrong {
-  background: rgba(239, 68, 68, 0.1);
-  color: var(--red);
-  border: 1px solid rgba(239, 68, 68, 0.3);
+  background: #FEF2F2;
+  color: #991B1B;
+  border: 1.5px solid #FECACA;
+}
+
+.fp-feedback-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 6px;
+}
+
+.fp-feedback-expl {
+  font-size: 0.88rem;
+  font-weight: 400;
+  line-height: 1.6;
+  margin-top: 4px;
 }
 
 /* Navigasi Bawah (Bottom App Bar) */

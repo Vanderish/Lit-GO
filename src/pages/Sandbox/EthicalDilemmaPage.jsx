@@ -164,7 +164,7 @@ const ETHICAL_CASES = [
 
 export default function EthicalDilemmaPage() {
   const navigate = useNavigate();
-  const { showToast } = useProgress();
+  const { logActivity, showToast } = useProgress();
 
   const [activeCaseIndex, setActiveCaseIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -187,6 +187,7 @@ export default function EthicalDilemmaPage() {
     setDilemmaState(opt);
 
     if (opt.type === 'ethical') {
+      logActivity(`Membuat Keputusan Etis AI: ${currentCase.topic} ⚖️`, 'fa-solid fa-scale-balanced', 'indigo');
       showToast('Keputusan sangat etis, berintegritas, & mematuhi regulasi!', 'success');
     } else if (opt.type === 'warning') {
       showToast('Perhatian: Terdapat potensi risiko etika yang perlu dimitigasi.', 'warning');

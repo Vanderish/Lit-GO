@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { useProgress } from '../../context/ProgressContext';
 import './ModulBelajarPage.css';
 import HandbookReader from './HandbookReader';
@@ -6,6 +7,7 @@ import Game1Arena from './Game1Arena';
 
 export default function ModulBelajarPage() {
   const { state, saveState, showToast, MODULES } = useProgress();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const [activeModule, setActiveModule] = useState(null); // Selected module card
   const [activeStep, setActiveStep] = useState(null); // Selected step (triggers Full-Screen Gamified View)
@@ -14,6 +16,20 @@ export default function ModulBelajarPage() {
   const [showQuizView, setShowQuizView] = useState(false);
   const [selectedAnsIndex, setSelectedAnsIndex] = useState(null);
   const [quizFeedback, setQuizFeedback] = useState({ show: false, correct: false, msg: '' });
+
+  // Sinkronisasi modul aktif via URL query param (?mod=1..6)
+  useEffect(() => {
+    const modIdParam = searchParams.get('mod');
+    if (modIdParam) {
+      const targetMod = MODULES.find((m) => String(m.id) === String(modIdParam));
+      if (targetMod) {
+        setActiveModule(targetMod);
+        if (state.lastVisitedModuleId !== targetMod.id) {
+          saveState({ ...state, lastVisitedModuleId: targetMod.id });
+        }
+      }
+    }
+  }, [searchParams]);
 
   const activeMod = MODULES.find((m) => m.id === activeModId);
 
@@ -51,17 +67,34 @@ export default function ModulBelajarPage() {
       const allModulesDone = mod1Done && mod2Done && mod3Done && mod4Done && mod5Done && mod6Done;
       if (allModulesDone && state.hasRadar && !newBadges.includes(5)) newBadges.push(5);
 
-      saveState({ ...state, doneModules: newDone, badges: newBadges });
+      const now = Date.now();
+      const newAct = {
+        id: now,
+        text: `Menuntaskan Kuis Evaluasi ${activeMod.tag}: ${activeMod.title} 🎓`,
+        icon: 'fa-solid fa-graduation-cap',
+        tone: 'indigo',
+        time: 'Baru saja',
+        timestamp: now,
+      };
+      const currentActs = Array.isArray(state.activities) ? state.activities : [];
+
+      saveState({ 
+        ...state, 
+        doneModules: newDone, 
+        badges: newBadges,
+        activities: [newAct, ...currentActs.slice(0, 9)],
+      });
+      
+      showToast('Kuis Berhasil Diselesaikan! +150 EXP & Modul Tuntas. 🎉', 'success');
       
       setTimeout(() => {
         setModuleOpen(false);
-        showToast('Modul selesai! EXP & Gems bertambah.', 'success');
-      }, 1500);
+      }, 2500);
     } else {
       setQuizFeedback({
         show: true,
         correct: false,
-        msg: 'Jawaban kurang tepat. Coba periksa kembali.',
+        msg: 'Jawaban kurang tepat. Coba periksa konsep ilmiah di bawah ini.',
       });
     }
   };
@@ -129,7 +162,13 @@ export default function ModulBelajarPage() {
             <div
               key={mod.id}
               className={`mod-carousel-card mod-card-theme-${mod.id}`}
-              onClick={() => setActiveModule(mod)}
+              onClick={() => {
+                setActiveModule(mod);
+                setSearchParams({ mod: String(mod.id) });
+                if (state.lastVisitedModuleId !== mod.id) {
+                  saveState({ ...state, lastVisitedModuleId: mod.id });
+                }
+              }}
               style={{ width: '100%', cursor: 'pointer', position: 'relative' }}
             >
               <div className="mod-card-level">{mod.id}</div>
@@ -197,7 +236,13 @@ export default function ModulBelajarPage() {
                   </div>
                 </div>
               </div>
-              <button className="modal-close" onClick={() => setActiveModule(null)}>
+              <button
+                className="modal-close"
+                onClick={() => {
+                  setActiveModule(null);
+                  setSearchParams({});
+                }}
+              >
                 ✕
               </button>
             </div>
@@ -367,25 +412,49 @@ export default function ModulBelajarPage() {
                       </div>
 
                       <div className="fp-quiz-options">
-                        {activeMod.quiz.opts.map((opt, i) => (
-                          <label 
-                            key={i} 
-                            className={`fp-quiz-option-card ${selectedAnsIndex === i ? 'selected' : ''}`}
-                            onClick={() => {
-                              setSelectedAnsIndex(i);
-                              setQuizFeedback({ show: false, correct: false, msg: '' });
-                            }}
-                          >
-                            <input className="sr-only" name="quiz_answer" type="radio" value={i} readOnly checked={selectedAnsIndex === i} />
-                            <span className="fp-quiz-option-text">{opt}</span>
-                          </label>
-                        ))}
+                        {activeMod.quiz.opts.map((opt, i) => {
+                          const isSelected = selectedAnsIndex === i;
+                          const isCorrectAns = activeMod.quiz.ans === i;
+                          let statusClass = '';
+                          if (quizFeedback.show) {
+                            if (isSelected && !quizFeedback.correct) statusClass = 'is-wrong';
+                            if (isCorrectAns) statusClass = 'is-correct';
+                          } else if (isSelected) {
+                            statusClass = 'selected';
+                          }
+
+                          return (
+                            <label 
+                              key={i} 
+                              className={`fp-quiz-option-card ${statusClass}`}
+                              onClick={() => {
+                                if (quizFeedback.show && quizFeedback.correct) return;
+                                setSelectedAnsIndex(i);
+                                setQuizFeedback({ show: false, correct: false, msg: '' });
+                              }}
+                            >
+                              <input className="sr-only" name="quiz_answer" type="radio" value={i} readOnly checked={selectedAnsIndex === i} />
+                              <span className="fp-quiz-option-text">{opt}</span>
+                              {quizFeedback.show && isCorrectAns && (
+                                <i className="fa-solid fa-circle-check text-emerald ml-2" style={{ fontSize: '1.2rem', color: '#10B981' }}></i>
+                              )}
+                              {quizFeedback.show && isSelected && !quizFeedback.correct && (
+                                <i className="fa-solid fa-circle-xmark text-red ml-2" style={{ fontSize: '1.2rem', color: '#EF4444' }}></i>
+                              )}
+                            </label>
+                          );
+                        })}
                       </div>
 
                       {quizFeedback.show && (
                         <div className={`fp-quiz-feedback ${quizFeedback.correct ? 'correct' : 'wrong'}`}>
-                          <i className={`fa-solid ${quizFeedback.correct ? 'fa-circle-check' : 'fa-triangle-exclamation'} mr-2`}></i>
-                          {quizFeedback.msg}
+                          <div className="fp-feedback-title">
+                            <i className={`fa-solid ${quizFeedback.correct ? 'fa-circle-check' : 'fa-triangle-exclamation'}`}></i>
+                            {quizFeedback.correct ? 'Jawaban Tepat! Modul Selesai 🎉' : 'Jawaban Belum Tepat 🤔'}
+                          </div>
+                          <div className="fp-feedback-expl">
+                            {activeMod.quiz.explanation || quizFeedback.msg}
+                          </div>
                         </div>
                       )}
                     </>

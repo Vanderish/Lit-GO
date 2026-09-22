@@ -114,7 +114,7 @@ const CURATED_CASES = [
 
 export default function DeepfakeDetectivePage() {
   const navigate = useNavigate();
-  const { state, saveState, showToast } = useProgress();
+  const { state, saveState, logActivity, showToast } = useProgress();
   
   // State untuk dataset kasus aktif
   const [activeCaseIndex, setActiveCaseIndex] = useState(0);
@@ -411,8 +411,10 @@ export default function DeepfakeDetectivePage() {
         gems: (state.gems || 0) + 150,
       });
 
+      logActivity(`Menuntaskan Investigasi Deepfake Lab: ${currentCase.title} 🔍`, 'fa-solid fa-eye', 'teal');
       showToast('Investigasi Berhasil! +150 Gems & E-Badge Detective Terbuka.', 'success');
     } else {
+      logActivity(`Melakukan Audit Forensik Gambar Kustom pada Deepfake Lab 🔬`, 'fa-solid fa-microchip', 'teal');
       showToast('Latihan investigasi gambar kustom berhasil diselesaikan!', 'success');
     }
   };

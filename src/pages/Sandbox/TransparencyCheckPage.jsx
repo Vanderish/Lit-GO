@@ -69,7 +69,7 @@ const AUDIT_CASES = [
 
 export default function TransparencyCheckPage() {
   const navigate = useNavigate();
-  const { showToast } = useProgress();
+  const { logActivity, showToast } = useProgress();
 
   const [activeCaseIndex, setActiveCaseIndex] = useState(0);
   const [userAuditAnswers, setUserAuditAnswers] = useState({});
@@ -99,6 +99,7 @@ export default function TransparencyCheckPage() {
     }
 
     setIsAudited(true);
+    logActivity(`Menuntaskan Audit Transparansi AI: ${currentCase.category} 📋`, 'fa-solid fa-file-shield', 'teal');
     showToast('Audit kepatuhan transparansi selesai dievaluasi!', 'success');
   };
 
