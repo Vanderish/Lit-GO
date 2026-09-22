@@ -23,6 +23,7 @@ import DeepfakeDetectivePage from './pages/Sandbox/DeepfakeDetectivePage';
 import BiasBreakerPage from './pages/Sandbox/BiasBreakerPage';
 import EthicalDilemmaPage from './pages/Sandbox/EthicalDilemmaPage';
 import PromptSafetyPage from './pages/Sandbox/PromptSafetyPage';
+import TransparencyCheckPage from './pages/Sandbox/TransparencyCheckPage';
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
               <Route path="/sandbox/bias-breaker" element={<BiasBreakerPage />} />
               <Route path="/sandbox/ethical-dilemma" element={<EthicalDilemmaPage />} />
               <Route path="/sandbox/prompt-safety" element={<PromptSafetyPage />} />
+              <Route path="/sandbox/transparency-check" element={<TransparencyCheckPage />} />
             </Route>
           </Route>
 

@@ -46,6 +46,7 @@ export default function Sidebar() {
     { to: '/sandbox/bias-breaker', title: 'Bias Breaker', icon: 'fa-quote-left', color: '#F59E0B' },
     { to: '/sandbox/ethical-dilemma', title: 'Ethical Dilemma', icon: 'fa-scale-balanced', color: '#6366F1' },
     { to: '/sandbox/prompt-safety', title: 'Prompt Safety Lab', icon: 'fa-code', color: '#10B981' },
+    { to: '/sandbox/transparency-check', title: 'Transparency Check', icon: 'fa-file-shield', color: '#14B8A6' },
   ];
 
   const badgeNav = [
@@ -67,11 +68,11 @@ export default function Sidebar() {
       <aside className={`sidebar-card ${isMobileOpen ? 'mobile-open' : ''}`}>
         <div className="sidebar-header">
 
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px', paddingBottom: '12px', borderBottom: '1px solid var(--line, rgba(30,41,59,0.08))' }}>
+          <div className="sidebar-header-top">
             <div style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }} onClick={() => navigate('/dashboard')}>
               <Logo size={22} showText={true} color="#3B82F6" textColor="var(--navy, #1E293B)" />
             </div>
-            <div className="sidebar-traffic-lights desktop-only" style={{ margin: 0 }}>
+            <div className="sidebar-traffic-lights desktop-only">
               <span className="dot dot-red"></span>
               <span className="dot dot-yellow"></span>
               <span className="dot dot-green"></span>

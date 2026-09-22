@@ -1,0 +1,593 @@
+/* ==========================================================================
+   SANDBOX LABS UNIFIED STYLESHEET (BIAS BREAKER, ETHICAL DILEMMA, PROMPT SAFETY)
+   ========================================================================== */
+
+/* --- Layout Grid --- */
+.sandbox-layout-grid {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 24px;
+  align-items: start;
+}
+
+@media (max-width: 1080px) {
+  .sandbox-layout-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- Common Lab Header --- */
+.lab-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 4px 12px;
+  border-radius: 999px;
+  margin-bottom: 8px;
+}
+
+.lab-badge-amber {
+  background: rgba(245, 158, 11, 0.12);
+  color: #D97706;
+  border: 1px solid rgba(245, 158, 11, 0.25);
+}
+
+.lab-badge-indigo {
+  background: rgba(59, 130, 246, 0.12);
+  color: #2563EB;
+  border: 1px solid rgba(59, 130, 246, 0.25);
+}
+
+.lab-badge-emerald {
+  background: rgba(16, 185, 129, 0.12);
+  color: #059669;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+/* --- Common Card / Box --- */
+.sandbox-card {
+  background: var(--white);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.03), 0 2px 6px -1px rgba(0, 0, 0, 0.02);
+  transition: all 0.2s ease;
+}
+
+.sandbox-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: sticky;
+  top: 88px;
+}
+
+.sandbox-sidebar-card {
+  background: var(--white);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.03);
+}
+
+.sandbox-sidebar-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ==========================================================================
+   LAB 02: BIAS BREAKER SPECIFIC STYLES
+   ========================================================================== */
+
+.document-sheet {
+  background: #FAFBFD;
+  border: 1px solid #E2E8F0;
+  border-radius: 14px;
+  padding: 22px;
+  position: relative;
+  line-height: 2.1;
+  font-size: 0.95rem;
+  color: var(--navy-light);
+}
+
+.document-sheet-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+  border-bottom: 1px dashed #CBD5E1;
+  font-size: 0.78rem;
+  color: var(--text-dim);
+}
+
+.document-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(59, 130, 246, 0.08);
+  color: var(--indigo);
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.fact-sentence-btn {
+  display: inline;
+  padding: 3px 6px;
+  margin: 0 2px;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.fact-sentence-btn:hover:not(.is-clicked) {
+  background: rgba(59, 130, 246, 0.08);
+  border-color: rgba(59, 130, 246, 0.25);
+  color: var(--indigo);
+}
+
+.fact-sentence-btn.is-hallu {
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.35);
+  color: var(--red);
+  font-weight: 600;
+  text-decoration: line-through;
+}
+
+.fact-sentence-btn.is-fact {
+  background: rgba(16, 185, 129, 0.12);
+  border-color: rgba(16, 185, 129, 0.35);
+  color: var(--emerald);
+  font-weight: 600;
+}
+
+/* Score Pill */
+.fact-score-display {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.06), rgba(245, 158, 11, 0.12));
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  border-radius: 12px;
+  padding: 12px 16px;
+}
+
+.fact-score-number {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #D97706;
+  line-height: 1;
+}
+
+.fact-score-dots {
+  display: flex;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.score-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #CBD5E1;
+  transition: all 0.3s;
+}
+
+.score-dot.active {
+  background: #D97706;
+  box-shadow: 0 0 8px rgba(245, 158, 11, 0.5);
+  transform: scale(1.15);
+}
+
+/* Feedback Box */
+.feedback-callout {
+  border-radius: 12px;
+  padding: 16px;
+  min-height: 130px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: all 0.3s;
+}
+
+.feedback-callout.neutral {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  color: var(--text-dim);
+}
+
+.feedback-callout.success {
+  background: rgba(16, 185, 129, 0.06);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #065F46;
+}
+
+.feedback-callout.danger {
+  background: rgba(239, 68, 68, 0.06);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #991B1B;
+}
+
+.btn-lab-action {
+  width: 100%;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid #E2E8F0;
+  background: #F8FAFC;
+  color: var(--navy);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-lab-action:hover {
+  background: #EEF2F6;
+  border-color: #CBD5E1;
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   LAB 03: ETHICAL DILEMMA SPECIFIC STYLES
+   ========================================================================== */
+
+.scenario-header-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--indigo);
+  margin-bottom: 6px;
+}
+
+.scenario-title {
+  font-size: 1.18rem;
+  font-weight: 800;
+  color: var(--navy);
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.scenario-desc-box {
+  background: #F8FAFC;
+  border-left: 3px solid var(--indigo);
+  border-radius: 0 10px 10px 0;
+  padding: 14px 16px;
+  font-size: 0.9rem;
+  color: var(--navy-light);
+  line-height: 1.6;
+  margin-bottom: 22px;
+}
+
+/* Choice Cards */
+.choice-cards-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dilemma-choice-btn {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 18px;
+  background: var(--white);
+  border: 1.5px solid #E2E8F0;
+  border-radius: 12px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 100%;
+  color: var(--navy);
+  position: relative;
+}
+
+.dilemma-choice-btn:hover {
+  border-color: rgba(59, 130, 246, 0.5);
+  background: rgba(59, 130, 246, 0.02);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.dilemma-choice-btn.selected-ethical {
+  border-color: var(--emerald);
+  background: rgba(16, 185, 129, 0.05);
+  box-shadow: 0 0 0 1px var(--emerald), 0 4px 14px rgba(16, 185, 129, 0.12);
+}
+
+.dilemma-choice-btn.selected-warning {
+  border-color: var(--amber);
+  background: rgba(245, 158, 11, 0.05);
+  box-shadow: 0 0 0 1px var(--amber), 0 4px 14px rgba(245, 158, 11, 0.12);
+}
+
+.dilemma-choice-btn.selected-danger {
+  border-color: var(--red);
+  background: rgba(239, 68, 68, 0.05);
+  box-shadow: 0 0 0 1px var(--red), 0 4px 14px rgba(239, 68, 68, 0.12);
+}
+
+.choice-letter-badge {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: #F1F5F9;
+  color: var(--navy);
+  font-weight: 800;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+
+.dilemma-choice-btn.selected-ethical .choice-letter-badge {
+  background: var(--emerald);
+  color: #fff;
+}
+.dilemma-choice-btn.selected-warning .choice-letter-badge {
+  background: var(--amber);
+  color: #fff;
+}
+.dilemma-choice-btn.selected-danger .choice-letter-badge {
+  background: var(--red);
+  color: #fff;
+}
+
+.choice-text-content {
+  flex: 1;
+}
+
+.choice-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  margin-bottom: 3px;
+  color: var(--navy);
+}
+
+.choice-desc {
+  font-size: 0.84rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+
+/* Progress Meters */
+.ethics-meter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ethics-meter-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ethics-meter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+.ethics-track {
+  height: 8px;
+  background: #E2E8F0;
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+}
+
+.ethics-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s;
+}
+
+/* ==========================================================================
+   LAB 04: PROMPT SAFETY SPECIFIC STYLES
+   ========================================================================== */
+
+.prompt-editor-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.prompt-templates-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.btn-template-chip {
+  padding: 5px 12px;
+  border-radius: 8px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  border: 1px solid #E2E8F0;
+  background: #F8FAFC;
+  color: var(--navy);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.2s;
+}
+
+.btn-template-chip:hover {
+  background: #EEF2F6;
+  border-color: #CBD5E1;
+  transform: translateY(-1px);
+}
+
+.btn-template-chip.safe-chip {
+  background: rgba(16, 185, 129, 0.08);
+  border-color: rgba(16, 185, 129, 0.25);
+  color: #059669;
+}
+.btn-template-chip.safe-chip:hover {
+  background: rgba(16, 185, 129, 0.16);
+}
+
+.btn-template-chip.danger-chip {
+  background: rgba(239, 68, 68, 0.08);
+  border-color: rgba(239, 68, 68, 0.25);
+  color: #DC2626;
+}
+.btn-template-chip.danger-chip:hover {
+  background: rgba(239, 68, 68, 0.16);
+}
+
+.prompt-textarea-wrap {
+  position: relative;
+  border-radius: 12px;
+  border: 1.5px solid #E2E8F0;
+  background: #F8FAFC;
+  transition: all 0.2s;
+}
+
+.prompt-textarea-wrap:focus-within {
+  border-color: var(--indigo);
+  background: #FFFFFF;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+}
+
+.prompt-textarea {
+  width: 100%;
+  padding: 16px;
+  background: transparent;
+  border: none;
+  font-family: 'JetBrains Mono', 'Plus Jakarta Sans', monospace;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--navy);
+  outline: none;
+  resize: vertical;
+  min-height: 140px;
+}
+
+.prompt-editor-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  border-top: 1px solid #E2E8F0;
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  background: #FAFBFD;
+  border-radius: 0 0 12px 12px;
+}
+
+/* Parser Anatomy Output Terminal */
+.parser-terminal {
+  background: #1E293B;
+  color: #E2E8F0;
+  border-radius: 12px;
+  padding: 16px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+  line-height: 1.65;
+  min-height: 110px;
+  word-break: break-word;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.parser-terminal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.7rem;
+  color: #94A3B8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.parser-grid-status {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.anatomy-status-card {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #E2E8F0;
+  background: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.2s;
+}
+
+.anatomy-status-card.is-active {
+  border-color: rgba(16, 185, 129, 0.4);
+  background: rgba(16, 185, 129, 0.04);
+}
+
+.anatomy-status-card.is-danger {
+  border-color: rgba(239, 68, 68, 0.4);
+  background: rgba(239, 68, 68, 0.04);
+}
+
+.anatomy-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--navy);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.anatomy-icon-badge {
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 6px;
+}
+
+.anatomy-icon-badge.pass {
+  background: rgba(16, 185, 129, 0.15);
+  color: #059669;
+}
+
+.anatomy-icon-badge.fail {
+  background: rgba(239, 68, 68, 0.15);
+  color: #DC2626;
+}
+
+.anatomy-icon-badge.pending {
+  background: #F1F5F9;
+  color: #94A3B8;
+}
