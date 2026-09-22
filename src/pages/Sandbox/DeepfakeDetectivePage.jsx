@@ -453,30 +453,15 @@ export default function DeepfakeDetectivePage() {
               Kasus #{idx + 1}: {c.title.split('(')[0].trim()}
             </button>
           ))}
-        </div>
-
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          {!isCustomMode && (
+          {isCustomMode && (
             <button
               type="button"
-              className="btn-lab-ghost"
-              onClick={handleRandomCase}
-              style={{ fontSize: '0.78rem', padding: '6px 12px' }}
-              title="Acak kasus uji berikutnya"
+              className="case-pill-btn active"
+              style={{ background: 'rgba(217, 119, 6, 0.1)', borderColor: '#D97706', color: '#B45309' }}
             >
-              <i className="fa-solid fa-shuffle mr-1"></i> Kasus Acak
+              <i className="fa-solid fa-cloud mr-1"></i> Gambar Kustom Anda
             </button>
           )}
-
-          <button
-            type="button"
-            className="case-pill-btn"
-            onClick={() => fileInputRef.current?.click()}
-            style={{ borderColor: 'rgba(59, 130, 246, 0.4)', color: 'var(--indigo)' }}
-          >
-            <i className="fa-solid fa-cloud-arrow-up mr-1"></i>
-            {isCustomMode ? 'Ganti Gambar Latihan' : 'Mode Latihan Bebas (Upload)'}
-          </button>
         </div>
       </div>
 

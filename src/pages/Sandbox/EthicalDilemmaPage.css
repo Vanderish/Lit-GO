@@ -1,0 +1,634 @@
+/* ==========================================================================
+   ETHICAL DILEMMA & TRANSPARENCY - SIMPLE & CLEAN MOCKUP THEME
+   ========================================================================== */
+
+.ethical-page-root {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-bottom: 60px;
+}
+
+/* 1. Header Area */
+.ethical-top-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.ethical-brand-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #64748B;
+  margin-bottom: 6px;
+}
+
+.ethical-main-title {
+  font-family: var(--font-display, inherit);
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 0 0 6px 0;
+  letter-spacing: -0.02em;
+}
+
+.ethical-sub-desc {
+  font-size: 0.88rem;
+  color: #64748B;
+  margin: 0;
+  line-height: 1.5;
+  max-width: 720px;
+}
+
+.ethical-accuracy-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 100px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #334155;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.04);
+}
+
+/* 2. Feature Tab Switcher (Simulator vs Audit) */
+.ethical-feature-tabs {
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px solid #E2E8F0;
+  margin-bottom: 22px;
+  padding-bottom: 2px;
+}
+
+.ethical-tab-btn {
+  background: transparent;
+  border: none;
+  padding: 10px 18px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #64748B;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ethical-tab-btn:hover {
+  color: #0F172A;
+}
+
+.ethical-tab-btn.active {
+  color: #2563EB;
+}
+
+.ethical-tab-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: #2563EB;
+  border-radius: 3px 3px 0 0;
+}
+
+.ethical-tab-count {
+  font-size: 0.72rem;
+  padding: 2px 7px;
+  border-radius: 100px;
+  background: #F1F5F9;
+  color: #475569;
+}
+
+.ethical-tab-btn.active .ethical-tab-count {
+  background: #EFF6FF;
+  color: #2563EB;
+}
+
+/* 3. Sub-Case Selector Bar */
+.ethical-selector-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 22px;
+  flex-wrap: wrap;
+}
+
+.ethical-selector-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.ethical-selector-label {
+  font-size: 0.76rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #64748B;
+}
+
+.ethical-pill-btn {
+  padding: 7px 16px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid #E2E8F0;
+  background: #FFFFFF;
+  color: #475569;
+}
+
+.ethical-pill-btn:hover {
+  background: #F8FAFC;
+  border-color: #CBD5E1;
+}
+
+.ethical-pill-btn.active {
+  background: #0F172A;
+  color: #FFFFFF;
+  border-color: #0F172A;
+}
+
+.ethical-case-counter {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #94A3B8;
+}
+
+/* 4. Two-Column Grid */
+.ethical-grid-layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 24px;
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .ethical-grid-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 5. Main Card Container */
+.ethical-main-panel {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 14px;
+  padding: 28px;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.03);
+}
+
+.ethical-domain-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  font-size: 0.78rem;
+  color: #64748B;
+  font-weight: 600;
+}
+
+.ethical-panel-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 0 0 14px 0;
+  line-height: 1.4;
+}
+
+.ethical-context-paragraph {
+  font-size: 0.92rem;
+  color: #334155;
+  line-height: 1.65;
+  margin-bottom: 22px;
+}
+
+.ethical-question-bold {
+  font-weight: 700;
+  color: #0F172A;
+  display: block;
+  margin-top: 8px;
+}
+
+/* 6. Choice Cards (Dilemma Tab) */
+.ethical-choices-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.ethical-choice-card {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 16px 18px;
+  background: #FFFFFF;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  text-align: left;
+  width: 100%;
+}
+
+.ethical-choice-card:hover {
+  border-color: #94A3B8;
+  background: #F8FAFC;
+}
+
+.ethical-choice-card.selected {
+  border-color: #2563EB;
+  background: #EFF6FF;
+  box-shadow: 0 0 0 1px #2563EB;
+}
+
+.ethical-radio-circle {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid #CBD5E1;
+  margin-top: 2px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ethical-choice-card.selected .ethical-radio-circle {
+  border-color: #2563EB;
+}
+
+.ethical-radio-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #2563EB;
+}
+
+.ethical-choice-body {
+  flex: 1;
+}
+
+.ethical-choice-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #0F172A;
+  margin-bottom: 4px;
+}
+
+.ethical-choice-desc {
+  font-size: 0.82rem;
+  color: #64748B;
+  line-height: 1.5;
+}
+
+.ethical-status-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.ethical-status-badge.badge-ethical {
+  background: #ECFDF5;
+  color: #059669;
+  border: 1px solid #A7F3D0;
+}
+
+.ethical-status-badge.badge-warning {
+  background: #FFFBEB;
+  color: #D97706;
+  border: 1px solid #FDE68A;
+}
+
+.ethical-status-badge.badge-danger {
+  background: #FEF2F2;
+  color: #DC2626;
+  border: 1px solid #FECACA;
+}
+
+/* Card Footer */
+.ethical-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 18px;
+  border-top: 1px solid #F1F5F9;
+  font-size: 0.78rem;
+  color: #94A3B8;
+}
+
+.ethical-reset-btn {
+  background: transparent;
+  border: none;
+  color: #64748B;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.ethical-reset-btn:hover {
+  color: #0F172A;
+}
+
+/* 7. Right Sidebar Panel */
+.ethical-side-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ethical-side-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 14px;
+  padding: 22px;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.03);
+}
+
+.ethical-side-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.ethical-side-heading {
+  font-size: 0.86rem;
+  font-weight: 800;
+  color: #0F172A;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.ethical-side-score-pill {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #059669;
+  background: #ECFDF5;
+  padding: 3px 10px;
+  border-radius: 100px;
+  border: 1px solid #A7F3D0;
+}
+
+/* Meters */
+.ethical-meter-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.ethical-meter-row {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.ethical-meter-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #334155;
+}
+
+.ethical-meter-track {
+  height: 6px;
+  background: #E2E8F0;
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.ethical-meter-fill {
+  height: 100%;
+  border-radius: 100px;
+  transition: width 0.4s ease;
+}
+
+/* Analysis Box */
+.ethical-analysis-box {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 18px;
+}
+
+.ethical-analysis-title {
+  font-size: 0.76rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #475569;
+  margin-bottom: 6px;
+}
+
+.ethical-analysis-text {
+  font-size: 0.8rem;
+  color: #334155;
+  line-height: 1.55;
+  margin-bottom: 10px;
+}
+
+.ethical-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 0.76rem;
+  color: #059669;
+  font-weight: 600;
+}
+
+/* Dark CTA Button */
+.btn-ethical-dark {
+  width: 100%;
+  padding: 12px 18px;
+  background: #0F172A;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.btn-ethical-dark:hover {
+  background: #1E293B;
+  transform: translateY(-1px);
+}
+
+.ethical-side-link {
+  display: block;
+  text-align: center;
+  margin-top: 10px;
+  font-size: 0.76rem;
+  color: #64748B;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.ethical-side-link:hover {
+  color: #0F172A;
+}
+
+/* ==========================================================================
+   TRANSPARENCY TAB SPECIFIC STYLES
+   ========================================================================== */
+
+.trans-quote-box {
+  background: #F8FAFC;
+  border-left: 3px solid #CBD5E1;
+  padding: 12px 16px;
+  border-radius: 0 8px 8px 0;
+  font-size: 0.86rem;
+  color: #334155;
+  font-style: italic;
+  margin-bottom: 14px;
+  line-height: 1.5;
+}
+
+.trans-forensic-tag {
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  color: #1E40AF;
+  margin-bottom: 22px;
+  line-height: 1.5;
+}
+
+.trans-params-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #475569;
+}
+
+.trans-param-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  background: #FFFFFF;
+  gap: 12px;
+}
+
+.trans-param-num {
+  font-weight: 800;
+  color: #64748B;
+  margin-right: 6px;
+}
+
+.trans-param-name {
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: #0F172A;
+}
+
+.trans-param-sub {
+  font-size: 0.76rem;
+  color: #64748B;
+  margin-top: 2px;
+}
+
+.trans-toggle-group {
+  display: flex;
+  gap: 6px;
+}
+
+.trans-toggle-btn {
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid #E2E8F0;
+  background: #FFFFFF;
+  color: #64748B;
+  transition: all 0.15s ease;
+}
+
+.trans-toggle-btn.active-terpenuhi {
+  background: #0F172A;
+  color: #FFFFFF;
+  border-color: #0F172A;
+}
+
+.trans-toggle-btn.active-tidak {
+  background: #0F172A;
+  color: #FFFFFF;
+  border-color: #0F172A;
+}
+
+/* Table in Sidebar */
+.trans-meta-table {
+  width: 100%;
+  font-size: 0.78rem;
+  margin-bottom: 16px;
+  border-collapse: collapse;
+}
+
+.trans-meta-table td {
+  padding: 6px 0;
+  border-bottom: 1px solid #F1F5F9;
+}
+
+.trans-meta-table td:first-child {
+  color: #64748B;
+}
+
+.trans-meta-table td:last-child {
+  text-align: right;
+  font-weight: 700;
+  color: #0F172A;
+}
+
+.trans-principles-list {
+  padding-left: 16px;
+  margin: 0;
+  font-size: 0.76rem;
+  color: #475569;
+  line-height: 1.6;
+}
+
+.trans-principles-list li {
+  margin-bottom: 6px;
+}

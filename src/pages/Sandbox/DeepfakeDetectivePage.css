@@ -912,6 +912,29 @@
   box-shadow: 0 0 0 1px var(--indigo);
 }
 
+.btn-upload-standalone {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 14px;
+  background: #F0F7FF;
+  border: 1.5px solid #BFDBFE;
+  color: #1D4ED8;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-upload-standalone:hover {
+  background: #DBEAFE;
+  border-color: #93C5FD;
+  color: #1E40AF;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.12);
+}
+
 .educational-disclaimer-banner {
   background: linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, rgba(217, 119, 6, 0.03) 100%);
   border: 1.5px solid rgba(245, 158, 11, 0.3);

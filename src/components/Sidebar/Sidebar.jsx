@@ -46,7 +46,6 @@ export default function Sidebar() {
     { to: '/sandbox/bias-breaker', title: 'Bias Breaker', icon: 'fa-quote-left', color: '#F59E0B' },
     { to: '/sandbox/ethical-dilemma', title: 'Ethical Dilemma', icon: 'fa-scale-balanced', color: '#6366F1' },
     { to: '/sandbox/prompt-safety', title: 'Prompt Safety Lab', icon: 'fa-code', color: '#10B981' },
-    { to: '/sandbox/transparency-check', title: 'Transparency Check', icon: 'fa-file-shield', color: '#14B8A6' },
   ];
 
   const userName = userData?.name || 'User Lit-GO';

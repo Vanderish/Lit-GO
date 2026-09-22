@@ -47,7 +47,7 @@ function App() {
               <Route path="/sandbox/bias-breaker" element={<BiasBreakerPage />} />
               <Route path="/sandbox/ethical-dilemma" element={<EthicalDilemmaPage />} />
               <Route path="/sandbox/prompt-safety" element={<PromptSafetyPage />} />
-              <Route path="/sandbox/transparency-check" element={<TransparencyCheckPage />} />
+              <Route path="/sandbox/transparency-check" element={<EthicalDilemmaPage />} />
             </Route>
           </Route>
 
