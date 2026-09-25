@@ -47,6 +47,18 @@ export default function Game1Arena({ activeStep, onClose, onComplete }) {
   const [timeLeft, setTimeLeft] = useState(10);
   const timerRef = useRef(null);
 
+  function handleTimeUp() {
+    if (checked) return;
+    setIsCorrect(false);
+    setChecked(true);
+    if (autoNext) {
+      if (autoNextTimerRef.current) clearTimeout(autoNextTimerRef.current);
+      autoNextTimerRef.current = setTimeout(() => {
+        handleNextQuestionDirect(quizIdx + 1);
+      }, 2000); // give a bit more time to read explanation if timed out
+    }
+  }
+
   // Timer logic
   useEffect(() => {
     if (isFinished || checked) {
@@ -69,20 +81,7 @@ export default function Game1Arena({ activeStep, onClose, onComplete }) {
       if (timerRef.current) clearInterval(timerRef.current);
     };
   }, [quizIdx, checked, isFinished]);
-
-  const handleTimeUp = () => {
-    if (checked) return;
-    setIsCorrect(false);
-    setChecked(true);
-    if (autoNext) {
-      if (autoNextTimerRef.current) clearTimeout(autoNextTimerRef.current);
-      autoNextTimerRef.current = setTimeout(() => {
-        handleNextQuestionDirect(quizIdx + 1);
-      }, 2000); // give a bit more time to read explanation if timed out
-    }
-  };
-
-  const handleNextQuestionDirect = (nextIdx) => {
+  function handleNextQuestionDirect(nextIdx) {
     if (autoNextTimerRef.current) clearTimeout(autoNextTimerRef.current);
 
     if (nextIdx < totalQuizzes) {
@@ -94,7 +93,7 @@ export default function Game1Arena({ activeStep, onClose, onComplete }) {
     } else {
       setIsFinished(true);
     }
-  };
+  }
 
   const handleSelectOption = (key) => {
     if (checked) return;
@@ -266,10 +265,50 @@ export default function Game1Arena({ activeStep, onClose, onComplete }) {
     );
   }
 
-  const useGrid = stepIndex === 3 || stepIndex === 4;
+  // Define Themes for each Step
+  const getThemeConfig = (step) => {
+    switch(step) {
+      case 1: return { 
+        id: 'theme-history', 
+        name: 'Sejarah & Arsitektur', 
+        icons: ['fa-building-columns', 'fa-scroll', 'fa-monument', 'fa-landmark'] 
+      };
+      case 2: return { 
+        id: 'theme-tech', 
+        name: 'Teknologi & AI', 
+        icons: ['fa-microchip', 'fa-robot', 'fa-network-wired', 'fa-satellite'] 
+      };
+      case 3: return { 
+        id: 'theme-nature', 
+        name: 'Alam & Lingkungan', 
+        icons: ['fa-leaf', 'fa-tree', 'fa-earth-americas', 'fa-seedling'] 
+      };
+      case 4: return { 
+        id: 'theme-space', 
+        name: 'Antariksa & Cosmos', 
+        icons: ['fa-rocket', 'fa-user-astronaut', 'fa-meteor', 'fa-star'] 
+      };
+      default: return { 
+        id: 'theme-history', 
+        name: 'Sejarah & Arsitektur', 
+        icons: ['fa-building-columns', 'fa-scroll', 'fa-monument', 'fa-landmark'] 
+      };
+    }
+  };
+
+  const themeConfig = getThemeConfig(stepIndex);
 
   return (
-    <div className={`duo-viewport animate-fade-in ${useGrid ? 'theme-grid' : 'theme-stack'}`}>
+    <div className={`duo-viewport animate-fade-in theme-stack ${themeConfig.id}`}>
+      
+      {/* Decorative Background Icons */}
+      <div className="theme-bg-decorations">
+        <i className={`fa-solid ${themeConfig.icons[0]} decor-1`}></i>
+        <i className={`fa-solid ${themeConfig.icons[1]} decor-2`}></i>
+        <i className={`fa-solid ${themeConfig.icons[2]} decor-3`}></i>
+        <i className={`fa-solid ${themeConfig.icons[3]} decor-4`}></i>
+      </div>
+
       {/* 1. TOP HEADER BAR */}
       <header className="duo-header">
         <button className="duo-close-btn" onClick={onClose} aria-label="Tutup">
@@ -313,8 +352,8 @@ export default function Game1Arena({ activeStep, onClose, onComplete }) {
           </h1>
         </div>
 
-        {/* Dynamic Layout Options (Grid vs Stack) */}
-        <div className={`duo-options-container ${useGrid ? 'grid-layout' : 'stack-layout'}`}>
+        {/* Dynamic Layout Options */}
+        <div className="duo-options-container">
           {['A', 'B', 'C', 'D'].map((key) => {
             const optText = currentQuiz?.options?.[key];
             if (!optText) return null;

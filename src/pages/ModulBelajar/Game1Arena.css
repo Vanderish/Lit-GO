@@ -1,6 +1,35 @@
 /* =========================================================
-   LIT-GO PREMIUM GAMIFIED LESSON STYLES (LEVEL 1-4)
+   LIT-GO PREMIUM GAMIFIED LESSON STYLES (THEMED LEVELS)
    ========================================================= */
+
+/* --- THEME VARIABLES --- */
+.theme-history {
+  --theme-bg: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  --theme-primary: #b45309;
+  --theme-text: #78350f;
+  --theme-accent: #f59e0b;
+}
+
+.theme-tech {
+  --theme-bg: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+  --theme-primary: #4338ca;
+  --theme-text: #312e81;
+  --theme-accent: #6366f1;
+}
+
+.theme-nature {
+  --theme-bg: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+  --theme-primary: #15803d;
+  --theme-text: #14532d;
+  --theme-accent: #22c55e;
+}
+
+.theme-space {
+  --theme-bg: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%);
+  --theme-primary: #6d28d9;
+  --theme-text: #4c1d95;
+  --theme-accent: #8b5cf6;
+}
 
 .duo-viewport {
   position: fixed;
@@ -13,16 +42,33 @@
   overflow: hidden;
   font-family: 'Plus Jakarta Sans', sans-serif;
   user-select: none;
-  transition: background 0.3s ease;
+  background: var(--theme-bg, #ccfbf1);
+  transition: background 0.5s ease;
 }
 
-/* ---------------------------------------------------------
-   THEME 1: STACK LAYOUT (LEVEL 1-2) - Soft Teal / Minimalist
-   --------------------------------------------------------- */
-.duo-viewport.theme-stack {
-  background: radial-gradient(circle at top left, #e0f2fe 0%, #ccfbf1 100%);
-  color: #0f172a;
+/* =========================================================
+   BACKGROUND DECORATIONS
+   ========================================================= */
+.theme-bg-decorations {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
 }
+.theme-bg-decorations i {
+  position: absolute;
+  font-size: 24rem;
+  opacity: 0.05;
+  color: var(--theme-primary, #000);
+  transform: rotate(-15deg);
+  transition: all 0.5s ease;
+}
+.decor-1 { top: -5%; left: -5%; }
+.decor-2 { bottom: 5%; right: -10%; transform: rotate(15deg) !important; font-size: 30rem !important; }
+.decor-3 { top: 35%; left: 75%; font-size: 16rem !important; transform: rotate(-30deg) !important; }
+.decor-4 { bottom: -15%; left: 15%; font-size: 20rem !important; transform: rotate(10deg) !important; }
+
 
 /* ---------------------------------------------------------
    THEME 2: GRID LAYOUT (LEVEL 3-4) - Deep Blue / Floating Card
@@ -206,9 +252,13 @@
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #0d9488;
+  color: var(--theme-primary, #0d9488);
   margin-bottom: 16px;
   display: inline-block;
+  background: rgba(255, 255, 255, 0.5);
+  padding: 6px 16px;
+  border-radius: 99px;
+  border: 1px solid var(--theme-accent, #14b8a6);
 }
 .theme-grid .duo-category-pill {
   color: #3b82f6;
@@ -218,12 +268,12 @@
   font-size: 2rem;
   font-weight: 800;
   line-height: 1.35;
-  color: #0f172a;
+  color: var(--theme-text, #0f172a);
   text-align: center;
   margin-bottom: 40px;
 }
 .theme-stack .duo-question-title {
-  color: #042f2e;
+  color: var(--theme-text, #042f2e);
 }
 
 /* =========================================================
@@ -497,15 +547,399 @@
 @media (max-width: 768px) {
   .duo-header { padding: 0 20px; height: 70px; gap: 16px; }
   .duo-question-title { font-size: 1.5rem; margin-bottom: 24px; }
-  .theme-grid .duo-arena-body { padding: 24px 20px; border-radius: 20px; margin: 10px; }
   .duo-footer-wrap { padding: 16px 20px; }
   .duo-feedback-headline { font-size: 1.3rem; }
   .duo-btn-check, .duo-btn-continue { padding: 14px 32px; width: 100%; text-align: center; }
   .duo-footer-content { flex-direction: column; gap: 16px; }
   .duo-feedback-area { width: 100%; }
 }
-@media (max-width: 480px) {
-  .theme-grid .duo-options-container { grid-template-columns: 1fr; gap: 16px; }
-  .theme-grid .duo-option-card { padding: 16px; flex-direction: row; text-align: left; min-height: 80px; }
-  .theme-grid .opt-indicator { width: 44px; height: 44px; font-size: 1.2rem; }
+
+/* =========================================================
+   NEW GRID THEME LAYOUT (SIDEBAR + MAIN CONTENT)
+   ========================================================= */
+.theme-grid-fullscreen {
+  background: linear-gradient(135deg, #0e7490 0%, #3b82f6 100%);
+  padding: 4vh 4vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.grid-modal-card {
+  width: 100%;
+  max-width: 1200px;
+  height: 85vh;
+  min-height: 600px;
+  background: #ffffff;
+  border-radius: 24px;
+  box-shadow: 0 24px 48px rgba(0,0,0,0.25);
+  display: flex;
+  overflow: hidden;
+}
+
+/* --- SIDEBAR --- */
+.grid-sidebar {
+  width: 320px;
+  background: #f8fafc;
+  border-right: 2px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  padding: 40px 32px;
+  position: relative;
+}
+
+.sidebar-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.sidebar-avatar {
+  width: 160px;
+  height: 160px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid #ffffff;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+  background: #ffffff;
+}
+
+.sidebar-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sidebar-title span {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #94a3b8;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.sidebar-title h3 {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 4px 0 0;
+  line-height: 1.2;
+}
+
+.sidebar-desc {
+  font-size: 0.9rem;
+  color: #64748b;
+  line-height: 1.5;
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.sidebar-progress {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto 0;
+}
+
+.prog-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.prog-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #f1f5f9;
+  border: 3px solid #cbd5e1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  color: #94a3b8;
+  font-size: 1.1rem;
+  transition: all 0.3s;
+}
+
+.prog-circle.active {
+  border-color: #10b981;
+  color: #10b981;
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
+  transform: scale(1.1);
+}
+
+.prog-circle.done {
+  background: #10b981;
+  border-color: #10b981;
+  color: #ffffff;
+}
+
+.prog-line {
+  width: 3px;
+  height: 30px;
+  background: #e2e8f0;
+  margin: 4px 0;
+}
+
+.prog-line.done {
+  background: #10b981;
+}
+
+.sidebar-footer {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 2px dashed #e2e8f0;
+  font-size: 0.8rem;
+  color: #64748b;
+  text-align: center;
+}
+.sidebar-footer strong {
+  color: #0f172a;
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* --- MAIN CONTENT --- */
+.grid-main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  position: relative;
+}
+
+.grid-main-header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 24px 32px;
+}
+
+.grid-close-btn {
+  background: #f1f5f9;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  color: #94a3b8;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.grid-close-btn:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+.grid-question-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 60px;
+}
+
+.grid-question-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #0f172a;
+  text-align: center;
+  margin-bottom: 48px;
+  line-height: 1.3;
+}
+
+.grid-options-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  width: 100%;
+}
+
+.grid-option-card {
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 32px 16px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+}
+
+.grid-option-card:hover:not(:disabled) {
+  border-color: #3b82f6;
+  box-shadow: 0 12px 24px rgba(59, 130, 246, 0.15);
+  transform: translateY(-4px);
+}
+
+/* SHARED STATES (SELECTED, CORRECT, WRONG) */
+.grid-option-card.selected {
+  background: #eff6ff !important;
+  border-color: #3b82f6 !important;
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.2) !important;
+}
+
+.grid-option-card.correct {
+  background: #ecfdf5 !important;
+  border-color: #10b981 !important;
+  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.2) !important;
+}
+
+.grid-option-card.wrong {
+  background: #fef2f2 !important;
+  border-color: #ef4444 !important;
+  box-shadow: 0 8px 24px rgba(239, 68, 68, 0.2) !important;
+}
+
+/* CSS GAUGE DESIGN */
+.gauge-container {
+  position: relative;
+  width: 80px;
+  height: 40px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.gauge-arc {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 10px solid #e2e8f0;
+  box-sizing: border-box;
+}
+.gauge-needle {
+  position: absolute;
+  bottom: 0;
+  left: 36px;
+  width: 8px;
+  height: 40px;
+  background: #94a3b8;
+  transform-origin: bottom center;
+  border-radius: 4px;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.gauge-center {
+  position: absolute;
+  bottom: -6px;
+  left: 34px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #64748b;
+}
+
+.grid-option-card.selected .gauge-arc { border-color: #bfdbfe; }
+.grid-option-card.selected .gauge-needle, .grid-option-card.selected .gauge-center { background: #2563eb !important; }
+
+.grid-option-card.correct .gauge-arc { border-color: #a7f3d0; }
+.grid-option-card.correct .gauge-needle, .grid-option-card.correct .gauge-center { background: #10b981 !important; }
+
+.grid-option-card.wrong .gauge-arc { border-color: #fecaca; }
+.grid-option-card.wrong .gauge-needle, .grid-option-card.wrong .gauge-center { background: #ef4444 !important; }
+
+.grid-opt-letter {
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: #1e293b;
+  margin-bottom: 4px;
+}
+.grid-opt-text {
+  font-size: 0.9rem;
+  color: #64748b;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.grid-explanation {
+  margin-top: 32px;
+  padding: 16px 24px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+.grid-explanation i {
+  font-size: 1.5rem;
+  margin-top: 2px;
+}
+.grid-explanation strong {
+  display: block;
+  font-size: 1rem;
+  color: #0f172a;
+  margin-bottom: 4px;
+}
+.grid-explanation p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #475569;
+  line-height: 1.5;
+}
+
+.grid-main-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 60px 40px;
+}
+
+.grid-action-btn {
+  padding: 16px 40px;
+  border-radius: 12px;
+  font-size: 1.05rem;
+  font-weight: 800;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.grid-action-btn.disabled {
+  background: #f1f5f9;
+  color: #94a3b8;
+  cursor: not-allowed;
+}
+.grid-action-btn.active {
+  background: #0f172a;
+  color: #ffffff;
+  box-shadow: 0 8px 16px rgba(15, 23, 42, 0.2);
+}
+.grid-action-btn.active:hover {
+  background: #1e293b;
+  transform: translateY(-2px);
+}
+.grid-action-btn.next {
+  background: #10b981;
+  color: #ffffff;
+}
+.grid-action-btn.next:hover {
+  background: #059669;
+  transform: translateY(-2px);
+}
+.grid-action-btn.next.wrong {
+  background: #ef4444;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+  .grid-sidebar { width: 260px; padding: 32px 20px; }
+  .grid-question-area { padding: 0 40px; }
+  .grid-options-container { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .theme-grid-fullscreen { padding: 0; }
+  .grid-modal-card { border-radius: 0; height: 100vh; flex-direction: column; }
+  .grid-sidebar { width: 100%; height: auto; flex-direction: row; align-items: center; justify-content: space-between; padding: 20px; border-right: none; border-bottom: 2px solid #e2e8f0; }
+  .sidebar-avatar { width: 60px; height: 60px; margin: 0; border-width: 2px; }
+  .sidebar-title { text-align: left; }
+  .sidebar-desc, .sidebar-progress, .sidebar-footer { display: none; }
+  
+  .grid-question-area { padding: 20px; justify-content: flex-start; }
+  .grid-question-title { font-size: 1.5rem; margin-bottom: 24px; margin-top: 16px; }
+  .grid-main-footer { padding: 20px; flex-direction: column; gap: 20px; }
+  .grid-action-btn { width: 100%; }
 }
