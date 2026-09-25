@@ -11,15 +11,15 @@ export const MODULES = [
     icon: "fa-brain",
     iconBg: "linear-gradient(135deg, #2563EB, #1D4ED8)",
     quiz: {
-      q: "Apa keunggulan utama teknologi Transformer yang membuat model AI (seperti ChatGPT) mampu memahami teks dengan cepat dan pintar?",
+      q: "Menurut materi modul, apa prinsip dasar cara kerja Large Language Model (LLM) seperti ChatGPT saat menghasilkan respons teks?",
       opts: [
-        "Mengubah komputer menjadi memiliki emosi dan kesadaran manusia.",
-        "Mampu menganalisis seluruh kalimat secara bersamaan (paralel) lewat mekanisme self-attention.",
-        "Hanya bisa membaca teks huruf demi huruf secara berurutan dan lambat.",
-        "Menghubungkan AI langsung ke pikiran pengguna tanpa internet."
+        "Memiliki perasaan, kesadaran batin, dan akal budi layaknya manusia seutuhnya.",
+        "Menebak potongan kata (token) berikutnya yang paling mungkin muncul berdasarkan pola probabilitas dari data latih.",
+        "Mencari dokumen rahasia langsung dari pikiran pengguna secara nirkabel.",
+        "Hanya menyalin dan menempel jawaban yang dihafal tanpa proses pengolahan."
       ],
       ans: 1,
-      explanation: "Transformer memproses seluruh kalimat sekaligus secara paralel dengan mekanisme self-attention, bukan membaca satu per satu kata secara lambat seperti model lama (Vaswani dkk., 2017)."
+      explanation: "Tepat sekali! LLM adalah model statistik probabilitas yang memprediksi kemunculan token kata berikutnya berdasarkan pola data latih, bukan entitas sadar yang memiliki akal budi atau perasaan manusiawi."
     },
     steps: [
       {
@@ -32,21 +32,21 @@ export const MODULES = [
       {
         id: "1-2",
         stepNum: 2,
-        title: "Pasangan Konsep Ilmiah",
+        title: "Prinsip & Logika Token AI",
         tag: "Langkah 2 • Logika Dasar",
         reading: "Self-attention paralel, model probabilistik, dan mekanisme tokenisasi."
       },
       {
         id: "1-3",
         stepNum: 3,
-        title: "Logika Probabilitas & Kasus Hukum",
+        title: "Mitos vs Realitas & Probabilitas",
         tag: "Langkah 3 • Analisis Kasus",
         reading: "Prediksi distribusi token berikutnya dan audit halusinasi pada putusan hukum."
       },
       {
         id: "1-4",
         stepNum: 4,
-        title: "Detektif Halusinasi & Evaluasi Lanjutan",
+        title: "Deteksi Halusinasi & Verifikasi Fakta",
         tag: "Langkah 4 • Audit Lanjutan",
         reading: "Pencegahan kutipan fiktif, pelacakan sumber primer, dan validasi ground truth."
       }
@@ -61,15 +61,15 @@ export const MODULES = [
     icon: "fa-shield-halved",
     iconBg: "linear-gradient(135deg, #0EA5E9, #0284C7)",
     quiz: {
-      q: "Dalam menangkal konten manipulasi (deepfake), apa perbedaan mendasar pendekatan standar C2PA dibanding deteksi forensik?",
+      q: "Mengapa kita wajib menerapkan sikap etis, kritis terhadap bias data, dan waspada terhadap deepfake dalam penggunaan AI?",
       opts: [
-        "C2PA menempelkan sertifikat riwayat asal-usul sejak media dibuat, sedangkan forensik mendeteksi cacat piksel setelah media beredar.",
-        "C2PA hanya bekerja setelah konten viral, sedangkan forensik bekerja sebelum foto diambil.",
-        "C2PA menghapus gambar otomatis dari internet, sedangkan forensik menyimpannya.",
-        "Keduanya sama persis dan tidak memiliki perbedaan cara kerja."
+        "Karena AI bisa menyerap stereotip sosial dari data latih masa lalu, dan deepfake dapat memalsukan identitas untuk menyebarkan misinformasi jika tidak diverifikasi.",
+        "Karena AI secara otomatis akan menghapus seluruh data dan akun media sosial di internet.",
+        "Karena teknologi AI dilarang sepenuhnya untuk digunakan dalam segala bidang pekerjaan.",
+        "Karena AI selalu menghasilkan keputusan yang 100% netral tanpa pernah ada pengaruh manusia."
       ],
       ans: 0,
-      explanation: "C2PA bersifat proaktif dengan menyematkan metadata asal-usul (label nutrisi digital), sedangkan forensik digital menganalisis artefak piksel setelah konten tersebar."
+      explanation: "Tepat sekali! AI dapat mereplikasi bias sosial dari data latihnya dan deepfake dapat disalahgunakan untuk manipulasi identitas, sehingga standar etika (UNESCO, SE Menkominfo) dan verifikasi keaslian (C2PA) sangat penting."
     },
     steps: [
       {
@@ -82,21 +82,21 @@ export const MODULES = [
       {
         id: "2-2",
         stepNum: 2,
-        title: "Bias Algoritma & Gender Shades",
+        title: "Mengenali Bias Algoritma",
         tag: "Langkah 2 • Identifikasi Bias",
         reading: "Riset Joy Buolamwini & Timnit Gebru (MIT 2018) serta fenomena Coded Gaze pada visi komputer."
       },
       {
         id: "2-3",
         stepNum: 3,
-        title: "Bias Bahasa & Word Embedding",
+        title: "Bias Bahasa & Representasi Data",
         tag: "Langkah 3 • Analisis Mendalam",
-        reading: "Riset Bolukbasi dkk. (2016) membuktikan embedding vektor menyerap stereotip sosial data latih."
+        reading: "Riset embedding vektor membuktikan model bahasa menyerap stereotip sosial dari data teks internet."
       },
       {
         id: "2-4",
         stepNum: 4,
-        title: "Forensik Digital vs C2PA",
+        title: "Keamanan Digital, Deepfake & C2PA",
         tag: "Langkah 4 • Audit Teknis",
         reading: "Koalisi C2PA dengan metadata kriptografis provenance asal-usul vs analisis artefak forensik."
       }
@@ -106,49 +106,49 @@ export const MODULES = [
     id: 3,
     tag: "Level 3",
     title: "Seni Berbicara dengan Mesin",
-    topics: "4 Pilar Prompting (Konteks, Instruksi, Format, Persona), Zero-Shot, Few-Shot, CoT (Wei 2022), & ReAct (Yao 2022).",
+    topics: "4 Pilar Prompting (Persona, Konteks, Instruksi, Format), Zero-Shot, Few-Shot, CoT (Wei 2022), & ReAct.",
     badge: "Master Prompt",
     icon: "fa-terminal",
     iconBg: "linear-gradient(135deg, #6366F1, #4F46E5)",
     quiz: {
-      q: "Dalam teknik prompting tingkat lanjut, apa kelebihan metode ReAct (Reasoning + Acting) dibanding prompt biasa?",
+      q: "Apa 4 pilar utama dalam menyusun prompt yang efektif agar AI memberikan jawaban yang terarah dan berkualitas tinggi?",
       opts: [
-        "Hanya bisa digunakan untuk menulis cerita dongeng fiksi.",
-        "Memungkinkan AI menggabungkan penalaran bertahap dengan tindakan nyata seperti memanggil alat/web eksternal.",
-        "Mengunci instruksi agar model AI tidak dapat diperbaiki.",
-        "Membuat AI hanya berfungsi secara offline tanpa jaringan."
+        "Nama pengguna, kata sandi akun, nomor telepon, dan lokasi GPS.",
+        "Persona (Peran), Konteks (Latar Belakang), Instruksi (Tugas Jelas), dan Format (Bentuk Hasil Luaran).",
+        "Kalimat perintah sepanjang mungkin tanpa tanda baca sama sekali.",
+        "Meminta AI menebak sendiri keinginan pengguna tanpa memberikan konteks apa pun."
       ],
       ans: 1,
-      explanation: "ReAct (Yao dkk., 2022) menggabungkan penalaran logis bertahap dengan kemampuan memanggil alat nyata (web search, kalkulator, API)."
+      explanation: "Tepat! Formula 4 Pilar (Persona, Konteks, Instruksi, Format) membantu model AI memahami peran spesifik, latar belakang audiens, tugas terarah, dan bentuk keluaran yang Anda harapkan."
     },
     steps: [
       {
         id: "3-1",
         stepNum: 1,
-        title: "Empat Pilar Prompting",
+        title: "Formula 4 Pilar Prompting",
         tag: "Langkah 1 • Formula Dasar",
         reading: "Formula 4 Pilar: Persona spesifik, Konteks latar belakang, Instruksi terarah, dan Format luaran."
       },
       {
         id: "3-2",
         stepNum: 2,
-        title: "Taksonomi Prompting Dasar",
+        title: "Teknik Zero-Shot & Few-Shot",
         tag: "Langkah 2 • Pola Contoh",
-        reading: "Zero-Shot prompting tanpa contoh vs Few-Shot in-context learning (Brown dkk., GPT-3 2020)."
+        reading: "Zero-Shot prompting tanpa contoh vs Few-Shot in-context learning dengan 1-3 contoh pola jawaban."
       },
       {
         id: "3-3",
         stepNum: 3,
-        title: "Advanced Prompting - CoT",
+        title: "Teknik Chain-of-Thought (CoT)",
         tag: "Langkah 3 • Nalar Bertahap",
-        reading: "Chain-of-Thought (Wei dkk., 2022 Google Research) untuk penalaran bertahap soal analitis kompleks."
+        reading: "Chain-of-Thought (Wei dkk., 2022) untuk penalaran bertahap langkah-demi-langkah pada soal analitis."
       },
       {
         id: "3-4",
         stepNum: 4,
-        title: "Agentic Framework - ReAct",
+        title: "Prompt Interaktif & ReAct",
         tag: "Langkah 4 • Tindakan Otonom",
-        reading: "Paradigma ReAct (Yao dkk., ICLR 2023): Sinergi alur Thought, Action, Observation, & Final Answer."
+        reading: "Dialog interaktif dan sinergi alur ReAct: Thought (nalar), Action (alat), dan Observation (evaluasi)."
       }
     ]
   },
@@ -156,49 +156,49 @@ export const MODULES = [
     id: 4,
     tag: "Level 4",
     title: "AI sebagai Asisten Produktivitas",
-    topics: "RAG (Lewis 2020 Meta AI), Memori Parametrik vs Non-Parametrik, UNESCO Guidance 2023, & Tutor Sokratik.",
+    topics: "RAG (Lewis 2020), Memori Eksternal Faktual, UNESCO Guidance 2023, & Tutor Sokratik.",
     badge: "Inovator Produktif",
     icon: "fa-rocket",
     iconBg: "linear-gradient(135deg, #EC4899, #F43F5E)",
     quiz: {
-      q: "Mengapa teknologi RAG (Retrieval-Augmented Generation) sangat efektif mencegah AI mengarang fakta (halusinasi)?",
+      q: "Bagaimana cara terbaik dan paling etis memanfaatkan AI sebagai asisten belajar dan produktivitas sesuai materi modul?",
       opts: [
-        "Karena AI dipaksa mencari dan merujuk pada dokumen fakta nyata yang disuntikkan sebelum menjawab.",
-        "Karena RAG menghapus pertanyaan yang dianggap terlalu sulit.",
-        "Karena RAG melatih ulang seluruh memori model setiap kali ditanya.",
-        "Karena RAG mengubah teks jawaban menjadi suara robotik otomatis."
+        "Menyalin seluruh jawaban AI secara mentah-mentah tanpa dibaca atau dicek kembali kebenarannya.",
+        "Mengunggah data rahasia pribadi dan kata sandi agar AI bisa mengingat semuanya.",
+        "Menjadikan AI sebagai mitra diskusi, pembuat draf kasar (zero-drafting), dan tutor Sokratik sambil tetap memverifikasi fakta ke sumber primer.",
+        "Menyerahkan 100% keputusan penting medis dan hukum kepada AI tanpa konsultasi tenaga ahli."
       ],
-      ans: 0,
-      explanation: "RAG (Lewis dkk., 2020 Meta AI) mengambil dokumen relevan dari basis data eksternal lalu menyuntikkannya sebagai konteks faktual ke model AI."
+      ans: 2,
+      explanation: "Tepat sekali! AI sangat efektif sebagai pemantik ide (drafting) dan tutor diskusi yang memancing nalar (Sokratik), asalkan kita tetap memvalidasi fakta ke rujukan primer dan menjaga privasi data sensitif."
     },
     steps: [
       {
         id: "4-1",
         stepNum: 1,
-        title: "Arsitektur & Prinsip RAG",
+        title: "Prinsip & Manfaat RAG",
         tag: "Langkah 1 • Konsep Alur",
-        reading: "Pemisahan memori parametrik (bobot statis) dan memori non-parametrik (dokumen fakta eksternal)."
+        reading: "Pemisahan memori parametrik (data latih) dan memori non-parametrik (dokumen fakta eksternal)."
       },
       {
         id: "4-2",
         stepNum: 2,
-        title: "Mekanisme Teknis RAG & Vector DB",
-        tag: "Langkah 2 • Ruang Vektor",
-        reading: "Proses chunking teks, representasi embedding ruang vektor, dan pencarian kemiripan kosinus."
+        title: "AI untuk Produktivitas Kerja & Belajar",
+        tag: "Langkah 2 • Alur Kerja Efisien",
+        reading: "Pemanfaatan AI untuk perangkuman dokumen, zero-drafting, brainstorming, dan manajemen prioritas tugas."
       },
       {
         id: "4-3",
         stepNum: 3,
-        title: "Etika AI dalam Pendidikan",
+        title: "Etika AI dalam Pendidikan & Tutor Sokratik",
         tag: "Langkah 3 • Etika Belajar",
-        reading: "Panduan UNESCO (2023) menggunakan AI sebagai Tutor Sokratik dan pemantik draf kasar (zero-drafting)."
+        reading: "Panduan UNESCO (2023) menggunakan AI sebagai Tutor Sokratik yang memancing nalar kritis siswa."
       },
       {
         id: "4-4",
         stepNum: 4,
-        title: "Evaluasi RAG & Tata Kelola",
-        tag: "Langkah 4 • Audit Akurasi",
-        reading: "Evaluasi tripartit RAG (Faithfulness, Answer Relevance, Context Recall) dan tata kelola privasi data."
+        title: "Privasi Data & Verifikasi Jawaban",
+        tag: "Langkah 4 • Audit Keamanan",
+        reading: "Protokol keamanan data, larangan mengunggah rahasia sensitif, dan praktik anonimisasi informasi."
       }
     ]
   },
@@ -206,20 +206,20 @@ export const MODULES = [
     id: 5,
     tag: "Level 5",
     title: "Eksplorasi AI Kreatif",
-    topics: "Enam Sumbu Visual Prompt (Ho 2020 Diffusion), Hak Cipta US Copyright Office, EU AI Act Opt-Out, & Lisensi India.",
+    topics: "Enam Sumbu Visual Prompt, Hak Cipta & Human Authorship, Regulasi Internasional, & Perlindungan Seniman.",
     badge: "Kreator Beretika",
     icon: "fa-palette",
     iconBg: "linear-gradient(135deg, #10B981, #059669)",
     quiz: {
-      q: "Berdasarkan pedoman hak cipta internasional, syarat utama agar karya seni yang dibantu AI dapat dilindungi hak cipta adalah...",
+      q: "Berdasarkan pedoman hak cipta internasional (seperti US Copyright Office) dan etika AI kreatif di modul, apa syarat utama agar karya yang dibantu AI dapat dilindungi hak cipta?",
       opts: [
-        "Cukup membayar biaya langganan aplikasi AI.",
-        "Hanya mengetikkan prompt satu kalimat tanpa modifikasi apa pun.",
-        "Terdapat kontribusi kreatif manusia yang nyata dan signifikan (human authorship) dalam proses pembuatannya.",
-        "Semua karya AI dilarang keras dipublikasikan ke masyarakat luas."
+        "Cukup membayar biaya langganan aplikasi AI termahal.",
+        "Harus terdapat kontribusi dan keterlibatan kreatif manusia yang nyata serta signifikan (Human Authorship) dalam proses pembuatannya.",
+        "Semua karya yang menyentuh AI dilarang dipublikasikan ke internet.",
+        "Hanya mengetikkan satu kata prompt tanpa modifikasi atau sentuhan manusia sama sekali."
       ],
-      ans: 2,
-      explanation: "U.S. Copyright Office menegaskan bahwa hanya elemen yang dihasilkan dari kepengarangan manusia (human authorship) yang dapat didaftarkan hak ciptanya."
+      ans: 1,
+      explanation: "Tepat! Badan hak cipta internasional menegaskan perlunya Human Authorship (keterlibatan kreatif manusia yang signifikan, seperti penulisan naskah, tata letak, dan kurasi artistik) agar karya berhak mendapat perlindungan hak cipta."
     },
     steps: [
       {
@@ -232,23 +232,23 @@ export const MODULES = [
       {
         id: "5-2",
         stepNum: 2,
-        title: "Kebijakan Hak Cipta",
+        title: "Hak Cipta & Human Authorship",
         tag: "Langkah 2 • Aturan Hukum",
-        reading: "Preseden U.S. Copyright Office (Zarya of the Dawn) dan syarat modifikasi substantif human authorship."
+        reading: "Preseden hukum hak cipta dan syarat modifikasi substantif keterlibatan kreatif manusia (human authorship)."
       },
       {
         id: "5-3",
         stepNum: 3,
-        title: "Regulasi Internasional",
+        title: "Regulasi Internasional & Perlindungan Seniman",
         tag: "Langkah 3 • Hak Seniman",
-        reading: "Hak opt-out seniman dalam EU AI Act dan skema kompensasi terpadu India One Nation One License."
+        reading: "Hak opt-out seniman dalam EU AI Act dan skema kemitraan lisensi yang adil bagi kreator orisinal."
       },
       {
         id: "5-4",
         stepNum: 4,
-        title: "Arsitektur Generatif & Proteksi Seniman",
-        tag: "Langkah 4 • Mekanisme Difusi",
-        reading: "Mekanisme difusi denoising bertahap (DDPM Ho dkk. 2020) dan protokol watermarking C2PA."
+        title: "Pemanfaatan Kreatif & Transparansi",
+        tag: "Langkah 4 • Etika Visual",
+        reading: "Pemberian label/watermark transparansi AI, pencegahan misinformasi, dan pemanfaatan sebagai papan ide (moodboard)."
       }
     ]
   },
@@ -256,33 +256,33 @@ export const MODULES = [
     id: 6,
     tag: "Level 6",
     title: "Bertahan & Berdaya di Era AI",
-    topics: "David Autor MIT (2015) Tugas Rutin vs Fleksibel, Paradoks Polanyi 1966 (Tacit Knowledge), & 3 Human Skills.",
+    topics: "David Autor MIT (Tugas Rutin vs Non-Rutin), Paradoks Polanyi 1966 (Tacit Knowledge), & 3 Human Skills.",
     badge: "Cendekia Digital",
     icon: "fa-graduation-cap",
     iconBg: "linear-gradient(135deg, #F59E0B, #D97706)",
     quiz: {
-      q: "Menurut konsep Paradoks Polanyi ('kita tahu lebih banyak dari yang bisa kita katakan'), mengapa AI tidak bisa sepenuhnya menggantikan manusia?",
+      q: "Mengapa peran manusia tetap tidak tergantikan oleh AI secanggih apa pun menurut konsep Paradoks Polanyi dan keterampilan manusiawi (Human Skills)?",
       opts: [
-        "Karena biaya listrik komputer terlalu mahal.",
-        "Karena empati, intuisi, dan nalar etis manusia (tacit knowledge) tidak bisa diubah menjadi sekadar rumus kode kaku.",
-        "Karena AI selalu gagal dalam melakukan perhitungan matematika.",
-        "Karena regulasi melarang semua penggunaan komputer di kantor."
+        "Karena biaya konsumsi listrik komputer AI terlalu boros di masa depan.",
+        "Karena kecerdasan emosional (EQ), empati, intuisi situasi, nalar kritis, dan kebijaksanaan moral manusia (tacit knowledge) tidak dapat diubah menjadi sekadar rumus statistik kaku.",
+        "Karena seluruh perusahaan akan melarang penggunaan komputer di masa depan.",
+        "Karena AI tidak mampu mengolah data angka dalam jumlah banyak secara cepat."
       ],
       ans: 1,
-      explanation: "Paradoks Polanyi menjelaskan bahwa tacit knowledge manusia (seperti empati, intuisi situasi, pertimbangan etis) tidak dapat diterjemahkan menjadi aturan eksplisit bagi algoritma statistik."
+      explanation: "Sempurna! AI adalah alat pengungkit (multiplier), namun empati, kehangatan hubungan antar-manusia, nalar kritis, dan kebijaksanaan etis (tacit knowledge) tetap menjadi keunggulan sejati manusia yang tak tergantikan."
     },
     steps: [
       {
         id: "6-1",
         stepNum: 1,
-        title: "Ekonomi Ketenagakerjaan",
+        title: "Otomasi vs Tugas Kognitif Non-Rutin",
         tag: "Langkah 1 • Pola Kerja",
         reading: "Analisis David Autor MIT (2015) memetakan kerentanan tugas rutin berpola vs tugas kognitif non-rutin."
       },
       {
         id: "6-2",
         stepNum: 2,
-        title: "Paradoks Polanyi",
+        title: "Paradoks Polanyi & Tacit Knowledge",
         tag: "Langkah 2 • Nalar Tacit",
         reading: "Michael Polanyi (1966) membuktikan bahwa tacit knowledge manusia melampaui aturan eksplisit kode."
       },
@@ -296,9 +296,9 @@ export const MODULES = [
       {
         id: "6-4",
         stepNum: 4,
-        title: "Adaptasi & Metakognisi Masa Depan",
+        title: "Adaptasi & Mindset Masa Depan",
         tag: "Langkah 4 • Visi Masa Depan",
-        reading: "Transisi dari ilusi otomatisasi menuju realitas augmentasi: Manusia sebagai pilot, AI sebagai kopilot."
+        reading: "Transisi menuju realitas augmentasi: Manusia sebagai pengemudi utama (driver), AI sebagai pengungkit (multiplier)."
       }
     ]
   }

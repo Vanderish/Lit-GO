@@ -3,6 +3,7 @@ import Navbar from '../../components/Navbar/Navbar';
 import SplashScreen from '../../components/SplashScreen/SplashScreen';
 import CertificateModal from '../../components/CertificateModal/CertificateModal';
 import AccessibilityPanel from '../../components/AccessibilityPanel';
+import LitoMascot3D from '../../components/Mascot3D/LitoMascot3D';
 import { useProgress } from '../../context/ProgressContext';
 import './LandingPage.css';
 
@@ -163,7 +164,20 @@ export default function LandingPage() {
                     PRE&#8209;TEST
                   </span>
                 </div>
-                <div className="mascot-slot">[ ruang maskot — diisi kemudian ]</div>
+
+                <LitoMascot3D
+                  size="100%"
+                  interactive={true}
+                  showGreeting={true}
+                  greetingText={isEnglish ? 'Hi! I am Lito 🤖' : 'Hai! Aku Lito 🤖'}
+                  subText={
+                    isEnglish
+                      ? 'AI Navigator. Click me or take the pre-test to calibrate your radar!'
+                      : 'Navigator AI kamu. Klik aku atau ikuti pre-test untuk kalibrasi radar!'
+                  }
+                  className="hero-mode"
+                />
+
                 <div className="pillar-row">
                   <span className="pillar-name">{isEnglish ? 'Foundational Knowledge' : 'Pemahaman Dasar'}</span>
                   <div className="pillar-bar-track">

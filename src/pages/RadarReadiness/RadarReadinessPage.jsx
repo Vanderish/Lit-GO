@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Chart as ChartJS,
   RadialLinearScale,
@@ -16,6 +17,7 @@ ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip);
 
 export default function RadarReadinessPage({ embedded = false }) {
   const { state } = useProgress();
+  const navigate = useNavigate();
   const [isPretestViewOpen, setIsPretestViewOpen] = useState(false);
 
   useEffect(() => {
@@ -29,6 +31,10 @@ export default function RadarReadinessPage({ embedded = false }) {
   const scoreCircumference = 2 * Math.PI * 50;
   const normalizedAvgScore = hasRadar ? Math.min(100, Math.max(0, avgScore)) : 0;
   const scoreProgress = hasRadar ? (normalizedAvgScore / 100) * scoreCircumference : 0;
+
+  // Skor sebelumnya & Delta Progres
+  const prevAvgScore = typeof state?.previousAvgScore === 'number' ? state.previousAvgScore : null;
+  const scoreDelta = (hasRadar && prevAvgScore !== null) ? (avgScore - prevAvgScore) : null;
 
   // Persentil Global dinamis berdasarkan skor kumulatif aktual
   const getDynamicPercentile = (score) => {
@@ -70,6 +76,7 @@ export default function RadarReadinessPage({ embedded = false }) {
       label: 'SKOR KUMULATIF',
       valMain: hasRadar ? `${avgScore}` : '0',
       valSub: '/100',
+      valDelta: scoreDelta !== null && scoreDelta !== 0 ? (scoreDelta > 0 ? `+${scoreDelta}` : `${scoreDelta}`) : null,
       tone: 'indigo',
     },
     {
@@ -95,6 +102,52 @@ export default function RadarReadinessPage({ embedded = false }) {
     },
   ];
 
+  const pillarMeta = [
+    { id: 0, label: 'Pemahaman Dasar', score: radar[0], color: '#4F46E5', modId: 1, tag: 'Level 1', modTitle: 'Kenalan dengan "Otak" Buatan', icon: 'fa-brain' },
+    { id: 1, label: 'Etika & Keamanan', score: radar[1], color: '#10B981', modId: 2, tag: 'Level 2', modTitle: 'Kompas Etika, Keamanan & Privasi', icon: 'fa-shield-halved' },
+    { id: 2, label: 'Prompting', score: radar[2], color: '#F59E0B', modId: 3, tag: 'Level 3', modTitle: 'Seni Berbicara dengan Mesin', icon: 'fa-terminal' },
+    { id: 3, label: 'Berpikir Kritis', score: radar[3], color: '#EC4899', modId: 4, tag: 'Level 4', modTitle: 'AI sebagai Asisten Produktivitas', icon: 'fa-magnifying-glass' },
+  ];
+
+  const sortedPillars = [...pillarMeta].sort((a, b) => b.score - a.score);
+  const strongestPillar = sortedPillars[0];
+  const weakestPillar = sortedPillars[sortedPillars.length - 1];
+
+  const getInsightContent = () => {
+    if (!hasRadar) {
+      return {
+        title: 'Asesmen Diagnostik Belum Diambil',
+        text: 'Ikuti asesmen pre-test 8 pertanyaan untuk memetakan kekuatan kompetensi literasi AI dan mendapatkan arahan belajar yang tepat sasaran.',
+        tag: 'Panduan Awal',
+        status: 'pending',
+      };
+    }
+
+    if (weakestPillar.score >= 85) {
+      return {
+        title: 'Kompetensi Sangat Prima & Merata 🌟',
+        text: `Luar biasa! Seluruh 4 pilar literasi AI kamu telah berada di tingkat mahir (${avgScore}%). Pertahankan konsistensi berpikir kritis dan eksplorasi studi kasus mendalam.`,
+        tag: 'Tingkat Mahir',
+        status: 'mastery',
+      };
+    }
+
+    return {
+      title: `Kekuatan di ${strongestPillar.label}, Peluang di ${weakestPillar.label}`,
+      text: `Analisis menunjukkan kamu paling unggul di ${strongestPillar.label} (${strongestPillar.score}%), namun masih memiliki ruang peningkatan di ${weakestPillar.label} (${weakestPillar.score}%). Pelajari modul terkait untuk menyeimbangkan skor radarmu.`,
+      tag: 'Rekomendasi Diagnostik',
+      status: 'growth',
+    };
+  };
+
+  const insightData = getInsightContent();
+
+  const pillars = pillarMeta.map((p) => ({
+    label: p.label,
+    value: p.score,
+    color: p.color,
+  }));
+
   const radarData = {
     labels: ['Pemahaman Dasar', 'Etika & Keamanan', 'Prompting', 'Berpikir Kritis'],
     datasets: [
@@ -103,13 +156,22 @@ export default function RadarReadinessPage({ embedded = false }) {
         data: radar,
         backgroundColor: 'rgba(99, 102, 241, 0.18)',
         borderColor: '#4F46E5',
-        pointBackgroundColor: '#4F46E5',
+        pointBackgroundColor: ['#4F46E5', '#10B981', '#F59E0B', '#EC4899'],
         pointBorderColor: '#FFFFFF',
         pointHoverBackgroundColor: '#FFFFFF',
         pointHoverBorderColor: '#4F46E5',
-        pointRadius: 4.5,
+        pointRadius: 5,
         pointBorderWidth: 2,
-        borderWidth: 2,
+        borderWidth: 2.5,
+      },
+      {
+        label: 'Rata-rata Pengguna',
+        data: [60, 55, 65, 58],
+        backgroundColor: 'rgba(148, 163, 184, 0.08)',
+        borderColor: '#94A3B8',
+        borderDash: [4, 4],
+        pointRadius: 0,
+        borderWidth: 1.5,
       },
     ],
   };
@@ -131,10 +193,23 @@ export default function RadarReadinessPage({ embedded = false }) {
       },
     },
     plugins: {
-      legend: { display: false },
+      legend: {
+        display: true,
+        position: 'top',
+        align: 'end',
+        labels: {
+          boxWidth: 12,
+          boxHeight: 12,
+          usePointStyle: true,
+          pointStyle: 'circle',
+          font: { size: 11, family: 'Plus Jakarta Sans', weight: '600' },
+          color: '#64748B',
+          padding: 12,
+        },
+      },
       tooltip: {
         callbacks: {
-          label: (context) => ` Skor: ${context.parsed.r}%`,
+          label: (context) => ` ${context.dataset.label}: ${context.parsed.r}%`,
         },
       },
     },
@@ -164,6 +239,11 @@ export default function RadarReadinessPage({ embedded = false }) {
                 {metric.valMain}
                 {metric.valSub && <span className="radar-val-sub">{metric.valSub}</span>}
               </strong>
+              {metric.valDelta && (
+                <span className="radar-metric-delta">
+                  <i className="fa-solid fa-arrow-trend-up"></i> {metric.valDelta}% vs sebelumnya
+                </span>
+              )}
             </div>
           </div>
         ))}
@@ -235,12 +315,136 @@ export default function RadarReadinessPage({ embedded = false }) {
               <Radar data={radarData} options={radarOptions} />
             </div>
 
+            <div className="radar-pillar-breakdown">
+              {pillars.map((p) => (
+                <div key={p.label} className="pillar-row">
+                  <span className="pillar-name">{p.label}</span>
+                  <div className="pillar-bar-track">
+                    <div className="pillar-bar-fill" style={{ width: `${p.value}%`, background: p.color }} />
+                  </div>
+                  <span className="pillar-score" style={{ color: p.color }}>{p.value}%</span>
+                </div>
+              ))}
+            </div>
+
             <div className="radar-footnote">
               <span>
                 <i className="fa-solid fa-circle" style={{ color: '#10B981', fontSize: '0.45rem', verticalAlign: 'middle', marginRight: '6px' }}></i>
                 Kalibrasi standar IEEE &amp; EU AI Act Literacy Framework
               </span>
               <strong>Skala: 0–100%</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 3. COHESIVE DIRECTIVE & SMART LEARNING ACTION BANNER */}
+      <div className="panel radar-directive-card animate-fade-in">
+        <div className="radar-directive-header">
+          <div className="radar-directive-title-group">
+            <div className="radar-directive-badge-row">
+              <img src="/illustrations/mascot_lito_3d.jpg" alt="Lito AI Navigator" className="radar-directive-mascot-avatar" />
+              <span className="radar-directive-kicker">
+                <i className="fa-solid fa-compass"></i> Arahan Navigator Lito
+              </span>
+            </div>
+            <h3 className="radar-directive-heading">Rencana Aksi Pembelajaran Terarah</h3>
+          </div>
+          {scoreDelta !== null && scoreDelta !== 0 && (
+            <div className={`radar-delta-pill ${scoreDelta > 0 ? 'up' : 'down'}`}>
+              <i className={`fa-solid ${scoreDelta > 0 ? 'fa-arrow-trend-up' : 'fa-arrow-trend-down'}`}></i>
+              <span>{scoreDelta > 0 ? `+${scoreDelta}%` : `${scoreDelta}%`} vs Pre-Test Terakhir</span>
+            </div>
+          )}
+        </div>
+
+        <div className="radar-directive-grid">
+          {/* Left Column: Analytical Assessment Summary */}
+          <div className="radar-analysis-pane">
+            <p className="radar-analysis-text">
+              {hasRadar ? (
+                <>
+                  Berdasarkan pemetaan radar, pilar <strong style={{ color: strongestPillar.color }}>{strongestPillar.label} ({strongestPillar.score}%)</strong> menjadi kekuatan utama kamu. Untuk mencapai profil kompetensi yang seimbang, prioritaskan penguasaan pada pilar <strong style={{ color: weakestPillar.color }}>{weakestPillar.label} ({weakestPillar.score}%)</strong>.
+                </>
+              ) : (
+                'Selesaikan asesmen awal untuk memetakan kekuatan kompetensi literasi AI dan membuka rekomendasi modul belajar yang terpersonalisasi.'
+              )}
+            </p>
+
+            {hasRadar && (
+              <div className="radar-pinnacle-meters">
+                <div className="pinnacle-row top">
+                  <div className="pinnacle-icon-wrap" style={{ background: `${strongestPillar.color}15`, color: strongestPillar.color }}>
+                    <i className={`fa-solid ${strongestPillar.icon}`}></i>
+                  </div>
+                  <div className="pinnacle-info">
+                    <div className="pinnacle-label-row">
+                      <span className="pinnacle-type">Kekuatan Tertinggi</span>
+                      <span className="pinnacle-score" style={{ color: strongestPillar.color }}>{strongestPillar.score}%</span>
+                    </div>
+                    <div className="pinnacle-bar-track">
+                      <div className="pinnacle-bar-fill" style={{ width: `${strongestPillar.score}%`, background: strongestPillar.color }}></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="pinnacle-row growth">
+                  <div className="pinnacle-icon-wrap" style={{ background: `${weakestPillar.color}15`, color: weakestPillar.color }}>
+                    <i className={`fa-solid ${weakestPillar.icon}`}></i>
+                  </div>
+                  <div className="pinnacle-info">
+                    <div className="pinnacle-label-row">
+                      <span className="pinnacle-type">Fokus Akselerasi</span>
+                      <span className="pinnacle-score" style={{ color: weakestPillar.color }}>{weakestPillar.score}%</span>
+                    </div>
+                    <div className="pinnacle-bar-track">
+                      <div className="pinnacle-bar-fill" style={{ width: `${weakestPillar.score}%`, background: weakestPillar.color }}></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Right Column: Hero Recommended Course Card */}
+          <div className="radar-course-hero-card">
+            <div className="course-hero-top">
+              <div className="course-hero-badge-group">
+                <span className="course-level-tag">{hasRadar ? weakestPillar.tag : 'Level 1'}</span>
+                <span className="course-rec-tag">Modul Prioritas</span>
+              </div>
+              <div className="course-icon-badge" style={{ background: hasRadar ? `${weakestPillar.color}20` : '#EFF6FF', color: hasRadar ? weakestPillar.color : '#2563EB' }}>
+                <i className={`fa-solid ${hasRadar ? weakestPillar.icon : 'fa-brain'}`}></i>
+              </div>
+            </div>
+
+            <div className="course-hero-body">
+              <h4 className="course-hero-title">
+                {hasRadar ? weakestPillar.modTitle : 'Kenalan dengan "Otak" Buatan'}
+              </h4>
+              <p className="course-hero-desc">
+                {hasRadar
+                  ? `Kuasai materi esensial pilar ${weakestPillar.label} melalui 4 langkah latihan interaktif dan selesaikan kuis kelulusan.`
+                  : 'Pelajari dasar arsitektur AI, logika token, dan audit halusinasi untuk memulai perjalanan literasi digital kamu.'}
+              </p>
+            </div>
+
+            <div className="course-hero-footer">
+              <button
+                type="button"
+                className="btn-course-launch"
+                onClick={() => navigate(hasRadar ? `/modul-belajar?mod=${weakestPillar.modId}` : '/modul-belajar?mod=1')}
+              >
+                <span>{hasRadar ? `Perkuat ${weakestPillar.label}` : 'Mulai Modul Fondasi'}</span>
+                <i className="fa-solid fa-arrow-right"></i>
+              </button>
+              <button
+                type="button"
+                className="btn-course-catalog-link"
+                onClick={() => navigate('/modul-belajar')}
+              >
+                Jelajahi 6 Modul Kurikulum
+              </button>
             </div>
           </div>
         </div>

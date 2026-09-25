@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../../context/ProgressContext';
 import RadarReadinessPage from '../RadarReadiness/RadarReadinessPage';
+import LitoMascot3D from '../../components/Mascot3D/LitoMascot3D';
 import './Dashboard.css';
 
 export default function Dashboard() {
@@ -196,21 +197,17 @@ export default function Dashboard() {
           </div>
 
           <div className="bento-right-col">
-            <div className="mascot-card-bento">
-              <div className="mascot-avatar-circle">
-                <i className="fa-solid fa-robot"></i>
-                <div className="mascot-glow-ring"></div>
-              </div>
-              <div className="mascot-speech-bubble">
-                <i className="fa-solid fa-quote-left mr-1 text-indigo"></i>
-                {hasRadar 
+            <LitoMascot3D
+              interactive={true}
+              showGreeting={true}
+              greetingText="Lito AI Companion"
+              subText={
+                hasRadar 
                   ? `Kesiapan AI kamu rata-rata ${avgRadarScore}%. Fokus tingkatkan pilar "${pillarsData[priorityPillarIndex]?.title}" untuk hasil optimal!`
-                  : "Selamat datang! Yuk ikuti Pre-test AI Readiness Radar untuk memetakan kekuatan dan kelemahan literasi AI kamu!"}
-              </div>
-              <div className="mascot-action-tag">
-                <span className="pulse-dot-indigo"></span> AI Companion Active
-              </div>
-            </div>
+                  : "Selamat datang! Yuk ikuti Pre-test AI Readiness Radar untuk memetakan kekuatan dan kelemahan literasi AI kamu!"
+              }
+              className="dashboard-bento-mascot"
+            />
           </div>
         </div>
 

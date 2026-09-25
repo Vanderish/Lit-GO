@@ -43,6 +43,45 @@ export default function Game1Arena({ activeStep, onClose, onComplete }) {
     Math.round(((quizIdx + (checked ? 1 : 0)) / totalQuizzes) * 100)
   );
 
+  // Timer state
+  const [timeLeft, setTimeLeft] = useState(10);
+  const timerRef = useRef(null);
+
+  // Timer logic
+  useEffect(() => {
+    if (isFinished || checked) {
+      if (timerRef.current) clearInterval(timerRef.current);
+      return;
+    }
+
+    timerRef.current = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          clearInterval(timerRef.current);
+          handleTimeUp();
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, [quizIdx, checked, isFinished]);
+
+  const handleTimeUp = () => {
+    if (checked) return;
+    setIsCorrect(false);
+    setChecked(true);
+    if (autoNext) {
+      if (autoNextTimerRef.current) clearTimeout(autoNextTimerRef.current);
+      autoNextTimerRef.current = setTimeout(() => {
+        handleNextQuestionDirect(quizIdx + 1);
+      }, 2000); // give a bit more time to read explanation if timed out
+    }
+  };
+
   const handleNextQuestionDirect = (nextIdx) => {
     if (autoNextTimerRef.current) clearTimeout(autoNextTimerRef.current);
 
@@ -51,6 +90,7 @@ export default function Game1Arena({ activeStep, onClose, onComplete }) {
       setSelectedOption(null);
       setChecked(false);
       setIsCorrect(false);
+      setTimeLeft(10);
     } else {
       setIsFinished(true);
     }
@@ -64,6 +104,8 @@ export default function Game1Arena({ activeStep, onClose, onComplete }) {
       const correct = key === currentQuiz.answerKey;
       setIsCorrect(correct);
       setChecked(true);
+      if (timerRef.current) clearInterval(timerRef.current);
+      
       if (correct) {
         setScore((prev) => prev + 1);
         if (autoNextTimerRef.current) clearTimeout(autoNextTimerRef.current);
@@ -75,8 +117,12 @@ export default function Game1Arena({ activeStep, onClose, onComplete }) {
   };
 
   const handleCheck = () => {
-    if (checked || !selectedOption || !currentQuiz) return;
+    if (checked || !currentQuiz) return;
+    // If no option selected and check is clicked (maybe from time out? Actually button is disabled, but just in case)
+    if (!selectedOption && timeLeft > 0) return;
 
+    if (timerRef.current) clearInterval(timerRef.current);
+    
     const correct = selectedOption === currentQuiz.answerKey;
     setIsCorrect(correct);
     setChecked(true);
@@ -100,10 +146,6 @@ export default function Game1Arena({ activeStep, onClose, onComplete }) {
   const handleFinalClaim = () => {
     onComplete(stepId);
   };
-
-  const avatarImg = (stepIndex % 2 === 1)
-    ? '/illustrations/duo_avatar_student.jpg'
-    : '/illustrations/duo_avatar_robot.jpg';
 
   // Completion screen when all 5 quizzes finished
   if (isFinished) {
@@ -160,7 +202,7 @@ export default function Game1Arena({ activeStep, onClose, onComplete }) {
           </h2>
 
           <p style={{ fontSize: '0.92rem', color: '#64748B', maxWidth: '440px', margin: '0 auto 24px', lineHeight: 1.5 }}>
-            Selamat! Kamu telah menyelesaikan seluruh <strong>5 Kuis Berbasis Jurnal Ilmiah</strong> untuk topik{' '}
+            Selamat! Kamu telah menyelesaikan seluruh <strong>5 Kuis Pemahaman Materi</strong> untuk topik{' '}
             <em>&quot;{stepData?.stepTitle || step?.title}&quot;</em>.
           </p>
 
@@ -224,12 +266,14 @@ export default function Game1Arena({ activeStep, onClose, onComplete }) {
     );
   }
 
+  const useGrid = stepIndex === 3 || stepIndex === 4;
+
   return (
-    <div className="duo-viewport animate-fade-in">
+    <div className={`duo-viewport animate-fade-in ${useGrid ? 'theme-grid' : 'theme-stack'}`}>
       {/* 1. TOP HEADER BAR */}
       <header className="duo-header">
         <button className="duo-close-btn" onClick={onClose} aria-label="Tutup">
-          ✕
+          <i className="fa-solid fa-xmark"></i>
         </button>
 
         <div className="duo-progress-container">
@@ -240,78 +284,37 @@ export default function Game1Arena({ activeStep, onClose, onComplete }) {
           </div>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <div className={`quiz-timer ${timeLeft <= 3 ? 'danger' : ''}`}>
+            <i className="fa-solid fa-stopwatch"></i> {timeLeft}s
+          </div>
+
           {/* Auto-Next Switch Button */}
           <button
             type="button"
+            className={`auto-next-btn ${autoNext ? 'active' : ''}`}
             onClick={() => setAutoNext((prev) => !prev)}
-            style={{
-              background: autoNext ? '#EFF6FF' : '#F1F5F9',
-              border: autoNext ? '1px solid #3B82F6' : '1px solid #CBD5E1',
-              color: autoNext ? '#1D4ED8' : '#64748B',
-              padding: '5px 10px',
-              borderRadius: '999px',
-              fontSize: '0.74rem',
-              fontWeight: 800,
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              transition: 'all 0.15s ease',
-            }}
-            title={autoNext ? 'Auto-Next aktif: otomatis lanjut saat benar' : 'Klik untuk mengaktifkan auto-next'}
+            title={autoNext ? 'Auto-Next aktif' : 'Auto-Next non-aktif'}
           >
-            <i className={`fa-solid fa-bolt ${autoNext ? 'text-amber-500' : ''}`}></i>
-            <span>{autoNext ? 'Auto-Next: ON' : 'Auto-Next: OFF'}</span>
+            <i className={`fa-solid fa-bolt ${autoNext ? 'text-amber-300' : ''}`}></i>
+            <span className="hidden sm:inline">{autoNext ? 'Auto: ON' : 'Auto: OFF'}</span>
           </button>
-
-          <span style={{ fontSize: '0.76rem', color: '#64748B', fontWeight: 800, whiteSpace: 'nowrap' }}>
-            Soal {quizIdx + 1} / {totalQuizzes}
-          </span>
         </div>
       </header>
 
       {/* 2. MAIN QUESTION ARENA */}
       <main className="duo-arena-body">
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-          <span className="duo-category-pill">
-            <i className="fa-solid fa-award"></i> Kuis #{currentQuiz?.num || quizIdx + 1} • Langkah {stepIndex}
+        <div style={{ textAlign: 'center', marginBottom: '24px' }}>
+          <span className="duo-category-pill" style={{ marginBottom: '12px', display: 'inline-block' }}>
+            Question {quizIdx + 1} / {totalQuizzes}
           </span>
-
-          <span
-            style={{
-              fontFamily: 'var(--font-mono)',
-              fontSize: '0.72rem',
-              fontWeight: 700,
-              color: '#64748B',
-              background: '#F8FAFC',
-              padding: '3px 8px',
-              borderRadius: '6px',
-              border: '1px solid #E2E8F0',
-            }}
-          >
-            Rujukan Jurnal
-          </span>
+          <h1 className="duo-question-title" style={{ fontSize: '1.4rem', lineHeight: 1.4, color: '#0F172A', fontWeight: 800 }}>
+            {currentQuiz?.question}
+          </h1>
         </div>
 
-        <h1 className="duo-question-title" style={{ fontSize: '1.28rem', lineHeight: 1.35 }}>
-          {currentQuiz?.question}
-        </h1>
-
-        {/* Character Dialogue context card */}
-        <div className="duo-dialogue-row" style={{ marginBottom: '14px' }}>
-          <div className="duo-avatar-wrap" style={{ width: '56px', height: '56px', borderRadius: '14px' }}>
-            <img src={avatarImg} alt="Avatar" className="duo-avatar-img" />
-          </div>
-          <div className="duo-speech-bubble" style={{ padding: '8px 14px', fontSize: '0.86rem' }}>
-            <span>
-              Pilih opsi paling tepat berdasarkan temuan riset akademik kurikulum <strong>Lit-GO</strong>:
-            </span>
-          </div>
-        </div>
-
-        {/* 4 Multiple Choice Options (A, B, C, D) */}
-        <div className="duo-options-stack">
+        {/* Dynamic Layout Options (Grid vs Stack) */}
+        <div className={`duo-options-container ${useGrid ? 'grid-layout' : 'stack-layout'}`}>
           {['A', 'B', 'C', 'D'].map((key) => {
             const optText = currentQuiz?.options?.[key];
             if (!optText) return null;
@@ -337,46 +340,46 @@ export default function Game1Arena({ activeStep, onClose, onComplete }) {
                 className={cardClass}
                 onClick={() => handleSelectOption(key)}
                 disabled={checked}
-                style={{
-                  minHeight: '46px',
-                  padding: '10px 14px',
-                  fontSize: '0.9rem',
-                }}
               >
-                <span className="duo-option-num">{key}</span>
-                <span className="duo-option-text" style={{ lineHeight: 1.4 }}>
+                <div className="opt-indicator">
+                  <span className="duo-option-num">{key}</span>
+                </div>
+                <span className="duo-option-text">
                   {optText}
                 </span>
-                {checked && isCorrectOption && (
-                  <i className="fa-solid fa-circle-check text-emerald" style={{ fontSize: '1.1rem', flexShrink: 0 }}></i>
-                )}
-                {checked && isSelected && !isCorrectOption && (
-                  <i className="fa-solid fa-circle-xmark text-rose" style={{ fontSize: '1.1rem', flexShrink: 0 }}></i>
-                )}
+                
+                <div className="opt-icon-status">
+                  {checked && isCorrectOption && (
+                    <i className="fa-solid fa-circle-check text-emerald"></i>
+                  )}
+                  {checked && isSelected && !isCorrectOption && (
+                    <i className="fa-solid fa-circle-xmark text-rose"></i>
+                  )}
+                </div>
               </button>
             );
           })}
         </div>
 
-        {/* Detailed Scientific Explanation & Reference Box */}
+        {/* Detailed Explanation & Reference Box */}
         {checked && currentQuiz?.explanation && (
           <div
             className="animate-fade-in"
             style={{
-              marginTop: '14px',
-              padding: '12px 16px',
+              marginTop: '24px',
+              padding: '16px',
               background: isCorrect ? 'rgba(16, 185, 129, 0.08)' : 'rgba(244, 63, 94, 0.08)',
               border: isCorrect ? '1.5px solid rgba(16, 185, 129, 0.3)' : '1.5px solid rgba(244, 63, 94, 0.3)',
-              borderRadius: '14px',
+              borderRadius: '16px',
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-              <i className={`fa-solid ${isCorrect ? 'fa-lightbulb text-emerald' : 'fa-triangle-exclamation text-rose'}`}></i>
-              <span style={{ fontWeight: 800, fontSize: '0.82rem', color: isCorrect ? '#065F46' : '#9F1239' }}>
-                Pembahasan &amp; Referensi Ilmiah:
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+              <i className={`fa-solid ${isCorrect ? 'fa-lightbulb text-emerald' : 'fa-triangle-exclamation text-rose'}`} style={{ fontSize: '1.2rem' }}></i>
+              <span style={{ fontWeight: 800, fontSize: '0.9rem', color: isCorrect ? '#065F46' : '#9F1239' }}>
+                Pembahasan Modul
               </span>
             </div>
-            <p style={{ fontSize: '0.82rem', color: '#334155', margin: 0, lineHeight: 1.45 }}>
+            <p style={{ fontSize: '0.9rem', color: '#334155', margin: 0, lineHeight: 1.5 }}>
               {currentQuiz.explanation}
             </p>
           </div>
@@ -403,11 +406,11 @@ export default function Game1Arena({ activeStep, onClose, onComplete }) {
                 </div>
                 <div className="duo-feedback-text-stack">
                   <div className="duo-feedback-headline">
-                    {isCorrect ? 'Jawaban Benar! Luar Biasa!' : 'Jawaban Kurang Tepat!'}
+                    {isCorrect ? 'Jawaban Benar! Luar Biasa!' : (!selectedOption ? 'Waktu Habis!' : 'Jawaban Kurang Tepat!')}
                   </div>
-                  <div className="duo-feedback-hint" style={{ fontSize: '0.82rem' }}>
+                  <div className="duo-feedback-hint" style={{ fontSize: '0.86rem' }}>
                     {isCorrect
-                      ? 'Pemahaman teoritis dan rujukannya sangat tepat.'
+                      ? 'Pemahaman konsep modul kamu sudah sangat tepat!'
                       : `Jawaban yang benar adalah Opsi [${currentQuiz?.answerKey}]. Perhatikan pembahasannya.`}
                   </div>
                 </div>
@@ -418,7 +421,7 @@ export default function Game1Arena({ activeStep, onClose, onComplete }) {
                 className="duo-btn-continue"
                 onClick={handleNextClick}
               >
-                {quizIdx + 1 === totalQuizzes ? 'Selesaikan Langkah 🏆' : 'Lanjutkan →'}
+                {quizIdx + 1 === totalQuizzes ? 'Selesai 🏆' : 'Lanjut →'}
               </button>
             </>
           )}

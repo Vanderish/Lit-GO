@@ -101,7 +101,9 @@ export default function PretestModal({ isOpen, onClose, canClose = false, onComp
     const newLv = Math.floor(newPts / 100) + 1;
     const newExpPct = newPts % 100;
 
-    const avgScore = Math.round(newRadar.reduce((a, b) => a + b, 0) / 4);
+    const prevAvgScore = (state.radar && state.hasRadar) ? Math.round(state.radar.reduce((a, b) => a + b, 0) / 4) : (state.previousAvgScore || null);
+    const prevRadar = (state.radar && state.hasRadar) ? state.radar : (state.previousRadar || null);
+
     const newActivity = {
       id: Date.now(),
       text: `Menyelesaikan Pre-Test AI Readiness Radar (${avgScore}% Kumulatif)`,
@@ -117,6 +119,8 @@ export default function PretestModal({ isOpen, onClose, canClose = false, onComp
       ...state,
       radar: newRadar,
       hasRadar: true,
+      previousAvgScore: prevAvgScore,
+      previousRadar: prevRadar,
       badges: newBadges,
       pts: newPts,
       lv: newLv,
@@ -251,6 +255,13 @@ export default function PretestModal({ isOpen, onClose, canClose = false, onComp
           {/* Right Sidebar Navigator */}
           <div className="pretest-sidebar">
             <div className="pretest-sidebar-card">
+              <div className="pretest-mascot-companion">
+                <img src="/illustrations/mascot_lito_3d.jpg" alt="Lito Companion" className="pretest-mascot-mini" />
+                <div className="pretest-mascot-status">
+                  <strong>Lito AI Companion</strong>
+                  <span>{isAllAnswered ? 'Siap kalibrasi radar!' : 'Pilih angka 1-10 sesuai pemahamanmu'}</span>
+                </div>
+              </div>
               <div className="pretest-sidebar-score">{progressPercentage}%</div>
               <div className="pretest-sidebar-sub">
                 Terjawab {answeredCount} dari 8 Pertanyaan
