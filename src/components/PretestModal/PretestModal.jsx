@@ -94,6 +94,8 @@ export default function PretestModal({ isOpen, onClose, canClose = false, onComp
       Math.round(((vals[6] + vals[7]) / 20) * 100),
     ];
 
+    const avgScore = Math.round(newRadar.reduce((a, b) => a + b, 0) / 4);
+
     let newBadges = [...(state.badges || [])];
     if (!newBadges.includes(1)) newBadges.push(1);
 

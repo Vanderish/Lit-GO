@@ -466,3 +466,135 @@
   padding: 2px 7px;
   border-radius: 6px;
 }
+
+/* ============================================================
+   PRETEST MODAL - FIX KLIK TOMBOL & OVERLAY
+   ============================================================ */
+
+.fullscreen-pretest-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #F8FAFC;
+  overflow-y: auto;
+  padding: 32px 48px 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: pretestFadeIn 0.25s ease-out;
+  pointer-events: auto; /* Memastikan area modal menangkap event klik */
+}
+
+.pretest-container {
+  width: 100%;
+  max-width: 1240px;
+  position: relative;
+  z-index: 10000; /* Pastikan berada di lapisan teratas */
+}
+
+/* Memperbaiki interaksi tombol navigasi bawah & tombol selesai */
+.pretest-nav-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+  gap: 16px;
+  position: relative;
+  z-index: 10002;
+}
+
+.btn-pretest-nav {
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.92rem;
+  border: 1px solid var(--line-strong);
+  background: var(--white);
+  color: var(--navy);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: auto; /* Memastikan tombol dapat diklik secara aktif */
+}
+
+.btn-pretest-nav.primary {
+  background: var(--navy);
+  color: #FFFFFF !important;
+  border: none;
+  box-shadow: 0 4px 14px rgba(30, 41, 59, 0.18);
+  pointer-events: auto;
+}
+
+.btn-pretest-nav.primary:hover:not(:disabled) {
+  background: var(--indigo);
+  color: #FFFFFF !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(59, 130, 246, 0.25);
+}
+
+.btn-pretest-nav:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+  pointer-events: none; /* Mencegah klik saat tombol disabled */
+}
+
+/* ==========================================================================
+   HIGH CONTRAST MODE OVERRIDES - PretestModal
+   ========================================================================== */
+body.high-contrast .fullscreen-pretest-overlay {
+  background: #0B0F19 !important;
+  color: #F1F5F9 !important;
+}
+
+body.high-contrast .pretest-main-card,
+body.high-contrast .pretest-sidebar-card {
+  background: #161E2E !important;
+  border-color: #334155 !important;
+  color: #F1F5F9 !important;
+}
+
+body.high-contrast .pretest-title-large,
+body.high-contrast .pretest-q-header {
+  color: #F1F5F9 !important;
+}
+
+body.high-contrast .scale-circle-btn {
+  background: #1E293B !important;
+  border-color: #475569 !important;
+  color: #F8FAFC !important;
+}
+
+body.high-contrast .scale-circle-btn.active {
+  background: #3B82F6 !important;
+  border-color: #60A5FA !important;
+  color: #FFFFFF !important;
+}
+
+body.high-contrast .btn-pretest-nav {
+  background: #1E293B !important;
+  border-color: #475569 !important;
+  color: #F8FAFC !important;
+}
+
+body.high-contrast .btn-pretest-nav.primary {
+  background: #2563EB !important;
+  color: #FFFFFF !important;
+  border: none;
+}
+
+body.high-contrast .pretest-pill-btn {
+  background: #1E293B !important;
+  border-color: #334155 !important;
+  color: #CBD5E1 !important;
+}
+
+body.high-contrast .pretest-pill-btn.active {
+  background: rgba(59, 130, 246, 0.2) !important;
+  border-color: #60A5FA !important;
+  color: #60A5FA !important;
+}
