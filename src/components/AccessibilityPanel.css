@@ -1,0 +1,150 @@
+/* ============================
+   BASE PANEL STYLES
+   ============================ */
+#a11y-panel {
+  position: fixed;
+  bottom: 84px;
+  right: 24px;
+  z-index: 250;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  width: 280px;
+  padding: 20px;
+  box-shadow: 0 14px 40px -12px rgba(30, 41, 59, 0.25);
+  transition: all 0.3s ease;
+}
+
+#a11y-panel.hidden {
+  display: none;
+}
+
+.a11y-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--line);
+}
+
+.a11y-panel-title {
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: var(--navy);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.a11y-panel-close {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 4px;
+  transition: color 0.2s ease;
+}
+
+.a11y-panel-close:hover {
+  color: var(--red);
+}
+
+.a11y-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+}
+
+.a11y-row-label {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--navy);
+}
+
+.a11y-row-col {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 4px;
+}
+
+.a11y-slider-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.a11y-size-val {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--indigo);
+}
+
+.a11y-slider-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.a11y-slider-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-dim);
+}
+
+.a11y-size-slider {
+  flex: 1;
+  accent-color: var(--indigo);
+  cursor: pointer;
+}
+
+.a11y-row-footer {
+  border-top: 1px solid var(--line);
+  margin-top: 8px;
+  padding-top: 10px;
+}
+
+/* ============================
+   HIGH CONTRAST OVERRIDES
+   ============================ */
+body.high-contrast #a11y-panel {
+  background: #161E2E !important;
+  border-color: #334155 !important;
+  box-shadow: 0 14px 40px -12px rgba(0, 0, 0, 0.5) !important;
+}
+
+body.high-contrast .a11y-panel-title { 
+  color: #FFFFFF !important; 
+}
+
+body.high-contrast .a11y-panel-close { 
+  color: #94A3B8 !important; 
+}
+
+body.high-contrast .a11y-panel-close:hover { 
+  color: #F87171 !important; 
+}
+
+body.high-contrast .a11y-row-label {
+  color: #E2E8F0 !important;
+}
+
+body.high-contrast .a11y-panel-header, 
+body.high-contrast .a11y-row-col,
+body.high-contrast .a11y-row-footer { 
+  border-color: #334155 !important; 
+}
+
+body.high-contrast .a11y-slider-label { 
+  color: #94A3B8 !important; 
+}
+
+body.high-contrast .a11y-size-val { 
+  color: #60A5FA !important; 
+}

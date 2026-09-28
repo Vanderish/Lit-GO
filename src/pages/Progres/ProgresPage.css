@@ -370,3 +370,86 @@
     align-items: flex-start;
   }
 }
+
+/* ========================================================================== */
+/* HIGH CONTRAST OVERRIDES - Progres Page                                     */
+/* ========================================================================== */
+
+body.high-contrast .progres-title,
+body.high-contrast .stat-card-value,
+body.high-contrast .radar-title,
+body.high-contrast .section-title,
+body.high-contrast .pillar-item-label strong,
+body.high-contrast .module-item-title {
+  color: #FFFFFF !important;
+}
+
+body.high-contrast .stat-card-desc,
+body.high-contrast .radar-subtitle,
+body.high-contrast .section-subtitle,
+body.high-contrast .module-item-desc {
+  color: #94A3B8 !important;
+}
+
+body.high-contrast .stat-card,
+body.high-contrast .radar-section,
+body.high-contrast .module-completion-section {
+  background: #161E2E !important;
+  border-color: #334155 !important;
+}
+
+body.high-contrast .stat-card-indigo {
+  background: rgba(59, 130, 246, 0.1) !important;
+  border-color: rgba(59, 130, 246, 0.3) !important;
+}
+
+body.high-contrast .stat-card-amber {
+  background: rgba(245, 158, 11, 0.1) !important;
+  border-color: rgba(245, 158, 11, 0.3) !important;
+}
+
+body.high-contrast .stat-card-emerald {
+  background: rgba(16, 185, 129, 0.1) !important;
+  border-color: rgba(16, 185, 129, 0.3) !important;
+}
+
+body.high-contrast .stat-card-teal {
+  background: rgba(20, 184, 166, 0.1) !important;
+  border-color: rgba(20, 184, 166, 0.3) !important;
+}
+
+body.high-contrast .pillar-item-track {
+  background: #1E293B !important;
+}
+
+body.high-contrast .module-item {
+  background: #1E293B !important;
+  border-color: #334155 !important;
+}
+
+body.high-contrast .module-item:hover {
+  background: #243147 !important;
+  border-color: #60A5FA !important;
+}
+
+body.high-contrast .module-item.done {
+  background: rgba(16, 185, 129, 0.15) !important;
+  border-color: rgba(16, 185, 129, 0.35) !important;
+}
+
+body.high-contrast .badge-status {
+  background: rgba(16, 185, 129, 0.2) !important;
+  color: #34D399 !important;
+}
+
+body.high-contrast .btn-lab-ghost {
+  background: #1E293B !important;
+  border-color: #475569 !important;
+  color: #F8FAFC !important;
+}
+
+body.high-contrast .btn-lab-ghost:hover {
+  background: rgba(96, 165, 250, 0.2) !important;
+  border-color: #60A5FA !important;
+  color: #60A5FA !important;
+}

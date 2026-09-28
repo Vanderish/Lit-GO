@@ -806,3 +806,381 @@
   .radar-summary-item:first-child { grid-column: span 1; }
   .radar-directive-header { flex-direction: column; gap: 12px; }
 }
+
+/* ============================================================
+   6. HIGH CONTRAST MODE
+   Mengikuti implementasi global: body.high-contrast
+   ============================================================ */
+
+body.high-contrast .radar-hub-head .hub-section-title {
+  color: #F1F5F9 !important;
+}
+
+body.high-contrast .radar-hub-head .hub-section-sub {
+  color: #CBD5E1 !important;
+}
+
+/* ------------------------------------------------------------
+   BUTTON
+   ------------------------------------------------------------ */
+
+body.high-contrast .btn-radar-pretest {
+  background: #2563EB !important;
+  color: #FFFFFF !important;
+  border: 1px solid #60A5FA !important;
+  box-shadow: none !important;
+}
+
+body.high-contrast .btn-radar-pretest:hover {
+  background: #1D4ED8 !important;
+  box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.35) !important;
+}
+
+
+/* ------------------------------------------------------------
+   SUMMARY METRICS
+   ------------------------------------------------------------ */
+
+body.high-contrast .radar-summary-item {
+  background: #161E2E !important;
+  border: 1px solid #334155 !important;
+  color: #F1F5F9 !important;
+  box-shadow: none !important;
+}
+
+body.high-contrast .radar-summary-item:hover {
+  background: #1E293B !important;
+  border-color: #475569 !important;
+  box-shadow: none !important;
+}
+
+body.high-contrast .radar-summary-item p {
+  color: #CBD5E1 !important;
+}
+
+body.high-contrast .radar-summary-item strong {
+  color: #F8FAFC !important;
+}
+
+body.high-contrast .radar-val-sub {
+  color: #CBD5E1 !important;
+}
+
+body.high-contrast .radar-summary-item:first-child {
+  background: #1E3A8A !important;
+  border: 1px solid #60A5FA !important;
+  box-shadow: none !important;
+}
+
+body.high-contrast .radar-summary-item:first-child p,
+body.high-contrast .radar-summary-item:first-child strong {
+  color: #FFFFFF !important;
+}
+
+body.high-contrast .radar-summary-item:first-child .radar-val-sub {
+  color: #DBEAFE !important;
+}
+
+body.high-contrast .radar-summary-item:first-child .radar-summary-icon {
+  background: rgba(255, 255, 255, 0.15) !important;
+  color: #FFFFFF !important;
+}
+
+body.high-contrast .radar-metric-delta {
+  color: #6EE7B7 !important;
+}
+
+body.high-contrast .radar-summary-item:first-child .radar-metric-delta {
+  color: #FFFFFF !important;
+}
+
+
+/* ------------------------------------------------------------
+   SUMMARY ICONS
+   ------------------------------------------------------------ */
+
+body.high-contrast .radar-summary-icon.indigo {
+  background: #1E3A8A !important;
+  color: #93C5FD !important;
+}
+
+body.high-contrast .radar-summary-icon.emerald {
+  background: #064E3B !important;
+  color: #6EE7B7 !important;
+}
+
+body.high-contrast .radar-summary-icon.amber {
+  background: #78350F !important;
+  color: #FCD34D !important;
+}
+
+body.high-contrast .radar-summary-icon.purple {
+  background: #134E4A !important;
+  color: #5EEAD4 !important;
+}
+
+
+/* ------------------------------------------------------------
+   MAIN RADAR CARD
+   ------------------------------------------------------------ */
+
+body.high-contrast .radar-futuristic-card {
+  background: #161E2E !important;
+  border: 1px solid #334155 !important;
+  color: #F1F5F9 !important;
+  box-shadow: none !important;
+}
+
+
+/* ------------------------------------------------------------
+   SCORE PANEL
+   ------------------------------------------------------------ */
+
+body.high-contrast .radar-score-panel {
+  background: #0F172A !important;
+  border: 1px solid #334155 !important;
+  color: #F1F5F9 !important;
+}
+
+body.high-contrast .radar-score-head h2 {
+  color: #F8FAFC !important;
+}
+
+body.high-contrast .radar-score-subtitle {
+  color: #CBD5E1 !important;
+}
+
+body.high-contrast .radar-status-badge {
+  background: #064E3B !important;
+  border: 1px solid #10B981 !important;
+  color: #6EE7B7 !important;
+}
+
+body.high-contrast .status-dot {
+  background: #34D399 !important;
+  box-shadow: 0 0 0 2px rgba(52, 211, 153, 0.25) !important;
+}
+
+body.high-contrast .radar-score-ring-wrap::before {
+  background: rgba(96, 165, 250, 0.12) !important;
+}
+
+body.high-contrast .radar-score-track {
+  stroke: #475569 !important;
+}
+
+body.high-contrast .radar-score-main {
+  color: #F8FAFC !important;
+}
+
+body.high-contrast .radar-score-main small {
+  color: #93C5FD !important;
+}
+
+body.high-contrast .radar-score-label {
+  color: #93C5FD !important;
+}
+
+body.high-contrast .radar-chip {
+  background: #1E3A8A !important;
+  border: 1px solid #60A5FA !important;
+  color: #DBEAFE !important;
+}
+
+
+/* ------------------------------------------------------------
+   MINI STAT
+   ------------------------------------------------------------ */
+
+body.high-contrast .radar-score-footer {
+  border-top-color: #334155 !important;
+}
+
+body.high-contrast .radar-mini-stat {
+  border-right-color: #334155 !important;
+}
+
+body.high-contrast .radar-mini-stat span {
+  color: #94A3B8 !important;
+}
+
+body.high-contrast .radar-mini-stat strong {
+  color: #F8FAFC !important;
+}
+
+
+/* ------------------------------------------------------------
+   CHART / PILLAR BREAKDOWN
+   ------------------------------------------------------------ */
+
+body.high-contrast .radar-chart-header h3 {
+  color: #F8FAFC !important;
+}
+
+body.high-contrast .radar-chart-header p {
+  color: #CBD5E1 !important;
+}
+
+body.high-contrast .radar-pillar-breakdown {
+  border-top-color: #475569 !important;
+}
+
+body.high-contrast .pillar-name {
+  color: #F1F5F9 !important;
+}
+
+body.high-contrast .pillar-bar-track {
+  background: #334155 !important;
+}
+
+body.high-contrast .radar-footnote {
+  border-top-color: #334155 !important;
+  color: #94A3B8 !important;
+}
+
+body.high-contrast .radar-footnote strong {
+  color: #F8FAFC !important;
+}
+
+
+/* ------------------------------------------------------------
+   DIRECTIVE CARD
+   ------------------------------------------------------------ */
+
+body.high-contrast .radar-directive-card {
+  background: #161E2E !important;
+  border: 1px solid #334155 !important;
+  color: #F1F5F9 !important;
+  box-shadow: none !important;
+}
+
+body.high-contrast .radar-directive-header {
+  border-bottom-color: #334155 !important;
+}
+
+body.high-contrast .radar-directive-heading {
+  color: #F8FAFC !important;
+}
+
+body.high-contrast .radar-directive-kicker {
+  color: #93C5FD !important;
+}
+
+body.high-contrast .radar-analysis-text {
+  color: #CBD5E1 !important;
+}
+
+
+/* ------------------------------------------------------------
+   PINNACLE METERS
+   ------------------------------------------------------------ */
+
+body.high-contrast .radar-pinnacle-meters {
+  background: #0F172A !important;
+  border: 1px solid #334155 !important;
+}
+
+body.high-contrast .pinnacle-type {
+  color: #F1F5F9 !important;
+}
+
+body.high-contrast .pinnacle-bar-track {
+  background: #334155 !important;
+  border-color: #475569 !important;
+}
+
+
+/* ------------------------------------------------------------
+   DELTA BADGES
+   ------------------------------------------------------------ */
+
+body.high-contrast .radar-delta-pill.up {
+  background: #064E3B !important;
+  color: #6EE7B7 !important;
+  border-color: #10B981 !important;
+}
+
+body.high-contrast .radar-delta-pill.down {
+  background: #450A0A !important;
+  color: #FCA5A5 !important;
+  border-color: #EF4444 !important;
+}
+
+
+/* ------------------------------------------------------------
+   COURSE HERO
+   ------------------------------------------------------------ */
+
+body.high-contrast .radar-course-hero-card {
+  background: #172554 !important;
+  border: 1px solid #60A5FA !important;
+  color: #F1F5F9 !important;
+  box-shadow: none !important;
+}
+
+body.high-contrast .course-level-tag {
+  background: #2563EB !important;
+  color: #FFFFFF !important;
+  border: 1px solid #93C5FD !important;
+}
+
+body.high-contrast .course-rec-tag {
+  background: #1E3A8A !important;
+  color: #DBEAFE !important;
+  border: 1px solid #60A5FA !important;
+}
+
+body.high-contrast .course-icon-badge {
+  background: #1E3A8A !important;
+  border-color: #60A5FA !important;
+  color: #DBEAFE !important;
+}
+
+body.high-contrast .course-hero-title {
+  color: #FFFFFF !important;
+}
+
+body.high-contrast .course-hero-desc {
+  color: #CBD5E1 !important;
+}
+
+body.high-contrast .btn-course-launch {
+  background: #2563EB !important;
+  color: #FFFFFF !important;
+  border: 1px solid #60A5FA !important;
+  box-shadow: none !important;
+}
+
+body.high-contrast .btn-course-launch:hover {
+  background: #1D4ED8 !important;
+  box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.35) !important;
+}
+
+body.high-contrast .btn-course-catalog-link {
+  color: #CBD5E1 !important;
+}
+
+body.high-contrast .btn-course-catalog-link:hover {
+  color: #93C5FD !important;
+}
+
+
+/* ------------------------------------------------------------
+   ACCESSIBILITY FOCUS
+   ------------------------------------------------------------ */
+
+body.high-contrast .radar-hub-head button:focus-visible,
+body.high-contrast .radar-directive-card button:focus-visible,
+body.high-contrast .radar-course-hero-card button:focus-visible {
+  outline: 2px solid #FBBF24 !important;
+  outline-offset: 3px !important;
+}
+
+body.high-contrast .radar-circular-backdrop,
+body.high-contrast .radar-circular-backdrop canvas {
+  color: #F8FAFC !important;
+}
+
+body.high-contrast .radar-circular-backdrop {
+  filter: brightness(1.1);
+}

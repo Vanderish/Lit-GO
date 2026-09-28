@@ -1,0 +1,167 @@
+/* ========================================================= */
+/* PROMPT SAFETY PAGE STYLES                                 */
+/* ========================================================= */
+
+.safety-header-wrap {
+  margin-bottom: 24px;
+}
+
+.safety-main-title {
+  font-size: 1.65rem;
+}
+
+.prompt-editor-title {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: var(--navy);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.prompt-status-indicator-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.prompt-status-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.safety-guidance-box {
+  margin-top: 16px;
+  background: #F8FAFC;
+  border-radius: 10px;
+  padding: 12px 14px;
+  border: 1px solid #E2E8F0;
+  font-size: 0.8rem;
+  color: var(--navy-light);
+  line-height: 1.6;
+}
+
+.safety-score-pill-badge {
+  font-size: 0.74rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+.safety-score-number-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.safety-score-val-large {
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.safety-score-max-label {
+  font-size: 0.88rem;
+  color: var(--text-dim);
+  font-weight: 600;
+}
+
+.safety-terminal-card-wrap {
+  padding: 16px !important;
+}
+
+/* Parser Highlight Default */
+.parser-highlight-safe {
+  background: rgba(16, 185, 129, 0.25);
+  color: #059669;
+  font-weight: 700;
+  border-radius: 3px;
+  padding: 1px 4px;
+}
+
+.parser-highlight-danger {
+  background: rgba(239, 68, 68, 0.3);
+  color: #DC2626;
+  font-weight: 700;
+  border-radius: 3px;
+  padding: 1px 4px;
+}
+
+/* ========================================================= */
+/* HIGH CONTRAST OVERRIDES - Prompt Safety Page              */
+/* ========================================================= */
+
+body.high-contrast .safety-main-title,
+body.high-contrast .prompt-editor-title {
+  color: #FFFFFF !important;
+}
+
+body.high-contrast .safety-guidance-box {
+  background: #1E293B !important;
+  border-color: #334155 !important;
+  color: #E2E8F0 !important;
+}
+
+body.high-contrast .safety-score-max-label {
+  color: #94A3B8 !important;
+}
+
+body.high-contrast .safety-terminal-card-wrap .parser-terminal {
+  background: #0F172A !important;
+  border-color: #334155 !important;
+}
+
+body.high-contrast .parser-highlight-safe {
+  background: rgba(16, 185, 129, 0.25) !important;
+  color: #34D399 !important;
+}
+
+body.high-contrast .parser-highlight-danger {
+  background: rgba(239, 68, 68, 0.3) !important;
+  color: #F87171 !important;
+}
+
+body.high-contrast .btn-template-chip {
+  background: #1E293B !important;
+  border-color: #475569 !important;
+  color: #E2E8F0 !important;
+}
+
+body.high-contrast .btn-template-chip:hover {
+  background: #334155 !important;
+  border-color: #60A5FA !important;
+  color: #60A5FA !important;
+}
+
+body.high-contrast .btn-template-chip.safe-chip {
+  border-color: rgba(52, 211, 153, 0.4) !important;
+  color: #34D399 !important;
+}
+
+body.high-contrast .btn-template-chip.danger-chip {
+  border-color: rgba(248, 113, 113, 0.4) !important;
+  color: #F87171 !important;
+}
+
+body.high-contrast .prompt-textarea-wrap,
+body.high-contrast .prompt-textarea {
+  background: #161E2E !important;
+  border-color: #334155 !important;
+  color: #F8FAFC !important;
+}
+
+body.high-contrast .prompt-textarea::placeholder {
+  color: #94A3B8 !important;
+}
+
+body.high-contrast .prompt-editor-footer {
+  background: #1E293B !important;
+  border-top-color: #334155 !important;
+  color: #94A3B8 !important;
+}
+
+body.high-contrast .prompt-editor-footer div:last-child {
+  color: #94A3B8 !important;
+}

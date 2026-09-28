@@ -1,0 +1,266 @@
+/* ========================================================= */
+/* BIAS BREAKER PAGE STYLES                                  */
+/* ========================================================= */
+
+.bias-header-wrap {
+  margin-bottom: 24px;
+}
+
+.bias-main-title {
+  font-size: 1.65rem;
+}
+
+.bias-case-selector-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  background: var(--white);
+  padding: 14px 18px;
+  border-radius: 14px;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+}
+
+.bias-case-btn-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.bias-case-label {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--navy);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.bias-case-pill {
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid #E2E8F0;
+  background: #F8FAFC;
+  color: var(--navy-light);
+  transition: all 0.2s;
+}
+
+.bias-case-pill:hover {
+  background: #EEF2F6;
+  border-color: #CBD5E1;
+}
+
+.bias-case-pill.active {
+  background: rgba(59, 130, 246, 0.1);
+  border-color: var(--indigo);
+  color: var(--indigo);
+}
+
+.bias-shuffle-btn {
+  font-size: 0.78rem;
+  padding: 6px 12px;
+}
+
+.bias-doc-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.bias-doc-subtitle-main {
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: var(--navy);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bias-doc-hint-text {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  margin-top: 2px;
+}
+
+.bias-sentence-container {
+  font-size: 0.94rem;
+  line-height: 2.2;
+}
+
+.bias-instruction-footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  margin-top: 16px;
+}
+
+.bias-target-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-dim);
+}
+
+.bias-score-status-text {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #92400E;
+}
+
+.bias-badge-danger {
+  font-size: 0.72rem;
+  color: var(--red);
+  font-weight: 700;
+}
+
+.bias-badge-success {
+  font-size: 0.72rem;
+  color: var(--emerald);
+  font-weight: 700;
+}
+
+.bias-feedback-title-inner {
+  font-size: 0.86rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.bias-feedback-msg {
+  font-size: 0.82rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.bias-reset-action-btn {
+  margin-top: 16px;
+}
+
+/* ========================================================= */
+/* HIGH CONTRAST OVERRIDES - Bias Breaker Page               */
+/* ========================================================= */
+
+body.high-contrast .bias-case-selector-bar {
+  background: #161E2E !important;
+  border-color: #334155 !important;
+}
+
+body.high-contrast .bias-case-label {
+  color: #F8FAFC !important;
+}
+
+body.high-contrast .bias-case-pill {
+  background: #1E293B !important;
+  border-color: #475569 !important;
+  color: #E2E8F0 !important;
+}
+
+body.high-contrast .bias-case-pill:hover {
+  background: #334155 !important;
+  border-color: #60A5FA !important;
+}
+
+body.high-contrast .bias-case-pill.active {
+  background: rgba(96, 165, 250, 0.2) !important;
+  border-color: #60A5FA !important;
+  color: #60A5FA !important;
+}
+
+body.high-contrast .bias-shuffle-btn {
+  background: #1E293B !important;
+  border-color: #475569 !important;
+  color: #F8FAFC !important;
+}
+
+body.high-contrast .bias-shuffle-btn:hover {
+  background: rgba(96, 165, 250, 0.2) !important;
+  border-color: #60A5FA !important;
+  color: #60A5FA !important;
+}
+
+body.high-contrast .bias-doc-subtitle-main {
+  color: #FFFFFF !important;
+}
+
+body.high-contrast .bias-doc-hint-text,
+body.high-contrast .bias-instruction-footer,
+body.high-contrast .bias-target-label {
+  color: #94A3B8 !important;
+}
+
+body.high-contrast .bias-score-status-text {
+  color: #FBBF24 !important;
+}
+
+/* Penyesuaian High Contrast untuk Sandbox Layout Grid & Cards */
+body.high-contrast .sandbox-card,
+body.high-contrast .sandbox-sidebar-card,
+body.high-contrast .document-sheet {
+  background: #161E2E !important;
+  border-color: #334155 !important;
+  color: #F8FAFC !important;
+}
+
+body.high-contrast .document-sheet-header {
+  border-bottom: 1px solid #334155 !important;
+  color: #94A3B8 !important;
+}
+
+body.high-contrast .fact-sentence-btn {
+  color: #E2E8F0 !important;
+}
+
+body.high-contrast .fact-sentence-btn:hover {
+  background: rgba(96, 165, 250, 0.15) !important;
+}
+
+body.high-contrast .sandbox-sidebar-card .feedback-callout {
+  background: #1E293B !important;
+  border-color: #475569 !important;
+  color: #F8FAFC !important;
+}
+
+body.high-contrast .sandbox-sidebar-card .feedback-callout.neutral {
+  background: #1E293B !important;
+  color: #94A3B8 !important;
+}
+
+body.high-contrast .sandbox-sidebar-card .feedback-callout.danger {
+  background: rgba(239, 68, 68, 0.15) !important;
+  border: 1px solid rgba(239, 68, 68, 0.35) !important;
+  color: #FCA5A5 !important;
+}
+
+body.high-contrast .sandbox-sidebar-card .feedback-callout.success {
+  background: rgba(16, 185, 129, 0.15) !important;
+  border: 1px solid rgba(16, 185, 129, 0.35) !important;
+  color: #6EE7B7 !important;
+}
+
+body.high-contrast .bias-feedback-title-inner {
+  color: #FFFFFF !important;
+}
+
+body.high-contrast .bias-feedback-msg {
+  color: #E2E8F0 !important;
+}
+
+body.high-contrast .btn-lab-action {
+  background: #1E293B !important;
+  border: 1px solid #475569 !important;
+  color: #F8FAFC !important;
+}
+
+body.high-contrast .btn-lab-action:hover {
+  background: rgba(96, 165, 250, 0.2) !important;
+  border-color: #60A5FA !important;
+  color: #60A5FA !important;
+}

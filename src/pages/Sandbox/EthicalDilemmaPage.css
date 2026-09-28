@@ -632,3 +632,158 @@
 .trans-principles-list li {
   margin-bottom: 6px;
 }
+
+/* ==========================================================================
+   HIGH CONTRAST OVERRIDES - Ethical Dilemma & Transparency Page
+   ========================================================================== */
+
+body.high-contrast .ethical-main-title,
+body.high-contrast .ethical-panel-title,
+body.high-contrast .ethical-choice-title,
+body.high-contrast .ethical-side-heading,
+body.high-contrast .trans-param-name {
+  color: #FFFFFF !important;
+}
+
+body.high-contrast .ethical-sub-desc,
+body.high-contrast .ethical-context-paragraph,
+body.high-contrast .ethical-choice-desc,
+body.high-contrast .ethical-card-footer,
+body.high-contrast .ethical-analysis-text,
+body.high-contrast .trans-quote-box,
+body.high-contrast .trans-param-sub,
+body.high-contrast .trans-principles-list {
+  color: #94A3B8 !important;
+}
+
+body.high-contrast .ethical-main-panel,
+body.high-contrast .ethical-side-card,
+body.high-contrast .ethical-choice-card,
+body.high-contrast .ethical-pill-btn,
+body.high-contrast .trans-param-row,
+body.high-contrast .trans-toggle-btn,
+body.high-contrast .ethical-accuracy-badge {
+  background: #161E2E !important;
+  border-color: #334155 !important;
+  color: #F8FAFC !important;
+}
+
+body.high-contrast .ethical-choice-card:hover {
+  background: #1E293B !important;
+  border-color: #60A5FA !important;
+}
+
+body.high-contrast .ethical-choice-card.selected {
+  background: rgba(96, 165, 250, 0.15) !important;
+  border-color: #60A5FA !important;
+  box-shadow: 0 0 0 1px #60A5FA !important;
+}
+
+body.high-contrast .ethical-pill-btn.active {
+  background: #3B82F6 !important;
+  border-color: #3B82F6 !important;
+  color: #FFFFFF !important;
+}
+
+body.high-contrast .ethical-feature-tabs {
+  border-bottom-color: #334155 !important;
+}
+
+body.high-contrast .ethical-tab-btn {
+  color: #94A3B8 !important;
+}
+
+body.high-contrast .ethical-tab-btn.active {
+  color: #60A5FA !important;
+}
+
+body.high-contrast .ethical-tab-btn.active::after {
+  background: #60A5FA !important;
+}
+
+body.high-contrast .ethical-tab-count {
+  background: #1E293B !important;
+  color: #94A3B8 !important;
+}
+
+body.high-contrast .ethical-tab-btn.active .ethical-tab-count {
+  background: rgba(96, 165, 250, 0.2) !important;
+  color: #60A5FA !important;
+}
+
+body.high-contrast .ethical-meter-track {
+  background: #1E293B !important;
+}
+
+body.high-contrast .ethical-meter-labels {
+  color: #E2E8F0 !important;
+}
+
+body.high-contrast .ethical-analysis-box {
+  background: #1E293B !important;
+  border-color: #334155 !important;
+}
+
+body.high-contrast .ethical-analysis-title {
+  color: #60A5FA !important;
+}
+
+body.high-contrast .btn-ethical-dark {
+  background: #3B82F6 !important;
+  color: #FFFFFF !important;
+}
+
+body.high-contrast .btn-ethical-dark:hover {
+  background: #2563EB !important;
+}
+
+body.high-contrast .trans-quote-box {
+  background: #1E293B !important;
+  border-left-color: #60A5FA !important;
+  color: #E2E8F0 !important;
+}
+
+body.high-contrast .trans-forensic-tag {
+  background: rgba(59, 130, 246, 0.15) !important;
+  border-color: rgba(59, 130, 246, 0.3) !important;
+  color: #60A5FA !important;
+}
+
+body.high-contrast .trans-toggle-btn.active-terpenuhi,
+body.high-contrast .trans-toggle-btn.active-tidak {
+  background: #3B82F6 !important;
+  border-color: #3B82F6 !important;
+  color: #FFFFFF !important;
+}
+
+body.high-contrast .trans-meta-table td {
+  border-bottom-color: #334155 !important;
+}
+
+body.high-contrast .trans-meta-table td:last-child {
+  color: #F8FAFC !important;
+}
+
+body.high-contrast .ethical-status-badge.badge-ethical {
+  background: rgba(16, 185, 129, 0.2) !important;
+  border-color: #34D399 !important;
+  color: #34D399 !important;
+}
+
+body.high-contrast .ethical-status-badge.badge-warning {
+  background: rgba(245, 158, 11, 0.2) !important;
+  border-color: #FBBF24 !important;
+  color: #FBBF24 !important;
+}
+
+body.high-contrast .ethical-status-badge.badge-danger {
+  background: rgba(239, 68, 68, 0.2) !important;
+  border-color: #F87171 !important;
+  color: #F87171 !important;
+}
+
+body.high-contrast .ethical-side-score-pill {
+  background: rgba(16, 185, 129, 0.2) !important;
+  border-color: #34D399 !important;
+  color: #34D399 !important;
+}

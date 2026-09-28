@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useProgress } from '../context/ProgressContext';
+import './AccessibilityPanel.css';
 
 export default function AccessibilityPanel() {
   const [panelOpen, setPanelOpen] = useState(false);
@@ -18,7 +19,6 @@ export default function AccessibilityPanel() {
 
   return (
     <>
-      {/* Floating Action Button */}
       <button
         id="a11y-fab"
         onClick={() => setPanelOpen(!panelOpen)}
@@ -28,34 +28,33 @@ export default function AccessibilityPanel() {
         <i className="fa-solid fa-universal-access"></i>
       </button>
 
-      {/* Floating Panel Drawer */}
       <div id="a11y-panel" className={panelOpen ? '' : 'hidden'}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px', paddingBottom: '10px', borderBottom: '1px solid var(--line)' }}>
-          <span style={{ fontWeight: 700, fontSize: '0.88rem', color: 'var(--navy)', display: 'flex', alignItems: 'center', gap: '8px' }}>
+        
+        <div className="a11y-panel-header">
+          <span className="a11y-panel-title">
             <i className="fa-solid fa-universal-access text-indigo"></i>
             {isEnglish ? 'Inclusive Accessibility' : 'Aksesibilitas Inklusif'}
           </span>
           <button
+            className="a11y-panel-close"
             onClick={() => setPanelOpen(false)}
-            style={{ background: 'none', border: 'none', color: 'var(--text-dim)', fontSize: '1rem', cursor: 'pointer', padding: '4px' }}
             aria-label="Close Accessibility Panel"
           >
             ✕
           </button>
         </div>
 
-        {/* Text Size Slider */}
-        <div className="a11y-row" style={{ display: 'flex', flexDirection: 'column', gap: '6px', padding: '8px 0', borderBottom: '1px solid var(--line)', marginBottom: '4px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span className="a11y-row-label" style={{ fontSize: '0.84rem', fontWeight: 600 }}>
+        <div className="a11y-row a11y-row-col">
+          <div className="a11y-slider-header">
+            <span className="a11y-row-label">
               <i className="fa-solid fa-font text-indigo mr-1"></i> {isEnglish ? 'Text Size' : 'Ukuran Teks'}
             </span>
-            <span className="a11y-size-val" style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', fontWeight: 700, color: 'var(--indigo)' }}>
+            <span className="a11y-size-val">
               {fontSize}px
             </span>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span style={{ fontSize: '0.72rem', fontWeight: 700, color: 'var(--text-dim)' }}>16px</span>
+          <div className="a11y-slider-control">
+            <span className="a11y-slider-label">16px</span>
             <input
               type="range"
               min="16"
@@ -64,15 +63,13 @@ export default function AccessibilityPanel() {
               value={fontSize}
               onChange={(e) => handleFontSize(e.target.value)}
               className="a11y-size-slider"
-              style={{ flex: 1, accentColor: 'var(--indigo)', cursor: 'pointer' }}
             />
-            <span style={{ fontSize: '0.72rem', fontWeight: 700, color: 'var(--text-dim)' }}>20px</span>
+            <span className="a11y-slider-label">20px</span>
           </div>
         </div>
 
-        {/* Dyslexia Font Switch */}
-        <div className="a11y-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '6px 0' }}>
-          <span className="a11y-row-label" style={{ fontSize: '0.84rem', fontWeight: 600 }}>
+        <div className="a11y-row">
+          <span className="a11y-row-label">
             <i className="fa-solid fa-wand-magic-sparkles text-teal mr-1"></i> {isEnglish ? 'Dyslexia-Friendly Font' : 'Font Ramah Disleksia'}
           </span>
           <button
@@ -82,9 +79,8 @@ export default function AccessibilityPanel() {
           ></button>
         </div>
 
-        {/* High Contrast Switch */}
-        <div className="a11y-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '6px 0' }}>
-          <span className="a11y-row-label" style={{ fontSize: '0.84rem', fontWeight: 600 }}>
+        <div className="a11y-row">
+          <span className="a11y-row-label">
             <i className="fa-solid fa-circle-half-stroke text-amber mr-1"></i> {isEnglish ? 'High Contrast' : 'Kontras Tinggi'}
           </span>
           <button
@@ -94,9 +90,8 @@ export default function AccessibilityPanel() {
           ></button>
         </div>
 
-        {/* Language Switch */}
-        <div className="a11y-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '6px 0' }}>
-          <span className="a11y-row-label" style={{ fontSize: '0.84rem', fontWeight: 600 }}>
+        <div className="a11y-row">
+          <span className="a11y-row-label">
             <i className="fa-solid fa-globe text-indigo mr-1"></i> {isEnglish ? 'English Language' : 'Bahasa Inggris'}
           </span>
           <button
@@ -106,9 +101,8 @@ export default function AccessibilityPanel() {
           ></button>
         </div>
 
-        {/* TTS Switch */}
-        <div className="a11y-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '6px 0', borderTop: '1px solid var(--line)', marginTop: '8px', paddingTop: '10px' }}>
-          <span className="a11y-row-label" style={{ fontSize: '0.84rem', fontWeight: 600 }}>
+        <div className="a11y-row a11y-row-footer">
+          <span className="a11y-row-label">
             <i className="fa-solid fa-volume-high text-emerald mr-1"></i> Text-to-Speech
           </span>
           <button

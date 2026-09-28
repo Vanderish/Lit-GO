@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useProgress } from '../../context/ProgressContext';
 import './SandboxLabs.css';
+import './PromptSafetyPage.css';
 
 export default function PromptSafetyPage() {
   const { showToast } = useProgress();
@@ -48,12 +49,10 @@ export default function PromptSafetyPage() {
 
     riskWords.forEach((kw) => {
       if (text.toLowerCase().includes(kw)) {
-        // If not preceded by "tanpa" or "jangan"
         riskFound.push(kw);
       }
     });
 
-    // Check if risky words appear in non-negated malicious context
     const hasUnsafeIntent = /(curi|hack|exploit|bypassing|jailbreak|mencuri)/i.test(text);
     if (hasUnsafeIntent) {
       score = Math.max(10, score - 50);
@@ -93,12 +92,12 @@ export default function PromptSafetyPage() {
   return (
     <div className="page-wrap">
       {/* Header */}
-      <div className="hub-section-head" style={{ marginBottom: '24px' }}>
+      <div className="hub-section-head safety-header-wrap">
         <div>
           <span className="lab-badge lab-badge-emerald">
             <i className="fa-solid fa-shield-halved"></i> SANDBOX LAB 04
           </span>
-          <h1 className="hub-section-title" style={{ fontSize: '1.65rem' }}>Prompt Safety Lab</h1>
+          <h1 className="hub-section-title safety-main-title">Prompt Safety Lab</h1>
           <p className="hub-section-sub">Parser Anatomi Prompt &amp; Penguji Keamanan Data Sensitif (Prompt Defense &amp; Injection Checker)</p>
         </div>
       </div>
@@ -108,8 +107,8 @@ export default function PromptSafetyPage() {
         {/* Left Column: Prompt Editor */}
         <div className="sandbox-card">
           <div className="prompt-editor-header">
-            <div style={{ fontSize: '0.9rem', fontWeight: 800, color: 'var(--navy)', display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <i className="fa-solid fa-code" style={{ color: 'var(--emerald)' }}></i> Editor &amp; Input Prompt
+            <div className="prompt-editor-title">
+              <i className="fa-solid fa-code text-emerald"></i> Editor &amp; Input Prompt
             </div>
             <div className="prompt-templates-row">
               <button className="btn-template-chip safe-chip" onClick={loadSafeSample} type="button">
@@ -134,13 +133,10 @@ export default function PromptSafetyPage() {
               className="prompt-textarea"
             />
             <div className="prompt-editor-footer">
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <div className="prompt-status-indicator-group">
                 <span
+                  className="prompt-status-dot"
                   style={{
-                    display: 'inline-block',
-                    width: '8px',
-                    height: '8px',
-                    borderRadius: '50%',
                     background: promptStats.safe ? 'var(--emerald)' : 'var(--red)',
                   }}
                 />
@@ -153,7 +149,7 @@ export default function PromptSafetyPage() {
           </div>
 
           {/* Quick Guidance */}
-          <div style={{ marginTop: '16px', background: '#F8FAFC', borderRadius: '10px', padding: '12px 14px', border: '1px solid #E2E8F0', fontSize: '0.8rem', color: 'var(--navy-light)', lineHeight: 1.6 }}>
+          <div className="safety-guidance-box">
             <strong>💡 Formula Prompt Efektif &amp; Aman:</strong> [Peran / Konteks] + [Instruksi Jelas] + [Batasan Format] + [Klausa Privasi/Keamanan].
           </div>
         </div>
@@ -165,11 +161,8 @@ export default function PromptSafetyPage() {
             <div className="sandbox-sidebar-title">
               <span>Safety &amp; Quality Score</span>
               <span
+                className="safety-score-pill-badge"
                 style={{
-                  fontSize: '0.74rem',
-                  fontWeight: 800,
-                  padding: '3px 8px',
-                  borderRadius: '6px',
                   background: promptStats.score >= 80 ? 'rgba(16,185,129,0.12)' : promptStats.score >= 50 ? 'rgba(245,158,11,0.12)' : 'rgba(239,68,68,0.12)',
                   color: promptStats.score >= 80 ? 'var(--emerald)' : promptStats.score >= 50 ? '#D97706' : 'var(--red)',
                 }}
@@ -178,11 +171,11 @@ export default function PromptSafetyPage() {
               </span>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginBottom: '10px' }}>
-              <span style={{ fontSize: '2rem', fontWeight: 800, color: promptStats.score >= 80 ? 'var(--emerald)' : promptStats.score >= 50 ? '#D97706' : 'var(--red)' }}>
+            <div className="safety-score-number-row">
+              <span className="safety-score-val-large" style={{ color: promptStats.score >= 80 ? 'var(--emerald)' : promptStats.score >= 50 ? '#D97706' : 'var(--red)' }}>
                 {promptStats.score}
               </span>
-              <span style={{ fontSize: '0.88rem', color: 'var(--text-dim)', fontWeight: 600 }}>/ 100 Poin</span>
+              <span className="safety-score-max-label">/ 100 Poin</span>
             </div>
 
             <div className="ethics-track">
@@ -246,7 +239,7 @@ export default function PromptSafetyPage() {
           </div>
 
           {/* Live Syntax Parser Terminal */}
-          <div className="sandbox-sidebar-card" style={{ padding: '16px' }}>
+          <div className="sandbox-sidebar-card safety-terminal-card-wrap">
             <div className="parser-terminal">
               <div className="parser-terminal-header">
                 <span><i className="fa-solid fa-terminal mr-1"></i> Live Token Inspector</span>
@@ -258,11 +251,11 @@ export default function PromptSafetyPage() {
                     ? promptText
                         .replace(
                           /(bertindak sebagai|kamu adalah|peranmu|konteks|sebagai pakar|sebagai tutor|jelaskan|ringkas|analisis|buatkan|tuliskan|identifikasi|berikan|format|tabel|bullet point|json|daftar|skema)/gi,
-                          '<span style="background:rgba(16,185,129,0.25); color:#34D399; font-weight:700; border-radius:3px; padding:1px 4px;">$1</span>'
+                          '<span class="parser-highlight-safe">$1</span>'
                         )
                         .replace(
                           /(password|kata sandi|rahasia|nik|ktp|rekening|curi|hack|bypassing|jailbreak|exploit|mencuri)/gi,
-                          '<span style="background:rgba(239,68,68,0.3); color:#F87171; font-weight:700; border-radius:3px; padding:1px 4px;">$1</span>'
+                          '<span class="parser-highlight-danger">$1</span>'
                         )
                     : '<span style="color:#64748B;">Menunggu input prompt...</span>',
                 }}

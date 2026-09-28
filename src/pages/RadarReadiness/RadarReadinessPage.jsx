@@ -104,7 +104,7 @@ export default function RadarReadinessPage({ embedded = false }) {
 
   const pillarMeta = [
     { id: 0, label: 'Pemahaman Dasar', score: radar[0], color: '#4F46E5', modId: 1, tag: 'Level 1', modTitle: 'Kenalan dengan "Otak" Buatan', icon: 'fa-brain' },
-    { id: 1, label: 'Etika & Keamanan', score: radar[1], color: '#10B981', modId: 2, tag: 'Level 2', modTitle: 'Kompas Etika, Keamanan & Privasi', icon: 'fa-shield-halved' },
+    { id: 1, label: `Etika &\nKeamanan`, score: radar[1], color: '#10B981', modId: 2, tag: 'Level 2', modTitle: 'Kompas Etika, Keamanan & Privasi', icon: 'fa-shield-halved' },
     { id: 2, label: 'Prompting', score: radar[2], color: '#F59E0B', modId: 3, tag: 'Level 3', modTitle: 'Seni Berbicara dengan Mesin', icon: 'fa-terminal' },
     { id: 3, label: 'Berpikir Kritis', score: radar[3], color: '#EC4899', modId: 4, tag: 'Level 4', modTitle: 'AI sebagai Asisten Produktivitas', icon: 'fa-magnifying-glass' },
   ];
@@ -176,6 +176,9 @@ export default function RadarReadinessPage({ embedded = false }) {
     ],
   };
 
+  // Cek apakah mode high-contrast sedang aktif
+  const isHighContrast = document.body.classList.contains('high-contrast');
+
   const radarOptions = {
     responsive: true,
     maintainAspectRatio: true,
@@ -183,12 +186,28 @@ export default function RadarReadinessPage({ embedded = false }) {
       r: {
         min: 0,
         max: 100,
-        grid: { color: '#E2E8F0', lineWidth: 1 },
-        angleLines: { color: '#E2E8F0', lineWidth: 1 },
+        grid: { 
+          color: (context) => document.body.classList.contains('high-contrast') ? '#334155' : '#E2E8F0', 
+          lineWidth: 1 
+        },
+        angleLines: { 
+          color: (context) => document.body.classList.contains('high-contrast') ? '#334155' : '#E2E8F0', 
+          lineWidth: 1 
+        },
         ticks: { display: false, stepSize: 20 },
         pointLabels: {
           font: { size: 11, family: 'Plus Jakarta Sans', weight: '700' },
-          color: '#1E293B',
+          // Warna teks langsung merespons secara real-time tanpa delay
+          color: () => document.body.classList.contains('high-contrast') ? '#F8FAFC' : '#1E293B',
+          // Menambahkan jarak (gap) antara label dengan garis/titik terluar radar chart
+          padding: 14,
+          // Callback untuk memecah label menjadi beberapa baris (enter) jika diperlukan
+          callback: (label) => {
+            if (label === 'Pemahaman Dasar') return ['Pemahaman', 'Dasar'];
+            if (label === 'Etika & Keamanan') return ['Etika &', 'Keamanan'];
+            if (label === 'Berpikir Kritis') return ['Berpikir', 'Kritis'];
+            return label; // Label lain (seperti 'Prompting') tetap 1 baris
+          }
         },
       },
     },
@@ -203,7 +222,7 @@ export default function RadarReadinessPage({ embedded = false }) {
           usePointStyle: true,
           pointStyle: 'circle',
           font: { size: 11, family: 'Plus Jakarta Sans', weight: '600' },
-          color: '#64748B',
+          color: () => document.body.classList.contains('high-contrast') ? '#94A3B8' : '#64748B',
           padding: 12,
         },
       },

@@ -978,4 +978,219 @@
   line-height: 1.5;
   margin: 0;
 }
-
+
+
+/* ========================================================================= */
+/* HIGH CONTRAST OVERRIDES - Deepfake Detective Page                         */
+/* ========================================================================= */
+
+body.high-contrast .case-selector-bar {
+  background: #161E2E !important;
+  border-color: #334155 !important;
+}
+
+body.high-contrast .case-pill-btn {
+  background: #1E293B !important;
+  border-color: #475569 !important;
+  color: #E2E8F0 !important;
+}
+
+body.high-contrast .case-pill-btn:hover {
+  background: #334155 !important;
+  border-color: #60A5FA !important;
+}
+
+body.high-contrast .case-pill-btn.active {
+  background: rgba(96, 165, 250, 0.2) !important;
+  border-color: #60A5FA !important;
+  color: #60A5FA !important;
+  box-shadow: 0 0 0 1px #60A5FA !important;
+}
+
+body.high-contrast .btn-upload-standalone {
+  background: #1E293B !important;
+  border-color: #3B82F6 !important;
+  color: #60A5FA !important;
+}
+
+body.high-contrast .btn-upload-standalone:hover {
+  background: rgba(59, 130, 246, 0.2) !important;
+}
+
+body.high-contrast .educational-disclaimer-banner {
+  background: rgba(245, 158, 11, 0.1) !important;
+  border-color: rgba(245, 158, 11, 0.4) !important;
+}
+
+body.high-contrast .disclaimer-content strong {
+  color: #FBBF24 !important;
+}
+
+body.high-contrast .disclaimer-content p {
+  color: #FDE68A !important;
+}
+
+body.high-contrast .image-panel,
+body.high-contrast .lab-sidebar-panel,
+body.high-contrast .detection-report-panel {
+  background: #161E2E !important;
+  border-color: #334155 !important;
+}
+
+body.high-contrast .tool-btn,
+body.high-contrast .btn-toolbar-action,
+body.high-contrast .artifact-card,
+body.high-contrast .quick-stat-item,
+body.high-contrast .statement-card {
+  background: #1E293B !important;
+  border-color: #475569 !important;
+  color: #F8FAFC !important;
+}
+
+body.high-contrast .tool-btn.active,
+body.high-contrast .tool-btn:hover,
+body.high-contrast .btn-upload-image {
+  background: rgba(59, 130, 246, 0.2) !important;
+  border-color: #60A5FA !important;
+  color: #60A5FA !important;
+}
+
+body.high-contrast .btn-reset-sample {
+  background: #0F172A !important;
+  color: #94A3B8 !important;
+}
+
+body.high-contrast .detective-title,
+body.high-contrast .lab-sidebar-title,
+body.high-contrast .report-title,
+body.high-contrast .section-label,
+body.high-contrast .card-title,
+body.high-contrast .file-name {
+  color: #FFFFFF !important;
+}
+
+body.high-contrast .hub-section-sub,
+body.high-contrast .confidence-label,
+body.high-contrast .stat-label,
+body.high-contrast .file-sub,
+body.high-contrast .card-statement,
+body.high-contrast .report-meta {
+  color: #94A3B8 !important;
+}
+
+body.high-contrast .locked-card {
+  background: rgba(255, 255, 255, 0.02) !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  color: #94A3B8 !important;
+}
+
+body.high-contrast .file-info-card {
+  background: #0F172A !important;
+  border-color: #334155 !important;
+}
+
+body.high-contrast .inspector-guide-box {
+  background: rgba(59, 130, 246, 0.1) !important;
+  border-color: rgba(59, 130, 246, 0.3) !important;
+}
+
+body.high-contrast .inspector-guide-box p,
+body.high-contrast .upload-prompt-text p {
+  color: #E2E8F0 !important;
+}
+
+body.high-contrast .detection-summary-box {
+  background: #1E293B !important;
+  border-left-color: #60A5FA !important;
+}
+
+body.high-contrast .summary-text {
+  color: #E2E8F0 !important;
+}
+
+body.high-contrast .summary-text strong {
+  color: #FFFFFF !important;
+}
+
+body.high-contrast .bottom-rec-box {
+  background: rgba(20, 184, 166, 0.15) !important;
+  border-color: rgba(20, 184, 166, 0.4) !important;
+}
+
+body.high-contrast .bottom-rec-box p {
+  color: #5EEAD4 !important;
+}
+
+body.high-contrast .rec-box-head {
+  color: #2DD4BF !important;
+}
+
+body.high-contrast .btn-copy {
+  background: #3B82F6 !important;
+  border-color: #3B82F6 !important;
+  color: #FFFFFF !important;
+}
+
+body.high-contrast .btn-rescan {
+  background: #1E293B !important;
+  border-color: #60A5FA !important;
+  color: #60A5FA !important;
+}
+
+body.high-contrast .btn-change {
+  background: #0F172A !important;
+  border-color: #334155 !important;
+  color: #E2E8F0 !important;
+}
+
+body.high-contrast .lab-controls {
+  border-color: #334155 !important;
+}
+
+body.high-contrast .lab-hint {
+  background: #1E293B !important;
+  border-color: #475569 !important;
+  color: #E2E8F0 !important;
+}
+
+body.high-contrast .badge-count {
+  background: #1E293B !important;
+  border-color: #475569 !important;
+  color: #94A3B8 !important;
+}
+
+body.high-contrast .badge-count.live-badge {
+  background: rgba(16, 185, 129, 0.2) !important;
+  border-color: #34D399 !important;
+  color: #34D399 !important;
+}
+
+body.high-contrast .btn-upload-inline {
+  background: #1E293B !important;
+  border-color: #60A5FA !important;
+  color: #60A5FA !important;
+}
+
+body.high-contrast .btn-upload-inline:hover {
+  background: rgba(59, 130, 246, 0.25) !important;
+  color: #FFFFFF !important;
+}
+
+body.high-contrast .lab-action-buttons,
+body.high-contrast .lab-controls {
+  color: #F8FAFC !important;
+}
+
+body.high-contrast .lab-action-buttons button,
+body.high-contrast .lab-controls button {
+  background: #1E293B !important;
+  border-color: #475569 !important;
+  color: #F8FAFC !important;
+}
+
+body.high-contrast .lab-action-buttons button:hover,
+body.high-contrast .lab-controls button:hover {
+  background: rgba(96, 165, 250, 0.2) !important;
+  border-color: #60A5FA !important;
+  color: #60A5FA !important;
+}

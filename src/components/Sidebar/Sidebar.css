@@ -307,4 +307,85 @@
   .sidebar-card.mobile-open {
     left: 0;
   }
-}
+}
+
+/* =========================================================
+   HIGH CONTRAST OVERRIDES (SIDEBAR)
+   ========================================================= */
+body.high-contrast .sidebar-card {
+  background: #0F172A !important;
+  border-right-color: #334155 !important;
+}
+
+body.high-contrast .sidebar-header {
+  border-bottom-color: #334155 !important;
+}
+
+body.high-contrast .sidebar-profile-card {
+  background: #1E293B !important;
+  border-color: #334155 !important;
+}
+
+body.high-contrast .user-name {
+  color: #F8FAFC !important;
+}
+
+body.high-contrast .user-email {
+  color: #94A3B8 !important;
+}
+
+body.high-contrast .profile-status-dot {
+  border-color: #0F172A !important;
+}
+
+body.high-contrast .sidebar-section-title {
+  color: #94A3B8 !important;
+}
+
+body.high-contrast .sidebar-menu-item {
+  color: #E2E8F0 !important;
+}
+
+body.high-contrast .sidebar-menu-item:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #FFFFFF !important;
+}
+
+body.high-contrast .sidebar-menu-item.active {
+  background: rgba(96, 165, 250, 0.15) !important;
+  color: #60A5FA !important;
+  border-color: rgba(96, 165, 250, 0.3) !important;
+}
+
+body.high-contrast .sidebar-menu-item.active::before {
+  background: #60A5FA !important;
+}
+
+body.high-contrast .menu-item-count {
+  background: #334155 !important;
+  color: #E2E8F0 !important;
+}
+
+body.high-contrast .sidebar-footer {
+  background: #0F172A !important;
+  border-top-color: #334155 !important;
+}
+
+body.high-contrast .sidebar-logout-btn {
+  background: rgba(239, 68, 68, 0.1) !important;
+  border-color: rgba(239, 68, 68, 0.3) !important;
+  color: #F87171 !important;
+}
+
+body.high-contrast .sidebar-logout-btn:hover {
+  background: rgba(239, 68, 68, 0.2) !important;
+  border-color: rgba(239, 68, 68, 0.5) !important;
+}
+
+body.high-contrast .sidebar-logout-btn .menu-item-title {
+  color: #F87171 !important;
+}
+
+body.high-contrast .mobile-nav-toggle {
+  color: #F8FAFC !important;
+}

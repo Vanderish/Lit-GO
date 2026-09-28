@@ -226,21 +226,19 @@
 .google-login-btn.is-loading .google-login-text {
   letter-spacing: 0.01em;
 }
-/* ... (kode google-login-btn ke atas biarkan sama) ... */
 
 .google-login-icon-wrap {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 24px;  /* Dibesarkan dari 20px */
-  height: 24px; /* Dibesarkan dari 20px */
+  width: 24px;
+  height: 24px;
   flex-shrink: 0;
-  /* Hapus background dan box-shadow yang bikin ikon terlihat sempit/bulat aneh */
   background: transparent; 
 }
 
 .google-login-icon {
-  width: 22px;  /* Dibesarkan agar lebih proporsional */
+  width: 22px;
   height: 22px;
   display: block;
 }
@@ -277,4 +275,105 @@
   color: var(--indigo);
   border-color: var(--indigo);
   transform: translateX(-4px);
+}
+
+/* =========================================================
+   HIGH CONTRAST OVERRIDES
+   ========================================================= */
+body.high-contrast .login-wrapper {
+  background-color: #0B0F19 !important;
+}
+
+body.high-contrast .login-card {
+  background: #161E2E !important;
+  border-color: #334155 !important;
+  box-shadow: 0 24px 60px -12px rgba(0, 0, 0, 0.5) !important;
+}
+
+body.high-contrast .brand-title {
+  color: #FFFFFF !important;
+}
+
+body.high-contrast .label-row label {
+  color: #E2E8F0 !important;
+}
+
+body.high-contrast .link-text {
+  color: #60A5FA !important;
+}
+
+body.high-contrast .link-text:hover {
+  color: #93C5FD !important;
+}
+
+body.high-contrast .form-input {
+  background: #1E293B !important;
+  border-color: #475569 !important;
+  color: #F8FAFC !important;
+}
+
+body.high-contrast .form-input:focus {
+  border-color: #60A5FA !important;
+  background: #0F172A !important;
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.25) !important;
+}
+
+body.high-contrast .input-icon {
+  color: #94A3B8 !important;
+}
+
+body.high-contrast .input-icon.right:hover {
+  color: #F8FAFC !important;
+}
+
+body.high-contrast .btn-submit {
+  background: #3B82F6 !important;
+  color: #FFFFFF !important;
+}
+
+body.high-contrast .btn-submit:hover {
+  background: #2563EB !important;
+}
+
+body.high-contrast .divider::before {
+  background: #334155 !important;
+}
+
+body.high-contrast .divider span {
+  background: #161E2E !important;
+  color: #94A3B8 !important;
+}
+
+body.high-contrast .register-prompt,
+body.high-contrast .trust-badge {
+  color: #94A3B8 !important;
+}
+
+body.high-contrast .google-login-btn {
+  background: #1E293B !important;
+  border-color: #475569 !important;
+  color: #F8FAFC !important;
+}
+
+body.high-contrast .google-login-btn:hover:not(:disabled) {
+  background: rgba(37, 99, 235, 0.15) !important;
+  border-color: #60A5FA !important;
+}
+
+body.high-contrast .google-login-btn.is-loading {
+  background: #161E2E !important;
+  border-color: #60A5FA !important;
+  color: #60A5FA !important;
+}
+
+body.high-contrast .btn-back-home {
+  background: #1E293B !important;
+  border-color: #334155 !important;
+  color: #F8FAFC !important;
+}
+
+body.high-contrast .btn-back-home:hover {
+  background: rgba(37, 99, 235, 0.15) !important;
+  border-color: #60A5FA !important;
+  color: #60A5FA !important;
 }

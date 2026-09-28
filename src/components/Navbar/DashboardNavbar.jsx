@@ -1,6 +1,7 @@
 import { Link, NavLink } from 'react-router-dom';
 import { useProgress } from '../../context/ProgressContext';
 import Logo from '../Logo/Logo';
+import './Navbar.css';
 
 export default function DashboardNavbar({ pts = 0, badgeCount = 0, expPct = 0, lv = 1, onRequestReset }) {
   const { isEnglish, toggleLanguage } = useProgress();
@@ -11,15 +12,15 @@ export default function DashboardNavbar({ pts = 0, badgeCount = 0, expPct = 0, l
   };
 
   return (
-    <nav style={{ margin: '0 0 24px 0', width: '100%' }}>
-      <div className="nav-inner" style={{ justifyContent: 'flex-start' }}>
+    <nav className="dashboard-nav">
+      <div className="nav-inner dashboard-nav-inner">
         
         {/* Tombol Hamburger (Khusus Mobile) */}
         <button className="mobile-nav-toggle" onClick={handleToggleSidebar} aria-label="Toggle Menu">
           <i className="fa-solid fa-bars"></i>
         </button>
 
-        <Link to="/dashboard" className="logo" style={{ textDecoration: 'none', marginRight: 'auto' }}>
+        <Link to="/dashboard" className="logo dashboard-logo">
           <Logo size={28} showText={true} color="#3B82F6" textColor="var(--navy, #1E293B)" />
         </Link>
 
@@ -56,25 +57,11 @@ export default function DashboardNavbar({ pts = 0, badgeCount = 0, expPct = 0, l
 
           {/* Language Switcher Button */}
           <button
-            className="btn-lang-toggle"
+            className="btn-lang-toggle dashboard-lang-toggle"
             onClick={toggleLanguage}
             title={isEnglish ? 'Switch to Indonesian' : 'Beralih ke Bahasa Inggris'}
-            style={{
-              background: 'var(--white)',
-              border: '1px solid var(--line)',
-              borderRadius: '10px',
-              padding: '6px 10px',
-              fontWeight: 700,
-              fontSize: '0.78rem',
-              color: 'var(--navy)',
-              cursor: 'pointer',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px',
-              transition: 'all 0.2s ease',
-            }}
           >
-            <i className="fa-solid fa-globe" style={{ color: 'var(--indigo)' }}></i>
+            <i className="fa-solid fa-globe icon-lang"></i>
             <span>{isEnglish ? 'EN' : 'ID'}</span>
           </button>
 

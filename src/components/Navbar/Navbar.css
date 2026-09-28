@@ -73,38 +73,127 @@
 }
 
 /* ============================
+   DASHBOARD NAVBAR OVERRIDES
+   ============================ */
+.dashboard-nav {
+  margin: 0 0 24px 0;
+  width: 100%;
+}
+
+.dashboard-nav-inner {
+  justify-content: flex-start;
+}
+
+.dashboard-logo {
+  text-decoration: none;
+  margin-right: auto;
+  color: var(--navy);
+}
+
+.dashboard-lang-toggle {
+  background: var(--white);
+  padding: 6px 10px;
+  font-size: 0.78rem;
+}
+
+/* ============================
+   HIGH CONTRAST MODE (NAVBAR & EXP BAR)
+   ============================ */
+body.high-contrast nav {
+  background: rgba(15, 23, 42, 0.96) !important;
+  border-bottom: 1.5px solid #334155 !important;
+}
+
+body.high-contrast .nav-links a {
+  color: #E2E8F0 !important;
+}
+
+body.high-contrast .nav-links a:hover,
+body.high-contrast .nav-links a.active {
+  color: #60A5FA !important;
+  background: rgba(96, 165, 250, 0.15) !important;
+}
+
+body.high-contrast .logo,
+body.high-contrast .dashboard-logo {
+  color: #F8FAFC !important;
+}
+
+body.high-contrast .hud-chips {
+  background: #161E2E !important;
+  border-color: #334155 !important;
+  color: #F8FAFC !important;
+}
+
+body.high-contrast .hud-level {
+  background: #1E293B !important;
+  border-color: #334155 !important;
+  color: #F8FAFC !important;
+}
+
+/* Overrides untuk Bar Progres EXP (exp-bar) */
+body.high-contrast .exp-bar-container,
+body.high-contrast .exp-bar-bg {
+  background-color: #1E293B !important;
+  border-color: #334155 !important;
+}
+
+body.high-contrast .exp-bar-fill {
+  background: linear-gradient(90deg, #3B82F6, #6366F1) !important;
+}
+
+body.high-contrast .exp-bar-text,
+body.high-contrast .hud-exp-text {
+  color: #CBD5E1 !important;
+}
+
+body.high-contrast .btn-lang-toggle,
+body.high-contrast .dashboard-lang-toggle {
+  background: #1E293B !important;
+  border-color: #334155 !important;
+  color: #F8FAFC !important;
+}
+
+body.high-contrast .btn-lang-toggle:hover,
+body.high-contrast .dashboard-lang-toggle:hover {
+  border-color: #60A5FA !important;
+  background: rgba(37, 99, 235, 0.15) !important;
+}
+
+body.high-contrast .btn-nav-cta {
+  background: #1E293B !important;
+  border-color: #334155 !important;
+  color: #F8FAFC !important;
+}
+
+body.high-contrast .btn-nav-cta:hover {
+  border-color: #60A5FA !important;
+  color: #60A5FA !important;
+}
+
+body.high-contrast .btn-reset {
+  background: #1E293B !important;
+  border-color: #334155 !important;
+  color: #94A3B8 !important;
+}
+
+body.high-contrast .btn-reset:hover {
+  border-color: #EF4444 !important;
+  color: #F87171 !important;
+  background: rgba(239, 68, 68, 0.1) !important;
+}
+
+body.high-contrast .mobile-nav-toggle {
+  color: #F8FAFC !important;
+}
+
+/* ============================
    MOBILE RESPONSIVENESS
    ============================ */
 @media (max-width: 480px) {
-  /* Perkecil gap antar tombol agar tidak melebar keluar layar */
-  .nav-hud {
-    gap: 6px;
-  }
-
-  /* Perkecil ukuran logo agar memberi ruang lebih untuk tombol */
-  .logo {
-    font-size: 1rem;
-    gap: 6px;
-  }
-  
-  .logo-mark {
-    width: 32px;
-    height: 32px;
-    font-size: 0.85rem;
-  }
-
-  /* Perkecil tombol bahasa */
-  .btn-lang-toggle {
-    padding: 6px 8px;
-    font-size: 0.75rem;
-    border-radius: 8px;
-  }
-
-  /* Perkecil tombol auth (Masuk & Daftar) */
-  .btn-nav-cta, 
-  .btn-nav-reg {
-    padding: 8px 12px;
-    font-size: 0.78rem;
-    border-radius: 8px;
-  }
+  .nav-hud { gap: 6px; }
+  .logo { font-size: 1rem; gap: 6px; }
+  .logo-mark { width: 32px; height: 32px; font-size: 0.85rem; }
+  .btn-lang-toggle, .dashboard-lang-toggle { padding: 6px 8px; font-size: 0.75rem; border-radius: 8px; }
+  .btn-nav-cta, .btn-nav-reg { padding: 8px 12px; font-size: 0.78rem; border-radius: 8px; }
 }

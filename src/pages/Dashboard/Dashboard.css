@@ -641,3 +641,142 @@
   box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
 }
 
+
+/* ==========================================================================
+   HIGH CONTRAST OVERRIDES - Dashboard
+   ========================================================================== */
+
+/* Hero Bento Items */
+body.high-contrast .bento-greeting-title { color: #FFFFFF !important; }
+body.high-contrast .bento-greeting-sub { color: #94A3B8 !important; }
+body.high-contrast .metric-val { color: #F1F5F9 !important; }
+body.high-contrast .metric-lbl { color: #94A3B8 !important; }
+body.high-contrast .bento-quick-metrics {
+  background: rgba(15, 23, 42, 0.8) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+body.high-contrast .bento-metric-divider {
+  background: rgba(255, 255, 255, 0.15) !important;
+}
+body.high-contrast .btn-bento-primary {
+  background: #3B82F6 !important;
+  color: #FFFFFF !important;
+  box-shadow: none !important;
+}
+body.high-contrast .btn-bento-primary:hover {
+  background: #2563EB !important;
+}
+body.high-contrast .btn-bento-ghost {
+  background: #1E293B !important;
+  border-color: #475569 !important;
+  color: #F1F5F9 !important;
+}
+body.high-contrast .btn-bento-ghost:hover {
+  background: #334155 !important;
+  border-color: #60A5FA !important;
+  color: #60A5FA !important;
+}
+body.high-contrast .lito-interactive-bubble {
+  background: #0F172A !important;
+  border-color: #60A5FA !important;
+}
+
+/* Section titles */
+body.high-contrast .section-title-clean { color: #F1F5F9 !important; }
+body.high-contrast .section-desc-clean { color: #94A3B8 !important; }
+body.high-contrast .section-badge-pre { color: #60A5FA !important; }
+
+/* Pillar panels (putih → gelap) */
+body.high-contrast .dashboard-pillar-panel {
+  background: #161E2E !important;
+  border-color: #334155 !important;
+  color: #F1F5F9 !important;
+}
+body.high-contrast .dashboard-pillar-panel.is-priority-focus {
+  border-color: #F87171 !important;
+  box-shadow: 0 0 12px rgba(239, 68, 68, 0.2) !important;
+}
+body.high-contrast .pillar-title { color: #F1F5F9 !important; }
+body.high-contrast .pillar-desc { color: #94A3B8 !important; }
+body.high-contrast .pillar-progress-track { background: #1E293B !important; }
+body.high-contrast .score-label { color: #94A3B8 !important; }
+body.high-contrast .score-val { color: #F1F5F9 !important; }
+body.high-contrast .btn-pillar-cta {
+  background: #1E293B !important;
+  border-color: #334155 !important;
+  color: #F1F5F9 !important;
+}
+body.high-contrast .btn-pillar-cta:hover {
+  background: #3B82F6 !important;
+  border-color: #3B82F6 !important;
+  color: #FFFFFF !important;
+}
+body.high-contrast .pillar-status-chip.priority {
+  background: rgba(239, 68, 68, 0.2) !important;
+  color: #F87171 !important;
+  border-color: #F87171 !important;
+}
+body.high-contrast .pillar-status-chip.mastered {
+  background: rgba(16, 185, 129, 0.2) !important;
+  color: #34D399 !important;
+  border-color: #34D399 !important;
+}
+body.high-contrast .pillar-status-chip.regular {
+  background: rgba(99, 102, 241, 0.2) !important;
+  color: #818CF8 !important;
+}
+body.high-contrast .pillar-status-chip.unmeasured {
+  background: rgba(148, 163, 184, 0.2) !important;
+  color: #94A3B8 !important;
+}
+
+/* Activity card (putih → gelap) */
+body.high-contrast .dashboard-activity-card {
+  background: #161E2E !important;
+  border-color: #334155 !important;
+}
+body.high-contrast .activity-title { color: #F1F5F9 !important; }
+body.high-contrast .activity-subtitle { color: #94A3B8 !important; }
+body.high-contrast .activity-card-header { border-bottom-color: #334155 !important; }
+body.high-contrast .activity-timeline-item {
+  background: #1E293B !important;
+  border-color: #334155 !important;
+}
+body.high-contrast .activity-timeline-item:hover {
+  background: #243147 !important;
+  border-color: #60A5FA !important;
+}
+body.high-contrast .activity-text { color: #E2E8F0 !important; }
+body.high-contrast .activity-time { color: #94A3B8 !important; }
+body.high-contrast .activity-empty-state {
+  background: rgba(59, 130, 246, 0.05) !important;
+  border-color: rgba(59, 130, 246, 0.25) !important;
+}
+body.high-contrast .activity-empty-text strong { color: #F1F5F9 !important; }
+body.high-contrast .activity-counter-pill {
+  background: rgba(37, 99, 235, 0.15) !important;
+  color: #60A5FA !important;
+  border-color: rgba(37, 99, 235, 0.3) !important;
+}
+body.high-contrast .activity-empty-icon {
+  background: rgba(16, 185, 129, 0.2) !important;
+  color: #34D399 !important;
+}
+body.high-contrast .btn-activity-start {
+  background: #3B82F6 !important;
+  color: #FFFFFF !important;
+  box-shadow: none !important;
+}
+body.high-contrast .btn-activity-start:hover {
+  background: #2563EB !important;
+}
+
+body.high-contrast .toast,
+body.high-contrast [class*="toast"] {
+  color: inherit !important;
+}
+
+body.high-contrast .toast *,
+body.high-contrast [class*="toast"] * {
+  color: inherit !important;
+}

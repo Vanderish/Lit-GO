@@ -53,3 +53,136 @@
   }
 }
 
+/* =========================================================
+   HIGH CONTRAST MODE
+   Sinkron dengan body.high-contrast pada App.css
+   ========================================================= */
+
+body.high-contrast .layout-root {
+  background-color: #0B0F19 !important;
+  color: #F1F5F9 !important;
+}
+
+body.high-contrast .layout-main {
+  background-color: #0B0F19 !important;
+  color: #F1F5F9 !important;
+}
+
+body.high-contrast .layout-content {
+  background-color: transparent !important;
+  color: #F1F5F9 !important;
+}
+
+/* Scrollbar tetap kontras dan terlihat jelas */
+body.high-contrast .layout-main::-webkit-scrollbar-track {
+  background: #0B0F19 !important;
+}
+
+body.high-contrast .layout-main::-webkit-scrollbar-thumb {
+  background: #64748B !important;
+  border: 1px solid #94A3B8 !important;
+}
+
+body.high-contrast .layout-main::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8 !important;
+}
+
+/* Komponen/panel yang berada di dalam DashboardLayout */
+body.high-contrast .layout-root .panel,
+body.high-contrast .layout-root .panel-sm,
+body.high-contrast .layout-root .card,
+body.high-contrast .layout-root .dashboard-card,
+body.high-contrast .layout-root .stat-card,
+body.high-contrast .layout-root .content-card {
+  background: #161E2E !important;
+  border-color: #334155 !important;
+  color: #F1F5F9 !important;
+}
+
+/* Teks umum di area dashboard */
+body.high-contrast .layout-root h1,
+body.high-contrast .layout-root h2,
+body.high-contrast .layout-root h3,
+body.high-contrast .layout-root h4,
+body.high-contrast .layout-root h5,
+body.high-contrast .layout-root h6,
+body.high-contrast .layout-root strong,
+body.high-contrast .layout-root label {
+  color: #FFFFFF !important;
+}
+
+body.high-contrast .layout-root p,
+body.high-contrast .layout-root span,
+body.high-contrast .layout-root small,
+body.high-contrast .layout-root .text-muted,
+body.high-contrast .layout-root .text-secondary {
+  color: #CBD5E1 !important;
+}
+
+/* Form controls di dashboard */
+body.high-contrast .layout-root input,
+body.high-contrast .layout-root textarea,
+body.high-contrast .layout-root select {
+  background: #1E293B !important;
+  border-color: #475569 !important;
+  color: #F8FAFC !important;
+}
+
+body.high-contrast .layout-root input::placeholder,
+body.high-contrast .layout-root textarea::placeholder {
+  color: #94A3B8 !important;
+}
+
+body.high-contrast .layout-root input:focus,
+body.high-contrast .layout-root textarea:focus,
+body.high-contrast .layout-root select:focus {
+  border-color: #60A5FA !important;
+  outline-color: #60A5FA !important;
+}
+
+/* Link dan tombol di dashboard */
+body.high-contrast .layout-root a {
+  color: #60A5FA;
+}
+
+body.high-contrast .layout-root button {
+  color: #F8FAFC;
+}
+
+/* Styling khusus untuk Tombol Batal Modal (.btn-modal-cancel) */
+body.high-contrast .layout-root .btn-modal-cancel,
+body.high-contrast .layout-root .btn-cancel,
+body.high-contrast .layout-root .btn-batal {
+  background-color: #1E293B !important;
+  border: 1px solid #475569 !important;
+  color: #CBD5E1 !important;
+}
+
+body.high-contrast .layout-root .btn-modal-cancel:hover,
+body.high-contrast .layout-root .btn-cancel:hover,
+body.high-contrast .layout-root .btn-batal:hover {
+  background-color: #334155 !important;
+  border-color: #94A3B8 !important;
+  color: #FFFFFF !important;
+}
+
+body.high-contrast .layout-root button:focus-visible,
+body.high-contrast .layout-root a:focus-visible,
+body.high-contrast .layout-root input:focus-visible,
+body.high-contrast .layout-root textarea:focus-visible,
+body.high-contrast .layout-root select:focus-visible {
+  outline: 2px solid #FBBF24 !important;
+  outline-offset: 2px;
+}
+
+body.high-contrast .mod-card-btn.done {
+  background-color: rgba(16, 185, 129, 0.15) !important;
+  border: 1px solid rgba(52, 211, 153, 0.4) !important;
+  color: #34D399 !important;
+}
+
+body.high-contrast .mod-card-btn.done:hover {
+  background-color: rgba(16, 185, 129, 0.25) !important;
+  border-color: #34D399 !important;
+  color: #A7F3D0 !important;
+}

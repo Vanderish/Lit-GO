@@ -753,7 +753,7 @@ h1.hero-title .accent {
 }
 
 /* =========================================================
-   CERTIFICATE & MOCKUP
+   CERTIFICATE & MOCKUP (DIKEMBALIKAN KE NORMAL TANPA HIGH CONTRAST)
    ========================================================= */
 .cert-section {
   display: grid;
@@ -1192,4 +1192,95 @@ h1.hero-title .accent {
     gap: 8px;
     margin-bottom: 12px;
   }
+}
+
+/* =========================================================
+   HIGH CONTRAST OVERRIDES KHUSUS LANDING PAGE
+   ========================================================= */
+body.high-contrast .eyebrow {
+  background: rgba(20, 184, 166, 0.15);
+  border-color: var(--teal);
+  color: #34D399;
+}
+body.high-contrast h1.hero-title .accent {
+  background: none;
+  color: #60A5FA;
+  -webkit-text-fill-color: #60A5FA;
+}
+body.high-contrast .hero-sub { color: #94A3B8; }
+body.high-contrast .stat-num { color: #F8FAFC; }
+body.high-contrast .stat-label { color: #94A3B8; }
+
+body.high-contrast .btn-secondary-ghost {
+  color: #60A5FA;
+  border-color: #60A5FA;
+}
+body.high-contrast .btn-secondary-ghost:hover {
+  background: rgba(96, 165, 250, 0.1);
+}
+
+body.high-contrast .radar-mascot-card {
+  background: #1E293B;
+  border-color: #334155;
+}
+body.high-contrast .radar-mascot-bubble strong { color: #F8FAFC; }
+body.high-contrast .radar-mascot-bubble p { color: #CBD5E1; }
+body.high-contrast .pillar-name { color: #F1F5F9; }
+body.high-contrast .pillar-val { color: #94A3B8; }
+body.high-contrast .pillar-bar-track { background: #334155; }
+
+body.high-contrast .bento-item {
+  background: #161E2E;
+  border-color: #334155;
+}
+body.high-contrast .lab-title { color: #F8FAFC; }
+body.high-contrast .lab-desc { color: #94A3B8; }
+body.high-contrast .lab-tag {
+  background: #1E293B;
+  color: #94A3B8;
+}
+
+body.high-contrast .badge-card {
+  background: #161E2E;
+  border-color: #334155;
+}
+body.high-contrast .badge-name { color: #F8FAFC; }
+body.high-contrast .badge-req, 
+body.high-contrast .badge-desc { color: #94A3B8; }
+
+/* Mod Carousel Overrides dalam Landing Page */
+body.high-contrast .mod-carousel-card {
+  background: #161E2E !important;
+  border-color: #334155 !important;
+  color: #F1F5F9 !important;
+}
+body.high-contrast .mod-carousel-card:hover {
+  background: #1E293B !important;
+  border-color: #60A5FA !important;
+}
+body.high-contrast .mod-card-title {
+  color: #F8FAFC !important;
+}
+body.high-contrast .mod-card-desc {
+  color: #94A3B8 !important;
+}
+body.high-contrast .mod-card-level {
+  background: #1E293B !important;
+  border-color: #334155 !important;
+  color: #F8FAFC !important;
+}
+body.high-contrast .mod-carousel-card:hover .mod-card-level {
+  background: #0F172A !important;
+  border-color: #60A5FA !important;
+  color: #FFFFFF !important;
+}
+
+body.high-contrast .a11y-section {
+  border: 1px solid #334155;
+  background: #161E2E;
+  box-shadow: none;
+}
+body.high-contrast .a11y-toggle {
+  background: #1E293B;
+  border-color: #334155;
 }

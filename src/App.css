@@ -804,11 +804,16 @@ body.high-contrast .lab-sidebar,
 body.high-contrast .hub-lobby,
 body.high-contrast #a11y-panel,
 body.high-contrast .modal-box,
-body.high-contrast .bento-item,
-body.high-contrast .cert-mock {
+body.high-contrast .bento-item {
   background: #161E2E !important;
   border-color: #334155 !important;
   color: #F1F5F9 !important;
+}
+
+body.high-contrast .litgo-logo-wrapper {
+  /* Memaksa warna logo dan teks berubah di High Contrast Mode */
+  --logo-svg-color: #60A5FA !important; 
+  --logo-txt-color: #F8FAFC !important;
 }
 
 body.high-contrast .hub-nav-btn {
@@ -1219,4 +1224,18 @@ body.font-dyslexic { font-family: 'OpenDyslexic', 'Comic Sans MS', sans-serif !i
   color: var(--indigo);
   background: rgba(59, 130, 246, 0.06);
   transform: translateX(-2px);
+}
+
+body.high-contrast div[class*="toast"],
+body.high-contrast span[class*="toast"],
+body.high-contrast .toast-container,
+body.high-contrast [role="status"] {
+  background: #1E293B !important;
+  border-color: #60A5FA !important;
+  color: #F8FAFC !important;
+}
+
+body.high-contrast div[class*="toast"] *,
+body.high-contrast [role="status"] * {
+  color: #F8FAFC !important;
 }
